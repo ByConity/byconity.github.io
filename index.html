@@ -5,7 +5,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="keywords" content="ByConity keywords">
-    <meta name="description" content="ByConity description">
+    <meta name="description" content="theme.home.header.description">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -58,18 +58,18 @@
       
       <i class="fas fa-home" style="zoom: 0.6;"></i>
       
-      <span>Index</span>
+      <span>Home</span>
     </a>
     
   </li>
   
   <li class="hide-on-med-and-down nav-item">
     
-    <a href="/blog" class="waves-effect waves-light">
+    <a href="/projects" class="waves-effect waves-light">
       
-      <i class="fas fa-bookmark" style="zoom: 0.6;"></i>
+      <i class="fas fa-tags" style="zoom: 0.6;"></i>
       
-      <span>Blog</span>
+      <span>Projects</span>
     </a>
     
   </li>
@@ -87,11 +87,22 @@
   
   <li class="hide-on-med-and-down nav-item">
     
-    <a href="/about" class="waves-effect waves-light">
+    <a href="/blog" class="waves-effect waves-light">
+      
+      <i class="fas fa-bookmark" style="zoom: 0.6;"></i>
+      
+      <span>Blog</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/blog" class="waves-effect waves-light">
       
       <i class="fas fa-user-circle" style="zoom: 0.6;"></i>
       
-      <span>About</span>
+      <span>Community</span>
     </a>
     
   </li>
@@ -113,7 +124,7 @@
         <div class="logo-name">ByConity</div>
         <div class="logo-desc">
             
-            ByConity description
+            theme.home.header.description
             
         </div>
     </div>
@@ -128,18 +139,18 @@
 			
 			    <i class="fa-fw fas fa-home"></i>
 			
-			Index
+			Home
 		</a>
           
         </li>
         
         <li class="m-nav-item">
 	  
-		<a href="/blog" class="waves-effect waves-light">
+		<a href="/projects" class="waves-effect waves-light">
 			
-			    <i class="fa-fw fas fa-bookmark"></i>
+			    <i class="fa-fw fas fa-tags"></i>
 			
-			Blog
+			Projects
 		</a>
           
         </li>
@@ -157,11 +168,22 @@
         
         <li class="m-nav-item">
 	  
-		<a href="/about" class="waves-effect waves-light">
+		<a href="/blog" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-bookmark"></i>
+			
+			Blog
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/blog" class="waves-effect waves-light">
 			
 			    <i class="fa-fw fas fa-user-circle"></i>
 			
-			About
+			Community
 		</a>
           
         </li>
@@ -295,24 +317,13 @@
         <div class="brand">
             <div class="title center-align">
                 
-                ByConity Subtitle
+                    ByConity
                 
             </div>
 
             <div class="description center-align">
                 
-                <span id="subtitle"></span>
-                <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.11"></script>
-                <script>
-                    var typed = new Typed("#subtitle", {
-                        strings: ['一二三四五六七八九十一二三四五六七八九十一二三四五六七八九十','一二三四五六七八九十一二三四五六七八九十一二三四五六七八九十一二三四五六七八九十'],
-                        startDelay: 300,
-                        typeSpeed: 100,
-                        loop: true,
-                        backSpeed: 50,
-                        showCursor: true
-                    });
-                </script>
+                    ByConity is a distributed cloud-native SQL data warehouse engine, that excels in interactive queries and Ad-Hoc queries, featuring support for querying multiple tables, cluster expansion without sensation, and unified aggregation of offline batch data and real-time data streams.
                 
             </div>
         </div>
@@ -420,16 +431,39 @@
             <div class="card">
                 <div class="card-content">
                     
-                        <div class="dream">
-    
-    <div class="title center-align">
-        <i class="far fa-lightbulb"></i>&nbsp;&nbsp;一二三四五六七八九十
-    </div>
-    
+
+                    
+                        <div class="features">
     <div class="row">
-        <div class="col l8 offset-l2 m10 offset-m1 s10 offset-s1 center-align text">
-            一二三四五六七八九十一二三四五六七八九十一二三四五六七八九十一二三四五六七八九十一二三四五六七八九十一二三四五六七八九十一二三四五六七八九十
-        </div>
+        
+        
+            
+            
+            
+            <img class="col l12 m12 s12" src="https://juejin.cn" alt="Hello image" lazy="true" />
+            
+        
+            
+            
+                
+                <div class="col l4 m4 s12 left-align text">
+                    <h3>High Performance, Low Cost</h3>
+                    <p>Support sub-second query response capability under massive data scale through vectorized execution engine, columnar storage and CBO+RBO optimizer. At the same time, the ultra-high compression ratio helps users save a lot of storage space and reduce disk costs.</p>
+                </div>
+                
+                <div class="col l4 m4 s12 left-align text">
+                    <h3>Unified Support for Multiple Scenarios</h3>
+                    <p>Supports real-time data streaming and offline batch data writing with interactive things capability and multi-table associative query capability, which can meet the interactive query needs of online systems as well as backend real-time monitoring, report big screen, etc.</p>
+                </div>
+                
+                <div class="col l4 m4 s12 left-align text">
+                    <h3>Eco-friendly</h3>
+                    <p>Compatible with most ClickHouse interfaces and tools, supports Kafka, Spark, Flink and many other data imports, also supports Superset, Tableau and other data visualization tools.</p>
+                </div>
+                
+            
+            
+        
     </div>
 </div>
 
@@ -461,7 +495,7 @@
             
             <div class="article col s12 m6 l4" data-aos="zoom-in">
                 <div class="card">
-                    <a href="/en/202209/hello-world/">
+                    <a href="/en/202210/hello-world/">
                         <div class="card-image">
                             
                             
@@ -479,7 +513,7 @@
                         </div>
                         <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2022-09-29
+                                <i class="far fa-clock fa-fw icon-date"></i>2022-10-13
                             </span>
                             <span class="publish-author">
                                 
@@ -496,7 +530,7 @@
             
             <div class="article col s12 m6 l4" data-aos="zoom-in">
                 <div class="card">
-                    <a href="/en/202209/docs/hello/">
+                    <a href="/en/202210/docs/hello/">
                         <div class="card-image">
                             
                             
@@ -514,7 +548,7 @@
                         </div>
                         <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2022-09-29
+                                <i class="far fa-clock fa-fw icon-date"></i>2022-10-13
                             </span>
                             <span class="publish-author">
                                 

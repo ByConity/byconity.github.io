@@ -2,11 +2,11 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
   <title>ByConity</title>
   
-  <subtitle>ByConity Subtitle</subtitle>
+  <subtitle>theme.home.header.subtitle</subtitle>
   <link href="https://byconity.github.io/atom.xml" rel="self"/>
   
   <link href="https://byconity.github.io/"/>
-  <updated>2022-09-29T02:19:04.344Z</updated>
+  <updated>2022-10-13T08:52:44.466Z</updated>
   <id>https://byconity.github.io/</id>
   
   <author>
@@ -18,10 +18,10 @@
   
   <entry>
     <title>Hello World</title>
-    <link href="https://byconity.github.io/en/202209/hello-world/"/>
-    <id>https://byconity.github.io/en/202209/hello-world/</id>
-    <published>2022-09-29T02:19:04.344Z</published>
-    <updated>2022-09-29T02:19:04.344Z</updated>
+    <link href="https://byconity.github.io/en/202210/hello-world/"/>
+    <id>https://byconity.github.io/en/202210/hello-world/</id>
+    <published>2022-10-13T08:52:44.466Z</published>
+    <updated>2022-10-13T08:52:44.466Z</updated>
     
     
       
@@ -39,10 +39,10 @@
   
   <entry>
     <title>Hello~</title>
-    <link href="https://byconity.github.io/en/202209/docs/hello/"/>
-    <id>https://byconity.github.io/en/202209/docs/hello/</id>
-    <published>2022-09-29T02:19:04.344Z</published>
-    <updated>2022-09-29T02:19:04.344Z</updated>
+    <link href="https://byconity.github.io/en/202210/docs/hello/"/>
+    <id>https://byconity.github.io/en/202210/docs/hello/</id>
+    <published>2022-10-13T08:52:44.466Z</published>
+    <updated>2022-10-13T08:52:44.466Z</updated>
     
     
       
