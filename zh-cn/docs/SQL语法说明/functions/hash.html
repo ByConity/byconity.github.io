@@ -1,0 +1,523 @@
+<hr>
+<h2 id="title-“Hash”slug-“hash”hidden-falsecreatedAt-“2021-07-29T12-05-52-839Z”updatedAt-“2021-09-23T04-02-59-496Z”categories-Docs-SQL-Syntax"><a href="#title-“Hash”slug-“hash”hidden-falsecreatedAt-“2021-07-29T12-05-52-839Z”updatedAt-“2021-09-23T04-02-59-496Z”categories-Docs-SQL-Syntax" class="headerlink" title="title: “Hash”slug: “hash”hidden: falsecreatedAt: “2021-07-29T12:05:52.839Z”updatedAt: “2021-09-23T04:02:59.496Z”categories:- Docs- SQL_Syntax"></a>title: “Hash”<br>slug: “hash”<br>hidden: false<br>createdAt: “2021-07-29T12:05:52.839Z”<br>updatedAt: “2021-09-23T04:02:59.496Z”<br>categories:<br>- Docs<br>- SQL_Syntax</h2><blockquote>
+<p>Notice:<br>Some of the examples below are referenced from <a href="https://clickhouse.com/docs/en/sql-reference/functions/">ClickHouse Documentation</a> but have been adapted and modified to work in ByteHouse.</p>
+</blockquote>
+<h2 id="MD5"><a href="#MD5" class="headerlink" title="MD5"></a>MD5</h2><p>Calculates the MD5 from a string and returns the resulting set of bytes as FixedString(16).</p>
+<p>If you do not need MD5 in particular, but you need a decent cryptographic 128-bit hash, use the [sipHash128] function instead.</p>
+<p>If you want to get the same result as output by the md5sum utility, use lower(hex(MD5(s))).</p>
+<p><strong>Syntax</strong></p>
+<pre><code class="sql">select MD5(string)
+</code></pre>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><code>string</code> – A string</li>
+</ul>
+<p><strong>Returned value</strong></p>
+<ul>
+<li>The Value of MD5.</li>
+</ul>
+<p>Type: FixedString(16)</p>
+<p><strong>Example</strong></p>
+<pre><code class="sql">select MD5(&#39;test the MD5 function&#39;)
+</code></pre>
+<p>Result:</p>
+<pre><code class="plain%20text">┌─MD5(&#39;test the MD5 function&#39;)─┐
+│ ो?N?iq@?5G?:a               │
+└──────────────────────────────┘
+</code></pre>
+<h2 id="SHA1"><a href="#SHA1" class="headerlink" title="SHA1"></a>SHA1</h2><p>Calculates SHA-1, SHA-224, or SHA-256 from a string and returns the resulting set of bytes as FixedString(20), FixedString(28), or FixedString(32).</p>
+<p>The function works fairly slowly (SHA-1 processes about 5 million short strings per second per processor core, while SHA-224 and SHA-256 process about 2.2 million).</p>
+<p>We recommend using this function only in cases when you need a specific hash function and you can’t select it.</p>
+<p>Even in these cases, we recommend applying the function offline and pre-calculating values when inserting them into the table, instead of applying it in SELECTS.</p>
+<p><strong>Syntax</strong></p>
+<pre><code class="sql">SHA1(string)
+</code></pre>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><code>string</code> – A string.</li>
+</ul>
+<p><strong>Returned value</strong></p>
+<ul>
+<li>SHA-1 Encrypted string in <code>FixedString(20)</code>.</li>
+</ul>
+<p>Type: <code>FixedString(20)</code></p>
+<p><strong>Example</strong></p>
+<pre><code class="sql">SELECT base64Encode(toString(SHA1(&#39;SAH1 test&#39;)))
+</code></pre>
+<p>Result:</p>
+<pre><code class="plain%20text">┌─base64Encode(toString(SHA1(&#39;SAH1 test&#39;)))─┐
+│ x5bDmJsgE+YzTir1+BPt4S98AEc=              │
+└───────────────────────────────────────────┘
+</code></pre>
+<h2 id="SHA224"><a href="#SHA224" class="headerlink" title="SHA224"></a>SHA224</h2><p>Calculates SHA-1, SHA-224, or SHA-256 from a string and returns the resulting set of bytes as FixedString(20), FixedString(28), or FixedString(32).</p>
+<p>The function works fairly slowly (SHA-1 processes about 5 million short strings per second per processor core, while SHA-224 and SHA-256 process about 2.2 million).</p>
+<p>We recommend using this function only in cases when you need a specific hash function and you can’t select it.</p>
+<p>Even in these cases, we recommend applying the function offline and pre-calculating values when inserting them into the table, instead of applying it in SELECTS.</p>
+<p><strong>Syntax</strong></p>
+<pre><code class="sql">SHA224(string)
+</code></pre>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><code>string</code> – A string.</li>
+</ul>
+<p><strong>Returned value</strong></p>
+<ul>
+<li>SHA-224 Encrypted string in <code>FixedString(28)</code>.</li>
+</ul>
+<p>Type: <code>FixedString(28)</code></p>
+<p><strong>Example</strong></p>
+<pre><code class="sql">SELECT base64Encode(toString(SHA224(&#39;SAH224 test&#39;)))
+</code></pre>
+<p>Result:</p>
+<pre><code class="plain%20text">┌─base64Encode(toString(SHA224(&#39;SAH224 test&#39;)))─┐
+│ eptUvYjJG4AeQfQI9kZ/qViECg0gRbuwPJ5UlA==      │
+└───────────────────────────────────────────────┘
+</code></pre>
+<h2 id="SHA256"><a href="#SHA256" class="headerlink" title="SHA256"></a>SHA256</h2><p>Calculates SHA-1, SHA-224, or SHA-256 from a string and returns the resulting set of bytes as FixedString(20), FixedString(28), or FixedString(32).</p>
+<p>The function works fairly slowly (SHA-1 processes about 5 million short strings per second per processor core, while SHA-224 and SHA-256 process about 2.2 million).</p>
+<p>We recommend using this function only in cases when you need a specific hash function and you can’t select it.</p>
+<p>Even in these cases, we recommend applying the function offline and pre-calculating values when inserting them into the table, instead of applying it in SELECTS.</p>
+<p><strong>Syntax</strong></p>
+<pre><code class="sql">SHA256(string)
+</code></pre>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><code>string</code> – A string.</li>
+</ul>
+<p><strong>Returned value</strong></p>
+<ul>
+<li>SHA-256 Encrypted string in <code>FixedString(32)</code>.</li>
+</ul>
+<p>Type: <code>FixedString(32)</code></p>
+<p><strong>Example</strong></p>
+<pre><code class="sql">SELECT base64Encode(toString(SHA256(&#39;SAH256 test&#39;)))
+</code></pre>
+<p>Result:</p>
+<pre><code class="plain%20text">┌─base64Encode(toString(SHA256(&#39;SAH256 test&#39;)))─┐
+│ I+OvFrLmD2Ofq1xBuFmKYCuB6iSg5/OrhcIbI5Qezs8=  │
+└───────────────────────────────────────────────┘
+</code></pre>
+<h2 id="URLHash"><a href="#URLHash" class="headerlink" title="URLHash"></a>URLHash</h2><p>A fast, decent-quality non-cryptographic hash function for a string obtained from a URL using some type of normalization.</p>
+<p><code>URLHash(s)</code> – Calculates a hash from a string without one of the trailing symbols <code>/</code> , <code>?</code> or <code>#</code> at the end, if present.</p>
+<p><code>URLHash(s, N)</code> – Calculates a hash from a string up to the N level in the URL hierarchy, without one of the trailing symbols <code>/</code> , <code>?</code> or <code>#</code> at the end, if present.</p>
+<p>Levels are the same as in URLHierarchy. This function is specific to Yandex.Metrica.</p>
+<p><strong>Syntax</strong></p>
+<pre><code class="sql">URLHash(s,N)
+</code></pre>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><code>s</code> – The URL string.</li>
+<li><code>N</code> – The number of level in UInt.</li>
+</ul>
+<p><strong>Returned value</strong></p>
+<ul>
+<li>The hash value in UInt64</li>
+</ul>
+<p>Type: <code>Uint64</code></p>
+<p><strong>Example</strong></p>
+<pre><code class="sql">SELECT URLHash(&#39;https://www.bytedance.com/en/news&#39;,2)
+</code></pre>
+<p>Result:</p>
+<pre><code class="plain%20text">┌─URLHash(&#39;https://www.bytedance.com/en/news&#39;, 2)─┐
+│ 11898456355197509749                            │
+└─────────────────────────────────────────────────┘
+</code></pre>
+<h2 id="cityHash64"><a href="#cityHash64" class="headerlink" title="cityHash64"></a>cityHash64</h2><p>Produces a 64-bit <a href="https://github.com/google/cityhash">CityHash</a> hash value.</p>
+<p>This is a fast non-cryptographic hash function. It uses the CityHash algorithm for string parameters and implementation-specific fast non-cryptographic hash function for parameters with other data types. The function uses the CityHash combinator to get the final results.</p>
+<p><strong>Syntax</strong></p>
+<pre><code class="sql">cityHash64(par1,...)
+</code></pre>
+<p><strong>Arguments</strong></p>
+<p>The function takes a variable number of input parameters. Arguments can be any of the <a href="https://bytedance.feishu.cn/sql-reference/data-types/index.md">supported data types</a> .</p>
+<p><strong>Returned Value</strong></p>
+<p>A <code>UInt64</code>data type hash value.</p>
+<p>Type:<code>UInt64</code></p>
+<p><strong>Examples</strong></p>
+<p>Call example:</p>
+<pre><code class="sql">SELECT cityHash64(array(&#39;e&#39;,&#39;x&#39;,&#39;a&#39;), &#39;mple&#39;, 10, toDateTime(&#39;2019-06-15 23:00:00&#39;)) AS CityHash, toTypeName(CityHash) AS type;
+</code></pre>
+<p>Result:</p>
+<pre><code class="plain%20text">┌─CityHash─────────────┬─type───┐
+│ 16754903278969853710 │ UInt64 │
+└──────────────────────┴────────┘
+</code></pre>
+<p>The following example shows how to compute the checksum of the entire table with accuracy up to the row order:</p>
+<pre><code class="sql">SELECT groupBitXor(cityHash64(*)) FROM table
+</code></pre>
+<h2 id="farmHash64"><a href="#farmHash64" class="headerlink" title="farmHash64"></a>farmHash64</h2><p>Produces a 64-bit [FarmHash] or Fingerprint value. <code>farmFingerprint64</code> is preferred for a stable and portable value.</p>
+<p><strong>Syntax</strong></p>
+<pre><code class="sql">farmFingerprint64(par1, ...)
+
+farmHash64(par1, ...)
+</code></pre>
+<p>These functions use the <code>Fingerprint64</code> and <code>Hash64</code> methods respectively from all [available methods] .</p>
+<p><strong>Arguments</strong></p>
+<p>The function takes a variable number of input parameters. Arguments can be any of the [supported data types].</p>
+<p><strong>Returned Value</strong></p>
+<p>An<code>UInt64</code>data type hash value.</p>
+<p>Tyep:<code>UInt64</code></p>
+<p><strong>Example</strong></p>
+<pre><code class="sql">SELECT farmHash64(array(&#39;e&#39;,&#39;x&#39;,&#39;a&#39;), &#39;mple&#39;, 10, toDateTime(&#39;2019-06-15 23:00:00&#39;)) AS FarmHash, toTypeName(FarmHash) AS type;
+</code></pre>
+<p>Result:</p>
+<pre><code class="plain%20text">┌─FarmHash─────────────┬─type───┐
+│ 16660843471760112397 │ UInt64 │
+└──────────────────────┴────────┘
+</code></pre>
+<h2 id="gccMurmurHash"><a href="#gccMurmurHash" class="headerlink" title="gccMurmurHash"></a>gccMurmurHash</h2><p>Calculates a 64-bit <a href="https://github.com/aappleby/smhasher">MurmurHash2</a> hash value using the same hash seed as <a href="https://github.com/gcc-mirror/gcc/blob/41d6b10e96a1de98e90a7c0378437c3255814b16/libstdc++-v3/include/bits/functional_hash.h#L191">gcc</a> . It is portable between CLang and GCC builds.</p>
+<p><strong>Syntax</strong></p>
+<pre><code class="sql">gccMurmurHash(par1, ...)
+</code></pre>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><code>par1, ...</code> — A variable number of parameters that can be any of the [supported data types].</li>
+</ul>
+<p><strong>Returned value</strong></p>
+<ul>
+<li>Calculated hash value.</li>
+</ul>
+<p>Type: <code>UInt64</code>.</p>
+<p><strong>Example</strong></p>
+<p>Query:</p>
+<pre><code class="sql">SELECT gccMurmurHash(1, 2, 3) AS res1,gccMurmurHash((&#39;a&#39;, [1, 2, 3], 4, (4, [&#39;foo&#39;, &#39;bar&#39;], 1, (1, 2)))) AS res2;
+</code></pre>
+<p>Result:</p>
+<pre><code class="plain%20text">┌─res1─────────────────┬─res2────────────────┐
+│ 12384823029245979431 │ 1188926775431157506 │
+└──────────────────────┴─────────────────────┘
+</code></pre>
+<h2 id="halfMD5"><a href="#halfMD5" class="headerlink" title="halfMD5"></a>halfMD5</h2><p>[Interprets] all the input parameters as strings and calculates the <a href="https://en.wikipedia.org/wiki/MD5">MD5</a> hash value for each of them. Then combines hashes, takes the first 8 bytes of the hash of the resulting string, and interprets them as <code>UInt64</code> in big-endian byte order.</p>
+<p><strong>Syntax</strong></p>
+<pre><code class="sql">halfMD5(par1, ...)
+</code></pre>
+<p>The function is relatively slow (5 million short strings per second per processor core).</p>
+<p>Consider using the [sipHash64] function instead.</p>
+<p><strong>Arguments</strong></p>
+<p>The function takes a variable number of input parameters. Arguments can be any of the [supported data types].</p>
+<p><strong>Returned Value</strong></p>
+<p>An [UInt64] data type hash value.</p>
+<p>Type: <code>Uini64</code></p>
+<p><strong>Example</strong></p>
+<pre><code class="sql">SELECT halfMD5(array(&#39;e&#39;,&#39;x&#39;,&#39;a&#39;), &#39;mple&#39;, 10, toDateTime(&#39;2019-06-15 23:00:00&#39;)) AS halfMD5hash, toTypeName(halfMD5hash) AS type;
+</code></pre>
+<pre><code class="plain%20text">┌─halfMD5hash────────┬─type───┐
+│ 236874400738930661 │ UInt64 │
+└────────────────────┴────────┘
+</code></pre>
+<h2 id="hiveHash"><a href="#hiveHash" class="headerlink" title="hiveHash"></a>hiveHash</h2><p>Calculates <code>HiveHash</code> from a string.</p>
+<p><strong>Syntax</strong></p>
+<pre><code class="sql">SELECT hiveHash(&#39;&#39;)
+</code></pre>
+<p>This is just [JavaHash] with zeroed out sign bit. This function is used in <a href="https://en.wikipedia.org/wiki/Apache_Hive">Apache Hive</a> for versions before 3.0. This hash function is neither fast nor having a good quality. The only reason to use it is when this algorithm is already used in another system and you have to calculate exactly the same result.</p>
+<p><strong>Returned value</strong></p>
+<p>A <code>Int32</code> data type hash value.</p>
+<p>Type: <code>hiveHash</code> .</p>
+<p><strong>Example</strong></p>
+<p>Query:</p>
+<pre><code class="sql">SELECT hiveHash(&#39;Hello, world!&#39;);
+</code></pre>
+<p>Result:</p>
+<pre><code class="plain%20text">┌─hiveHash(&#39;Hello, world!&#39;)─┐
+│ 267439093                 │
+└───────────────────────────┘
+</code></pre>
+<h2 id="intHash32"><a href="#intHash32" class="headerlink" title="intHash32"></a>intHash32</h2><p>Calculates a 32-bit hash code from any type of integer.</p>
+<p>This is a relatively fast non-cryptographic hash function of average quality for numbers.</p>
+<p>TODO: need to re-confirm below sentences.</p>
+<p><strong>Syntax</strong></p>
+<pre><code class="sql">intHash32(integer)
+</code></pre>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><code>integer</code> – The integer.</li>
+</ul>
+<p><strong>Returned value</strong></p>
+<ul>
+<li>32-bit hash code.</li>
+</ul>
+<p>Type:<code>UInt32</code></p>
+<p><strong>Example</strong></p>
+<pre><code class="sql">SELECT intHash32(12072650598913549138);
+</code></pre>
+<p>Result:</p>
+<pre><code class="plain%20text">┌─intHash32(12072650598913549138)─┐
+│ 3406876673                      │
+└─────────────────────────────────┘
+</code></pre>
+<h2 id="intHash64"><a href="#intHash64" class="headerlink" title="intHash64"></a>intHash64</h2><p>Calculates a 64-bit hash code from any type of integer.</p>
+<p>It works faster than intHash32. Average quality.</p>
+<p>TODO: need to re-confirm below sentences.</p>
+<p><strong>Syntax</strong></p>
+<pre><code class="sql">intHash64(integer)
+</code></pre>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><code>integer</code> – The integer.</li>
+</ul>
+<p><strong>Returned value</strong></p>
+<ul>
+<li>64-bit hash code.</li>
+</ul>
+<p>Type:<code>UInt64</code></p>
+<p><strong>Example</strong></p>
+<pre><code class="sql">SELECT intHash64(12072650598913549138);
+</code></pre>
+<p>Result:</p>
+<pre><code class="plain%20text">┌─intHash32(12072650598913549138)─┐
+│ 3406876673                      │
+└─────────────────────────────────┘
+</code></pre>
+<h2 id="javaHash"><a href="#javaHash" class="headerlink" title="javaHash"></a>javaHash</h2><p>Calculates <a href="http://hg.openjdk.java.net/jdk8u/jdk8u/jdk/file/478a4add975b/src/share/classes/java/lang/String.java#l1452">JavaHash</a> from a string. This hash function is neither fast nor having a good quality. The only reason to use it is when this algorithm is already used in another system and you have to calculate exactly the same result.</p>
+<p><strong>Syntax</strong></p>
+<pre><code class="sql">SELECT javaHash(&#39;&#39;)
+</code></pre>
+<p><strong>Arguments</strong></p>
+<ul>
+<li>A <code>string</code></li>
+</ul>
+<p><strong>Returned value</strong></p>
+<ul>
+<li>A <code>Int32</code> data type hash value.</li>
+</ul>
+<p><strong>Example</strong></p>
+<p>Query:</p>
+<pre><code class="sql">SELECT javaHash(&#39;Hello, world!&#39;);
+</code></pre>
+<p>Result:</p>
+<pre><code class="plain%20text">┌─javaHash(&#39;Hello, world!&#39;)─┐
+│ -1880044555               │
+└───────────────────────────┘
+</code></pre>
+<h2 id="jumpConsistentHash"><a href="#jumpConsistentHash" class="headerlink" title="jumpConsistentHash"></a>jumpConsistentHash</h2><p>Calculates JumpConsistentHash form a UInt64.</p>
+<p>Accepts two arguments: a <code>UInt64</code>-type key and the number of buckets. Returns <code>Int32</code>.</p>
+<p>For more information, see the link: <a href="https://arxiv.org/pdf/1406.2294.pdf">JumpConsistentHash</a></p>
+<p><strong>Syntax</strong></p>
+<pre><code class="sql">JumpConsistentHash(key, buckets)
+</code></pre>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><code>key</code> – An <code>UInt64</code>- type key. </li>
+<li><code>buckets</code> – A number of buckets.</li>
+</ul>
+<p><strong>Returned value</strong></p>
+<ul>
+<li>Result in <code>Int32</code>.</li>
+</ul>
+<p>Type：<code>Int32</code></p>
+<p><strong>Example</strong></p>
+<p>TODO: improve below example if necessary</p>
+<pre><code class="sql">SELECT jumpConsistentHash(18446744073709551615, 12);
+</code></pre>
+<p>Result:</p>
+<pre><code class="plain%20text">┌─jumpConsistentHash(18446744073709551615, 12)─┐
+│ 10                                           │
+└──────────────────────────────────────────────┘
+</code></pre>
+<h2 id="metroHash64"><a href="#metroHash64" class="headerlink" title="metroHash64"></a>metroHash64</h2><p>Produces a 64-bit <a href="http://www.jandrewrogers.com/2015/05/27/metrohash/">MetroHash</a> hash value.</p>
+<p><strong>Syntax</strong></p>
+<pre><code class="sql">metroHash64(par1, ...)
+</code></pre>
+<p><strong>Arguments</strong></p>
+<p>The function takes a variable number of input parameters. Arguments can be any of the [supported data types] .</p>
+<p><strong>Returned Value</strong></p>
+<p>A [UInt64] data type hash value.</p>
+<p>Type：<code>UInt64</code></p>
+<p><strong>Example</strong></p>
+<pre><code class="sql">SELECT metroHash64(array(&#39;e&#39;,&#39;x&#39;,&#39;a&#39;), &#39;mple&#39;, 10, toDateTime(&#39;2019-06-15 23:00:00&#39;)) AS MetroHash, toTypeName(MetroHash) AS type;
+</code></pre>
+<pre><code class="plain%20text">┌─MetroHash────────────┬─type───┐
+│ 15061233052885528061 │ UInt64 │
+└──────────────────────┴────────┘
+</code></pre>
+<h2 id="murmurHash2-32"><a href="#murmurHash2-32" class="headerlink" title="murmurHash2_32"></a>murmurHash2_32</h2><p>Produces a <a href="https://github.com/aappleby/smhasher/">MurmurHash2</a> hash value.</p>
+<p><strong>Syntax</strong></p>
+<pre><code class="sql">murmurHash2_32(par1, ...)
+</code></pre>
+<p><strong>Arguments</strong></p>
+<p>Both functions take a variable number of input parameters. Arguments can be any of the [supported data types] .</p>
+<p><strong>Returned Value</strong></p>
+<ul>
+<li>The <code>murmurHash2_32</code> function returns hash value having the [UInt32] data type.</li>
+</ul>
+<p>Type: <code>Uint32</code></p>
+<p><strong>Example</strong></p>
+<pre><code class="sql">SELECT murmurHash2_32(&#39;test&#39;);
+</code></pre>
+<p>Result:</p>
+<pre><code class="plain%20text">┌─murmurHash2_32(&#39;test&#39;)─┐
+│ 403862830              │
+└────────────────────────┘
+</code></pre>
+<h2 id="murmurHash2-64"><a href="#murmurHash2-64" class="headerlink" title="murmurHash2_64"></a>murmurHash2_64</h2><p>Produces a <a href="https://github.com/aappleby/smhasher">MurmurHash2</a> hash value.</p>
+<p><strong>Syntax</strong></p>
+<pre><code class="sql">murmurHash2_64(par1, ...)
+</code></pre>
+<p><strong>Arguments</strong></p>
+<p>Both functions take a variable number of input parameters. Arguments can be any of the <a href="">supported data types</a> .</p>
+<p><strong>Returned Value</strong></p>
+<ul>
+<li>The <code>murmurHash2_64</code> function returns hash value having the <a href="">UInt64</a> data type.</li>
+</ul>
+<p>Type: <code>Uint64</code></p>
+<p><strong>Example</strong></p>
+<pre><code class="sql">SELECT murmurHash2_64(array(&#39;e&#39;,&#39;x&#39;,&#39;a&#39;), &#39;mple&#39;, 10, toDateTime(&#39;2019-06-15 23:00:00&#39;)) AS MurmurHash2, toTypeName(MurmurHash2) AS type;
+</code></pre>
+<pre><code class="plain%20text">┌─MurmurHash2────────┬─type───┐
+│ 178997598777428518 │ UInt64 │
+└────────────────────┴────────┘
+</code></pre>
+<h2 id="murmurHash3-128"><a href="#murmurHash3-128" class="headerlink" title="murmurHash3_128"></a>murmurHash3_128</h2><p>Produces a 128-bit <a href="https://github.com/aappleby/smhasher">MurmurHash3</a> hash value.</p>
+<p><strong>Syntax</strong></p>
+<pre><code class="sql">murmurHash3_128( expr )
+</code></pre>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><code>expr</code> — <a href="">Expressions</a> returning a <a href="">String</a> -type value.</li>
+</ul>
+<p><strong>Returned Value</strong></p>
+<ul>
+<li>A <a href="">FixedString(16)</a> data type hash value.</li>
+</ul>
+<p>Type: <code>FixedString(16)</code></p>
+<p><strong>Example</strong></p>
+<pre><code class="sql">SELECT hex(murmurHash3_128(&#39;example_string&#39;)) AS MurmurHash3, toTypeName(MurmurHash3) AS type;
+</code></pre>
+<p>Result:</p>
+<pre><code class="plain%20text">┌─MurmurHash3──────────────────────┬─type───┐
+│ 368A1A311CB7342253354B548E7E7E71 │ String │
+└──────────────────────────────────┴────────┘
+</code></pre>
+<h2 id="murmurHash3-32"><a href="#murmurHash3-32" class="headerlink" title="murmurHash3_32"></a>murmurHash3_32</h2><p>Produces a <a href="https://github.com/aappleby/smhasher">MurmurHash3</a> hash value.</p>
+<p><strong>Syntax</strong></p>
+<pre><code class="sql">murmurHash3_32(par1, ...)
+</code></pre>
+<p><strong>Arguments</strong></p>
+<p>Both functions take a variable number of input parameters. Arguments can be any of the <a href="">supported data types</a> .</p>
+<p><strong>Returned Value</strong></p>
+<ul>
+<li>The <code>murmurHash3_32</code> function returns a <a href="">UInt32</a> data type hash value.</li>
+</ul>
+<p>Type: <code>Uint32</code></p>
+<p><strong>Example</strong></p>
+<pre><code class="sql">SELECT murmurHash3_32(array(&#39;e&#39;,&#39;x&#39;,&#39;a&#39;), &#39;mple&#39;, 10, toDateTime(&#39;2019-06-15 23:00:00&#39;)) AS MurmurHash3, toTypeName(MurmurHash3) AS type;
+</code></pre>
+<p>Result:</p>
+<pre><code class="plain%20text">┌─MurmurHash3─┬─type───┐
+│ 3163913960  │ UInt32 │
+└─────────────┴────────┘
+</code></pre>
+<h2 id="murmurHash3-64"><a href="#murmurHash3-64" class="headerlink" title="murmurHash3_64"></a>murmurHash3_64</h2><p>Produces a <a href="https://github.com/aappleby/smhasher">MurmurHash3</a> hash value.</p>
+<p><strong>Syntax</strong></p>
+<pre><code class="sql">murmurHash3_64(par1, ...)
+</code></pre>
+<p><strong>Arguments</strong></p>
+<p>Both functions take a variable number of input parameters. Arguments can be any of the <a href="">supported data types</a> .</p>
+<p><strong>Returned Value</strong></p>
+<ul>
+<li>The <code>murmurHash3_64</code> function returns a <a href="">UInt64</a> data type hash value.</li>
+</ul>
+<p>Type：<code>Uint64</code></p>
+<p><strong>Example</strong></p>
+<pre><code class="sql">SELECT murmurHash3_64(array(&#39;e&#39;,&#39;x&#39;,&#39;a&#39;), &#39;mple&#39;, 10, toDateTime(&#39;2019-06-15 23:00:00&#39;)) AS MurmurHash3, toTypeName(MurmurHash3) AS type;
+</code></pre>
+<p>Result:</p>
+<pre><code class="plain%20text">┌─MurmurHash3──────────┬─type───┐
+│ 12839777463072566684 │ UInt64 │
+└──────────────────────┴────────┘
+</code></pre>
+<h2 id="sipHash128"><a href="#sipHash128" class="headerlink" title="sipHash128"></a>sipHash128</h2><p>Calculates SipHash from a string.</p>
+<p>Accepts a String-type argument. Returns FixedString(16).</p>
+<p>Differs from sipHash64 in that the final xor-folding state is only done up to 128 bits.</p>
+<p><strong>Syntax</strong></p>
+<pre><code class="sql">sipHash128(par1,...)
+</code></pre>
+<p><strong>Arguments</strong></p>
+<p>The function takes a variable number of input parameters. Arguments can be any of the <a href="">supported data types</a> .</p>
+<p><strong>Returned Value</strong></p>
+<p>A <a href="">UInt64</a> data type hash value.</p>
+<p>Type: <code>Uint64</code></p>
+<p><strong>Example</strong></p>
+<pre><code class="sql">select sipHash128(&#39;test sipHash128&#39;);
+</code></pre>
+<p>Result:</p>
+<pre><code class="plain%20text">┌─sipHash128(&#39;test sipHash128&#39;)─┐
+│ av&#39;??&quot;????bk??:              │
+└───────────────────────────────┘
+</code></pre>
+<h2 id="sipHash64"><a href="#sipHash64" class="headerlink" title="sipHash64"></a>sipHash64</h2><p>Produces a 64-bit <a href="https://github.com/veorq/SipHash/">SipHash</a> hash value.</p>
+<p>This is a cryptographic hash function. It works at least three times faster than the <a href="">MD5</a> function.</p>
+<p>Function <a href="">interprets</a> all the input parameters as strings and calculates the hash value for each of them. Then combines hashes by the following algorithm:</p>
+<ul>
+<li><p>After hashing all the input parameters, the function gets the array of hashes. </p>
+</li>
+<li><p>Function takes the first and the second elements and calculates a hash for the array of them. </p>
+</li>
+<li><p>Then the function takes the hash value, calculated at the previous step, and the third element of the initial hash array, and calculates a hash for the array of them. </p>
+</li>
+<li><p>The previous step is repeated for all the remaining elements of the initial hash array.</p>
+</li>
+</ul>
+<p><strong>Syntax</strong></p>
+<pre><code class="sql">sipHash64(par1,...)
+</code></pre>
+<p><strong>Arguments</strong></p>
+<p>The function takes a variable number of input parameters. Arguments can be any of the <a href="">supported data types</a> .</p>
+<p><strong>Returned Value</strong></p>
+<p>A <a href="">UInt64</a> data type hash value.</p>
+<p>Type: <code>Uint64</code></p>
+<p><strong>Example</strong></p>
+<pre><code class="sql">SELECT sipHash64(array(&#39;e&#39;,&#39;x&#39;,&#39;a&#39;), &#39;mple&#39;, 10, toDateTime(&#39;2019-06-15 23:00:00&#39;)) AS SipHash, toTypeName(SipHash) AS type;
+</code></pre>
+<p>Result:</p>
+<pre><code class="plain%20text">┌─SipHash─────────────┬─type───┐
+│ 7934052906670448870 │ UInt64 │
+└─────────────────────┴────────┘
+</code></pre>
+<h2 id="xxHash32"><a href="#xxHash32" class="headerlink" title="xxHash32"></a>xxHash32</h2><p>Calculates <code>xxHash</code> from a string.</p>
+<p><code>xxHash</code> is an extremely fast non-cryptographic hash algorithm, working at RAM speed limit.</p>
+<p><strong>Syntax</strong></p>
+<pre><code class="sql">SELECT xxHash32(s)
+</code></pre>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><code>s</code> – The string.</li>
+</ul>
+<p><strong>Returned value</strong></p>
+<p>A <code>Uint32</code> data type hash value.</p>
+<p>Type: <code>UInt32</code></p>
+<p><strong>Example</strong></p>
+<pre><code class="sql">SELECT xxHash32(&#39;Hello, world!&#39;)
+</code></pre>
+<p>Result:</p>
+<pre><code class="plain%20text">┌─xxHash32(&#39;Hello, world!&#39;)─┐
+│ 834093149                 │
+└───────────────────────────┘
+</code></pre>
+<p><strong>See Also</strong></p>
+<ul>
+<li><a href="http://cyan4973.github.io/xxHash/">xxHash</a> .</li>
+</ul>
+<h2 id="xxHash64"><a href="#xxHash64" class="headerlink" title="xxHash64"></a>xxHash64</h2><p>Calculates <code>xxHash</code> from a string.</p>
+<p><code>xxHash</code> is an extremely fast non-cryptographic hash algorithm, working at RAM speed limit.</p>
+<p><strong>Syntax</strong></p>
+<pre><code class="sql">SELECT xxHash64(s)
+</code></pre>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><code>s</code> – The string.</li>
+</ul>
+<p><strong>Returned value</strong></p>
+<p>A <code>Uint64</code> data type hash value.</p>
+<p>Type: <code>UInt64</code></p>
+<p><strong>Example</strong></p>
+<pre><code class="sql">SELECT xxHash64(&#39;Hello, world!&#39;)
+</code></pre>
+<p>Result:</p>
+<pre><code class="plain%20text">┌─xxHash64(&#39;Hello, world!&#39;)─┐
+│ 17691043854468224118      │
+└───────────────────────────┘
+</code></pre>
+<p><strong>See Also</strong></p>
+<ul>
+<li><a href="http://cyan4973.github.io/xxHash/">xxHash</a> .</li>
+</ul>

@@ -1,0 +1,1107 @@
+<hr>
+<h2 id="title-“Array”slug-“array”hidden-falsecreatedAt-“2021-07-29T02-30-43-353Z”updatedAt-“2021-09-23T08-08-05-696Z”categories-Docs-SQL-Syntax"><a href="#title-“Array”slug-“array”hidden-falsecreatedAt-“2021-07-29T02-30-43-353Z”updatedAt-“2021-09-23T08-08-05-696Z”categories-Docs-SQL-Syntax" class="headerlink" title="title: “Array”slug: “array”hidden: falsecreatedAt: “2021-07-29T02:30:43.353Z”updatedAt: “2021-09-23T08:08:05.696Z”categories:- Docs- SQL_Syntax"></a>title: “Array”<br>slug: “array”<br>hidden: false<br>createdAt: “2021-07-29T02:30:43.353Z”<br>updatedAt: “2021-09-23T08:08:05.696Z”<br>categories:<br>- Docs<br>- SQL_Syntax</h2><blockquote>
+<p>Notice:<br>Some of the examples below are referenced from <a href="https://clickhouse.com/docs/en/sql-reference/functions/">ClickHouse Documentation</a> but have been adapted and modified to work in ByteHouse.</p>
+</blockquote>
+<h2 id="array"><a href="#array" class="headerlink" title="array"></a>array</h2><p>Creates an array from the function arguments.</p>
+<p>The arguments must be constants and have types that have the smallest common type. At least one argument must be passed, because otherwise it isn’t clear which type of array to create. That is, you can’t use this function to create an empty array (to do that, use the ‘emptyArray*’ function described above).</p>
+<p><strong>Syntax</strong></p>
+<pre><code class="sql">array(x1, …)
+</code></pre>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><code>x1,...</code> – must be constants and have types that have the smallest common type</li>
+</ul>
+<p><strong>Returned value</strong></p>
+<ul>
+<li>Returns an ‘Array(T)’ type result, where ‘T’ is the smallest common type out of the passed arguments.</li>
+</ul>
+<p><strong>Example</strong></p>
+<pre><code class="sql">SELECT array(1,2,3);
+</code></pre>
+<pre><code class="plain%20text">┌─array(1, 2, 3)─┐
+│ [1, 2, 3]      │
+└────────────────┘
+</code></pre>
+<h2 id="arrayAll"><a href="#arrayAll" class="headerlink" title="arrayAll"></a>arrayAll</h2><p>Returns 1 if <code>func</code> returns something other than 0 for all the elements in <code>arr</code> . Otherwise, it returns 0.<br>Note that the <code>arrayAll</code> is a higher-order function. You can pass a lambda function to it as the first argument.</p>
+<p><strong>Syntax</strong></p>
+<pre><code class="sql">arrayAll([func,] arr1, …)
+</code></pre>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><code>func</code> – higher-order function which must return UInt8</li>
+<li><code>arr1,..</code> - arrays as input for func</li>
+</ul>
+<p><strong>Returned value</strong></p>
+<ul>
+<li>Returns 1 if <code>func</code> returns something other than 0 for all the elements in <code>arr</code></li>
+</ul>
+<p><strong>Example</strong></p>
+<pre><code class="sql">SELECT arrayAll((x,y)-&gt;x==y,[1,2,3],[4,5,6]);
+</code></pre>
+<pre><code class="plain%20text">┌─arrayAll(lambda(tuple(x, y), equals(x, y)), [1, 2, 3], [4, 5, 6])─┐
+│ 0                                                                 │
+└───────────────────────────────────────────────────────────────────┘
+</code></pre>
+<pre><code class="sql">SELECT arrayAll((x,y)-&gt;x==y,[1,2,3],[1,2,3]);
+</code></pre>
+<pre><code class="plain%20text">┌─arrayAll(lambda(tuple(x, y), equals(x, y)), [1, 2, 3], [1, 2, 3])─┐
+│ 1                                                                 │
+└───────────────────────────────────────────────────────────────────┘
+</code></pre>
+<h2 id="arrayConcat"><a href="#arrayConcat" class="headerlink" title="arrayConcat"></a>arrayConcat</h2><p>Combines arrays passed as arguments.</p>
+<p><strong>Syntax</strong></p>
+<pre><code class="sql">arrayConcat(arrays)
+</code></pre>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><code>arrays</code> – Arbitrary number of arguments of Array type.</li>
+</ul>
+<p><strong>Returned value</strong></p>
+<ul>
+<li>A combined array.</li>
+</ul>
+<p><strong>Example</strong></p>
+<pre><code class="sql">SELECT arrayConcat([1, 2], [3, 4], [5, 6]) AS res
+</code></pre>
+<pre><code class="plain%20text">┌─res───────────┐
+│ [1,2,3,4,5,6] │
+└───────────────┘
+</code></pre>
+<h2 id="arrayCount"><a href="#arrayCount" class="headerlink" title="arrayCount"></a>arrayCount</h2><p>Returns the number of elements in the arr array for which func returns something other than 0. If ‘func’ is not specified, it returns the number of non-zero elements in the array.</p>
+<p>Note that the <code>arrayCount</code> is a higher-order function. You can pass a lambda function to it as the first argument.</p>
+<p><strong>Syntax</strong></p>
+<pre><code class="sql">arrayCount([func,] arr1, …)
+</code></pre>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><code>func</code> – higher-order function which must return UInt8</li>
+<li><code>arr1,..</code> - arrays as input for func</li>
+</ul>
+<p><strong>Returned value</strong></p>
+<ul>
+<li>number of elements in the arr array for which func returns something other than 0</li>
+</ul>
+<p><strong>Example</strong></p>
+<pre><code class="sql">SELECT arrayCount((x,y)-&gt;x==y,[1,2,3],[1,5,3]);
+</code></pre>
+<pre><code class="plain%20text">┌─arrayCount(lambda(tuple(x, y), equals(x, y)), [1, 2, 3], [1, 5, 3])─┐
+│ 2                                                                   │
+└─────────────────────────────────────────────────────────────────────┘
+</code></pre>
+<h2 id="arrayCumSum"><a href="#arrayCumSum" class="headerlink" title="arrayCumSum"></a>arrayCumSum</h2><p>Returns an array of partial sums of elements in the source array (a running sum). If the <code>func</code> function is specified, then the values of the array elements are converted by this function before summing.</p>
+<p>Note that the <code>arrayCumSum</code> is a higher-order function. You can pass a lambda function to it as the first argument.</p>
+<p><strong>Syntax</strong></p>
+<pre><code class="sql">arrayCumSum([func,] arr1, …)
+</code></pre>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><code>func</code> – higher-order function</li>
+<li><code>arr1,..</code> - arrays as input for func</li>
+</ul>
+<p><strong>Returned value</strong></p>
+<ul>
+<li>An array of partial sums of elements in the source array</li>
+</ul>
+<p><strong>Example</strong></p>
+<pre><code class="sql">SELECT arrayCumSum([1, 1, 1, 1]) AS res
+</code></pre>
+<pre><code class="plain%20text">┌─res──────────┐
+│ [1, 2, 3, 4] │
+└──────────────┘
+</code></pre>
+<pre><code class="sql">SELECT arrayCumSum(x-&gt;x+1,[1, 1, 1, 1]) AS res
+</code></pre>
+<pre><code class="plain%20text">┌─res──────────┐
+│ [2, 4, 6, 8] │
+└──────────────┘
+</code></pre>
+<h2 id="arrayCumSumNonNegative"><a href="#arrayCumSumNonNegative" class="headerlink" title="arrayCumSumNonNegative"></a>arrayCumSumNonNegative</h2><p>Same as <code>arrayCumSum</code> , returns an array of partial sums of elements in the source array (a running sum). Different <code>arrayCumSum</code> , when returned value contains a value less than zero, the value is replace with zero and the subsequent calculation is performed with zero parameters. For example:</p>
+<p>Note that the <code>arraySumNonNegative</code> is a higher-order function. You can pass a lambda function to it as the first argument.</p>
+<p><strong>Syntax</strong></p>
+<pre><code class="sql">arrayCumSumNonNegative([func,] arr1, …)
+</code></pre>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><code>func</code> – higher-order function</li>
+<li><code>arr1,..</code> - arrays as input for func</li>
+</ul>
+<p><strong>Returned value</strong></p>
+<ul>
+<li>An array of partial sums of elements in the source array</li>
+</ul>
+<p><strong>Example</strong></p>
+<pre><code class="sql">SELECT arrayCumSumNonNegative([1, 1, -4, 1]) AS res
+</code></pre>
+<pre><code class="plain%20text">┌─res──────────┐
+│ [1, 2, 0, 1] │
+└──────────────┘
+</code></pre>
+<pre><code class="sql">SELECT arrayCumSumNonNegative(x-&gt;x-2,[1, 1, -4, 3]) AS res
+</code></pre>
+<pre><code class="plain%20text">┌─res──────────┐
+│ [0, 0, 0, 1] │
+└──────────────┘
+</code></pre>
+<h2 id="arrayDifference"><a href="#arrayDifference" class="headerlink" title="arrayDifference"></a>arrayDifference</h2><p>Calculates the difference between adjacent array elements. Returns an array where the first element will be 0, the second is the difference between <code>a[1] - a[0]</code> , etc. The type of elements in the resulting array is determined by the type inference rules for subtraction (e.g. <code>UInt8</code> - <code>UInt8</code> &#x3D; <code>Int16</code> ).</p>
+<p><strong>Syntax</strong></p>
+<pre><code class="sql">arrayDifference(array)
+</code></pre>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><code>array</code> – an Array.</li>
+</ul>
+<p><strong>Returned values</strong><br>Returns an array of differences between adjacent elements.<br>Type: UInt*, Int*, Float*.</p>
+<p><strong>Example</strong></p>
+<pre><code class="sql">SELECT arrayDifference([1, 2, 3, 4]);
+</code></pre>
+<pre><code class="plain%20text">┌─arrayDifference([1, 2, 3, 4])─┐
+│ [0, 1, 1, 1]                  │
+└───────────────────────────────┘
+</code></pre>
+<p>Example of the overflow due to result type Int64:</p>
+<pre><code class="sql">SELECT arrayDifference([0, 10000000000000000000]);
+</code></pre>
+<pre><code class="plain%20text">┌─arrayDifference([0, 10000000000000000000])─┐
+│ [0, -8446744073709551616]                  │
+└────────────────────────────────────────────┘
+</code></pre>
+<h2 id="arrayDistinct"><a href="#arrayDistinct" class="headerlink" title="arrayDistinct"></a>arrayDistinct</h2><p>Takes an array, returns an array containing the distinct elements only.</p>
+<p><strong>Syntax</strong></p>
+<pre><code class="sql">arrayDistinct(array)
+</code></pre>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><code>array</code> – an Array.</li>
+</ul>
+<p><strong>Returned values</strong></p>
+<ul>
+<li>Returns an array containing the distinct elements.</li>
+</ul>
+<p><strong>Example</strong></p>
+<pre><code class="sql">SELECT arrayDistinct([1, 2, 2, 3, 1]);
+</code></pre>
+<pre><code class="plain%20text">┌─arrayDistinct([1, 2, 2, 3, 1])─┐
+│ [1, 2, 3]                      │
+└────────────────────────────────┘
+</code></pre>
+<h2 id="arrayElement"><a href="#arrayElement" class="headerlink" title="arrayElement"></a>arrayElement</h2><p>Get the element with the index <code>n</code> from the array <code>arr</code> . <code>n</code> must be any integer type.<br>Indexes in an array begin from one.</p>
+<p>Negative indexes are supported. In this case, it selects the corresponding element numbered from the end. For example, <code>arr[-1]</code> is the last item in the array.</p>
+<p>If the index falls outside of the bounds of an array, it returns some default value (0 for numbers, an empty string for strings, etc.), except for the case with a non-constant array and a constant index 0 (in this case there will be an error <code>Array indices are 1-based</code> ).</p>
+<p><strong>Syntax</strong></p>
+<pre><code class="sql">arrayElement(array, n)
+</code></pre>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><code>array</code> – an Array. </li>
+<li><code>n</code> - an Index in the array.</li>
+</ul>
+<p><strong>Returned values</strong></p>
+<ul>
+<li>Get the element with the index <code>n</code> from the array <code>arr</code></li>
+</ul>
+<p><strong>Example</strong></p>
+<pre><code class="sql">SELECT arrayElement([1, 2, 2, 3, 1],3);
+</code></pre>
+<pre><code class="plain%20text">┌─arrayElement([1, 2, 2, 3, 1], 3)─┐
+│ 2                                │
+└──────────────────────────────────┘
+</code></pre>
+<h2 id="arrayEnumerate"><a href="#arrayEnumerate" class="headerlink" title="arrayEnumerate"></a>arrayEnumerate</h2><p>Returns the array [1, 2, 3, … ]</p>
+<p>This function is normally used with ARRAY JOIN. It allows counting something just once for each array after applying ARRAY JOIN.</p>
+<p><strong>Syntax</strong></p>
+<pre><code class="sql">arrayEnumerate(arr)
+</code></pre>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><code>arr</code> – an Array.</li>
+</ul>
+<p><strong>Returned values</strong></p>
+<ul>
+<li>Returns the array [1, 2, 3, … ]</li>
+</ul>
+<p><strong>Example</strong></p>
+<pre><code class="sql">SELECT number, num FROM numbers(5) ARRAY JOIN arrayEnumerate([1,2,3]) as num
+</code></pre>
+<pre><code>┌─number─┬─num─┐
+│ 0      │ 1   │
+│ 0      │ 2   │
+│ 0      │ 3   │
+│ 1      │ 1   │
+│ 1      │ 2   │
+│ 1      │ 3   │
+│ 2      │ 1   │
+│ 2      │ 2   │
+│ 2      │ 3   │
+│ 3      │ 1   │
+│ 3      │ 2   │
+│ 3      │ 3   │
+│ 4      │ 1   │
+│ 4      │ 2   │
+│ 4      │ 3   │
+└────────┴─────┘
+</code></pre>
+<h2 id="arrayEnumerateDense"><a href="#arrayEnumerateDense" class="headerlink" title="arrayEnumerateDense"></a>arrayEnumerateDense</h2><p>Returns an array of the same size as the source array, indicating where each element first appears in the source array.</p>
+<p><strong>Syntax</strong></p>
+<pre><code class="sql">arrayEnumerateDense(arr)
+</code></pre>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><code>arr</code> – an Array.</li>
+</ul>
+<p><strong>Returned values</strong></p>
+<ul>
+<li>An array where each element first appears in the source array</li>
+</ul>
+<p><strong>Example</strong></p>
+<pre><code class="sql">SELECT arrayEnumerateDense([10, 20, 10, 30])
+</code></pre>
+<pre><code class="plain%20text">┌─arrayEnumerateDense([10, 20, 10, 30])─┐
+│ [1, 2, 1, 3]                          │
+└───────────────────────────────────────┘
+</code></pre>
+<h2 id="arrayEnumerateUniq"><a href="#arrayEnumerateUniq" class="headerlink" title="arrayEnumerateUniq"></a>arrayEnumerateUniq</h2><p>Returns an array the same size as the source array, indicating for each element what its position is among elements with the same value.</p>
+<p>For example: arrayEnumerateUniq([10, 20, 10, 30]) &#x3D; [1, 1, 2, 1].</p>
+<p>This function is useful when using ARRAY JOIN and aggregation of array elements.</p>
+<p><strong>Syntax</strong></p>
+<pre><code class="sql">arrayEnumerateUniq(arr, …)
+</code></pre>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><code>arr</code> – an Array.</li>
+</ul>
+<p><strong>Returned values</strong></p>
+<ul>
+<li>Returns an array the same size as the source array, indicating for each element what its position is among elements with the same value.</li>
+</ul>
+<p><strong>Example</strong></p>
+<pre><code class="sql">SELECT arrayEnumerateUniq([10, 20, 10, 30]) as res
+</code></pre>
+<pre><code class="plain%20text">┌─res──────────┐
+│ [1, 1, 2, 1] │
+└──────────────┘
+</code></pre>
+<p>The arrayEnumerateUniq function can take multiple arrays of the same size as arguments. In this case, uniqueness is considered for tuples of elements in the same positions in all the arrays.</p>
+<pre><code class="sql">SELECT arrayEnumerateUniq([1, 1, 1, 2, 2, 2], [1, 1, 2, 1, 1, 2]) AS res
+</code></pre>
+<pre><code class="plain%20text">┌─res────────────────┐
+│ [1, 2, 1, 1, 2, 1] │
+└────────────────────┘
+</code></pre>
+<p>This is necessary when using ARRAY JOIN with a nested data structure and further aggregation across multiple elements in this structure.</p>
+<h2 id="arrayExists"><a href="#arrayExists" class="headerlink" title="arrayExists"></a>arrayExists</h2><p>Returns 1 if there is at least one element in <code>arr</code> for which <code>func</code> returns something other than 0. Otherwise, it returns 0.</p>
+<p>Note that the <code>arrayExists</code> is a higher-order function.</p>
+<p><strong>Syntax</strong></p>
+<pre><code class="sql">arrayExists([func,] arr1, …)
+</code></pre>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><code>func</code> – higher-order function which must return UInt8</li>
+<li><code>arr1,..</code> - arrays as input for func</li>
+</ul>
+<p><strong>Returned values</strong></p>
+<ul>
+<li>Returns 1 if there is at least one element in <code>arr</code> for which <code>func</code> returns something other than 0. Otherwise, it returns 0.</li>
+</ul>
+<p><strong>Example</strong></p>
+<pre><code class="sql">SELECT arrayExists((x,y)-&gt;x==y,[1, 2, 2, 3, 1],[4, 5, 6, 7, 8]);
+</code></pre>
+<pre><code class="plain%20text">┌─arrayExists(lambda(tuple(x, y), equals(x, y)), [1, 2, 2, 3, 1], [4, 5, 6, 7, 8])─┐
+│ 0                                                                                │
+└──────────────────────────────────────────────────────────────────────────────────┘
+</code></pre>
+<pre><code class="sql">SELECT arrayExists((x,y)-&gt;x==y,[1, 2, 2, 3, 1],[1, 5, 6, 7, 8]);
+</code></pre>
+<pre><code class="plain%20text">┌─arrayExists(lambda(tuple(x, y), equals(x, y)), [1, 2, 2, 3, 1], [1, 5, 6, 7, 8])─┐
+│ 1                                                                                │
+└──────────────────────────────────────────────────────────────────────────────────┘
+</code></pre>
+<h2 id="arrayFilter"><a href="#arrayFilter" class="headerlink" title="arrayFilter"></a>arrayFilter</h2><p>Note that the <code>arrayFilter</code> is a higher-order function. You must pass a lambda function to it as the first argument, and it can’t be omitted.<br>Returns an array containing only the elements in <code>arr1</code> for which <code>func</code> returns something other than 0.</p>
+<p><strong>Syntax</strong></p>
+<pre><code class="sql">arrayFilter(func, arr1, …)
+</code></pre>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><code>func</code> – higher-order function which must return UInt8</li>
+<li><code>arr1,..</code> - arrays as input for func</li>
+</ul>
+<p><strong>Returned values</strong></p>
+<ul>
+<li>Returns an array containing only the elements in <code>arr1</code> for which <code>func</code> returns something other than 0.</li>
+</ul>
+<p><strong>Example</strong></p>
+<pre><code class="sql">SELECT arrayFilter(x -&gt; x LIKE &#39;%World%&#39;, [&#39;Hello&#39;, &#39;abc World&#39;]) AS res
+</code></pre>
+<pre><code class="plain%20text">┌─res───────────┐
+│ [&#39;abc World&#39;] │
+└───────────────┘
+</code></pre>
+<pre><code class="sql">SELECT arrayFilter((i, x) -&gt; x LIKE &#39;%World%&#39;, arrayEnumerate(arr), [&#39;Hello&#39;, &#39;abc World&#39;] AS arr) AS res
+</code></pre>
+<pre><code class="plain%20text">┌─res─┐
+│ [2] │
+└─────┘
+</code></pre>
+<p>[block:api-header]<br>{<br>  “title”: “arrayFirst”<br>}<br>[&#x2F;block]<br>Returns the first element in the <code>arr1</code> array for which <code>func</code> returns something other than 0.<br>Note that the <code>arrayFirst</code> is a higher-order function. You must pass a lambda function to it as the first argument, and it can’t be omitted.</p>
+<p><strong>Syntax</strong></p>
+<pre><code class="sql">arrayFirst(func, arr1, …)
+</code></pre>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><code>func</code> – higher-order function which must return UInt8</li>
+<li><code>arr1,..</code> - arrays as input for func</li>
+</ul>
+<p><strong>Returned values</strong></p>
+<ul>
+<li>Returns the first element in the <code>arr1</code> array for which <code>func</code> returns something other than 0.</li>
+</ul>
+<p><strong>Example</strong></p>
+<pre><code class="sql">SELECT arrayFirst(x -&gt; x LIKE &#39;%World%&#39;, [&#39;Hello World&#39;, &#39;abc World&#39;]) AS res
+</code></pre>
+<pre><code class="plain%20text">┌─res─────────┐
+│ Hello World │
+└─────────────┘
+</code></pre>
+<h2 id="arrayFirstIndex"><a href="#arrayFirstIndex" class="headerlink" title="arrayFirstIndex"></a>arrayFirstIndex</h2><p>Returns the index of the first element in the <code>arr1</code> array for which <code>func</code> returns something other than 0.</p>
+<p>Note that the <code>arrayFirstIndex</code> is a higher-order function. You must pass a lambda function to it as the first argument, and it can’t be omitted.</p>
+<p><strong>Syntax</strong></p>
+<pre><code class="sql">arrayFirstIndex(func, arr1, …) 
+</code></pre>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><code>func</code> – higher-order function which must return UInt8</li>
+<li><code>arr1,..</code> - arrays as input for func</li>
+</ul>
+<p><strong>Returned values</strong></p>
+<ul>
+<li>Returns the index of the first element in the <code>arr1</code> array for which <code>func</code> returns something other than 0.</li>
+</ul>
+<p><strong>Example</strong></p>
+<pre><code class="sql">SELECT arrayFirstIndex(x -&gt; x LIKE &#39;%World%&#39;, [&#39;Hello World&#39;, &#39;abc World&#39;]) AS res
+</code></pre>
+<pre><code class="plain%20text">┌─res─┐
+│ 1   │
+└─────┘
+</code></pre>
+<h2 id="arrayIntersect"><a href="#arrayIntersect" class="headerlink" title="arrayIntersect"></a>arrayIntersect</h2><p>Takes multiple arrays, returns an array with elements that are present in all source arrays. Elements order in the resulting array is the same as in the first array.</p>
+<p><strong>Syntax</strong></p>
+<pre><code class="sql">arrayIntersect(arr)
+</code></pre>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><code>arr1,..</code> - multiple arrays</li>
+</ul>
+<p><strong>Returned values</strong></p>
+<ul>
+<li>Returns an array with elements that are present in all source arrays</li>
+</ul>
+<p><strong>Example</strong></p>
+<pre><code class="sql">SELECT
+    arrayIntersect([1, 2], [1, 3], [2, 3]) AS no_intersect,
+    arrayIntersect([1, 2], [1, 3], [1, 4]) AS intersect
+</code></pre>
+<pre><code class="plain%20text">┌─no_intersect─┬─intersect─┐
+│ []           │ [1]       │
+└──────────────┴───────────┘
+</code></pre>
+<h2 id="arrayJoin"><a href="#arrayJoin" class="headerlink" title="arrayJoin"></a>arrayJoin</h2><p>This is a very unusual function.<br>Normal functions do not change a set of rows, but just change the values in each row (map).<br>Aggregate functions compress a set of rows (fold or reduce).<br>The ‘arrayJoin’ function takes each row and generates a set of rows (unfold).</p>
+<p>This function takes an array as an argument, and propagates the source row to multiple rows for the number of elements in the array.</p>
+<p>All the values in columns are simply copied, except the values in the column where this function is applied; it is replaced with the corresponding array value.</p>
+<p>A query can use multiple <code>arrayJoin</code> functions. In this case, the transformation is performed multiple times.</p>
+<p>Note the ARRAY JOIN syntax in the SELECT query, which provides broader possibilities.</p>
+<p><strong>Syntax</strong></p>
+<pre><code class="sql">arrayJoin(arr)
+</code></pre>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><code>arr</code> - an Array</li>
+</ul>
+<p><strong>Returned values</strong></p>
+<ul>
+<li>Propagates the source row to multiple rows for the number of elements in the array.</li>
+</ul>
+<p><strong>Example</strong></p>
+<pre><code class="sql">SELECT arrayJoin([1, 2, 3] AS src) AS dst, &#39;Hello&#39;, src
+</code></pre>
+<pre><code class="plain%20text">┌─dst─┬─&#39;Hello&#39;─┬─src───────┐
+│ 1   │ Hello   │ [1, 2, 3] │
+│ 2   │ Hello   │ [1, 2, 3] │
+│ 3   │ Hello   │ [1, 2, 3] │
+└─────┴─────────┴───────────┘
+</code></pre>
+<h2 id="arrayMap"><a href="#arrayMap" class="headerlink" title="arrayMap"></a>arrayMap</h2><p>Returns an array obtained from the original application of the <code>func</code> function to each element in the <code>arr</code> array.</p>
+<p>Note that the <code>arrayMap</code> is a higher-order function. You must pass a lambda function to it as the first argument, and it can’t be omitted.</p>
+<p><strong>Syntax</strong></p>
+<pre><code class="sql">arrayMap(func, arr1, …)
+</code></pre>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><code>func</code>- higher-order function</li>
+<li><code>arr1,..</code> - multiple arrays</li>
+</ul>
+<p><strong>Returned values</strong></p>
+<ul>
+<li>Returns an array obtained from the original application of the <code>func</code> function to each element in the <code>arr</code> array.</li>
+</ul>
+<p><strong>Example</strong></p>
+<pre><code class="sql">SELECT arrayMap(x -&gt; (x + 2), [1, 2, 3]) as res;
+</code></pre>
+<pre><code class="plain%20text">┌─res───────┐
+│ [3, 4, 5] │
+└───────────┘
+</code></pre>
+<p>The following example shows how to create a tuple of elements from different arrays:</p>
+<pre><code class="sql">SELECT arrayMap((x, y) -&gt; (x, y), [1, 2, 3], [4, 5, 6]) AS res
+</code></pre>
+<pre><code class="plain%20text">┌─res──────────────────────┐
+│ [(1, 4), (2, 5), (3, 6)] │
+└──────────────────────────┘
+</code></pre>
+<h2 id="arrayPopBack"><a href="#arrayPopBack" class="headerlink" title="arrayPopBack"></a>arrayPopBack</h2><p>Removes the last item from the array.</p>
+<p><strong>Syntax</strong></p>
+<pre><code class="sql">arrayPopBack(array)
+</code></pre>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><code>array</code> – Array.</li>
+</ul>
+<p><strong>Returned values</strong></p>
+<ul>
+<li><code>array</code> – An Array removes the last item from the original array.</li>
+</ul>
+<p><strong>Example</strong></p>
+<pre><code class="sql">SELECT arrayPopBack([1, 2, 3]) AS res;
+</code></pre>
+<pre><code class="plain%20text">┌─res────┐
+│ [1, 2] │
+└────────┘
+</code></pre>
+<h2 id="arrayPopFront"><a href="#arrayPopFront" class="headerlink" title="arrayPopFront"></a>arrayPopFront</h2><p>Removes the first item from the array.</p>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><code>array</code> – Array.</li>
+</ul>
+<p><strong>Returned values</strong></p>
+<ul>
+<li><code>array</code> – An Array removes the first item from the original array.</li>
+</ul>
+<p><strong>Example</strong></p>
+<pre><code class="sql">SELECT arrayPopFront([1, 2, 3]) AS res;
+</code></pre>
+<pre><code class="plain%20text">┌─res────┐
+│ [2, 3] │
+└────────┘
+</code></pre>
+<h2 id="arrayPushBack"><a href="#arrayPushBack" class="headerlink" title="arrayPushBack"></a>arrayPushBack</h2><p>Adds one item to the end of the array.</p>
+<p><strong>Syntax</strong></p>
+<pre><code class="sql">arrayPushBack(array, single_value)
+</code></pre>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><code>array</code> – Array. </li>
+<li><code>single_value</code> – A single value. Only numbers can be added to an array with numbers, and only strings can be added to an array of strings. When adding numbers, ByteHouse automatically sets the <code>single_value</code> type for the data type of the array. Can be <code>NULL</code> . The function adds a <code>NULL</code> element to an array, and the type of array elements converts to <code>Nullable</code> .</li>
+</ul>
+<p><strong>Returned values</strong></p>
+<ul>
+<li><code>array</code> – An Array with the new item adds to the end of original array.</li>
+</ul>
+<p><strong>Example</strong></p>
+<pre><code class="sql">SELECT arrayPushBack([&#39;a&#39;], &#39;b&#39;) AS res, toTypeName(arrayPushBack([&#39;a&#39;], &#39;b&#39;)) as type;
+</code></pre>
+<pre><code class="plain%20text">┌─res────┬─type──────────┐│ [a, b] │ Array(String) │└────────┴───────────────┘
+</code></pre>
+<pre><code class="sql">SELECT arrayPushBack([&#39;a&#39;], NULL) AS res, toTypeName(arrayPushBack([&#39;a&#39;], NULL)) as type
+</code></pre>
+<pre><code class="plain%20text">┌─res───────┬─type────────────────────┐
+│ [a, ᴺᵁᴸᴸ] │ Array(Nullable(String)) │
+└───────────┴─────────────────────────┘
+</code></pre>
+<h2 id="arrayPushFront"><a href="#arrayPushFront" class="headerlink" title="arrayPushFront"></a>arrayPushFront</h2><p>Adds one element to the beginning of the array.</p>
+<p><strong>Syntax</strong></p>
+<pre><code class="sql">arrayPushFront(array, single_value)
+</code></pre>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><code>array</code> – Array. </li>
+<li><code>single_value</code> – A single value. Only numbers can be added to an array with numbers, and only strings can be added to an array of strings. When adding numbers, ByteHouse automatically sets the <code>single_value</code> type for the data type of the array. Can be <code>NULL</code> . The function adds a <code>NULL</code> element to an array, and the type of array elements converts to <code>Nullable</code> .</li>
+</ul>
+<p><strong>Returned values</strong></p>
+<ul>
+<li><code>array</code> – An Array with the new item adds to the beginning of original array.</li>
+</ul>
+<p><strong>Example</strong></p>
+<pre><code class="sql">SELECT arrayPushFront([&#39;b&#39;], &#39;a&#39;) AS res, toTypeName(arrayPushFront([&#39;b&#39;], &#39;a&#39;)) as type;
+</code></pre>
+<pre><code class="plain%20text">┌─res────┬─type──────────┐
+│ [a, b] │ Array(String) │
+└────────┴───────────────┘
+</code></pre>
+<pre><code class="sql">SELECT arrayPushFront([&#39;b&#39;], NULL) AS res, toTypeName(arrayPushFront([&#39;b&#39;], NULL)) as type;
+</code></pre>
+<pre><code class="plain%20text">┌─res───────┬─type────────────────────┐
+│ [ᴺᵁᴸᴸ, b] │ Array(Nullable(String)) │
+└───────────┴─────────────────────────┘
+</code></pre>
+<h2 id="arrayReduce"><a href="#arrayReduce" class="headerlink" title="arrayReduce"></a>arrayReduce</h2><p>Applies an aggregate function to array elements and returns its result. The name of the aggregation function is passed as a string in single quotes <code>&#39;max&#39;</code> , <code>&#39;sum&#39;</code> . When using parametric aggregate functions, the parameter is indicated after the function name in parentheses <code>&#39;uniqUpTo(6)&#39;</code> .</p>
+<p><strong>Syntax</strong></p>
+<pre><code class="sql">arrayReduce(agg_func, arr1, arr2, ..., arrN)
+</code></pre>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><code>agg_func</code> — The name of an aggregate function which should be a constant string. </li>
+<li><code>arr</code> — Any number of array type columns as the parameters of the aggregation function.</li>
+</ul>
+<p><strong>Returned value</strong></p>
+<ul>
+<li>Result of aggregate function to array elements.</li>
+</ul>
+<p><strong>Example</strong></p>
+<pre><code class="sql">SELECT arrayReduce(&#39;max&#39;, [1, 2, 3]);
+</code></pre>
+<pre><code class="plain%20text">┌─arrayReduce(&#39;max&#39;, [1, 2, 3])─┐│                             3 │└───────────────────────────────┘
+</code></pre>
+<p>If an aggregate function takes multiple arguments, then this function must be applied to multiple arrays of the same size.</p>
+<pre><code class="sql">SELECT arrayReduce(&#39;maxIf&#39;, [3, 5], [1, 0]);
+</code></pre>
+<pre><code class="plain%20text">┌─arrayReduce(&#39;maxIf&#39;, [3, 5], [1, 0])─┐│                                    3 │└──────────────────────────────────────┘
+</code></pre>
+<p>Example with a parametric aggregate function.</p>
+<pre><code class="sql">SELECT arrayReduce(&#39;uniqUpTo(3)&#39;, [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]);
+</code></pre>
+<pre><code class="plain%20text">┌─arrayReduce(&#39;uniqUpTo(3)&#39;, [1, 2, 3, 4, 5, 6, 7, 8, 9, 10])─┐│                                                           4 │└─────────────────────────────────────────────────────────────┘
+</code></pre>
+<h2 id="arrayResize"><a href="#arrayResize" class="headerlink" title="arrayResize"></a>arrayResize</h2><p>Changes the length of the array.</p>
+<p><strong>Syntax</strong></p>
+<pre><code class="sql">arrayResize(array, size[, extender])
+</code></pre>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><code>array</code> — Array. </li>
+<li><code>size</code> — Required length of the array. <ul>
+<li>If <code>size</code> is less than the original size of the array, the array is truncated from the right. </li>
+<li>If <code>size</code> is larger than the initial size of the array, the array is extended to the right with <code>extender</code> values or default values for the data type of the array items.</li>
+</ul>
+</li>
+<li><code>extender</code> — Value for extending an array. Can be <code>NULL</code> .</li>
+</ul>
+<p><strong>Returned value</strong></p>
+<ul>
+<li>An array of length <code>size</code> .</li>
+</ul>
+<p><strong>Examples of calls</strong></p>
+<pre><code class="sql">SELECT arrayResize([1], 3);
+</code></pre>
+<pre><code class="plain%20text">┌─arrayResize([1], 3)─┐
+│ [1, 0, 0]           │
+└─────────────────────┘
+</code></pre>
+<pre><code class="sql">SELECT arrayResize([1], 3, NULL);
+</code></pre>
+<pre><code class="plain%20text">┌─arrayResize([1], 3, NULL)─┐
+│ [1, ᴺᵁᴸᴸ, ᴺᵁᴸᴸ]           │
+└───────────────────────────┘
+</code></pre>
+<h2 id="arrayReverse"><a href="#arrayReverse" class="headerlink" title="arrayReverse"></a>arrayReverse</h2><p>Returns an array of the same size as the original array containing the elements in reverse order.</p>
+<p><strong>Syntax</strong></p>
+<pre><code class="sql">arrayReverse(array)
+</code></pre>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><code>array</code> — Array.</li>
+</ul>
+<p><strong>Returned value</strong></p>
+<ul>
+<li>Reversed orginal array.</li>
+</ul>
+<p><strong>Examples</strong></p>
+<pre><code class="sql">SELECT arrayReverse([1, 2, 3])
+</code></pre>
+<pre><code class="plain%20text">┌─arrayReverse([1, 2, 3])─┐
+│ [3, 2, 1]               │
+└─────────────────────────┘
+</code></pre>
+<h2 id="arrayReverseSort"><a href="#arrayReverseSort" class="headerlink" title="arrayReverseSort"></a>arrayReverseSort</h2><p>Sorts the elements of the <code>arr</code> array in descending order. If the <code>func</code> function is specified, <code>arr</code> is sorted according to the result of the <code>func</code> function applied to the elements of the array, and then the sorted array is reversed. If <code>func</code> accepts multiple arguments, the <code>arrayReverseSort</code> function is passed several arrays that the arguments of <code>func</code> will correspond to. Detailed examples are shown at the end of <code>arrayReverseSort</code> description.</p>
+<p>Note that the <code>arrayReverseSort</code> is a higher-order function. You can pass a lambda function to it as the first argument. Example is shown below.</p>
+<p><strong>Syntax</strong></p>
+<pre><code class="sql">arrayReverseSort([func,] arr, …)
+</code></pre>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><code>func</code> - sort function.</li>
+<li><code>array</code> — Array.</li>
+</ul>
+<p><strong>Returned value</strong></p>
+<ul>
+<li>Reversed sorted array.</li>
+</ul>
+<p><strong>Examples</strong><br>Example of integer values sorting:</p>
+<pre><code class="sql">SELECT arrayReverseSort([1, 3, 3, 0]);
+</code></pre>
+<pre><code class="plain%20text">┌─arrayReverseSort([1, 3, 3, 0])─┐
+│ [3, 3, 1, 0]                   │
+└────────────────────────────────┘
+</code></pre>
+<p>Example of string values sorting:</p>
+<pre><code class="sql">SELECT arrayReverseSort([&#39;hello&#39;, &#39;world&#39;, &#39;!&#39;]);
+</code></pre>
+<pre><code class="plain%20text">┌─arrayReverseSort([&#39;hello&#39;, &#39;world&#39;, &#39;!&#39;])─┐
+│ [world, hello, !]                         │
+└───────────────────────────────────────────┘
+</code></pre>
+<p>Consider the following sorting order for the <code>NULL</code> , <code>NaN</code> and <code>Inf</code> values:</p>
+<pre><code class="sql">SELECT arrayReverseSort([1, nan, 2, NULL, 3, nan, -4, NULL, inf, -inf]) as res;
+</code></pre>
+<pre><code class="plain%20text">┌─res─────────────────────────────────────────────────────────────┐
+│ [+Inf, 3e+00, 2e+00, 1e+00, -4e+00, -Inf, NaN, NaN, ᴺᵁᴸᴸ, ᴺᵁᴸᴸ] │
+└─────────────────────────────────────────────────────────────────┘
+</code></pre>
+<ul>
+<li><code>Inf</code> values are first in the array. </li>
+<li><code>NULL</code> values are last in the array. </li>
+<li><code>NaN</code> values are right before <code>NULL</code> . </li>
+<li><code>-Inf</code> values are right before <code>NaN</code> .</li>
+</ul>
+<pre><code class="sql">SELECT arrayReverseSort((x) -&gt; -x, [1, 2, 3]) as res;
+</code></pre>
+<pre><code class="plain%20text">┌─res───────┐
+│ [1, 2, 3] │
+└───────────┘
+</code></pre>
+<p>The array is sorted in the following way:</p>
+<ol>
+<li>At first, the source array ([1, 2, 3]) is sorted according to the result of the lambda function applied to the elements of the array. The result is an array [3, 2, 1]. </li>
+<li>Array that is obtained on the previous step, is reversed. So, the final result is [1, 2, 3].</li>
+</ol>
+<p>The lambda function can accept multiple arguments. In this case, you need to pass the <code>arrayReverseSort</code> function several arrays of identical length that the arguments of lambda function will correspond to. The resulting array will consist of elements from the first input array; elements from the next input array(s) specify the sorting keys. For example:</p>
+<pre><code class="sql">SELECT arrayReverseSort((x, y) -&gt; y, [&#39;hello&#39;, &#39;world&#39;], [2, 1]) as res;
+</code></pre>
+<pre><code class="plain%20text">┌─res────────────┐
+│ [hello, world] │
+└────────────────┘
+</code></pre>
+<p>In this example, the array is sorted in the following way:</p>
+<ol>
+<li>At first, the source array ([‘hello’, ‘world’]) is sorted according to the result of the lambda function applied to the elements of the arrays. The elements that are passed in the second array ([2, 1]), define the sorting keys for corresponding elements from the source array. The result is an array [‘world’, ‘hello’]. </li>
+<li>Array that was sorted on the previous step, is reversed. So, the final result is [‘hello’, ‘world’].</li>
+</ol>
+<p>Other examples are shown below.</p>
+<pre><code class="sql">SELECT arrayReverseSort((x, y) -&gt; y, [4, 3, 5], [&#39;a&#39;, &#39;b&#39;, &#39;c&#39;]) AS res;
+</code></pre>
+<pre><code class="plain%20text">┌─res───────┐
+│ [5, 3, 4] │
+└───────────┘
+</code></pre>
+<pre><code class="sql">SELECT arrayReverseSort((x, y) -&gt; -y, [4, 3, 5], [1, 2, 3]) AS res;
+</code></pre>
+<pre><code class="plain%20text">┌─res───────┐
+│ [4, 3, 5] │
+└───────────┘
+</code></pre>
+<h2 id="arraySlice"><a href="#arraySlice" class="headerlink" title="arraySlice"></a>arraySlice</h2><p>Returns a slice of the array.</p>
+<p><strong>Syntax</strong></p>
+<pre><code class="sql">arraySlice(array, offset[, length])
+</code></pre>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><code>array</code> – Array of data. </li>
+<li><code>offset</code> – Indent from the edge of the array. A positive value indicates an offset on the left, and a negative value is an indent on the right. Numbering of the array items begins with 1. </li>
+<li><code>length</code> – The length of the required slice. If you specify a negative value, the function returns an open slice <code>[offset, array_length - length)</code> . If you omit the value, the function returns the slice <code>[offset, the_end_of_array]</code> .</li>
+</ul>
+<p><strong>Returned value</strong></p>
+<ul>
+<li>Slice of array.</li>
+</ul>
+<p><strong>Example</strong></p>
+<pre><code class="sql">SELECT arraySlice([1, 2, NULL, 4, 5], 2, 3) AS res;
+</code></pre>
+<pre><code class="plain%20text">┌─res──────────┐
+│ [2, ᴺᵁᴸᴸ, 4] │
+└──────────────┘
+</code></pre>
+<p>Array elements set to <code>NULL</code> are handled as normal values.</p>
+<h2 id="arraySort"><a href="#arraySort" class="headerlink" title="arraySort"></a>arraySort</h2><p>Sorts the elements of the <code>arr</code> array in ascending order. If the <code>func</code> function is specified, sorting order is determined by the result of the <code>func</code> function applied to the elements of the array. If <code>func</code> accepts multiple arguments, the <code>arraySort</code> function is passed several arrays that the arguments of <code>func</code> will correspond to. Detailed examples are shown at the end of <code>arraySort</code> description.</p>
+<p>Note that <code>arraySort</code> is a higher-order function. You can pass a lambda function to it as the first argument. In this case, sorting order is determined by the result of the lambda function applied to the elements of the array.</p>
+<p>To improve sorting efficiency, the <a href="https://en.wikipedia.org/wiki/Schwartzian_transform">Schwartzian transform</a> is used.<br><strong>Syntax</strong></p>
+<pre><code class="sql">arraySort([func,] arr, …)
+</code></pre>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><code>func</code> - sort function.</li>
+<li><code>array</code> — Array.</li>
+</ul>
+<p><strong>Returned value</strong></p>
+<ul>
+<li>Sorted array.</li>
+</ul>
+<p><strong>Example</strong></p>
+<pre><code class="sql">SELECT arraySort([1, 3, 3, 0]);
+</code></pre>
+<pre><code class="plain%20text">┌─arraySort([1, 3, 3, 0])─┐
+│ [0, 1, 3, 3]            │
+└─────────────────────────┘
+</code></pre>
+<p>Example of string values sorting:</p>
+<pre><code class="sql">SELECT arraySort([&#39;hello&#39;, &#39;world&#39;, &#39;!&#39;]);
+</code></pre>
+<pre><code class="plain%20text">┌─arraySort([&#39;hello&#39;, &#39;world&#39;, &#39;!&#39;])─┐
+│ [!, hello, world]                  │
+└────────────────────────────────────┘
+</code></pre>
+<p>Consider the following sorting order for the <code>NULL</code> , <code>NaN</code> and <code>Inf</code> values:</p>
+<pre><code class="sql">SELECT arraySort([1, nan, 2, NULL, 3, nan, -4, NULL, inf, -inf]);
+</code></pre>
+<pre><code class="plain%20text">┌─arraySort([1, nan, 2, NULL, 3, nan, -4, NULL, inf, -inf])───────┐│ [-Inf, -4e+00, 1e+00, 2e+00, 3e+00, +Inf, NaN, NaN, ᴺᵁᴸᴸ, ᴺᵁᴸᴸ] │└─────────────────────────────────────────────────────────────────┘
+</code></pre>
+<ul>
+<li><code>-Inf</code> values are first in the array. </li>
+<li><code>NULL</code> values are last in the array. </li>
+<li><code>NaN</code> values are right before <code>NULL</code> . </li>
+<li><code>Inf</code> values are right before <code>NaN</code> .</li>
+</ul>
+<pre><code class="sql">SELECT arraySort((x) -&gt; -x, [1, 2, 3]) as res;
+</code></pre>
+<pre><code class="plain%20text">┌─res───────┐
+│ [3, 2, 1] │
+└───────────┘
+</code></pre>
+<p>For each element of the source array, the lambda function returns the sorting key, that is, [1 –&gt; -1, 2 –&gt; -2, 3 –&gt; -3]. Since the <code>arraySort</code> function sorts the keys in ascending order, the result is [3, 2, 1]. Thus, the <code>(x) –&gt; -x</code> lambda function sets the descending order in a sorting.</p>
+<p>The lambda function can accept multiple arguments. In this case, you need to pass the <code>arraySort</code> function several arrays of identical length that the arguments of lambda function will correspond to. The resulting array will consist of elements from the first input array; elements from the next input array(s) specify the sorting keys. For example:</p>
+<pre><code class="sql">SELECT arraySort((x, y) -&gt; y, [&#39;hello&#39;, &#39;world&#39;], [2, 1]) as res;
+</code></pre>
+<pre><code class="plain%20text">┌─res────────────┐│ [world, hello] │└────────────────┘
+</code></pre>
+<p>Here, the elements that are passed in the second array ([2, 1]) define a sorting key for the corresponding element from the source array ([‘hello’, ‘world’]), that is, [‘hello’ –&gt; 2, ‘world’ –&gt; 1]. Since the lambda function does not use <code>x</code> , actual values of the source array do not affect the order in the result. So, ‘hello’ will be the second element in the result, and ‘world’ will be the first.</p>
+<p>Other examples are shown below.</p>
+<pre><code class="sql">SELECT arraySort((x, y) -&gt; y, [0, 1, 2], [&#39;c&#39;, &#39;b&#39;, &#39;a&#39;]) as res;
+</code></pre>
+<pre><code class="plain%20text">┌─res───────┐
+│ [2, 1, 0] │
+└───────────┘
+</code></pre>
+<pre><code class="sql">SELECT arraySort((x, y) -&gt; -y, [0, 1, 2], [1, 2, 3]) as res;
+</code></pre>
+<pre><code class="plain%20text">┌─res───────┐
+│ [2, 1, 0] │
+└───────────┘
+</code></pre>
+<h2 id="arraySum"><a href="#arraySum" class="headerlink" title="arraySum"></a>arraySum</h2><p>Returns the sum of elements in the source array.</p>
+<p>If the <code>func</code> function is specified, returns the sum of elements converted by this function.</p>
+<p>Note that the <code>arraySum</code> is a higher-order function. You can pass a lambda function to it as the first argument.</p>
+<p><strong>Syntax</strong></p>
+<pre><code class="sql">arraySum([func,] arr)
+</code></pre>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><code>func</code> — higher-order function. </li>
+<li><code>arr</code> — Array.</li>
+</ul>
+<p><strong>Returned value</strong></p>
+<ul>
+<li>The sum of the function values (or the array sum).<br>Type: <ul>
+<li>for decimal numbers in source array (or for converted values, if <code>func</code> is specified) Decimal128 Float64</li>
+<li>for numeric unsigned UInt64</li>
+<li>and for numeric signed Int64</li>
+</ul>
+</li>
+</ul>
+<p><strong>Examples</strong></p>
+<pre><code class="sql">SELECT arraySum([2, 3]) AS res;
+</code></pre>
+<pre><code class="plain%20text">┌─res─┐
+│ 5   │
+└─────┘
+</code></pre>
+<pre><code class="sql">SELECT arraySum(x -&gt; x*x, [2, 3]) AS res;
+</code></pre>
+<pre><code class="plain%20text">┌─res─┐
+│ 13  │
+└─────┘
+</code></pre>
+<h2 id="arrayUniq"><a href="#arrayUniq" class="headerlink" title="arrayUniq"></a>arrayUniq</h2><p>If one argument is passed, it counts the number of different elements in the array.</p>
+<p>If multiple arguments are passed, it counts the number of different tuples of elements at corresponding positions in multiple arrays.</p>
+<p>If you want to get a list of unique items in an array, you can use <code>arrayReduce(‘groupUniqArray’, arr)</code> .</p>
+<p><strong>Syntax</strong></p>
+<pre><code class="sql">arrayUniq(arr, …)
+</code></pre>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><code>arr</code> — Array.</li>
+</ul>
+<p><strong>Examples</strong></p>
+<pre><code class="sql">SELECT arrayUniq([2, 3]) AS res;
+</code></pre>
+<pre><code class="plain%20text">┌─res─┐
+│ 2   │
+└─────┘
+</code></pre>
+<pre><code class="sql">SELECT arrayUniq([2, 3, 3], [1, 2, 3]) AS res
+</code></pre>
+<pre><code class="plain%20text">┌─res─┐
+│ 3   │
+└─────┘
+</code></pre>
+<p>There are three different tuples (2,1),(3,2),(3,3).</p>
+<h2 id="countEqual"><a href="#countEqual" class="headerlink" title="countEqual"></a>countEqual</h2><p>Returns the number of elements in the array equal to x. Equivalent to arrayCount (elem -&gt; elem &#x3D; x, arr).</p>
+<p><code>NULL</code> elements are handled as separate values.</p>
+<p><strong>Syntax</strong></p>
+<pre><code class="sql">countEqual(arr, x)
+</code></pre>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><code>arr</code> — Array. </li>
+<li><code>x</code> - pivot element</li>
+</ul>
+<p><strong>Returned value</strong></p>
+<ul>
+<li>Number of elements in the array equal to x.</li>
+</ul>
+<p><strong>Examples</strong></p>
+<pre><code class="sql">SELECT countEqual([1, 2, NULL, NULL], NULL)
+</code></pre>
+<pre><code class="plain%20text">┌─countEqual([1, 2, NULL, NULL], NULL)─┐
+│ 2                                    │
+└──────────────────────────────────────┘
+</code></pre>
+<h2 id="flatten"><a href="#flatten" class="headerlink" title="flatten"></a>flatten</h2><p>Converts an array of arrays to a flat array.Function:- Applies to any depth of nested arrays. - Does not change arrays that are already flat. The flattened array contains all the elements from all source arrays.</p>
+<p><strong>Syntax</strong></p>
+<pre><code class="sql">flatten(array_of_arrays)
+</code></pre>
+<p>Alias: <code>flatten</code> .</p>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><code>array_of_arrays</code> — Array of arrays. For example, <code>[[1,2,3], [4,5]]</code> .</li>
+</ul>
+<p><strong>Returned value</strong></p>
+<ul>
+<li>The flattened array.</li>
+</ul>
+<p><strong>Examples</strong></p>
+<pre><code class="sql">SELECT flatten([[[1]], [[2], [3]]]);
+</code></pre>
+<pre><code class="plain%20text">┌─flatten(array(array([1]), array([2], [3])))─┐
+│ [1, 2, 3]                                   │
+└─────────────────────────────────────────────┘
+</code></pre>
+<h2 id="groupArrayInsertAt"><a href="#groupArrayInsertAt" class="headerlink" title="groupArrayInsertAt"></a>groupArrayInsertAt</h2><p>Inserts a value into the array at the specified position.</p>
+<p><strong>Syntax</strong></p>
+<pre><code class="sql">groupArrayInsertAt(default_x, size)(x, pos)
+</code></pre>
+<p>If in one query several values are inserted into the same position, the function behaves in the following ways:</p>
+<ul>
+<li>If a query is executed in a single thread, the first one of the inserted values is used.</li>
+<li>If a query is executed in multiple threads, the resulting value is an undetermined one of the inserted values.</li>
+</ul>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><code>x</code> — Value to be inserted. Expression resulting in one of the supported data types.</li>
+<li><code>pos</code> — Position at which the specified element <code>x</code> is to be inserted. Index numbering in the array starts from zero. UInt32.</li>
+<li><code>default_x</code> — Default value for substituting in empty positions. Optional parameter. Expression resulting in the data type configured for the <code>x</code> parameter. If <code>default_x</code> is not defined, the default values are used.</li>
+<li><code>size</code> — Length of the resulting array. Optional parameter. When using this parameter, the default value <code>default_x</code> must be specified. UInt32.</li>
+</ul>
+<p><strong>Returned value</strong></p>
+<ul>
+<li>Array with inserted values.</li>
+</ul>
+<p><strong>Example</strong></p>
+<pre><code class="sql">SELECT groupArrayInsertAt(toString(number), number * 2) FROM numbers(5);
+</code></pre>
+<pre><code class="text">┌─groupArrayInsertAt(toString(number), multiply(number, 2))─┐│ [&#39;0&#39;,&#39;&#39;,&#39;1&#39;,&#39;&#39;,&#39;2&#39;,&#39;&#39;,&#39;3&#39;,&#39;&#39;,&#39;4&#39;]                         │└───────────────────────────────────────────────────────────┘
+</code></pre>
+<pre><code class="sql">SELECT groupArrayInsertAt(&#39;-&#39;)(toString(number), number * 2) FROM numbers(5);
+</code></pre>
+<pre><code class="text">┌─groupArrayInsertAt(&#39;-&#39;)(toString(number), multiply(number, 2))─┐
+│ [&#39;0&#39;,&#39;-&#39;,&#39;1&#39;,&#39;-&#39;,&#39;2&#39;,&#39;-&#39;,&#39;3&#39;,&#39;-&#39;,&#39;4&#39;]                          │
+└────────────────────────────────────────────────────────────────┘
+</code></pre>
+<pre><code class="sql">SELECT groupArrayInsertAt(&#39;-&#39;, 5)(toString(number), number * 2) FROM numbers(5);
+</code></pre>
+<pre><code class="text">┌─groupArrayInsertAt(&#39;-&#39;, 5)(toString(number), multiply(number, 2))─┐
+│ [&#39;0&#39;,&#39;-&#39;,&#39;1&#39;,&#39;-&#39;,&#39;2&#39;]                                             │
+└───────────────────────────────────────────────────────────────────┘
+</code></pre>
+<!-- TODO: numbers_mt is not supported. This example may need to remove -->
+<!-- Multi-threaded insertion of elements into one position.
+
+``` sql
+SELECT groupArrayInsertAt(number, 0) FROM numbers_mt(10) SETTINGS max_block_size = 1;
+```
+
+As a result of this query you get random integer in the `[0,9]` range. For example:
+
+``` text
+┌─groupArrayInsertAt(number, 0)─┐
+│ [7]                           │
+└───────────────────────────────┘
+``` -->
+<h2 id="hasAll"><a href="#hasAll" class="headerlink" title="hasAll"></a>hasAll</h2><p>Checks whether one array is a subset of another.</p>
+<p><strong>Syntax</strong></p>
+<pre><code class="sql">hasAll(set, subset)
+</code></pre>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><code>set</code> – Array of any type with a set of elements. </li>
+<li><code>subset</code> – Array of any type with elements that should be tested to be a subset of <code>set</code> .</li>
+</ul>
+<p><strong>Return values</strong></p>
+<ul>
+<li><code>1</code> , if <code>set</code> contains all of the elements from <code>subset</code> . </li>
+<li><code>0</code> , otherwise.</li>
+</ul>
+<p><strong>Peculiar properties</strong></p>
+<ul>
+<li>An empty array is a subset of any array. </li>
+<li><code>Null</code> processed as a value. </li>
+<li>Order of values in both of arrays does not matter.</li>
+</ul>
+<p><strong>Examples</strong></p>
+<pre><code class="sql">SELECT hasAll([], []);
+</code></pre>
+<pre><code class="text">┌─hasAll(array(), array())─┐
+│ 1                        │
+└──────────────────────────┘
+</code></pre>
+<pre><code class="sql">SELECT hasAll([1, Null], [Null]);
+</code></pre>
+<pre><code class="text">┌─hasAll([1, NULL], [NULL])─┐
+│ 1                         │
+└───────────────────────────┘
+</code></pre>
+<pre><code class="sql">SELECT hasAll([1.0, 2, 3, 4], [1, 3]);
+</code></pre>
+<pre><code class="text">┌─hasAll([1., 2, 3, 4], [1, 3])─┐
+│ 1                             │
+└───────────────────────────────┘
+</code></pre>
+<pre><code class="sql">SELECT hasAll([&#39;a&#39;, &#39;b&#39;], [&#39;a&#39;]);
+</code></pre>
+<pre><code class="text">┌─hasAll([&#39;a&#39;, &#39;b&#39;], [&#39;a&#39;])─┐
+│ 1                         │
+└───────────────────────────┘
+</code></pre>
+<pre><code class="sql">SELECT hasAll([1], [&#39;a&#39;]);
+</code></pre>
+<pre><code class="text">┌─hasAll([1], [&#39;a&#39;])─┐
+│ 0                  │
+└────────────────────┘
+</code></pre>
+<pre><code class="sql">SELECT hasAll([[1, 2], [3, 4]], [[1, 2], [3, 5]]);
+</code></pre>
+<pre><code class="text">┌─hasAll(array([1, 2], [3, 4]), array([1, 2], [3, 5]))─┐
+│ 0                                                    │
+└──────────────────────────────────────────────────────┘
+</code></pre>
+<h2 id="hasAny"><a href="#hasAny" class="headerlink" title="hasAny"></a>hasAny</h2><p>Checks whether two arrays have intersection by some elements.</p>
+<p><strong>Syntax</strong></p>
+<pre><code class="sql">hasAny(array1, array2)
+</code></pre>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><code>array1</code> – Array of any type with a set of elements. </li>
+<li><code>array2</code> – Array of any type with a set of elements.</li>
+</ul>
+<p><strong>Return values</strong></p>
+<ul>
+<li><code>1</code> , if <code>array1</code> and <code>array2</code> have one similar element at least. </li>
+<li><code>0</code> , otherwise.</li>
+</ul>
+<p><strong>Peculiar properties</strong></p>
+<ul>
+<li><code>Null</code> processed as a value. </li>
+<li>Order of values in both of arrays does not matter.</li>
+</ul>
+<p><strong>Examples</strong></p>
+<pre><code class="sql">SELECT hasAny([1], []);
+</code></pre>
+<pre><code class="text">┌─hasAny([1], array())─┐
+│ 0                    │
+└──────────────────────┘
+</code></pre>
+<pre><code class="sql">SELECT hasAny([Null], [Null, 1]);
+</code></pre>
+<pre><code class="text">┌─hasAny([NULL], [NULL, 1])─┐
+│ 1                         │
+└───────────────────────────┘
+</code></pre>
+<pre><code class="sql">SELECT hasAny([-128, 1., 512], [1]);
+</code></pre>
+<pre><code class="text">┌─hasAny([-128, 1., 512], [1])─┐
+│ 1                            │
+└──────────────────────────────┘
+</code></pre>
+<pre><code class="sql">SELECT hasAny([[1, 2], [3, 4]], [&#39;a&#39;, &#39;c&#39;]);
+</code></pre>
+<pre><code class="text">┌─hasAny(array([1, 2], [3, 4]), [&#39;a&#39;, &#39;c&#39;])─┐
+│ 0                                         │
+└───────────────────────────────────────────┘
+</code></pre>
+<pre><code class="sql">SELECT hasAll([[1, 2], [3, 4]], [[1, 2], [1, 2]]);
+</code></pre>
+<pre><code class="text">┌─hasAll(array([1, 2], [3, 4]), array([1, 2], [1, 2]))─┐
+│ 1                                                    │
+└──────────────────────────────────────────────────────┘
+</code></pre>
+<h2 id="indexOf"><a href="#indexOf" class="headerlink" title="indexOf"></a>indexOf</h2><p>Returns the index of the first ‘x’ element (starting from 1) if it is in the array, or 0 if it is not.</p>
+<p><strong>Syntax</strong></p>
+<pre><code class="sql">indexOf(arr, x) 
+</code></pre>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><code>arr</code> – Array of any type with a set of elements. </li>
+<li><code>x</code> – an Element.</li>
+</ul>
+<p><strong>Return values</strong></p>
+<ul>
+<li>index of the first ‘x’ element (starting from 1)</li>
+</ul>
+<p><strong>Examples</strong></p>
+<pre><code class="sql">SELECT indexOf([1, 3, NULL, NULL], NULL);
+</code></pre>
+<pre><code class="plain%20text">┌─indexOf([1, 3, NULL, NULL], NULL)─┐
+│ 3                                 │
+└───────────────────────────────────┘
+</code></pre>
+<p>Elements set to <code>NULL</code> are handled as normal values.</p>
+<h2 id="length"><a href="#length" class="headerlink" title="length"></a>length</h2><p>Returns the length of a arrays.</p>
+<p><strong>Syntax</strong></p>
+<pre><code class="sql">length(array)
+</code></pre>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><code>array</code> – Array of any type with a set of elements.</li>
+</ul>
+<p><strong>Return values</strong></p>
+<ul>
+<li>length of array. UInt64</li>
+</ul>
+<p><strong>Examples</strong></p>
+<pre><code class="sql">SELECT length([1,2,3]);
+</code></pre>
+<pre><code class="text">┌─length([1, 2, 3])─┐
+│ 3                 │
+└───────────────────┘
+```Returns an array of `UInt` numbers from 0 to `end - 1` by 1 .
+
+**Syntax**
+&lt;!-- Different with community --&gt;
+```sql
+range(end)
+</code></pre>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><code>end</code> — The number before which the array is constructed. Required. UInt</li>
+</ul>
+<p><strong>Returned value</strong></p>
+<ul>
+<li>Array of <code>UInt</code> numbers from 0 to <code>end - 1</code> by 1 .</li>
+</ul>
+<p><strong>Implementation details</strong></p>
+<ul>
+<li>All arguments must be positive values.</li>
+<li>An exception is thrown if the query results in arrays with a total length of more than 100,000,000 elements.</li>
+</ul>
+<p><strong>Examples</strong></p>
+<pre><code class="sql">SELECT range(5);
+</code></pre>
+<pre><code class="plain%20text">┌─range(5)────────┐
+│ [0, 1, 2, 3, 4] │
+└─────────────────┘
+</code></pre>

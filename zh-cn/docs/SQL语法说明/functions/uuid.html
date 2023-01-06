@@ -1,0 +1,170 @@
+<hr>
+<h2 id="title-“UUID”slug-“uuid”hidden-falsecreatedAt-“2021-07-29T12-33-03-093Z”updatedAt-“2021-09-23T06-52-47-060Z”categories-Docs-SQL-Syntax"><a href="#title-“UUID”slug-“uuid”hidden-falsecreatedAt-“2021-07-29T12-33-03-093Z”updatedAt-“2021-09-23T06-52-47-060Z”categories-Docs-SQL-Syntax" class="headerlink" title="title: “UUID”slug: “uuid”hidden: falsecreatedAt: “2021-07-29T12:33:03.093Z”updatedAt: “2021-09-23T06:52:47.060Z”categories:- Docs- SQL_Syntax"></a>title: “UUID”<br>slug: “uuid”<br>hidden: false<br>createdAt: “2021-07-29T12:33:03.093Z”<br>updatedAt: “2021-09-23T06:52:47.060Z”<br>categories:<br>- Docs<br>- SQL_Syntax</h2><blockquote>
+<p>Notice:<br>Some of the examples below are referenced from <a href="https://clickhouse.com/docs/en/sql-reference/functions/">ClickHouse Documentation</a> but have been adapted and modified to work in ByteHouse.</p>
+</blockquote>
+<h2 id="generateUUIDv4"><a href="#generateUUIDv4" class="headerlink" title="generateUUIDv4"></a>generateUUIDv4</h2><p>Generates the UUID of <a href="https://tools.ietf.org/html/rfc4122#section-4.4">version 4</a> .</p>
+<p><strong>Syntax</strong></p>
+<pre><code class="sql">
+generateUUIDv4()
+</code></pre>
+<p><strong>Returned value</strong></p>
+<ul>
+<li>The UUID type value.</li>
+</ul>
+<p><strong>Examples</strong><br>This example demonstrates creating a table with the UUID type column and inserting a value into the table.</p>
+<pre><code class="sql">
+CREATE TABLE test.functionGenerateUUIDv4 (x UUID) ENGINE=CnchMergeTree ORDER BY x;
+INSERT INTO test.functionGenerateUUIDv4 SELECT generateUUIDv4();
+SELECT * FROM test.functionGenerateUUIDv4;
+</code></pre>
+<pre><code class="plain%20text">┌─x────────────────────────────────────┐
+│ a630fbcb-1a32-4902-b5cc-dd51eba8cf4b │
+└──────────────────────────────────────┘
+</code></pre>
+<h2 id="toUUID"><a href="#toUUID" class="headerlink" title="toUUID"></a>toUUID</h2><p>Converts String type value to UUID type. Exception will be raised if input string is invalid uuid format.</p>
+<p><strong>Syntax</strong></p>
+<pre><code class="sql">
+toUUID(String)
+</code></pre>
+<p><strong>Arguments</strong> </p>
+<ul>
+<li><code>String</code> — string in uuid format.</li>
+</ul>
+<p><strong>Returned value</strong></p>
+<ul>
+<li>The UUID type value.</li>
+</ul>
+<p><strong>Examples</strong></p>
+<pre><code class="sql">
+SELECT toUUID(&#39;61f0c404-5cb3-11e7-907b-a6006ad3dba0&#39;) AS uuid, toTypeName(uuid) AS uuid_type;
+</code></pre>
+<pre><code class="plain%20text">┌─uuid─────────────────────────────────┬─uuid_type─┐
+│ 61f0c404-5cb3-11e7-907b-a6006ad3dba0 │ UUID      │
+└──────────────────────────────────────┴───────────┘
+</code></pre>
+<h2 id="toUUIDOrNull"><a href="#toUUIDOrNull" class="headerlink" title="toUUIDOrNull"></a>toUUIDOrNull</h2><p>It takes an argument of type String and tries to parse it into UUID. If failed, returns NULL.</p>
+<p><strong>Syntax</strong></p>
+<pre><code class="sql">
+toUUIDOrNull(String)
+</code></pre>
+<p><strong>Arguments</strong> </p>
+<ul>
+<li><code>String</code> — string in uuid format.</li>
+</ul>
+<p><strong>Returned value</strong></p>
+<ul>
+<li>The Nullable(UUID) type value.</li>
+</ul>
+<p><strong>Examples</strong></p>
+<pre><code class="sql">
+SELECT toUUIDOrNull(&#39;61f0c404-5cb3-11e7-907b-a6006ad3dba0T&#39;) AS uuid
+</code></pre>
+<pre><code class="plain%20text">┌─uuid─┐
+│ ᴺᵁᴸᴸ │
+└──────┘
+</code></pre>
+<h2 id="toUUIDOrZero"><a href="#toUUIDOrZero" class="headerlink" title="toUUIDOrZero"></a>toUUIDOrZero</h2><p>It takes an argument of type String and tries to parse it into UUID. If failed, returns zero UUID.</p>
+<p><strong>Syntax</strong></p>
+<pre><code class="sql">
+toUUIDOrZero(String)
+</code></pre>
+<p><strong>Arguments</strong> </p>
+<ul>
+<li><code>String</code> — string in uuid format.</li>
+</ul>
+<p><strong>Returned value</strong></p>
+<ul>
+<li>The UUID type value.</li>
+</ul>
+<p><strong>Examples</strong></p>
+<pre><code class="sql">
+SELECT toUUIDOrZero(&#39;61f0c404-5cb3-11e7-907b-a6006ad3dba0T&#39;) AS uuid
+</code></pre>
+<pre><code class="plain%20text">┌─uuid─────────────────────────────────┐
+│ 00000000-0000-0000-0000-000000000000 │
+└──────────────────────────────────────┘
+</code></pre>
+<h2 id="generateUUIDv4-1"><a href="#generateUUIDv4-1" class="headerlink" title="generateUUIDv4"></a>generateUUIDv4</h2><p>Generates the <a href="https://bytedance.feishu.cn/sql-reference/data-types/uuid.md">UUID</a> of <a href="https://tools.ietf.org/html/rfc4122#section-4.4">version 4</a> .</p>
+<p><strong>Syntax</strong></p>
+<pre><code class="sql">
+generateUUIDv4()
+</code></pre>
+<p><strong>Returned value</strong></p>
+<p>The UUID type value.</p>
+<p><strong>Usage example</strong></p>
+<p>This example demonstrates creating a table with the UUID type column and inserting a value into the table.</p>
+<pre><code class="sql">
+CREATE TABLE t_uuid (x UUID) ENGINE=TinyLog
+
+
+
+INSERT INTO t_uuid SELECT generateUUIDv4()
+
+
+
+SELECT * FROM t_uuid
+</code></pre>
+<pre><code class="plain%20text">
+┌────────────────────────────────────x─┐
+
+│ f4bf890f-f9dc-4332-ad5c-0c18e73f28e9 │
+
+└──────────────────────────────────────┘
+</code></pre>
+<h2 id="toUUID-1"><a href="#toUUID-1" class="headerlink" title="toUUID"></a>toUUID</h2><p><strong>Syntax</strong></p>
+<pre><code class="sql">
+toUUID (x) 
+</code></pre>
+<p>Converts String type value to UUID type.</p>
+<pre><code class="sql">
+toUUID(String)
+</code></pre>
+<p><strong>Returned value</strong></p>
+<p>The UUID type value.</p>
+<p><strong>Usage example</strong></p>
+<pre><code class="sql">
+SELECT toUUID(&#39;61f0c404-5cb3-11e7-907b-a6006ad3dba0&#39;) AS uuid
+</code></pre>
+<pre><code class="plain%20text">
+┌─────────────────────────────────uuid─┐
+
+│ 61f0c404-5cb3-11e7-907b-a6006ad3dba0 │
+
+└──────────────────────────────────────┘
+</code></pre>
+<h2 id="toUUIDOrNull-1"><a href="#toUUIDOrNull-1" class="headerlink" title="toUUIDOrNull"></a>toUUIDOrNull</h2><p>toUUIDOrNull (x)</p>
+<p>It takes an argument of type String and tries to parse it into UUID. If failed, returns NULL.</p>
+<pre><code class="sql">
+toUUIDOrNull(String)
+</code></pre>
+<p><strong>Returned value</strong></p>
+<p>The Nullable(UUID) type value.</p>
+<p><strong>Usage example</strong></p>
+<pre><code class="sql">
+SELECT toUUIDOrNull(&#39;61f0c404-5cb3-11e7-907b-a6006ad3dba0T&#39;) AS uuid
+</code></pre>
+<pre><code class="plain%20text">
+┌─uuid─┐
+
+│ ᴺᵁᴸᴸ │
+
+└──────┘
+</code></pre>
+<h2 id="toUUIDOrZero-1"><a href="#toUUIDOrZero-1" class="headerlink" title="toUUIDOrZero"></a>toUUIDOrZero</h2><p>toUUIDOrZero (x)</p>
+<p>It takes an argument of type String and tries to parse it into UUID. If failed, returns zero UUID.</p>
+<pre><code class="sql">
+toUUIDOrZero(String)
+</code></pre>
+<p><strong>Returned value</strong></p>
+<p>The UUID type value.</p>
+<p><strong>Usage example</strong></p>
+<pre><code class="sql">
+SELECT toUUIDOrZero(&#39;61f0c404-5cb3-11e7-907b-a6006ad3dba0T&#39;) AS uuid
+</code></pre>
+<pre><code class="plain%20text">
+┌─────────────────────────────────uuid─┐
+
+│ 00000000-0000-0000-0000-000000000000 │
+
+└──────────────────────────────────────┘
+</code></pre>

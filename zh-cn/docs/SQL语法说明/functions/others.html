@@ -1,0 +1,1358 @@
+<hr>
+<h2 id="title-“Others”slug-“others”hidden-truecreatedAt-“2021-07-29T12-25-27-577Z”updatedAt-“2021-07-29T12-25-27-577Z”categories-Docs-SQL-Syntax"><a href="#title-“Others”slug-“others”hidden-truecreatedAt-“2021-07-29T12-25-27-577Z”updatedAt-“2021-07-29T12-25-27-577Z”categories-Docs-SQL-Syntax" class="headerlink" title="title: “Others”slug: “others”hidden: truecreatedAt: “2021-07-29T12:25:27.577Z”updatedAt: “2021-07-29T12:25:27.577Z”categories:- Docs- SQL_Syntax"></a>title: “Others”<br>slug: “others”<br>hidden: true<br>createdAt: “2021-07-29T12:25:27.577Z”<br>updatedAt: “2021-07-29T12:25:27.577Z”<br>categories:<br>- Docs<br>- SQL_Syntax</h2><h2 id="MACNumToString"><a href="#MACNumToString" class="headerlink" title="MACNumToString"></a>MACNumToString</h2><p><strong>Syntax</strong></p>
+<pre><code class="sql">
+MACNumToString(num)
+</code></pre>
+<p>Accepts a UInt64 number. Interprets it as a MAC address in big endian. Returns a string containing the corresponding MAC address in the format AA:BB:CC:DD:EE:FF (colon-separated numbers in hexadecimal form).</p>
+<h2 id="MACStringToNum"><a href="#MACStringToNum" class="headerlink" title="MACStringToNum"></a>MACStringToNum</h2><p><strong>Syntax</strong></p>
+<pre><code class="sql">
+MACNumToString(num)
+</code></pre>
+<p>The inverse function of MACNumToString. If the MAC address has an invalid format, it returns 0.</p>
+<h2 id="MACStringToOUI"><a href="#MACStringToOUI" class="headerlink" title="MACStringToOUI"></a>MACStringToOUI</h2><p><strong>Syntax</strong></p>
+<pre><code class="sql">
+MACStringToOUI(s)
+</code></pre>
+<p>Accepts a MAC address in the format AA:BB:CC:DD:EE:FF (colon-separated numbers in hexadecimal form). Returns the first three octets as a UInt64 number. If the MAC address has an invalid format, it returns 0.</p>
+<h2 id="auc"><a href="#auc" class="headerlink" title="auc"></a>auc</h2><p>Calculate AUC (Area Under the Curve, which is a concept in machine learning, see more details: <a href="https://en.wikipedia.org/wiki/Receiver_operating_characteristic#Area_under_the_curve">https://en.wikipedia.org/wiki/Receiver_operating_characteristic#Area_under_the_curve</a> ).</p>
+<p><strong>Syntax</strong></p>
+<pre><code class="sql">
+arrayAUC(arr_scores, arr_labels)
+</code></pre>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><p><code>arr_scores</code> — scores prediction model gives. </p>
+</li>
+<li><p><code>arr_labels</code> — labels of samples, usually 1 for positive sample and 0 for negtive sample.</p>
+</li>
+</ul>
+<p><strong>Returned value</strong></p>
+<p>Returns AUC value with type Float64.</p>
+<p><strong>Example</strong></p>
+<p>Query:</p>
+<pre><code class="sql">
+select arrayAUC([0.1, 0.4, 0.35, 0.8], [0, 0, 1, 1]);
+</code></pre>
+<p>Result:</p>
+<pre><code class="plain%20text">
+┌─arrayAUC([0.1, 0.4, 0.35, 0.8], [0, 0, 1, 1])─┐
+
+│                                          0.75 │
+
+└───────────────────────────────────────────────┘
+</code></pre>
+<h2 id="bar"><a href="#bar" class="headerlink" title="bar"></a>bar</h2><p><strong>Syntax</strong></p>
+<pre><code class="sql">
+bar(x, min, max, width)
+</code></pre>
+<p>Allows building a unicode-art diagram.</p>
+<p><code>bar(x, min, max, width)</code> draws a band with a width proportional to <code>(x - min)</code> and equal to <code>width</code> characters when <code>x = max</code> .</p>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><p><code>x</code> — Size to display. </p>
+</li>
+<li><p><code>min, max</code> — Integer constants. The value must fit in <code>Int64</code> . </p>
+</li>
+<li><p><code>width</code> — Constant, positive integer, can be fractional.</p>
+</li>
+</ul>
+<p>The band is drawn with accuracy to one eighth of a symbol.</p>
+<p>Example:</p>
+<pre><code class="sql">
+SELECT
+
+    toHour(EventTime) AS h,
+
+    count() AS c,
+
+    bar(c, 0, 600000, 20) AS bar
+
+FROM test.hits
+
+GROUP BY h
+
+ORDER BY h ASC
+</code></pre>
+<pre><code class="plain%20text">
+┌──h─┬──────c─┬─bar────────────────┐
+
+│  0 │ 292907 │ █████████▋         │
+
+│  1 │ 180563 │ ██████             │
+
+│  2 │ 114861 │ ███▋               │
+
+│  3 │  85069 │ ██▋                │
+
+│  4 │  68543 │ ██▎                │
+
+│  5 │  78116 │ ██▌                │
+
+│  6 │ 113474 │ ███▋               │
+
+│  7 │ 170678 │ █████▋             │
+
+│  8 │ 278380 │ █████████▎         │
+
+│  9 │ 391053 │ █████████████      │
+
+│ 10 │ 457681 │ ███████████████▎   │
+
+│ 11 │ 493667 │ ████████████████▍  │
+
+│ 12 │ 509641 │ ████████████████▊  │
+
+│ 13 │ 522947 │ █████████████████▍ │
+
+│ 14 │ 539954 │ █████████████████▊ │
+
+│ 15 │ 528460 │ █████████████████▌ │
+
+│ 16 │ 539201 │ █████████████████▊ │
+
+│ 17 │ 523539 │ █████████████████▍ │
+
+│ 18 │ 506467 │ ████████████████▊  │
+
+│ 19 │ 520915 │ █████████████████▎ │
+
+│ 20 │ 521665 │ █████████████████▍ │
+
+│ 21 │ 542078 │ ██████████████████ │
+
+│ 22 │ 493642 │ ████████████████▍  │
+
+│ 23 │ 400397 │ █████████████▎     │
+
+└────┴────────┴────────────────────┘
+</code></pre>
+<h2 id="blockNumber"><a href="#blockNumber" class="headerlink" title="blockNumber"></a>blockNumber</h2><p>Returns the sequence number of the data block where the row is located.</p>
+<h2 id="blockSize"><a href="#blockSize" class="headerlink" title="blockSize"></a>blockSize</h2><p>Gets the size of the block.</p>
+<p><strong>Syntax</strong></p>
+<pre><code class="sql">
+blockSize()
+</code></pre>
+<p>In ClickHouse, queries are always run on blocks (sets of column parts). This function allows getting the size of the block that you called it for.</p>
+<h2 id="currentDatabase"><a href="#currentDatabase" class="headerlink" title="currentDatabase"></a>currentDatabase</h2><p><strong>Syntax</strong></p>
+<pre><code class="sql">
+currentDatabase()
+</code></pre>
+<p>Returns the name of the current database.</p>
+<p>You can use this function in table engine parameters in a CREATE TABLE query where you need to specify the database.</p>
+<h2 id="defaultValueOfArgumentType"><a href="#defaultValueOfArgumentType" class="headerlink" title="defaultValueOfArgumentType"></a>defaultValueOfArgumentType</h2><p>Outputs the default value for the data type. Does not include default values for custom columns set by the user.</p>
+<p><strong>Syntax</strong></p>
+<pre><code class="sql">
+defaultValueOfArgumentType(expression)
+</code></pre>
+<p><strong>Arguments:</strong></p>
+<ul>
+<li><code>expression</code> — Arbitrary type of value or an expression that results in a value of an arbitrary type.</li>
+</ul>
+<p><strong>Returned values</strong></p>
+<ul>
+<li><p><code>0</code> for numbers. </p>
+</li>
+<li><p>Empty string for strings. </p>
+</li>
+<li><p><code>ᴺᵁᴸᴸ</code> for <a href="https://bytedance.feishu.cn/sql-reference/data-types/nullable.md">Nullable</a> .</p>
+</li>
+</ul>
+<p><strong>Example</strong></p>
+<pre><code class="sql">
+SELECT defaultValueOfArgumentType( CAST(1 AS Int8) )
+</code></pre>
+<pre><code class="plain%20text">
+┌─defaultValueOfArgumentType(CAST(1, &#39;Int8&#39;))─┐
+
+│                                           0 │
+
+└─────────────────────────────────────────────┘
+</code></pre>
+<pre><code class="sql">
+SELECT defaultValueOfArgumentType( CAST(1 AS Nullable(Int8) ) )
+</code></pre>
+<pre><code class="plain%20text">
+┌─defaultValueOfArgumentType(CAST(1, &#39;Nullable(Int8)&#39;))─┐
+
+│                                                  ᴺᵁᴸᴸ │
+
+└───────────────────────────────────────────────────────┘
+</code></pre>
+<h2 id="dumpColumnStructure"><a href="#dumpColumnStructure" class="headerlink" title="dumpColumnStructure"></a>dumpColumnStructure</h2><p>Outputs a detailed description of data structures in RAM</p>
+<p><strong>Syntax</strong></p>
+<pre><code class="sql">
+dumpColumnStructure(value)
+</code></pre>
+<p><strong>Arguments:</strong></p>
+<ul>
+<li><code>value</code> — Any type of value.</li>
+</ul>
+<p><strong>Returned values</strong></p>
+<ul>
+<li>A string describing the structure that is used for representing the <code>value</code> data type in RAM.</li>
+</ul>
+<p><strong>Example</strong></p>
+<pre><code class="sql">
+SELECT dumpColumnStructure(CAST(&#39;2018-01-01 01:02:03&#39;, &#39;DateTime&#39;))
+</code></pre>
+<pre><code class="plain%20text">
+┌─dumpColumnStructure(CAST(&#39;2018-01-01 01:02:03&#39;, &#39;DateTime&#39;))─┐
+
+│ DateTime, Const(size = 1, UInt32(size = 1))                  │
+
+└──────────────────────────────────────────────────────────────┘
+</code></pre>
+<h2 id="filesystemAvailable"><a href="#filesystemAvailable" class="headerlink" title="filesystemAvailable"></a>filesystemAvailable</h2><p>Returns amount of remaining space on the filesystem where the files of the databases located. It is always smaller than total free space ( <a href="https://bytedance.feishu.cn/docs/doccnFkHpok0xssNrwscSUDfwNG#filesystemfree">filesystemFree</a> ) because some space is reserved for OS.</p>
+<p><strong>Syntax</strong></p>
+<pre><code class="sql">
+filesystemAvailable()
+</code></pre>
+<p><strong>Returned value</strong></p>
+<ul>
+<li>The amount of remaining space available in bytes.</li>
+</ul>
+<p>Type: <a href="https://bytedance.feishu.cn/sql-reference/data-types/int-uint.md">UInt64</a> .</p>
+<p><strong>Example</strong></p>
+<p>Query:</p>
+<pre><code class="sql">
+SELECT formatReadableSize(filesystemAvailable()) AS &quot;Available space&quot;, toTypeName(filesystemAvailable()) AS &quot;Type&quot;;
+</code></pre>
+<p>Result:</p>
+<pre><code class="plain%20text">
+┌─Available space─┬─Type───┐
+
+│ 30.75 GiB       │ UInt64 │
+
+└─────────────────┴────────┘
+</code></pre>
+<h2 id="filesystemCapacity"><a href="#filesystemCapacity" class="headerlink" title="filesystemCapacity"></a>filesystemCapacity</h2><p>Returns the capacity of the filesystem in bytes. For evaluation, the <a href="https://bytedance.feishu.cn/operations/server-configuration-parameters/settings.md#server_configuration_parameters-path">path</a> to the data directory must be configured.</p>
+<p><strong>Syntax</strong></p>
+<pre><code class="sql">
+filesystemCapacity()
+</code></pre>
+<p><strong>Returned value</strong></p>
+<ul>
+<li>Capacity information of the filesystem in bytes.</li>
+</ul>
+<p>Type: <a href="https://bytedance.feishu.cn/sql-reference/data-types/int-uint.md">UInt64</a> .</p>
+<p><strong>Example</strong></p>
+<p>Query:</p>
+<pre><code class="sql">
+SELECT formatReadableSize(filesystemCapacity()) AS &quot;Capacity&quot;, toTypeName(filesystemCapacity()) AS &quot;Type&quot;
+</code></pre>
+<p>Result:</p>
+<pre><code class="plain%20text">
+┌─Capacity──┬─Type───┐
+
+│ 39.32 GiB │ UInt64 │
+
+└───────────┴────────┘
+</code></pre>
+<h2 id="filesystemFree"><a href="#filesystemFree" class="headerlink" title="filesystemFree"></a>filesystemFree</h2><p>Returns total amount of the free space on the filesystem where the files of the databases located. See also <code>filesystemAvailable</code></p>
+<p><strong>Syntax</strong></p>
+<pre><code class="sql">
+filesystemFree()
+</code></pre>
+<p><strong>Returned value</strong></p>
+<ul>
+<li>Amount of free space in bytes.</li>
+</ul>
+<p>Type: <a href="https://bytedance.feishu.cn/sql-reference/data-types/int-uint.md">UInt64</a> .</p>
+<p><strong>Example</strong></p>
+<p>Query:</p>
+<pre><code class="sql">
+SELECT formatReadableSize(filesystemFree()) AS &quot;Free space&quot;, toTypeName(filesystemFree()) AS &quot;Type&quot;;
+</code></pre>
+<p>Result:</p>
+<pre><code class="plain%20text">
+┌─Free space─┬─Type───┐
+
+│ 32.39 GiB  │ UInt64 │
+
+└────────────┴────────┘
+</code></pre>
+<h2 id="finalizeAggregation"><a href="#finalizeAggregation" class="headerlink" title="finalizeAggregation"></a>finalizeAggregation</h2><p>Takes state of aggregate function. Returns result of aggregation (or finalized state when using <a href="https://bytedance.feishu.cn/sql-reference/aggregate-functions/combinators.md#agg-functions-combinator-state">-State</a> combinator).</p>
+<p><strong>Syntax</strong></p>
+<pre><code class="sql">
+finalizeAggregation(state)
+</code></pre>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><code>state</code> — State of aggregation. <a href="https://bytedance.feishu.cn/sql-reference/data-types/aggregatefunction.md#data-type-aggregatefunction">AggregateFunction</a> .</li>
+</ul>
+<p><strong>Returned value(s)</strong></p>
+<ul>
+<li>Value&#x2F;values that was aggregated.</li>
+</ul>
+<p>Type: Value of any types that was aggregated.</p>
+<p><strong>Examples</strong></p>
+<p>Query:</p>
+<pre><code class="sql">
+SELECT finalizeAggregation(( SELECT countState(number) FROM numbers(10)));
+</code></pre>
+<p>Result:</p>
+<pre><code class="plain%20text">
+┌─finalizeAggregation(_subquery16)─┐
+
+│                               10 │
+
+└──────────────────────────────────┘
+</code></pre>
+<p>Query:</p>
+<pre><code class="sql">
+SELECT finalizeAggregation(( SELECT sumState(number) FROM numbers(10)));
+</code></pre>
+<p>Result:</p>
+<pre><code class="plain%20text">
+┌─finalizeAggregation(_subquery20)─┐
+
+│                               45 │
+
+└──────────────────────────────────┘
+</code></pre>
+<p>Note that <code>NULL</code> values are ignored.</p>
+<p>Query:</p>
+<pre><code class="sql">
+SELECT finalizeAggregation(arrayReduce(&#39;anyState&#39;, [NULL, 2, 3]));
+</code></pre>
+<p>Result:</p>
+<pre><code class="plain%20text">
+┌─finalizeAggregation(arrayReduce(&#39;anyState&#39;, [NULL, 2, 3]))─┐
+
+│                                                          2 │
+
+└────────────────────────────────────────────────────────────┘
+</code></pre>
+<p>Combined example:</p>
+<p>Query:</p>
+<pre><code class="sql">
+WITH initializeAggregation(&#39;sumState&#39;, number) AS one_row_sum_state
+
+SELECT
+
+    number,
+
+    finalizeAggregation(one_row_sum_state) AS one_row_sum,
+
+    runningAccumulate(one_row_sum_state) AS cumulative_sum
+
+FROM numbers(10);
+</code></pre>
+<p>Result:</p>
+<pre><code class="plain%20text">
+┌─number─┬─one_row_sum─┬─cumulative_sum─┐
+
+│      0 │           0 │              0 │
+
+│      1 │           1 │              1 │
+
+│      2 │           2 │              3 │
+
+│      3 │           3 │              6 │
+
+│      4 │           4 │             10 │
+
+│      5 │           5 │             15 │
+
+│      6 │           6 │             21 │
+
+│      7 │           7 │             28 │
+
+│      8 │           8 │             36 │
+
+│      9 │           9 │             45 │
+
+└────────┴─────────────┴────────────────┘
+</code></pre>
+<p><strong>See Also</strong></p>
+<ul>
+<li><p><a href="https://bytedance.feishu.cn/sql-reference/functions/array-functions.md#arrayreduce">arrayReduce</a> </p>
+</li>
+<li><p><a href="https://bytedance.feishu.cn/docs/doccnFkHpok0xssNrwscSUDfwNG#initializeaggregation">initializeAggregation</a></p>
+</li>
+</ul>
+<h2 id="formatReadableSize-x"><a href="#formatReadableSize-x" class="headerlink" title="formatReadableSize(x)"></a>formatReadableSize(x)</h2><p>formatReadableSize(x)<br>Accepts the size (number of bytes). Returns a rounded size with a suffix (KiB, MiB, etc.) as a string.</p>
+<p>Example:</p>
+<pre><code class="sql">SELECT
+    arrayJoin([1, 1024, 1024*1024, 192851925]) AS filesize_bytes,
+    formatReadableSize(filesize_bytes) AS filesize
+</code></pre>
+<pre><code class="text">┌─filesize_bytes─┬─filesize───┐
+│              1 │ 1.00 B     │
+│           1024 │ 1.00 KiB   │
+│        1048576 │ 1.00 MiB   │
+│      192851925 │ 183.92 MiB │
+└────────────────┴────────────┘
+​```## getSizeOfEnumType
+
+
+Returns the number of fields in [Enum](https://bytedance.feishu.cn/sql-reference/data-types/enum.md) .
+
+**Syntax**
+
+​```sql
+
+getSizeOfEnumType(value)
+</code></pre>
+<p><strong>Arguments:</strong></p>
+<ul>
+<li><code>value</code> — Value of type <code>Enum</code> .</li>
+</ul>
+<p><strong>Returned values</strong></p>
+<ul>
+<li><p>The number of fields with <code>Enum</code> input values. </p>
+</li>
+<li><p>An exception is thrown if the type is not <code>Enum</code> .</p>
+</li>
+</ul>
+<p><strong>Example</strong></p>
+<pre><code class="sql">
+SELECT getSizeOfEnumType( CAST(&#39;a&#39; AS Enum8(&#39;a&#39; = 1, &#39;b&#39; = 2) ) ) AS x
+</code></pre>
+<pre><code class="plain%20text">
+┌─x─┐
+
+│ 2 │
+
+└───┘
+</code></pre>
+<h2 id="globalIn"><a href="#globalIn" class="headerlink" title="globalIn"></a>globalIn</h2><p>in, notIn, globalIn, globalNotIn {#in-functions}</p>
+<p>See the section <a href="https://bytedance.feishu.cn/sql-reference/operators/in.md#select-in-operators">IN operators</a> .</p>
+<h2 id="globalNotIn"><a href="#globalNotIn" class="headerlink" title="globalNotIn"></a>globalNotIn</h2><p>in, notIn, globalIn, globalNotIn {#in-functions}</p>
+<p>See the section <a href="https://bytedance.feishu.cn/sql-reference/operators/in.md#select-in-operators">IN operators</a> .</p>
+<h2 id="has"><a href="#has" class="headerlink" title="has"></a>has</h2><p>has(arr, elem)</p>
+<p>Checks whether the ‘arr’ array has the ‘elem’ element.</p>
+<p>Returns 0 if the element is not in the array, or 1 if it is.</p>
+<p><code>NULL</code> is processed as a value.</p>
+<pre><code class="sql">
+SELECT has([1, 2, NULL], NULL)
+</code></pre>
+<pre><code class="plain%20text">
+┌─has([1, 2, NULL], NULL)─┐
+
+│                       1 │
+
+└─────────────────────────┘
+</code></pre>
+<h2 id="hasColumnInTable"><a href="#hasColumnInTable" class="headerlink" title="hasColumnInTable"></a>hasColumnInTable</h2><p>hasColumnInTable([‘hostname’[, ‘username’[, ‘password’]],] ‘database’, ‘table’, ‘column’) {#hascolumnintablehostname-username-password-database-table-column}</p>
+<p>Accepts constant strings: database name, table name, and column name. Returns a UInt8 constant expression equal to 1 if there is a column, otherwise 0. If the hostname parameter is set, the test will run on a remote server.</p>
+<p>The function throws an exception if the table does not exist.</p>
+<p>For elements in a nested data structure, the function checks for the existence of a column. For the nested data structure itself, the function returns 0.</p>
+<h2 id="hostName"><a href="#hostName" class="headerlink" title="hostName"></a>hostName</h2><p>hostName()</p>
+<p>Returns a string with the name of the host that this function was performed on. For distributed processing, this is the name of the remote server host, if the function is performed on a remote server.</p>
+<h2 id="identity"><a href="#identity" class="headerlink" title="identity"></a>identity</h2><p>Returns the same value that was used as its argument. Used for debugging and testing, allows to cancel using index, and get the query performance of a full scan. When query is analyzed for possible use of index, the analyzer does not look inside <code>identity</code> functions. Also constant folding is not applied too.</p>
+<p><strong>Syntax</strong></p>
+<pre><code class="sql">
+identity(x)
+</code></pre>
+<p><strong>Example</strong></p>
+<p>Query:</p>
+<pre><code class="sql">
+SELECT identity(42)
+</code></pre>
+<p>Result:</p>
+<pre><code class="plain%20text">
+┌─identity(42)─┐
+
+│           42 │
+
+└──────────────┘
+</code></pre>
+<h2 id="if"><a href="#if" class="headerlink" title="if"></a>if</h2><p>Controls conditional branching. Unlike most systems, ClickHouse always evaluate both expressions <code>then</code> and <code>else</code> .</p>
+<p><strong>Syntax</strong></p>
+<pre><code class="sql">
+SELECT if(cond, then, else)
+</code></pre>
+<p>If the condition <code>cond</code> evaluates to a non-zero value, returns the result of the expression <code>then</code> , and the result of the expression <code>else</code> , if present, is skipped. If the <code>cond</code> is zero or <code>NULL</code> , then the result of the <code>then</code> expression is skipped and the result of the <code>else</code> expression, if present, is returned.</p>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><p><code>cond</code> – The condition for evaluation that can be zero or not. The type is UInt8, Nullable(UInt8) or NULL. </p>
+</li>
+<li><p><code>then</code> – The expression to return if condition is met. </p>
+</li>
+<li><p><code>else</code> – The expression to return if condition is not met.</p>
+</li>
+</ul>
+<p><strong>Returned values</strong></p>
+<p>The function executes <code>then</code> and <code>else</code> expressions and returns its result, depending on whether the condition <code>cond</code> ended up being zero or not.</p>
+<p><strong>Example</strong></p>
+<p>Query:</p>
+<pre><code class="sql">
+SELECT if(1, plus(2, 2), plus(2, 6));
+</code></pre>
+<p>Result:</p>
+<pre><code class="plain%20text">
+┌─plus(2, 2)─┐
+
+│          4 │
+
+└────────────┘
+</code></pre>
+<p>Query:</p>
+<pre><code class="sql">
+SELECT if(0, plus(2, 2), plus(2, 6));
+</code></pre>
+<p>Result:</p>
+<pre><code class="plain%20text">
+┌─plus(2, 6)─┐
+
+│          8 │
+
+└────────────┘
+</code></pre>
+<ul>
+<li><code>then</code> and <code>else</code> must have the lowest common type.</li>
+</ul>
+<p><strong>Example:</strong></p>
+<p>Take this <code>LEFT_RIGHT</code> table:</p>
+<pre><code class="sql">
+SELECT *
+
+FROM LEFT_RIGHT
+
+
+
+┌─left─┬─right─┐
+
+│ ᴺᵁᴸᴸ │     4 │
+
+│    1 │     3 │
+
+│    2 │     2 │
+
+│    3 │     1 │
+
+│    4 │  ᴺᵁᴸᴸ │
+
+└──────┴───────┘
+</code></pre>
+<p>The following query compares <code>left</code> and <code>right</code> values:</p>
+<pre><code class="sql">
+SELECT
+
+    left,
+
+    right,
+
+    if(left &lt; right, &#39;left is smaller than right&#39;, &#39;right is greater or equal than left&#39;) AS is_smaller
+
+FROM LEFT_RIGHT
+
+WHERE isNotNull(left) AND isNotNull(right)
+
+
+
+┌─left─┬─right─┬─is_smaller──────────────────────────┐
+
+│    1 │     3 │ left is smaller than right          │
+
+│    2 │     2 │ right is greater or equal than left │
+
+│    3 │     1 │ right is greater or equal than left │
+
+└──────┴───────┴─────────────────────────────────────┘
+</code></pre>
+<p>Note: <code>NULL</code> values are not used in this example, check <a href="https://bytedance.feishu.cn/docs/doccnZ2mgKjAAc5rAc62DusGjq1#null-values-in-conditionals">NULL values in conditionals</a> section.</p>
+<h2 id="ignore"><a href="#ignore" class="headerlink" title="ignore"></a>ignore</h2><p><strong>Syntax</strong></p>
+<pre><code class="sql">
+ignore(…) 
+</code></pre>
+<p>Accepts any arguments, including <code>NULL</code> . Always returns 0.</p>
+<p>However, the argument is still evaluated. This can be used for benchmarks.</p>
+<h2 id="indexHint"><a href="#indexHint" class="headerlink" title="indexHint"></a>indexHint</h2><p>The function is intended for debugging and introspection purposes. The function ignores it’s argument and always returns 1. Arguments are not even evaluated.</p>
+<p>But for the purpose of index analysis, the argument of this function is analyzed as if it was present directly without being wrapped inside <code>indexHint</code> function. This allows to select data in index ranges by the corresponding condition but without further filtering by this condition. The index in ClickHouse is sparse and using <code>indexHint</code> will yield more data than specifying the same condition directly.</p>
+<p><strong>Syntax</strong></p>
+<pre><code class="sql">
+SELECT * FROM table WHERE indexHint(&lt;expression&gt;)
+</code></pre>
+<p><strong>Returned value</strong></p>
+<ol start="5">
+<li>Type: <a href="https://clickhouse.yandex/docs/en/data_types/int_uint/#diapazony-uint">Uint8</a> .</li>
+</ol>
+<p><strong>Example</strong></p>
+<p>Here is the example of test data from the table <a href="https://bytedance.feishu.cn/getting-started/example-datasets/ontime.md">ontime</a> .</p>
+<p>Input table:</p>
+<pre><code class="sql">
+SELECT count() FROM ontime
+</code></pre>
+<pre><code class="plain%20text">
+┌─count()─┐
+
+│ 4276457 │
+
+└─────────┘
+</code></pre>
+<p>The table has indexes on the fields <code>(FlightDate, (Year, FlightDate))</code> .</p>
+<p>Create a query, where the index is not used.</p>
+<p>Query:</p>
+<pre><code class="sql">
+SELECT FlightDate AS k, count() FROM ontime GROUP BY k ORDER BY k
+</code></pre>
+<p>ClickHouse processed the entire table ( <code>Processed 4.28 million rows</code> ).</p>
+<p>Result:</p>
+<pre><code class="plain%20text">
+┌──────────k─┬─count()─┐
+
+│ 2017-01-01 │   13970 │
+
+│ 2017-01-02 │   15882 │
+
+........................
+
+│ 2017-09-28 │   16411 │
+
+│ 2017-09-29 │   16384 │
+
+│ 2017-09-30 │   12520 │
+
+└────────────┴─────────┘
+</code></pre>
+<p>To apply the index, select a specific date.</p>
+<p>Query:</p>
+<pre><code class="sql">
+SELECT FlightDate AS k, count() FROM ontime WHERE k = &#39;2017-09-15&#39; GROUP BY k ORDER BY k
+</code></pre>
+<p>By using the index, ClickHouse processed a significantly smaller number of rows ( <code>Processed 32.74 thousand rows</code> ).</p>
+<p>Result:</p>
+<pre><code class="plain%20text">
+┌──────────k─┬─count()─┐
+
+│ 2017-09-15 │   16428 │
+
+└────────────┴─────────┘
+</code></pre>
+<p>Now wrap the expression <code>k = &#39;2017-09-15&#39;</code> into <code>indexHint</code> function.</p>
+<p>Query:</p>
+<pre><code class="sql">
+SELECT
+
+    FlightDate AS k,
+
+    count()
+
+FROM ontime
+
+WHERE indexHint(k = &#39;2017-09-15&#39;)
+
+GROUP BY k
+
+ORDER BY k ASC
+</code></pre>
+<p>ClickHouse used the index in the same way as the previous time ( <code>Processed 32.74 thousand rows</code> ).</p>
+<p>The expression <code>k = &#39;2017-09-15&#39;</code> was not used when generating the result.</p>
+<p>In examle the <code>indexHint</code> function allows to see adjacent dates.</p>
+<p>Result:</p>
+<pre><code class="plain%20text">
+┌──────────k─┬─count()─┐
+
+│ 2017-09-14 │    7071 │
+
+│ 2017-09-15 │   16428 │
+
+│ 2017-09-16 │    1077 │
+
+│ 2017-09-30 │    8167 │
+
+└────────────┴─────────┘
+</code></pre>
+<h2 id="isFinite"><a href="#isFinite" class="headerlink" title="isFinite"></a>isFinite</h2><p>isFinite(x)</p>
+<p><strong>Syntax</strong></p>
+<pre><code class="sql">
+isFinite(x)
+</code></pre>
+<p>Accepts Float32 and Float64 and returns UInt8 equal to 1 if the argument is not infinite and not a NaN, otherwise 0.</p>
+<h2 id="isInfinite"><a href="#isInfinite" class="headerlink" title="isInfinite"></a>isInfinite</h2><p>isInfinite(x)</p>
+<p><strong>Syntax</strong></p>
+<pre><code class="sql">
+isInfinite(x)
+</code></pre>
+<p>Accepts Float32 and Float64 and returns UInt8 equal to 1 if the argument is infinite, otherwise 0. Note that 0 is returned for a NaN.</p>
+<h2 id="isNaN"><a href="#isNaN" class="headerlink" title="isNaN"></a>isNaN</h2><p>isNaN(x)</p>
+<p><strong>Syntax</strong></p>
+<pre><code class="sql">
+isNaN(x)
+</code></pre>
+<p>Accepts Float32 and Float64 and returns UInt8 equal to 1 if the argument is a NaN, otherwise 0.</p>
+<h2 id="joinGet"><a href="#joinGet" class="headerlink" title="joinGet"></a>joinGet</h2><p>The function lets you extract data from the table the same way as from a <a href="https://bytedance.feishu.cn/sql-reference/dictionaries/index.md">dictionary</a> .</p>
+<p>Gets data from <a href="https://bytedance.feishu.cn/engines/table-engines/special/join.md#creating-a-table">Join</a> tables using the specified join key.</p>
+<p>Only supports tables created with the <code>ENGINE = Join(ANY, LEFT, &lt;join_keys&gt;)</code> statement.</p>
+<p><strong>Syntax</strong></p>
+<pre><code class="sql">
+joinGet(join_storage_table_name, `value_column`, join_keys)
+</code></pre>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><p><code>join_storage_table_name</code> — an <a href="https://bytedance.feishu.cn/sql-reference/syntax.md#syntax-identifiers">identifier</a> indicates where search is performed. The identifier is searched in the default database (see parameter <code>default_database</code> in the config file). To override the default database, use the <code>USE db_name</code> or specify the database and the table through the separator <code>db_name.db_table</code> , see the example. </p>
+</li>
+<li><p><code>value_column</code> — name of the column of the table that contains required data. </p>
+</li>
+<li><p><code>join_keys</code> — list of keys.</p>
+</li>
+</ul>
+<p><strong>Returned value</strong></p>
+<p>Returns list of values corresponded to list of keys.</p>
+<p>If certain does not exist in source table then <code>0</code> or <code>null</code> will be returned based on <a href="https://bytedance.feishu.cn/operations/settings/settings.md#join_use_nulls">join_use_nulls</a> setting.</p>
+<p>More info about <code>join_use_nulls</code> in <a href="https://bytedance.feishu.cn/engines/table-engines/special/join.md">Join operation</a> .</p>
+<p><strong>Example</strong></p>
+<p>Input table:</p>
+<pre><code class="sql">
+CREATE DATABASE db_test
+
+CREATE TABLE db_test.id_val(`id` UInt32, `val` UInt32) ENGINE = Join(ANY, LEFT, id) SETTINGS join_use_nulls = 1
+
+INSERT INTO db_test.id_val VALUES (1,11)(2,12)(4,13)
+</code></pre>
+<pre><code class="plain%20text">
+┌─id─┬─val─┐
+
+│  4 │  13 │
+
+│  2 │  12 │
+
+│  1 │  11 │
+
+└────┴─────┘
+</code></pre>
+<p>Query:</p>
+<pre><code class="sql">
+SELECT joinGet(db_test.id_val,&#39;val&#39;,toUInt32(number)) from numbers(4) SETTINGS join_use_nulls = 1
+</code></pre>
+<p>Result:</p>
+<pre><code class="plain%20text">
+┌─joinGet(db_test.id_val, &#39;val&#39;, toUInt32(number))─┐
+
+│                                                0 │
+
+│                                               11 │
+
+│                                               12 │
+
+│                                                0 │
+
+└──────────────────────────────────────────────────┘
+</code></pre>
+<h2 id="least"><a href="#least" class="headerlink" title="least"></a>least</h2><p>least(a, b)</p>
+<p>Returns the smallest value from a and b.</p>
+<h2 id="log"><a href="#log" class="headerlink" title="log"></a>log</h2><p>log(x)</p>
+<p>Accepts a numeric argument and returns a Float64 number close to the natural logarithm of the argument.</p>
+<h2 id="materialize"><a href="#materialize" class="headerlink" title="materialize"></a>materialize</h2><p>materialize(x)</p>
+<p>Turns a constant into a full column containing just one value.</p>
+<p>In ClickHouse, full columns and constants are represented differently in memory. Functions work differently for constant arguments and normal arguments (different code is executed), although the result is almost always the same. This function is for debugging this behavior.</p>
+<h2 id="modelEvaluate"><a href="#modelEvaluate" class="headerlink" title="modelEvaluate"></a>modelEvaluate</h2><p>Evaluate external model.</p>
+<p><strong>Syntax</strong></p>
+<pre><code class="sql">
+modelEvaluate(model_name, …) 
+</code></pre>
+<p>Accepts a model name and model arguments. Returns Float64.</p>
+<h2 id="regionHierarchy"><a href="#regionHierarchy" class="headerlink" title="regionHierarchy"></a>regionHierarchy</h2><p>regionHierarchy(id[, geobase]) {#regionhierarchyid-geobase}</p>
+<p>Accepts a UInt32 number – the region ID from the Yandex geobase. Returns an array of region IDs consisting of the passed region and all parents along the chain.</p>
+<p>Example: <code>regionHierarchy(toUInt32(213)) = [213,1,3,225,10001,10000]</code> .</p>
+<h2 id="regionIn"><a href="#regionIn" class="headerlink" title="regionIn"></a>regionIn</h2><p>regionIn(lhs, rhs[, geobase]) {#regioninlhs-rhs-geobase}</p>
+<p>Checks whether a ‘lhs’ region belongs to a ‘rhs’ region. Returns a UInt8 number equal to 1 if it belongs, or 0 if it does not belong.</p>
+<p>The relationship is reflexive – any region also belongs to itself.</p>
+<h2 id="regionToArea"><a href="#regionToArea" class="headerlink" title="regionToArea"></a>regionToArea</h2><p>regionToArea(id[, geobase])</p>
+<p>Converts a region to an area (type 5 in the geobase). In every other way, this function is the same as ‘regionToCity’.</p>
+<pre><code class="sql">
+SELECT DISTINCT regionToName(regionToArea(toUInt32(number), &#39;ua&#39;))
+
+FROM system.numbers
+
+LIMIT 15
+</code></pre>
+<pre><code class="plain%20text">
+┌─regionToName(regionToArea(toUInt32(number), \&#39;ua\&#39;))─┐
+
+│                                                      │
+
+│ Moscow and Moscow region                             │
+
+│ St. Petersburg and Leningrad region                  │
+
+│ Belgorod region                                      │
+
+│ Ivanovsk region                                      │
+
+│ Kaluga region                                        │
+
+│ Kostroma region                                      │
+
+│ Kursk region                                         │
+
+│ Lipetsk region                                       │
+
+│ Orlov region                                         │
+
+│ Ryazan region                                        │
+
+│ Smolensk region                                      │
+
+│ Tambov region                                        │
+
+│ Tver region                                          │
+
+│ Tula region                                          │
+
+└──────────────────────────────────────────────────────┘
+</code></pre>
+<h2 id="regionToCity"><a href="#regionToCity" class="headerlink" title="regionToCity"></a>regionToCity</h2><p>regionToCity(id[, geobase])</p>
+<p>Accepts a UInt32 number – the region ID from the Yandex geobase. If this region is a city or part of a city, it returns the region ID for the appropriate city. Otherwise, returns 0.</p>
+<h2 id="regionToContinent"><a href="#regionToContinent" class="headerlink" title="regionToContinent"></a>regionToContinent</h2><p>regionToContinent(id[, geobase])</p>
+<p>Converts a region to a continent. In every other way, this function is the same as ‘regionToCity’.</p>
+<p>Example: <code>regionToContinent(toUInt32(213)) = 10001</code> converts Moscow (213) to Eurasia (10001).</p>
+<h2 id="regionToCountry"><a href="#regionToCountry" class="headerlink" title="regionToCountry"></a>regionToCountry</h2><p>regionToCountry(id[, geobase])</p>
+<p>Converts a region to a country. In every other way, this function is the same as ‘regionToCity’.</p>
+<p>Example: <code>regionToCountry(toUInt32(213)) = 225</code> converts Moscow (213) to Russia (225).</p>
+<h2 id="regionToDistrict"><a href="#regionToDistrict" class="headerlink" title="regionToDistrict"></a>regionToDistrict</h2><p>regionToDistrict(id[, geobase])</p>
+<p>Converts a region to a federal district (type 4 in the geobase). In every other way, this function is the same as ‘regionToCity’.</p>
+<pre><code class="sql">
+SELECT DISTINCT regionToName(regionToDistrict(toUInt32(number), &#39;ua&#39;))
+
+FROM system.numbers
+
+LIMIT 15
+</code></pre>
+<pre><code class="plain%20text">
+┌─regionToName(regionToDistrict(toUInt32(number), \&#39;ua\&#39;))─┐
+
+│                                                          │
+
+│ Central federal district                                 │
+
+│ Northwest federal district                               │
+
+│ South federal district                                   │
+
+│ North Caucases federal district                          │
+
+│ Privolga federal district                                │
+
+│ Ural federal district                                    │
+
+│ Siberian federal district                                │
+
+│ Far East federal district                                │
+
+│ Scotland                                                 │
+
+│ Faroe Islands                                            │
+
+│ Flemish region                                           │
+
+│ Brussels capital region                                  │
+
+│ Wallonia                                                 │
+
+│ Federation of Bosnia and Herzegovina                     │
+
+└──────────────────────────────────────────────────────────┘
+</code></pre>
+<h2 id="regionToName"><a href="#regionToName" class="headerlink" title="regionToName"></a>regionToName</h2><p>regionToName(id[, lang])</p>
+<p>Accepts a UInt32 number – the region ID from the Yandex geobase. A string with the name of the language can be passed as a second argument. Supported languages are: ru, en, ua, uk, by, kz, tr. If the second argument is omitted, the language ‘ru’ is used. If the language is not supported, an exception is thrown. Returns a string – the name of the region in the corresponding language. If the region with the specified ID does not exist, an empty string is returned.</p>
+<p><code>ua</code> and <code>uk</code> both mean Ukrainian.</p>
+<h2 id="regionToPopulation"><a href="#regionToPopulation" class="headerlink" title="regionToPopulation"></a>regionToPopulation</h2><p>regionToPopulation(id[, geobase])</p>
+<p>Gets the population for a region.</p>
+<p>The population can be recorded in files with the geobase. See the section “External dictionaries”.</p>
+<p>If the population is not recorded for the region, it returns 0.</p>
+<p>In the Yandex geobase, the population might be recorded for child regions, but not for parent regions.</p>
+<h2 id="regionToTopContinent"><a href="#regionToTopContinent" class="headerlink" title="regionToTopContinent"></a>regionToTopContinent</h2><p><code>regionToTopContinent(id[, geobase])</code></p>
+<p>Finds the highest continent in the hierarchy for the region.</p>
+<p><strong>Syntax</strong></p>
+<pre><code class="sql">
+regionToTopContinent(id[, geobase])
+</code></pre>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><p><code>id</code> — Region ID from the Yandex geobase. <a href="https://bytedance.feishu.cn/sql-reference/data-types/int-uint.md">UInt32</a> . </p>
+</li>
+<li><p><code>geobase</code> — Dictionary key. See <a href="https://bytedance.feishu.cn/docs/doccnFkHpok0xssNrwscSUDfwNG#multiple-geobases">Multiple Geobases</a> . <a href="https://bytedance.feishu.cn/sql-reference/data-types/string.md">String</a> . Optional.</p>
+</li>
+</ul>
+<p><strong>Returned value</strong></p>
+<ul>
+<li><p>Identifier of the top level continent (the latter when you climb the hierarchy of regions). </p>
+</li>
+<li><p>0, if there is none.</p>
+</li>
+</ul>
+<p>Type: <code>UInt32</code> .</p>
+<h2 id="replicate"><a href="#replicate" class="headerlink" title="replicate"></a>replicate</h2><p>Creates an array with a single value.</p>
+<p>Used for internal implementation of <a href="https://bytedance.feishu.cn/sql-reference/functions/array-join.md#functions_arrayjoin">arrayJoin</a> .</p>
+<pre><code class="sql">
+SELECT replicate(x, arr);
+</code></pre>
+<p><strong>Arguments:</strong></p>
+<ul>
+<li><p><code>arr</code> — Original array. ClickHouse creates a new array of the same length as the original and fills it with the value <code>x</code> . </p>
+</li>
+<li><p><code>x</code> — The value that the resulting array will be filled with.</p>
+</li>
+</ul>
+<p><strong>Returned value</strong></p>
+<p>An array filled with the value <code>x</code> .</p>
+<p>Type: <code>Array</code> .</p>
+<p><strong>Example</strong></p>
+<p>Query:</p>
+<pre><code class="sql">
+SELECT replicate(1, [&#39;a&#39;, &#39;b&#39;, &#39;c&#39;])
+</code></pre>
+<p>Result:</p>
+<pre><code class="plain%20text">
+┌─replicate(1, [&#39;a&#39;, &#39;b&#39;, &#39;c&#39;])─┐
+
+│ [1,1,1]                       │
+
+└───────────────────────────────┘
+</code></pre>
+<h2 id="rowNumberInAllBlocks"><a href="#rowNumberInAllBlocks" class="headerlink" title="rowNumberInAllBlocks"></a>rowNumberInAllBlocks</h2><p>rowNumberInAllBlocks()</p>
+<p>Returns the ordinal number of the row in the data block. This function only considers the affected data blocks.</p>
+<h2 id="rowNumberInBlock"><a href="#rowNumberInBlock" class="headerlink" title="rowNumberInBlock"></a>rowNumberInBlock</h2><p>Returns the ordinal number of the row in the data block. Different data blocks are always recalculated.</p>
+<h2 id="runningAccumulate"><a href="#runningAccumulate" class="headerlink" title="runningAccumulate"></a>runningAccumulate</h2><p>Accumulates states of an aggregate function for each row of a data block.</p>
+<p><strong>Warning</strong></p>
+<p>The state is reset for each new data block.</p>
+<p><strong>Syntax</strong></p>
+<pre><code class="sql">
+runningAccumulate(agg_state[, grouping]);
+</code></pre>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><p><code>agg_state</code> — State of the aggregate function. <a href="https://bytedance.feishu.cn/sql-reference/data-types/aggregatefunction.md#data-type-aggregatefunction">AggregateFunction</a> . </p>
+</li>
+<li><p><code>grouping</code> — Grouping key. Optional. The state of the function is reset if the <code>grouping</code> value is changed. It can be any of the <a href="https://bytedance.feishu.cn/sql-reference/data-types/index.md">supported data types</a> for which the equality operator is defined.</p>
+</li>
+</ul>
+<p><strong>Returned value</strong></p>
+<ul>
+<li>Each resulting row contains a result of the aggregate function, accumulated for all the input rows from 0 to the current position. <code>runningAccumulate</code> resets states for each new data block or when the <code>grouping</code> value changes.</li>
+</ul>
+<p>Type depends on the aggregate function used.</p>
+<p><strong>Examples</strong></p>
+<p>Consider how you can use <code>runningAccumulate</code> to find the cumulative sum of numbers without and with grouping.</p>
+<p>Query:</p>
+<pre><code class="sql">
+SELECT k, runningAccumulate(sum_k) AS res FROM (SELECT number as k, sumState(k) AS sum_k FROM numbers(10) GROUP BY k ORDER BY k);
+</code></pre>
+<p>Result:</p>
+<pre><code class="plain%20text">
+┌─k─┬─res─┐
+
+│ 0 │   0 │
+
+│ 1 │   1 │
+
+│ 2 │   3 │
+
+│ 3 │   6 │
+
+│ 4 │  10 │
+
+│ 5 │  15 │
+
+│ 6 │  21 │
+
+│ 7 │  28 │
+
+│ 8 │  36 │
+
+│ 9 │  45 │
+
+└───┴─────┘
+</code></pre>
+<p>The subquery generates <code>sumState</code> for every number from <code>0</code> to <code>9</code> . <code>sumState</code> returns the state of the <a href="https://bytedance.feishu.cn/sql-reference/aggregate-functions/reference/sum.md">sum</a> function that contains the sum of a single number.</p>
+<p>The whole query does the following:</p>
+<ol start="6">
+<li><p>For the first row, <code>runningAccumulate</code> takes <code>sumState(0)</code> and returns <code>0</code> . </p>
+</li>
+<li><p>For the second row, the function merges <code>sumState(0)</code> and <code>sumState(1)</code> resulting in <code>sumState(0 + 1)</code> , and returns <code>1</code> as a result. </p>
+</li>
+<li><p>For the third row, the function merges <code>sumState(0 + 1)</code> and <code>sumState(2)</code> resulting in <code>sumState(0 + 1 + 2)</code> , and returns <code>3</code> as a result. </p>
+</li>
+<li><p>The actions are repeated until the block ends.</p>
+</li>
+</ol>
+<p>The following example shows the <code>groupping</code> parameter usage:</p>
+<p>Query:</p>
+<pre><code class="sql">
+SELECT
+
+    grouping,
+
+    item,
+
+    runningAccumulate(state, grouping) AS res
+
+FROM
+
+(
+
+    SELECT
+
+        toInt8(number / 4) AS grouping,
+
+        number AS item,
+
+        sumState(number) AS state
+
+    FROM numbers(15)
+
+    GROUP BY item
+
+    ORDER BY item ASC
+
+);
+</code></pre>
+<p>Result:</p>
+<pre><code class="plain%20text">
+┌─grouping─┬─item─┬─res─┐
+
+│        0 │    0 │   0 │
+
+│        0 │    1 │   1 │
+
+│        0 │    2 │   3 │
+
+│        0 │    3 │   6 │
+
+│        1 │    4 │   4 │
+
+│        1 │    5 │   9 │
+
+│        1 │    6 │  15 │
+
+│        1 │    7 │  22 │
+
+│        2 │    8 │   8 │
+
+│        2 │    9 │  17 │
+
+│        2 │   10 │  27 │
+
+│        2 │   11 │  38 │
+
+│        3 │   12 │  12 │
+
+│        3 │   13 │  25 │
+
+│        3 │   14 │  39 │
+
+└──────────┴──────┴─────┘
+</code></pre>
+<p>As you can see, <code>runningAccumulate</code> merges states for each group of rows separately.</p>
+<h2 id="runningDifference"><a href="#runningDifference" class="headerlink" title="runningDifference"></a>runningDifference</h2><p><strong>Syntax</strong></p>
+<pre><code class="sql">
+runningDifference(x) 
+</code></pre>
+<p>Calculates the difference between successive row values in the data block.</p>
+<p>Returns 0 for the first row and the difference from the previous row for each subsequent row.</p>
+<p>Warning:</p>
+<p>It can reach the previous row only inside the currently processed data block.</p>
+<p>The result of the function depends on the affected data blocks and the order of data in the block.</p>
+<p>The rows order used during the calculation of <code>runningDifference</code> can differ from the order of rows returned to the user.</p>
+<p>To prevent that you can make a subquery with <a href="https://bytedance.feishu.cn/sql-reference/statements/select/order-by.md">ORDER BY</a> and call the function from outside the subquery.</p>
+<p>Example:</p>
+<pre><code class="sql">
+SELECT
+
+    EventID,
+
+    EventTime,
+
+    runningDifference(EventTime) AS delta
+
+FROM
+
+(
+
+    SELECT
+
+        EventID,
+
+        EventTime
+
+    FROM events
+
+    WHERE EventDate = &#39;2016-11-24&#39;
+
+    ORDER BY EventTime ASC
+
+    LIMIT 5
+
+)
+</code></pre>
+<pre><code class="plain%20text">
+┌─EventID─┬───────────EventTime─┬─delta─┐
+
+│    1106 │ 2016-11-24 00:00:04 │     0 │
+
+│    1107 │ 2016-11-24 00:00:05 │     1 │
+
+│    1108 │ 2016-11-24 00:00:05 │     0 │
+
+│    1109 │ 2016-11-24 00:00:09 │     4 │
+
+│    1110 │ 2016-11-24 00:00:10 │     1 │
+
+└─────────┴─────────────────────┴───────┘
+</code></pre>
+<p>Please note - block size affects the result. With each new block, the <code>runningDifference</code> state is reset.</p>
+<pre><code class="sql">
+SELECT
+
+    number,
+
+    runningDifference(number + 1) AS diff
+
+FROM numbers(100000)
+
+WHERE diff != 1
+</code></pre>
+<pre><code class="plain%20text">
+┌─number─┬─diff─┐
+
+│      0 │    0 │
+
+└────────┴──────┘
+
+┌─number─┬─diff─┐
+
+│  65536 │    0 │
+
+└────────┴──────┘
+</code></pre>
+<pre><code class="sql">
+set max_block_size=100000 -- default value is 65536!
+
+
+
+SELECT
+
+    number,
+
+    runningDifference(number + 1) AS diff
+
+FROM numbers(100000)
+
+WHERE diff != 1
+</code></pre>
+<pre><code class="plain%20text">
+┌─number─┬─diff─┐
+
+│      0 │    0 │
+
+└────────┴──────┘
+</code></pre>
+<h2 id="runningDifferenceStartingWithFirstValue"><a href="#runningDifferenceStartingWithFirstValue" class="headerlink" title="runningDifferenceStartingWithFirstValue"></a>runningDifferenceStartingWithFirstValue</h2><p>Same as for <a href="https://bytedance.feishu.cn/docs/other-functions.md#other_functions-runningdifference">runningDifference</a> , the difference is the value of the first row, returned the value of the first row, and each subsequent row returns the difference from the previous row.</p>
+<h2 id="sleep"><a href="#sleep" class="headerlink" title="sleep"></a>sleep</h2><p><strong>Syntax</strong></p>
+<pre><code class="sql">
+sleep(seconds)
+</code></pre>
+<p>Sleeps ‘seconds’ seconds on each data block. You can specify an integer or a floating-point number.</p>
+<h2 id="sleepEachRow"><a href="#sleepEachRow" class="headerlink" title="sleepEachRow"></a>sleepEachRow</h2><p>sleepEachRow(seconds)</p>
+<p>Sleeps ‘seconds’ seconds on each row. You can specify an integer or a floating-point number.</p>
+<h2 id="throwIf"><a href="#throwIf" class="headerlink" title="throwIf"></a>throwIf</h2><p>throwIf(x[, custom_message])</p>
+<p>Throw an exception if the argument is non zero.</p>
+<p>custom_message - is an optional parameter: a constant string, provides an error message</p>
+<pre><code class="sql">
+SELECT throwIf(number = 3, &#39;Too many&#39;) FROM numbers(10);
+</code></pre>
+<pre><code class="plain%20text">
+↙ Progress: 0.00 rows, 0.00 B (0.00 rows/s., 0.00 B/s.) Received exception from server (version 19.14.1):
+
+Code: 395. DB::Exception: Received from [localhost:9000](http://localhost:9000/). DB::Exception: Too many.
+</code></pre>
+<h2 id="toColumnTypeName"><a href="#toColumnTypeName" class="headerlink" title="toColumnTypeName"></a>toColumnTypeName</h2><p>Returns the name of the class that represents the data type of the column in RAM.</p>
+<pre><code class="sql">
+toColumnTypeName(value)
+</code></pre>
+<p><strong>Arguments:</strong></p>
+<ul>
+<li><code>value</code> — Any type of value.</li>
+</ul>
+<p><strong>Returned values</strong></p>
+<ul>
+<li>A string with the name of the class that is used for representing the <code>value</code> data type in RAM.</li>
+</ul>
+<p><strong>Example of the difference between</strong> <code>**toTypeName &#39; and &#39; toColumnTypeName**</code></p>
+<pre><code class="sql">
+SELECT toTypeName(CAST(&#39;2018-01-01 01:02:03&#39; AS DateTime))
+</code></pre>
+<pre><code class="plain%20text">
+┌─toTypeName(CAST(&#39;2018-01-01 01:02:03&#39;, &#39;DateTime&#39;))─┐
+
+│ DateTime                                            │
+
+└─────────────────────────────────────────────────────┘
+</code></pre>
+<pre><code class="sql">
+SELECT toColumnTypeName(CAST(&#39;2018-01-01 01:02:03&#39; AS DateTime))
+</code></pre>
+<pre><code class="plain%20text">
+┌─toColumnTypeName(CAST(&#39;2018-01-01 01:02:03&#39;, &#39;DateTime&#39;))─┐
+
+│ Const(UInt32)                                             │
+
+└───────────────────────────────────────────────────────────┘
+</code></pre>
+<p>The example shows that the <code>DateTime</code> data type is stored in memory as <code>Const(UInt32)</code> .</p>
+<h2 id="toTypeName"><a href="#toTypeName" class="headerlink" title="toTypeName"></a>toTypeName</h2><p>toTypeName(x)</p>
+<p>Returns a string containing the type name of the passed argument.</p>
+<p>If <code>NULL</code> is passed to the function as input, then it returns the <code>Nullable(Nothing)</code> type, which corresponds to an internal <code>NULL</code> representation in ClickHouse.</p>
+<h2 id="transform"><a href="#transform" class="headerlink" title="transform"></a>transform</h2><p><strong>Syntax</strong></p>
+<pre><code class="sql">
+transform(x, array_from, array_to) 
+</code></pre>
+<p>Differs from the first variation in that the ‘default’ argument is omitted.</p>
+<p>If the ‘x’ value is equal to one of the elements in the ‘array_from’ array, it returns the matching element (that is numbered the same) from the ‘array_to’ array. Otherwise, it returns ‘x’.</p>
+<p>Types:</p>
+<p><code>transform(T, Array(T), Array(T)) -&gt; T</code></p>
+<p>Example:</p>
+<pre><code class="sql">
+SELECT
+
+    transform(domain(Referer), [&#39;[yandex.ru](http://yandex.ru/)&#39;, &#39;[google.ru](http://google.ru/)&#39;, &#39;[vk.com](http://vk.com/)&#39;], [&#39;www.yandex&#39;, &#39;[example.com](http://example.com/)&#39;]) AS s,
+
+    count() AS c
+
+FROM test.hits
+
+GROUP BY domain(Referer)
+
+ORDER BY count() DESC
+
+LIMIT 10
+</code></pre>
+<pre><code class="plain%20text">
+┌─s──────────────┬───────c─┐
+
+│                │ 2906259 │
+
+│ www.yandex     │  867767 │
+
+│ ███████.ru     │  313599 │
+
+│ [mail.yandex.ru](http://mail.yandex.ru/) │  107147 │
+
+│ ██████.ru      │  100355 │
+
+│ █████████.ru   │   65040 │
+
+│ [news.yandex.ru](http://news.yandex.ru/) │   64515 │
+
+│ ██████.net     │   59141 │
+
+│ [example.com](http://example.com/)    │   57316 │
+
+└────────────────┴─────────┘
+</code></pre>
+<p>transformx-array-from-array-to-default</p>
+<p><strong>Syntax</strong></p>
+<pre><code class="sql">
+transform(x, array_from, array_to, default)
+</code></pre>
+<p><strong>Argument</strong></p>
+<p><code>x</code> – What to transform.</p>
+<p><code>array_from</code> – Constant array of values for converting.</p>
+<p><code>array_to</code> – Constant array of values to convert the values in ‘from’ to.</p>
+<p><code>default</code> – Which value to use if ‘x’ is not equal to any of the values in ‘from’.</p>
+<p><code>array_from</code> and <code>array_to</code> – Arrays of the same size.</p>
+<p>Types:</p>
+<p><code>transform(T, Array(T), Array(U), U) -&gt; U</code></p>
+<p><code>T</code> and <code>U</code> can be numeric, string, or Date or DateTime types.</p>
+<p>Where the same letter is indicated (T or U), for numeric types these might not be matching types, but types that have a common type.</p>
+<p>For example, the first argument can have the Int64 type, while the second has the Array(UInt16) type.</p>
+<p>If the ‘x’ value is equal to one of the elements in the ‘array_from’ array, it returns the existing element (that is numbered the same) from the ‘array_to’ array. Otherwise, it returns ‘default’. If there are multiple matching elements in ‘array_from’, it returns one of the matches.</p>
+<p><strong>Example</strong> :</p>
+<pre><code class="sql">
+SELECT
+
+    transform(SearchEngineID, [2, 3], [&#39;Yandex&#39;, &#39;Google&#39;], &#39;Other&#39;) AS title,
+
+    count() AS c
+
+FROM test.hits
+
+WHERE SearchEngineID != 0
+
+GROUP BY title
+
+ORDER BY c DESC
+</code></pre>
+<pre><code class="plain%20text">
+┌─title─────┬──────c─┐
+
+│ Yandex    │ 498635 │
+
+│ Google    │ 229872 │
+
+│ Other     │ 104472 │
+
+└───────────┴────────┘
+</code></pre>
+<p>transformx-array-from-array-to</p>
+<p><strong>Syntax</strong></p>
+<pre><code class="sql">
+transform(x, array_from, array_to)
+</code></pre>
+<p>Differs from the first variation in that the ‘default’ argument is omitted.</p>
+<p>If the ‘x’ value is equal to one of the elements in the ‘array_from’ array, it returns the matching element (that is numbered the same) from the ‘array_to’ array. Otherwise, it returns ‘x’.</p>
+<p><strong>Types</strong> :</p>
+<p><code>transform(T, Array(T), Array(T)) -&gt; T</code></p>
+<p><strong>Example</strong> :</p>
+<pre><code class="sql">
+SELECT
+
+    transform(domain(Referer), [&#39;[yandex.ru](http://yandex.ru/)&#39;, &#39;[google.ru](http://google.ru/)&#39;, &#39;[vk.com](http://vk.com/)&#39;], [&#39;www.yandex&#39;, &#39;[example.com](http://example.com/)&#39;]) AS s,
+
+    count() AS c
+
+FROM test.hits
+
+GROUP BY domain(Referer)
+
+ORDER BY count() DESC
+
+LIMIT 10
+</code></pre>
+<pre><code class="plain%20text">
+┌─s──────────────┬───────c─┐
+
+│                │ 2906259 │
+
+│ www.yandex     │  867767 │
+
+│ ███████.ru     │  313599 │
+
+│ [mail.yandex.ru](http://mail.yandex.ru/) │  107147 │
+
+│ ██████.ru      │  100355 │
+
+│ █████████.ru   │   65040 │
+
+│ [news.yandex.ru](http://news.yandex.ru/) │   64515 │
+
+│ ██████.net     │   59141 │
+
+│ [example.com](http://example.com/)    │   57316 │
+
+└────────────────┴─────────┘
+</code></pre>
+<h2 id="uptime"><a href="#uptime" class="headerlink" title="uptime"></a>uptime</h2><p>uptime()</p>
+<p>Returns the server’s uptime in seconds.</p>
+<h2 id="version"><a href="#version" class="headerlink" title="version"></a>version</h2><p><strong>Syntax</strong></p>
+<pre><code class="sql">
+version()
+</code></pre>
+<p>Returns the version of the server as a string.</p>
+<h2 id="visibleWidth"><a href="#visibleWidth" class="headerlink" title="visibleWidth"></a>visibleWidth</h2><p>visibleWidth(x)</p>
+<p>Calculates the approximate width when outputting values to the console in text format (tab-separated).</p>
+<p>This function is used by the system for implementing Pretty formats.</p>
+<p><code>NULL</code> is represented as a string corresponding to <code>NULL</code> in <code>Pretty</code> formats.</p>
+<pre><code class="sql">
+SELECT visibleWidth(NULL)
+</code></pre>
+<pre><code class="plain%20text">
+┌─visibleWidth(NULL)─┐
+
+│                  4 │
+
+└────────────────────┘
+</code></pre>

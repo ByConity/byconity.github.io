@@ -1,0 +1,1127 @@
+<!DOCTYPE HTML>
+<html lang="en,zh-cn,default">
+
+
+<head>
+    <meta charset="utf-8">
+    <meta name="keywords" content="集群配置参数, ByConity keywords">
+    <meta name="description" content="theme.home.header.description">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="renderer" content="webkit|ie-stand|ie-comp">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+
+
+    <title>集群配置参数 | ByConity</title>
+    <link rel="icon" type="image/png" href="/favicon.png">
+
+    <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
+    <link rel="stylesheet" type="text/css" href="/libs/materialize/materialize.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/aos/aos.css">
+    <link rel="stylesheet" type="text/css" href="/libs/animate/animate.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/lightGallery/css/lightgallery.min.css">
+    <link rel="stylesheet" type="text/css" href="/css/matery.css">
+    <link rel="stylesheet" type="text/css" href="/css/my.css">
+
+    <script src="/libs/jquery/jquery.min.js"></script>
+
+<meta name="generator" content="Hexo 6.3.0"><link rel="alternate" href="/atom.xml" title="ByConity" type="application/atom+xml">
+</head>
+
+
+
+
+<body>
+    <header class="navbar-fixed">
+    <nav id="headNav" class="bg-color nav-transparent">
+        <div id="navContainer" class="nav-wrapper container">
+            <div class="brand-logo">
+                <a href="/" class="waves-effect waves-light">
+                    
+                    <img src="/medias/logo.png" class="logo-img" alt="LOGO">
+                    
+                    <span class="logo-span">ByConity</span>
+                </a>
+            </div>
+            
+
+<a href="#" data-target="mobile-nav" class="sidenav-trigger button-collapse"><i class="fas fa-bars"></i></a>
+<ul class="right nav-menu">
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/" class="waves-effect waves-light">
+      
+      <i class="fas fa-home" style="zoom: 0.6;"></i>
+      
+      <span>Home</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/zh-cn/docs" class="waves-effect waves-light">
+      
+      <i class="fas fa-archive" style="zoom: 0.6;"></i>
+      
+      <span>Docs</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a target="_blank" rel="noopener" href="https://github.com/byconity" class="waves-effect waves-light">
+      
+      <i class="fas fa-user-circle" style="zoom: 0.6;"></i>
+      
+      <span>Community</span>
+    </a>
+    
+  </li>
+  
+  <li>
+    <a href="#searchModal" class="modal-trigger waves-effect waves-light">
+      <i id="searchIcon" class="fas fa-search" title="Search" style="zoom: 0.85;"></i>
+    </a>
+  </li>
+</ul>
+
+
+<div id="mobile-nav" class="side-nav sidenav">
+
+    <div class="mobile-head bg-color">
+        
+        <img src="/medias/logo.png" class="logo-img circle responsive-img">
+        
+        <div class="logo-name">ByConity</div>
+        <div class="logo-desc">
+            
+            theme.home.header.description
+            
+        </div>
+    </div>
+
+    
+
+    <ul class="menu-list mobile-menu-list">
+        
+        <li class="m-nav-item">
+	  
+		<a href="/" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-home"></i>
+			
+			Home
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/zh-cn/docs" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-archive"></i>
+			
+			Docs
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a target="_blank" rel="noopener" href="https://github.com/byconity" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-user-circle"></i>
+			
+			Community
+		</a>
+          
+        </li>
+        
+        
+        <li><div class="divider"></div></li>
+        <li>
+            <a href="https://github.com/byConity" class="waves-effect waves-light" target="_blank">
+                <i class="fab fa-github-square fa-fw"></i>Contribute with us
+            </a>
+        </li>
+        
+    </ul>
+</div>
+
+
+        </div>
+
+        
+            <style>
+    .nav-transparent .github-corner {
+        display: none !important;
+    }
+
+    .github-corner {
+        position: absolute;
+        z-index: 10;
+        top: 0;
+        right: 0;
+        border: 0;
+        transform: scale(1.1);
+    }
+
+    .github-corner svg {
+        color: #0f9d58;
+        fill: #fff;
+        height: 64px;
+        width: 64px;
+    }
+
+    .github-corner:hover .octo-arm {
+        animation: a 0.56s ease-in-out;
+    }
+
+    .github-corner .octo-arm {
+        animation: none;
+    }
+
+    @keyframes a {
+        0%,
+        to {
+            transform: rotate(0);
+        }
+        20%,
+        60% {
+            transform: rotate(-25deg);
+        }
+        40%,
+        80% {
+            transform: rotate(10deg);
+        }
+    }
+</style>
+
+<a href="https://github.com/byConity" class="github-corner tooltipped hide-on-med-and-down" target="_blank"
+   data-tooltip="Contribute with us" data-position="left" data-delay="50">
+    <svg viewBox="0 0 250 250" aria-hidden="true">
+        <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path>
+        <path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2"
+              fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path>
+        <path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z"
+              fill="currentColor" class="octo-body"></path>
+    </svg>
+</a>
+        
+    </nav>
+
+</header>
+
+    
+
+
+
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/3.jpg')">
+    <div class="container" style="right: 0px;left: 0px;">
+        <div class="row">
+            <div class="col s12 m12 l12">
+                <div class="brand">
+                    <h1 class="description center-align post-title">集群配置参数</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<main class="post-container content">
+
+    
+    <link rel="stylesheet" href="/libs/tocbot/tocbot.css">
+<style>
+    #articleContent h1::before,
+    #articleContent h2::before,
+    #articleContent h3::before,
+    #articleContent h4::before,
+    #articleContent h5::before,
+    #articleContent h6::before {
+        display: block;
+        content: " ";
+        height: 100px;
+        margin-top: -100px;
+        visibility: hidden;
+    }
+
+    #articleContent :focus {
+        outline: none;
+    }
+
+    .toc-fixed {
+        position: fixed;
+        top: 64px;
+    }
+
+    .toc-widget {
+        width: 345px;
+        padding-left: 20px;
+    }
+
+    .toc-widget .toc-title {
+        padding: 35px 0 15px 17px;
+        font-size: 1.5rem;
+        font-weight: bold;
+        line-height: 1.5rem;
+    }
+
+    .toc-widget ol {
+        padding: 0;
+        list-style: none;
+    }
+
+    #toc-content {
+        padding-bottom: 30px;
+        overflow: auto;
+    }
+
+    #toc-content ol {
+        padding-left: 10px;
+    }
+
+    #toc-content ol li {
+        padding-left: 10px;
+    }
+
+    #toc-content .toc-link:hover {
+        color: #42b983;
+        font-weight: 700;
+        text-decoration: underline;
+    }
+
+    #toc-content .toc-link::before {
+        background-color: transparent;
+        max-height: 25px;
+
+        position: absolute;
+        right: 23.5vw;
+        display: block;
+    }
+
+    #toc-content .is-active-link {
+        color: #42b983;
+    }
+
+    #floating-toc-btn {
+        position: fixed;
+        right: 15px;
+        bottom: 76px;
+        padding-top: 15px;
+        margin-bottom: 0;
+        z-index: 998;
+    }
+
+    #floating-toc-btn .btn-floating {
+        width: 48px;
+        height: 48px;
+    }
+
+    #floating-toc-btn .btn-floating i {
+        line-height: 48px;
+        font-size: 1.4rem;
+    }
+</style>
+<div class="row">
+    <div id="main-content" class="col s12 m12 l9">
+        <!-- 文章内容详情 -->
+<div id="artDetail">
+    <div class="card">
+        <div class="card-content article-info">
+            <div class="row tag-cate">
+                <div class="col s7">
+                    
+                          <div class="article-tag">
+                            <span class="chip bg-color">No tag</span>
+                          </div>
+                    
+                </div>
+                <div class="col s5 right-align">
+                    
+                    <div class="post-cate">
+                        <i class="fas fa-bookmark fa-fw icon-category"></i>
+                        
+                            <a href="/categories/Docs/" class="post-category">
+                                Docs
+                            </a>
+                        
+                            <a href="/categories/Docs/Getting-Started/" class="post-category">
+                                Getting_Started
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+
+            <div class="post-info">
+                
+                <div class="post-date info-break-policy">
+                    <i class="far fa-calendar-minus fa-fw"></i>Publish Date:&nbsp;&nbsp;
+                    2023-01-06
+                </div>
+                
+
+                
+
+                
+
+                
+
+                
+                
+                <div class="info-break-policy">
+                    
+                    <style>
+                        .github-edit-link {
+                            padding: 0 2px;
+                            color: #42b983;
+                            font-weight: 500;
+                            text-decoration: underline;
+                            word-wrap: break-word;
+                        }
+                    </style>
+                    <a class="github-edit-link" href="https://github.com/byConity/byconity.github.io/edit/main/source/_posts/%E5%9F%BA%E7%A1%80%E4%BD%BF%E7%94%A8%E6%89%8B%E5%86%8C/%E9%9B%86%E7%BE%A4%E9%85%8D%E7%BD%AE%E5%8F%82%E6%95%B0.md" target="_blank">
+                        <i class="far fa-edit fa-fw"></i>Edit post
+                    </a>
+                </div>
+                
+            </div>
+        </div>
+        <hr class="clearfix">
+
+        
+
+        
+
+        <div class="card-content article-card-content">
+            <div id="articleContent">
+                <h1 id="集群配置参数"><a href="#集群配置参数" class="headerlink" title="集群配置参数"></a>集群配置参数</h1><p>文档类型：说明型</p>
+<p>内容提要：</p>
+<ol>
+<li>在安装部署的过程中，需要理解哪些基础参数</li>
+<li>各组件分别有哪些高级参数，作用是什么</li>
+</ol>
+<h2 id="Server-配置参数"><a href="#Server-配置参数" class="headerlink" title="Server 配置参数"></a>Server 配置参数</h2><p>ByConity(曾用内部代号 CNCH)  Server 端的配置保存在 cnch-server.xml 中，进程启动时通过 <code>--config-file</code> 指定， server 会自动从 cnch-server.xml 中加载配置。</p>
+<h3 id="cnch-type"><a href="#cnch-type" class="headerlink" title="cnch_type"></a>cnch_type</h3><p>配置 ByConity 进程类型，可配置为 server 或者 worker。其中 server 主要负责接收查询请求并负责将查询调度到 worker；worker 节点主要负责执行来自 server 的查询任务。举例如下：</p>
+<p>Example:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;cnch_type&gt;server&lt;/cnch_type&gt;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h3 id="tcp-port"><a href="#tcp-port" class="headerlink" title="tcp_port"></a>tcp_port</h3><p>server 和客户端进行连接的 TCP 端口</p>
+<p>Example：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;tcp_port&gt;9000&lt;/tcp_port&gt;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h3 id="http-port"><a href="#http-port" class="headerlink" title="http_port"></a>http_port</h3><p>server 与客户端进行连接的 HTTP 端口</p>
+<p>Example:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;https_port&gt;9999&lt;/https_port&gt;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h3 id="rpc-port"><a href="#rpc-port" class="headerlink" title="rpc_port"></a>rpc_port</h3><p>server 与其他组件进行交互的 RPC 端口</p>
+<p>Example:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;rpc_port&gt;8124&lt;/rpc_port&gt;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h3 id="exchange-port"><a href="#exchange-port" class="headerlink" title="exchange_port"></a>exchange_port</h3><p>复杂查询的数据传输端口 （将来考虑与 rpc_port 合并）</p>
+<h3 id="exchange-status-port"><a href="#exchange-status-port" class="headerlink" title="exchange_status_port"></a>exchange_status_port</h3><p>复杂查询的控制指令端口 （将来考虑与 rpc_port 合并）</p>
+<h3 id="path"><a href="#path" class="headerlink" title="path"></a>path</h3><p>本地数据路径目录</p>
+<p>Example:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;path&gt;/var/lib/clickhouse/&lt;/path&gt;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h3 id="tmp-path"><a href="#tmp-path" class="headerlink" title="tmp_path"></a>tmp_path</h3><p>本地临时目录路径,用来存放查询过程中的临时数据</p>
+<p>Example：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;tmp_path&gt;/var/lib/clickhouse/tmp/&lt;/tmp_path&gt;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h3 id="users-config"><a href="#users-config" class="headerlink" title="users_config"></a>users_config</h3><p>用户相关配置文件的路径。</p>
+<p>Example:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;users_config&gt;/path/to/userconf/users.xml&lt;/users_config&gt;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h3 id="Service-discovery"><a href="#Service-discovery" class="headerlink" title="Service discovery"></a>Service discovery</h3><p>配置与 server 进程通信的其他组件(包括其他 server)。与 server 交互的其他组件有 server, tso, daemon manager, virtual warehouse 以及 resource manager</p>
+<p>keys**:**</p>
+<ul>
+<li><strong>mode</strong> : 服务发现模式, 可选择的配置参数为 local , dns, consul</li>
+<li><strong>cluster</strong>: 集群名称</li>
+<li><strong>disable_cache</strong>：如果配置为 false, 将启用缓存以减少调用服务发现的次数</li>
+<li><strong>cache_timeout</strong> : 缓存过期时间</li>
+</ul>
+<p>Example</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">&lt;service_discovery&gt;</span><br><span class="line">    &lt;mode&gt;dns&lt;/mode&gt;</span><br><span class="line">    &lt;cluster&gt;default&lt;/cluster&gt;</span><br><span class="line">        &lt;disable_cache&gt;false&lt;/disable_cache&gt;</span><br><span class="line">        &lt;cache_timeout&gt;5&lt;/cache_timeout&gt;</span><br><span class="line">    &lt;server&gt;</span><br><span class="line">        &lt;psm&gt;data.cnch.server&lt;/psm&gt;</span><br><span class="line">        &lt;service&gt;cnch-server-pp&lt;/service&gt;</span><br><span class="line">        &lt;headless_service&gt;cnch-server-pp-headless&lt;/headless_service&gt;</span><br><span class="line">    &lt;/server&gt;</span><br><span class="line">    &lt;tso&gt;</span><br><span class="line">        &lt;psm&gt;data.cnch.tso&lt;/psm&gt;</span><br><span class="line">        &lt;service&gt;cnch-tso&lt;/service&gt;</span><br><span class="line">        &lt;headless_service&gt;cnch-tso-headless&lt;/headless_service&gt;</span><br><span class="line">    &lt;/tso&gt;</span><br><span class="line">    &lt;vw&gt;</span><br><span class="line">        &lt;psm&gt;data.cnch.vw&lt;/psm&gt;</span><br><span class="line">    &lt;/vw&gt;</span><br><span class="line">    &lt;daemon_manager&gt;</span><br><span class="line">        &lt;psm&gt;data.cnch.daemon_manager&lt;/psm&gt;</span><br><span class="line">        &lt;service&gt;cnch-daemon-manager&lt;/service&gt;</span><br><span class="line">        &lt;headless_service&gt;cnch-daemon-manager-headless&lt;/headless_service&gt;</span><br><span class="line">    &lt;/daemon_manager&gt;</span><br><span class="line">    &lt;resource_manager&gt;</span><br><span class="line">        &lt;psm&gt;data.cnch.resource_manager&lt;/psm&gt;</span><br><span class="line">        &lt;service&gt;cnch-resource-manager&lt;/service&gt;</span><br><span class="line">        &lt;headless_service&gt;cnch-resource-manager-headless&lt;/headless_service&gt;</span><br><span class="line">    &lt;/resource_manager&gt;</span><br><span class="line">&lt;/service_discovery&gt;            </span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h3 id="Catalog-service"><a href="#Catalog-service" class="headerlink" title="Catalog service"></a>Catalog service</h3><p>集群元数据相关配置</p>
+<p>Keys:</p>
+<ul>
+<li><strong>type</strong> : 元数据存储引擎类型，支持 bytekv, fdb</li>
+</ul>
+<p>Example:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&lt;!-- For foundationDB metastore--&gt;</span><br><span class="line">&lt;catalog_service&gt;</span><br><span class="line">    &lt;!--TODO: move name_space into catalog_service tag --&gt;</span><br><span class="line">    &lt;!--Metastore storage type, support `bytekv` and `fdb`--&gt;</span><br><span class="line">    &lt;type&gt;fdb&lt;/type&gt;</span><br><span class="line">    &lt;fdb&gt;</span><br><span class="line">        &lt;cluster_file&gt;/path/to/fdb/cluster_config&lt;/cluster_file&gt;</span><br><span class="line">    &lt;/fdb&gt;</span><br><span class="line">&lt;/catalog_service&gt;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h3 id=""><a href="#" class="headerlink" title=""></a></h3><h2 id="HDFS-配置参数"><a href="#HDFS-配置参数" class="headerlink" title="HDFS  配置参数"></a>HDFS  配置参数</h2><p>启动服务时，会按照 cfs_addr&gt;hdfs_addr&gt;hdfs_ha_nameservice&gt;hdfs_nnproxy 的顺序来检测配置项，一但其中某个配置项配置则使用对应的配置项来访问 HDFS</p>
+<h3 id="hdfs-user"><a href="#hdfs-user" class="headerlink" title="hdfs_user"></a>hdfs_user</h3><p>访问 HDFS 时默认使用的用户的名称，默认 clickhouse</p>
+<p>Example:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;hdfs_user&gt;clickhouse&lt;/hdfs_user&gt;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h3 id="cfs-addr"><a href="#cfs-addr" class="headerlink" title="cfs_addr"></a>cfs_addr</h3><p>cfs 服务的地址，格式为 cfs:&#x2F;&#x2F;service_url</p>
+<p>Example:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;cfs_addr&gt;cfs://service_url&lt;/cfs_addr&gt;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h3 id="hdfs-addr"><a href="#hdfs-addr" class="headerlink" title="hdfs_addr"></a>hdfs_addr</h3><p>hdfs 服务的地址，格式为 hdfs:&#x2F;&#x2F;nnip:nnport&#x2F;path</p>
+<p>Example:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;hdfs_addr&gt;hdfs://nnip:nnport/path&lt;/hdfs_addr&gt;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h3 id="hdfs-ha-nameservice"><a href="#hdfs-ha-nameservice" class="headerlink" title="hdfs_ha_nameservice"></a>hdfs_ha_nameservice</h3><p>hdfs 服务的名称，需要在 libhdfs3 的配置文件中提前配置好</p>
+<p>Example:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;hdfs_ha_nameservice&gt;hdfs_service&lt;/hdfs_ha_nameservice&gt;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h3 id="hdfs-nnproxy"><a href="#hdfs-nnproxy" class="headerlink" title="hdfs_nnproxy"></a><del>hdfs_nnproxy</del></h3><p><del>访问~~~~HDFS~~~~时默认使用的 nnproxy 名称，默认 nnproxy</del></p>
+<p><del>Example:</del></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">~~&lt;hdfs_nnproxy&gt;nnproxy&lt;/hdfs_nnproxy&gt;~~</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h3 id="storage-configuration"><a href="#storage-configuration" class="headerlink" title="storage_configuration"></a>storage_configuration</h3><ol>
+<li>接下来的配置层级与配置文件中 storage_configuration 配置层级一一对应</li>
+</ol>
+<ul>
+<li>storage_configuration</li>
+<li>cnch_default_policy，指定 CNCH 存储实际数据所使用的 StoragePolicy，可选配置项，默认是 cnch_default_hdfs，这个 StoragePolicy 中应当仅包含 HDFSDisk</li>
+<li>当建表的时候，对于 CNCH 表，如果没有指定 storage_policy 这个 MergeTreeSettings，则会被默认修改为 ${cnch_default_policy}</li>
+<li>cnch_auxility_policy，指定 CNCH 在本地磁盘上存储临时数据所使用的 StoragePolicy，可选配置项，默认是 default</li>
+<li>disks</li>
+<li>${DISK_NAME}</li>
+<li>type，这个磁盘的类型，可选配置项，默认是 local</li>
+<li>CNCH 支持选用 hdfs&#x2F;bytehdfs 这两种磁盘作为远端存储，目前该 StoragePolicy 中仅支持单个 Disk</li>
+<li>为了与内部的配置兼容，hdfs&#x2F;bytehdfs 均解析为内部的 bytehdfs 这种 Disk，社区版本的 HDFSDisk 的 type 被重命名为 communityhdfs</li>
+<li>CNCH 所使用的 StoragePolicy 所指定的 HDFSDisk，其配置项在所有的 Server&#x2F;Worker 的配置文件中都应当相同</li>
+<li>path</li>
+<li>数据将被存储在这个 Disk 的哪个路径中，必需的配置项</li>
+<li>hdfs_params</li>
+<li>针对 bytehdfs 类型的磁盘所新增的可选配置项，包含如下参数</li>
+<li>hdfs_user，连接 hdfs 所使用的 user，可选配置项，默认是 clickhouse</li>
+<li>cfs_addr，cfs 的地址，可选配置项，仅在使用 cfs 时需要配置此配置项</li>
+<li>hdfs_addr，hdfs 的 namenode 的地址，可选配置项，如 hdfs:&#x2F;&#x2F;nnip:nnport&#x2F;path</li>
+<li>hdfs_ha_nameservice，可选配置项，如果需要使用 hdfs 的 HA，可以使用该配置项指定对应的 service，对应的 hdfs 配置需要通过 hdfs3_config 配置文件来配置</li>
+<li>hdfs_nnproxy，hdfs 的 nnproxy 的地址，可选配置项，默认是 nnproxy</li>
+<li>如果 DiskByteHDFS 没有配置 hdfs_params 配置项，则会去配置文件中找到全局的配置项，例如配置文件中 hdfs_user 这个配置项的值</li>
+<li>policies</li>
+<li>${STORAGE_POLICY_NAME}</li>
+<li>volumes</li>
+<li>${VOLUME_NAME}</li>
+<li>default，这个 Volume 中的默认磁盘，必需的配置项，默认的磁盘会被用来存放部分不支持多盘存储的数据，例如 metastore 等</li>
+<li>disk，这个 Volume 所包含的所有磁盘名称，必需的配置项，对应 Disk 需要在 storage_configuration.disks 中配置好</li>
+</ul>
+<ol>
+<li>配置示例</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line">&lt;storage_configuration&gt;</span><br><span class="line">    &lt;disks&gt;</span><br><span class="line">        &lt;default&gt;&lt;/default&gt;</span><br><span class="line">        &lt;server_local_disk1&gt;</span><br><span class="line">            &lt;path&gt;/home/ch_test_service/service_test_env/server_data1/&lt;/path&gt;</span><br><span class="line">        &lt;/server_local_disk1&gt;</span><br><span class="line">        &lt;server_local_disk2&gt;</span><br><span class="line">            &lt;path&gt;/home/ch_test_service/service_test_env/server_data2/&lt;/path&gt;</span><br><span class="line">        &lt;/server_local_disk2&gt;</span><br><span class="line">        &lt;server_hdfs_disk0&gt;</span><br><span class="line">            &lt;path&gt;/user/cnch/&lt;/path&gt;</span><br><span class="line">            &lt;type&gt;bytehdfs&lt;/type&gt;</span><br><span class="line">        &lt;/server_hdfs_disk0&gt;</span><br><span class="line">    &lt;/disks&gt;</span><br><span class="line">    &lt;policies&gt;</span><br><span class="line">        &lt;default&gt;</span><br><span class="line">            &lt;volumes&gt;</span><br><span class="line">                &lt;local&gt;</span><br><span class="line">                    &lt;default&gt;default&lt;/default&gt;</span><br><span class="line">                    &lt;disk&gt;default&lt;/disk&gt;</span><br><span class="line">                    &lt;disk&gt;server_local_disk1&lt;/disk&gt;</span><br><span class="line">                    &lt;disk&gt;server_local_disk2&lt;/disk&gt;</span><br><span class="line">                &lt;/local&gt;</span><br><span class="line">            &lt;/volumes&gt;</span><br><span class="line">        &lt;/default&gt;</span><br><span class="line">        &lt;cnch_default_hdfs&gt;</span><br><span class="line">            &lt;volumes&gt;</span><br><span class="line">                &lt;hdfs&gt;</span><br><span class="line">                    &lt;default&gt;server_hdfs_disk0&lt;/default&gt;</span><br><span class="line">                    &lt;disk&gt;server_hdfs_disk0&lt;/disk&gt;</span><br><span class="line">                &lt;/hdfs&gt;</span><br><span class="line">            &lt;/volumes&gt;</span><br><span class="line">        &lt;/cnch_default_hdfs&gt;</span><br><span class="line">    &lt;/policies&gt;</span><br><span class="line">&lt;/storage_configuration&gt;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<ol>
+<li>为了兼容内部旧版本的配置项，如果用户仅指定了 default 这一个 StoragePolicy，同时包含 hdfs 和 local 这两个 volume，那么这个配置项会被解析成两个 StoragePolicy，一个是 default，但是仅包含 local 这个 volume，另一个是 ${cnch_default_policy}，仅包含 hdfs 这个 volume</li>
+</ol>
+<h3 id="hdfs3-config"><a href="#hdfs3-config" class="headerlink" title="hdfs3_config"></a>hdfs3_config</h3><p>libhdfs3 配置文件路径</p>
+<p>Example:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;hdfs3_config&gt;/path/to/conf/hdfs3.xml&lt;/hdfs3_config&gt;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h3 id="disk-cache-strategies"><a href="#disk-cache-strategies" class="headerlink" title="disk_cache_strategies"></a>disk_cache_strategies</h3><p>配置 disk cache 策略，包括策略 simple 和 lru 两种不同策略：</p>
+<ul>
+<li><strong>lru</strong>，LRUCache 淘汰策略相关配置</li>
+<li>lru_max_size，DiskCache 最大的大小，默认 2T</li>
+<li>random_drop_threshold，Cache 队列有长度限制，当队列长度到达一定比例后会按一定几率开始丢弃 Cache 请求来避免大表 Scan 导致 Cache 队列被占满，默认 50%</li>
+<li><strong>simple</strong>，Cache 策略相关配置</li>
+<li>segment_size，DiskCache 的粒度，默认 8192，及将一个 ColumnStream 的最多 8192 个 GranuleCache 成一个 DiskCacheSegment</li>
+<li>hits_to_cache，数据开始 Cache 的阈值，默认为 2</li>
+</ul>
+<p>Example:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&lt;disk_cache_strategies&gt;</span><br><span class="line">    &lt;simple&gt;</span><br><span class="line">        &lt;lru_max_size&gt;1099511627776&lt;/lru_max_size&gt;</span><br><span class="line">    &lt;/simple&gt;</span><br><span class="line">&lt;/disk_cache_strategies&gt;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h3 id="cnch-kafka-log"><a href="#cnch-kafka-log" class="headerlink" title="cnch_kafka_log"></a>cnch_kafka_log</h3><p>配置后，CNCH 将开启 kafka_log, 可通过系统表查看消费日志</p>
+<p>Example:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&lt;cnch_kafka_log&gt;</span><br><span class="line">    &lt;database&gt;cnch_system&lt;/database&gt;</span><br><span class="line">    &lt;table&gt;cnch_kafka_log&lt;/table&gt;</span><br><span class="line">    &lt;flush_max_row_count&gt;10000&lt;/flush_max_row_count&gt;</span><br><span class="line">    &lt;flush_interval_milliseconds&gt;7500&lt;/flush_interval_milliseconds&gt;</span><br><span class="line">&lt;/cnch_kafka_log&gt;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h3 id="brpc"><a href="#brpc" class="headerlink" title="brpc"></a>brpc</h3><h3 id="cnch-transaction-cleaner-max-threads"><a href="#cnch-transaction-cleaner-max-threads" class="headerlink" title="cnch_transaction_cleaner_max_threads"></a>cnch_transaction_cleaner_max_threads</h3><p>CNCH 后台清理 transaction record 的线程池大小，默认 128</p>
+<p>Example:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;cnch_transaction_cleaner_max_threads&gt;128&lt;/cnch_transaction_cleaner_max_threads&gt;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h3 id="cnch-transaction-cleaner-queue-size"><a href="#cnch-transaction-cleaner-queue-size" class="headerlink" title="cnch_transaction_cleaner_queue_size"></a>cnch_transaction_cleaner_queue_size</h3><p>CNCH 后台清理 transaction record 的线程池队列大小，默认 10000</p>
+<p>Example:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;cnch_transaction_cleaner_queue_size&gt;10000&lt;/cnch_transaction_cleaner_queue_size&gt;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h3 id="dance-merge-selector"><a href="#dance-merge-selector" class="headerlink" title="dance_merge_selector"></a>dance_merge_selector</h3><p>配置自研 merge 选择策略参数</p>
+<p>Example:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;dance_merge_selector&gt;</span><br><span class="line">    &lt;max_total_rows_to_merge&gt;10000000&lt;/max_total_rows_to_merge&gt;</span><br><span class="line">&lt;/dance_merge_selector&gt;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h3 id="exchange-timeout-ms"><a href="#exchange-timeout-ms" class="headerlink" title="exchange_timeout_ms"></a>exchange_timeout_ms</h3><p>复杂查询数据传输 rpc 超时，默认 100000</p>
+<p>Example:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;exchange_timeout_ms&gt;100000&lt;/exchange_timeout_ms&gt;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h3 id="zookeeper"><a href="#zookeeper" class="headerlink" title="zookeeper"></a>zookeeper</h3><p>配置 zookeeper （可选）， 当使用 clickhouse keeper 时需要配置为空</p>
+<p>Example:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;zookeeper&gt;&lt;/zookeeper&gt;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h2 id="TSO-配置参数"><a href="#TSO-配置参数" class="headerlink" title="TSO 配置参数"></a>TSO 配置参数</h2><h3 id="tso-service"><a href="#tso-service" class="headerlink" title="tso_service"></a>tso_service</h3><p>配置 tso 服务，包括服务端口，元数据存储，keeper 等</p>
+<p>Keys:</p>
+<ul>
+<li><strong>port</strong>:  TSO 服务 TCP 端口</li>
+<li><strong>keeper</strong>:  tso，server_master 等组件 leader 选举服务</li>
+<li><strong>type</strong>:  TSO 元数据存储引擎</li>
+</ul>
+<p>Example:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&lt;tso_service&gt;</span><br><span class="line">    &lt;port&gt;8080&lt;/port&gt;</span><br><span class="line">    &lt;keeper&gt;</span><br><span class="line">        &lt;port&gt;2181&lt;/port&gt;</span><br><span class="line">    &lt;/keeper&gt;</span><br><span class="line">    &lt;!-- Support for CNCH-CE Merge. Metastore store type, support `bytekv` and `fdb` --&gt;</span><br><span class="line">    &lt;type&gt;fdb&lt;/type&gt;</span><br><span class="line">    &lt;fdb&gt;</span><br><span class="line">        &lt;cluster_file&gt;/path/to/fdb/conf/fdb.cluster&lt;/cluster_file&gt;&gt;</span><br><span class="line">    &lt;/fdb&gt;</span><br><span class="line"> &lt;/tso_service&gt;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h3 id="keeper-server"><a href="#keeper-server" class="headerlink" title="keeper_server"></a>keeper_server</h3><ul>
+<li>path: keeper 数据存储路径</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;path&gt;/var/lib/tso_server/keeper/&lt;/path&gt;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>keeper_server</li>
+<li>tcp_port：keeper 服务的 tcp 端口</li>
+<li>server_id：keeper 内部 leader 选举的 id，需要是 int 类型</li>
+<li>log_storage_path：keeper log 存储路径</li>
+<li>snapshot_storage_path：keeper snapshot 存储路径</li>
+<li>coordination_settings：支持定制化 keeper settings</li>
+<li>raft_configuration：可选，支持从配置文件读取 keeper 节点。如使用服务发现读取 keeper 节点，则不能配置该配置项</li>
+<li>id: 同上 server_id</li>
+<li>hostname: ip 地址</li>
+<li>port: keeper 内部通信 port，与 tcp_port 不同</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">&lt;keeper_server&gt;</span><br><span class="line">    &lt;tcp_port&gt;9181&lt;/tcp_port&gt;</span><br><span class="line">    &lt;server_id&gt;1&lt;/server_id&gt;</span><br><span class="line">    &lt;log_storage_path&gt;/var/lib/tso_server/keeper/log&lt;/log_storage_path&gt;</span><br><span class="line">    &lt;snapshot_storage_path&gt;/var/lib/tso_server/keeper1/snapshots&lt;/snapshot_storage_path&gt;</span><br><span class="line"></span><br><span class="line">    &lt;coordination_settings&gt;</span><br><span class="line">        &lt;operation_timeout_ms&gt;10000&lt;/operation_timeout_ms&gt;</span><br><span class="line">        &lt;session_timeout_ms&gt;30000&lt;/session_timeout_ms&gt;</span><br><span class="line">        &lt;raft_logs_level&gt;warning&lt;/raft_logs_level&gt;</span><br><span class="line">        &lt;compress_logs&gt;0&lt;/compress_logs&gt;</span><br><span class="line">    &lt;/coordination_settings&gt;</span><br><span class="line">&lt;!--</span><br><span class="line">    &lt;raft_configuration&gt;</span><br><span class="line">        &lt;server&gt;</span><br><span class="line">            &lt;id&gt;1&lt;/id&gt;</span><br><span class="line">            &lt;hostname&gt;host0&lt;/hostname&gt;</span><br><span class="line">            &lt;port&gt;9445&lt;/port&gt;</span><br><span class="line">        &lt;/server&gt;</span><br><span class="line">        &lt;server&gt;</span><br><span class="line">            &lt;id&gt;2&lt;/id&gt;</span><br><span class="line">            &lt;hostname&gt;host1&lt;/hostname&gt;</span><br><span class="line">            &lt;port&gt;9445&lt;/port&gt;</span><br><span class="line">        &lt;/server&gt;</span><br><span class="line">        &lt;server&gt;</span><br><span class="line">            &lt;id&gt;3&lt;/id&gt;</span><br><span class="line">            &lt;hostname&gt;host2&lt;/hostname&gt;</span><br><span class="line">            &lt;port&gt;9445&lt;/port&gt;</span><br><span class="line">        &lt;/server&gt;</span><br><span class="line">    &lt;/raft_configuration&gt;</span><br><span class="line">--&gt;</span><br><span class="line">&lt;/keeper_server&gt;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>zookeeper</li>
+</ul>
+<p>配置 zookeeper 以启用 leader election，也可通过服务发现来获取 zookeeper 的节点信息，在这种情况下，需要配置一个空的 zookeeper 标签</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&lt;zookeeper&gt;</span><br><span class="line">    &lt;!--</span><br><span class="line">    &lt;node index=&quot;1&quot;&gt;</span><br><span class="line">        &lt;host&gt;host0&lt;/host&gt;</span><br><span class="line">        &lt;port&gt;9181&lt;/port&gt;</span><br><span class="line">    &lt;/node&gt;</span><br><span class="line">    --&gt;</span><br><span class="line">&lt;/zookeeper&gt;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h3 id="service-discovery"><a href="#service-discovery" class="headerlink" title="service_discovery"></a>service_discovery</h3><p>服务发现相关配置，高可用 TSO 进程通过服务发现获取其他 TSO server 地址及端口进行通信</p>
+<p>Keys:</p>
+<ul>
+<li><strong>mode</strong> : 与其他模块 service discovery 一样，支持 dns, consul, local 等模式</li>
+</ul>
+<p>Example:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&lt;service_discovery&gt;</span><br><span class="line">    &lt;mode&gt;dns&lt;/mode&gt;</span><br><span class="line">    &lt;tso&gt;</span><br><span class="line">        &lt;psm&gt;data.cnch.tso&lt;/psm&gt;</span><br><span class="line">        &lt;service&gt;cnch-tso&lt;/service&gt;</span><br><span class="line">        &lt;headless_service&gt;cnch-tso-headless&lt;/headless_service&gt;</span><br><span class="line">    &lt;/tso&gt;</span><br><span class="line">&lt;/service_discovery&gt;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h2 id="Daemon-Manager-配置参数"><a href="#Daemon-Manager-配置参数" class="headerlink" title="Daemon Manager 配置参数"></a>Daemon Manager 配置参数</h2><h3 id="daemon-manager"><a href="#daemon-manager" class="headerlink" title="daemon_manager"></a>daemon_manager</h3><p>配置 daemon manager 进程端口以及调度后台任务的信息</p>
+<p>Keys:</p>
+<ul>
+<li>port:  DM 进程 TCP 端口</li>
+<li>http: DM 进程 http 端口等配置</li>
+<li>workload_thread_interval_ms: 后台任务调度的时间间隔</li>
+<li>daemon_jobs: DM 负责调度的后台任务类型及配置。可调度的任务类型包括：PART_GC, PART_MERGE, CONSUMER, GLOBAL_GC, TXN_GC 等</li>
+</ul>
+<p>Example:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line">&lt;daemon_manager&gt;</span><br><span class="line">    &lt;port&gt;8090&lt;/port&gt;</span><br><span class="line">    &lt;http&gt;</span><br><span class="line">        &lt;port&gt;8091&lt;/port&gt;</span><br><span class="line">        &lt;receive_timeout&gt;1800&lt;/receive_timeout&gt;</span><br><span class="line">        &lt;send_timeout&gt;1800&lt;/send_timeout&gt;</span><br><span class="line">    &lt;/http&gt;</span><br><span class="line">    &lt;workload_thread_interval_ms&gt;1000&lt;/workload_thread_interval_ms&gt;</span><br><span class="line">    &lt;daemon_jobs&gt;</span><br><span class="line">        &lt;job&gt;</span><br><span class="line">            &lt;name&gt;PART_GC&lt;/name&gt;</span><br><span class="line">            &lt;!-- Interval in millisecond --&gt;</span><br><span class="line">            &lt;interval&gt;10000&lt;/interval&gt;</span><br><span class="line">        &lt;/job&gt;</span><br><span class="line">        &lt;job&gt;</span><br><span class="line">            &lt;name&gt;PART_MERGE&lt;/name&gt;</span><br><span class="line">            &lt;!-- Interval in millisecond --&gt;</span><br><span class="line">            &lt;interval&gt;10000&lt;/interval&gt;</span><br><span class="line">        &lt;/job&gt;</span><br><span class="line">        &lt;job&gt;</span><br><span class="line">            &lt;name&gt;CONSUMER&lt;/name&gt;</span><br><span class="line">            &lt;!-- Interval in millisecond --&gt;</span><br><span class="line">            &lt;interval&gt;10000&lt;/interval&gt;</span><br><span class="line">        &lt;/job&gt;</span><br><span class="line">        &lt;job&gt;</span><br><span class="line">            &lt;name&gt;GLOBAL_GC&lt;/name&gt;</span><br><span class="line">            &lt;!-- Interval in millisecond --&gt;</span><br><span class="line">            &lt;interval&gt;50000&lt;/interval&gt;</span><br><span class="line">        &lt;/job&gt;</span><br><span class="line">        &lt;job&gt;</span><br><span class="line">            &lt;name&gt;TXN_GC&lt;/name&gt;</span><br><span class="line">            &lt;!-- Interval in millisecond --&gt;</span><br><span class="line">            &lt;interval&gt;600000&lt;/interval&gt;</span><br><span class="line">        &lt;/job&gt;</span><br><span class="line">        &lt;job&gt;</span><br><span class="line">            &lt;name&gt;DEDUP_WORKER&lt;/name&gt;</span><br><span class="line">            &lt;!-- Interval in millisecond --&gt;</span><br><span class="line">            &lt;interval&gt;10000&lt;/interval&gt;</span><br><span class="line">        &lt;/job&gt;</span><br><span class="line">        &lt;job&gt;</span><br><span class="line">            &lt;name&gt;PART_CLUSTERING&lt;/name&gt;</span><br><span class="line">            &lt;!-- Interval in millisecond --&gt;</span><br><span class="line">            &lt;interval&gt;10000&lt;/interval&gt;</span><br><span class="line">        &lt;/job&gt;</span><br><span class="line">    &lt;/daemon_jobs&gt;</span><br><span class="line">&lt;/daemon_manager&gt;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h3 id="cnch-data-retention-time-in-sec"><a href="#cnch-data-retention-time-in-sec" class="headerlink" title="cnch_data_retention_time_in_sec"></a>cnch_data_retention_time_in_sec</h3><p>被删除的表及数据库在被彻底清理之前的保留时间，默认 3 天。期间内，用户可以恢复已经删除的数据。</p>
+<p>Example:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;cnch_data_retention_time_in_sec&gt;86400&lt;/cnch_data_retention_time_in_sec&gt;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h2 id="Resource-Manager-配置参数"><a href="#Resource-Manager-配置参数" class="headerlink" title="Resource Manager 配置参数"></a>Resource Manager 配置参数</h2><h3 id="resource-manager"><a href="#resource-manager" class="headerlink" title="resource_manager"></a>resource_manager</h3><p>配置 resource manager 进程端口、初始 VW 配置等信息。</p>
+<p>Keys：</p>
+<ul>
+<li>**port: **服务启动的端口号</li>
+<li>**vws: **初始配置的 VW 相关信息</li>
+</ul>
+<p>Example：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">&lt;resource_manager&gt;</span><br><span class="line">    &lt;port&gt;18989&lt;/port&gt;</span><br><span class="line">    &lt;vws&gt;</span><br><span class="line">        &lt;vw&gt;</span><br><span class="line">            &lt;name&gt;vw_default&lt;/name&gt;</span><br><span class="line">            &lt;type&gt;Default&lt;/type&gt;</span><br><span class="line">            &lt;num_workers&gt;1&lt;/num_workers&gt;</span><br><span class="line">            &lt;worker_groups&gt;</span><br><span class="line">                &lt;worker_group&gt;</span><br><span class="line">                    &lt;name&gt;wg_default&lt;/name&gt;</span><br><span class="line">                    &lt;type&gt;Physical&lt;/type&gt;</span><br><span class="line">                &lt;/worker_group&gt;</span><br><span class="line">            &lt;/worker_groups&gt;</span><br><span class="line">        &lt;/vw&gt;</span><br><span class="line">    &lt;/vws&gt;</span><br><span class="line">&lt;/resource_manager&gt;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h3 id="catalog"><a href="#catalog" class="headerlink" title="catalog"></a>catalog</h3><p>Catalog 相关配置。</p>
+<p>Keys:</p>
+<ul>
+<li>name_space</li>
+</ul>
+<p>Example:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;name_space&gt;default&lt;/name_space&gt;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h3 id="catalog-service"><a href="#catalog-service" class="headerlink" title="catalog_service"></a>catalog_service</h3><p>catalog_service 相关配置。</p>
+<p>Keys:</p>
+<ul>
+<li><strong>type</strong> - catalog 服务的类型</li>
+</ul>
+<p>Example:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&lt;!-- For foundationDB metastore--&gt;</span><br><span class="line">&lt;catalog_service&gt;</span><br><span class="line">    &lt;!--TODO: move name_space into catalog_service tag --&gt;</span><br><span class="line">    &lt;!--Metastore storage type, support `bytekv` and `fdb`--&gt;</span><br><span class="line">    &lt;type&gt;fdb&lt;/type&gt;</span><br><span class="line">    &lt;fdb&gt;</span><br><span class="line">        &lt;cluster_file&gt;/path/to/fdb/cluster_config&lt;/cluster_file&gt;</span><br><span class="line">    &lt;/fdb&gt;</span><br><span class="line">&lt;/catalog_service&gt;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+                
+            </div>
+            <hr/>
+
+            
+
+
+
+            <div class="tag_share" style="display: block;">
+                <div class="post-meta__tag-list" style="display: inline-block;">
+                    
+                        <div class="article-tag">
+                            <span class="chip bg-color">No tag</span>
+                        </div>
+                    
+                </div>
+                <div class="post_share" style="zoom: 80%; width: fit-content; display: inline-block; float: right; margin: -0.15rem 0;">
+                    <link rel="stylesheet" type="text/css" href="/libs/share/css/share.min.css">
+<div id="article-share">
+
+    
+    <div class="social-share" data-sites="twitter,facebook,linkedin,qq,wechat,weibo" data-wechat-qrcode-helper="<p>微信扫一扫即可分享！</p>"></div>
+    <script src="/libs/share/js/social-share.min.js"></script>
+    
+
+    
+
+</div>
+
+                </div>
+            </div>
+            
+        </div>
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+<article id="prenext-posts" class="prev-next articles">
+    <div class="row article-row">
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge left-badge text-color">
+                <i class="fas fa-chevron-left"></i>&nbsp;Previous</div>
+            <div class="card">
+                <a href="/zh-cn/docs/%E5%9F%BA%E7%A1%80%E4%BD%BF%E7%94%A8%E6%89%8B%E5%86%8C/%E9%85%8D%E7%BD%AE%E8%AE%A1%E7%AE%97%E7%BB%84/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/21.jpg" class="responsive-img" alt="配置计算组">
+                        
+                        <span class="card-title">配置计算组</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            
+                        
+                    </div>
+                    <div class="publish-info">
+                        <span class="publish-date">
+                            <i class="far fa-clock fa-fw icon-date"></i>2023-01-06
+                        </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/Docs/" class="post-category">
+                                    Docs
+                                </a>
+                            
+                            <a href="/categories/Docs/Getting-Started/" class="post-category">
+                                    Getting_Started
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                Next&nbsp;<i class="fas fa-chevron-right"></i>
+            </div>
+            <div class="card">
+                <a href="/zh-cn/docs/%E9%AB%98%E7%BA%A7%E7%94%A8%E6%88%B7%E6%89%8B%E5%86%8C/%E4%BA%8B%E7%89%A9%E5%92%8C%E5%B9%B6%E5%8F%91%E6%8E%A7%E5%88%B6/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/8.jpg" class="responsive-img" alt="事物和并发控制">
+                        
+                        <span class="card-title">事物和并发控制</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2023-01-06
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/Docs/" class="post-category">
+                                    Docs
+                                </a>
+                            
+                            <a href="/categories/Docs/Advanced/" class="post-category">
+                                    Advanced
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+        
+    </div>
+</article>
+
+</div>
+
+
+
+<!-- 代码块功能依赖 -->
+<script type="text/javascript" src="/libs/codeBlock/codeBlockFuction.js"></script>
+
+<!-- 代码语言 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeLang.js"></script>
+
+
+<!-- 代码块复制 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeCopy.js"></script>
+
+
+<!-- 代码块收缩 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeShrink.js"></script>
+
+
+    </div>
+    <div id="toc-aside" class="expanded col l3 hide-on-med-and-down">
+        <div class="toc-widget card" style="background-color: white;">
+            <div class="toc-title"><i class="far fa-list-alt"></i>&nbsp;&nbsp;TOC</div>
+            <div id="toc-content"></div>
+        </div>
+    </div>
+</div>
+
+<!-- TOC 悬浮按钮. -->
+
+<div id="floating-toc-btn" class="hide-on-med-and-down">
+    <a class="btn-floating btn-large bg-color">
+        <i class="fas fa-list-ul"></i>
+    </a>
+</div>
+
+
+<script src="/libs/tocbot/tocbot.min.js"></script>
+<script>
+    $(function () {
+        tocbot.init({
+            tocSelector: '#toc-content',
+            contentSelector: '#articleContent',
+            headingsOffset: -($(window).height() * 0.4 - 45),
+            collapseDepth: Number('0'),
+            headingSelector: 'h2, h3, h4'
+        });
+
+        // modify the toc link href to support Chinese.
+        let i = 0;
+        let tocHeading = 'toc-heading-';
+        $('#toc-content a').each(function () {
+            $(this).attr('href', '#' + tocHeading + (++i));
+        });
+
+        // modify the heading title id to support Chinese.
+        i = 0;
+        $('#articleContent').children('h2, h3, h4').each(function () {
+            $(this).attr('id', tocHeading + (++i));
+        });
+
+        // Set scroll toc fixed.
+        let tocHeight = parseInt($(window).height() * 0.4 - 64);
+        let $tocWidget = $('.toc-widget');
+        $(window).scroll(function () {
+            let scroll = $(window).scrollTop();
+            /* add post toc fixed. */
+            if (scroll > tocHeight) {
+                $tocWidget.addClass('toc-fixed');
+            } else {
+                $tocWidget.removeClass('toc-fixed');
+            }
+        });
+
+        
+        /* 修复文章卡片 div 的宽度. */
+        let fixPostCardWidth = function (srcId, targetId) {
+            let srcDiv = $('#' + srcId);
+            if (srcDiv.length === 0) {
+                return;
+            }
+
+            let w = srcDiv.width();
+            if (w >= 450) {
+                w = w + 21;
+            } else if (w >= 350 && w < 450) {
+                w = w + 18;
+            } else if (w >= 300 && w < 350) {
+                w = w + 16;
+            } else {
+                w = w + 14;
+            }
+            $('#' + targetId).width(w);
+        };
+
+        // 切换TOC目录展开收缩的相关操作.
+        const expandedClass = 'expanded';
+        let $tocAside = $('#toc-aside');
+        let $mainContent = $('#main-content');
+        $('#floating-toc-btn .btn-floating').click(function () {
+            if ($tocAside.hasClass(expandedClass)) {
+                $tocAside.removeClass(expandedClass).hide();
+                $mainContent.removeClass('l9');
+            } else {
+                $tocAside.addClass(expandedClass).show();
+                $mainContent.addClass('l9');
+            }
+            fixPostCardWidth('artDetail', 'prenext-posts');
+        });
+        
+    });
+</script>
+
+    
+
+</main>
+
+
+
+
+    <footer class="page-footer bg-color">
+    
+    <div class="container row center-align" style="margin-bottom: 0px !important;">
+        <div class="col s12 m8 l8 copy-right">
+            Copyright&nbsp;&copy;
+            
+                <span id="year">2022-2023</span>
+            
+            <!-- <span id="year">2022</span> -->
+            <a href="/about" target="_blank">ByteDance Inc.</a>
+            |&nbsp;Powered by&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a>
+            |&nbsp;Theme&nbsp;<a href="https://github.com/blinkfox/hexo-theme-matery" target="_blank">Matery</a>
+            <br>
+            
+            
+            
+            
+            
+            <br>
+            
+            <br>
+            
+        </div>
+        <div class="col s12 m4 l4 social-link ">
+    <a href="https://github.com/byconity" class="tooltipped" target="_blank" data-tooltip="GitHub" data-position="top" data-delay="50">
+        <i class="fab fa-github"></i>
+    </a>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <a href="/atom.xml" class="tooltipped" target="_blank" data-tooltip="RSS" data-position="top" data-delay="50">
+        <i class="fas fa-rss"></i>
+    </a>
+
+</div>
+    </div>
+</footer>
+
+<div class="progress-bar"></div>
+
+
+    <!-- 搜索遮罩框 -->
+<div id="searchModal" class="modal">
+    <div class="modal-content">
+        <div class="search-header">
+            <span class="title"><i class="fas fa-search"></i>&nbsp;&nbsp;Search</span>
+            <input type="search" id="searchInput" name="s" placeholder="Please enter a search keyword"
+                   class="search-input">
+        </div>
+        <div id="searchResult"></div>
+    </div>
+</div>
+
+<script type="text/javascript">
+$(function () {
+    var searchFunc = function (path, search_id, content_id) {
+        'use strict';
+        $.ajax({
+            url: path,
+            dataType: "xml",
+            success: function (xmlResponse) {
+                // get the contents from search data
+                var datas = $("entry", xmlResponse).map(function () {
+                    return {
+                        title: $("title", this).text(),
+                        content: $("content", this).text(),
+                        url: $("url", this).text()
+                    };
+                }).get();
+                var $input = document.getElementById(search_id);
+                var $resultContent = document.getElementById(content_id);
+                $input.addEventListener('input', function () {
+                    var str = '<ul class=\"search-result-list\">';
+                    var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+                    $resultContent.innerHTML = "";
+                    if (this.value.trim().length <= 0) {
+                        return;
+                    }
+                    // perform local searching
+                    datas.forEach(function (data) {
+                        var isMatch = true;
+                        var data_title = data.title.trim().toLowerCase();
+                        var data_content = data.content.trim().replace(/<[^>]+>/g, "").toLowerCase();
+                        var data_url = data.url;
+                        data_url = data_url.indexOf('/') === 0 ? data.url : '/' + data_url;
+                        var index_title = -1;
+                        var index_content = -1;
+                        var first_occur = -1;
+                        // only match artiles with not empty titles and contents
+                        if (data_title !== '' && data_content !== '') {
+                            keywords.forEach(function (keyword, i) {
+                                index_title = data_title.indexOf(keyword);
+                                index_content = data_content.indexOf(keyword);
+                                if (index_title < 0 && index_content < 0) {
+                                    isMatch = false;
+                                } else {
+                                    if (index_content < 0) {
+                                        index_content = 0;
+                                    }
+                                    if (i === 0) {
+                                        first_occur = index_content;
+                                    }
+                                }
+                            });
+                        }
+                        // show search results
+                        if (isMatch) {
+                            str += "<li><a href='" + data_url + "' class='search-result-title'>" + data_title + "</a>";
+                            var content = data.content.trim().replace(/<[^>]+>/g, "");
+                            if (first_occur >= 0) {
+                                // cut out 100 characters
+                                var start = first_occur - 20;
+                                var end = first_occur + 80;
+                                if (start < 0) {
+                                    start = 0;
+                                }
+                                if (start === 0) {
+                                    end = 100;
+                                }
+                                if (end > content.length) {
+                                    end = content.length;
+                                }
+                                var match_content = content.substr(start, end);
+                                // highlight all keywords
+                                keywords.forEach(function (keyword) {
+                                    var regS = new RegExp(keyword, "gi");
+                                    match_content = match_content.replace(regS, "<em class=\"search-keyword\">" + keyword + "</em>");
+                                });
+
+                                str += "<p class=\"search-result\">" + match_content + "...</p>"
+                            }
+                            str += "</li>";
+                        }
+                    });
+                    str += "</ul>";
+                    $resultContent.innerHTML = str;
+                });
+            }
+        });
+    };
+
+    searchFunc('/search.xml', 'searchInput', 'searchResult');
+});
+</script>
+
+    <!-- 回到顶部按钮 -->
+<div id="backTop" class="top-scroll">
+    <a class="btn-floating btn-large waves-effect waves-light" href="#!">
+        <i class="fas fa-arrow-up"></i>
+    </a>
+</div>
+
+
+    <script src="/libs/materialize/materialize.min.js"></script>
+    <script src="/libs/masonry/masonry.pkgd.min.js"></script>
+    <script src="/libs/aos/aos.js"></script>
+    <script src="/libs/scrollprogress/scrollProgress.min.js"></script>
+    <script src="/libs/lightGallery/js/lightgallery-all.min.js"></script>
+    <script src="/js/matery.js"></script>
+
+    <!-- Baidu Analytics -->
+
+    <!-- Baidu Push -->
+
+<script>
+    (function () {
+        var bp = document.createElement('script');
+        var curProtocol = window.location.protocol.split(':')[0];
+        if (curProtocol === 'https') {
+            bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+        } else {
+            bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+        }
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(bp, s);
+    })();
+</script>
+
+    
+    
+
+    
+
+    
+
+	
+    
+
+    
+
+    
+
+    
+    <script src="/libs/instantpage/instantpage.js" type="module"></script>
+    
+
+</body>
+
+</html>

@@ -1,0 +1,1824 @@
+<!DOCTYPE HTML>
+<html lang="en,zh-cn,default">
+
+
+<head>
+    <meta charset="utf-8">
+    <meta name="keywords" content="Array, ByConity keywords">
+    <meta name="description" content="theme.home.header.description">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="renderer" content="webkit|ie-stand|ie-comp">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+
+
+    <title>Array | ByConity</title>
+    <link rel="icon" type="image/png" href="/favicon.png">
+
+    <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
+    <link rel="stylesheet" type="text/css" href="/libs/materialize/materialize.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/aos/aos.css">
+    <link rel="stylesheet" type="text/css" href="/libs/animate/animate.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/lightGallery/css/lightgallery.min.css">
+    <link rel="stylesheet" type="text/css" href="/css/matery.css">
+    <link rel="stylesheet" type="text/css" href="/css/my.css">
+
+    <script src="/libs/jquery/jquery.min.js"></script>
+
+<meta name="generator" content="Hexo 6.3.0"><link rel="alternate" href="/atom.xml" title="ByConity" type="application/atom+xml">
+</head>
+
+
+
+
+<body>
+    <header class="navbar-fixed">
+    <nav id="headNav" class="bg-color nav-transparent">
+        <div id="navContainer" class="nav-wrapper container">
+            <div class="brand-logo">
+                <a href="/" class="waves-effect waves-light">
+                    
+                    <img src="/medias/logo.png" class="logo-img" alt="LOGO">
+                    
+                    <span class="logo-span">ByConity</span>
+                </a>
+            </div>
+            
+
+<a href="#" data-target="mobile-nav" class="sidenav-trigger button-collapse"><i class="fas fa-bars"></i></a>
+<ul class="right nav-menu">
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/" class="waves-effect waves-light">
+      
+      <i class="fas fa-home" style="zoom: 0.6;"></i>
+      
+      <span>Home</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/zh-cn/docs" class="waves-effect waves-light">
+      
+      <i class="fas fa-archive" style="zoom: 0.6;"></i>
+      
+      <span>Docs</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a target="_blank" rel="noopener" href="https://github.com/byconity" class="waves-effect waves-light">
+      
+      <i class="fas fa-user-circle" style="zoom: 0.6;"></i>
+      
+      <span>Community</span>
+    </a>
+    
+  </li>
+  
+  <li>
+    <a href="#searchModal" class="modal-trigger waves-effect waves-light">
+      <i id="searchIcon" class="fas fa-search" title="Search" style="zoom: 0.85;"></i>
+    </a>
+  </li>
+</ul>
+
+
+<div id="mobile-nav" class="side-nav sidenav">
+
+    <div class="mobile-head bg-color">
+        
+        <img src="/medias/logo.png" class="logo-img circle responsive-img">
+        
+        <div class="logo-name">ByConity</div>
+        <div class="logo-desc">
+            
+            theme.home.header.description
+            
+        </div>
+    </div>
+
+    
+
+    <ul class="menu-list mobile-menu-list">
+        
+        <li class="m-nav-item">
+	  
+		<a href="/" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-home"></i>
+			
+			Home
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/zh-cn/docs" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-archive"></i>
+			
+			Docs
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a target="_blank" rel="noopener" href="https://github.com/byconity" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-user-circle"></i>
+			
+			Community
+		</a>
+          
+        </li>
+        
+        
+        <li><div class="divider"></div></li>
+        <li>
+            <a href="https://github.com/byConity" class="waves-effect waves-light" target="_blank">
+                <i class="fab fa-github-square fa-fw"></i>Contribute with us
+            </a>
+        </li>
+        
+    </ul>
+</div>
+
+
+        </div>
+
+        
+            <style>
+    .nav-transparent .github-corner {
+        display: none !important;
+    }
+
+    .github-corner {
+        position: absolute;
+        z-index: 10;
+        top: 0;
+        right: 0;
+        border: 0;
+        transform: scale(1.1);
+    }
+
+    .github-corner svg {
+        color: #0f9d58;
+        fill: #fff;
+        height: 64px;
+        width: 64px;
+    }
+
+    .github-corner:hover .octo-arm {
+        animation: a 0.56s ease-in-out;
+    }
+
+    .github-corner .octo-arm {
+        animation: none;
+    }
+
+    @keyframes a {
+        0%,
+        to {
+            transform: rotate(0);
+        }
+        20%,
+        60% {
+            transform: rotate(-25deg);
+        }
+        40%,
+        80% {
+            transform: rotate(10deg);
+        }
+    }
+</style>
+
+<a href="https://github.com/byConity" class="github-corner tooltipped hide-on-med-and-down" target="_blank"
+   data-tooltip="Contribute with us" data-position="left" data-delay="50">
+    <svg viewBox="0 0 250 250" aria-hidden="true">
+        <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path>
+        <path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2"
+              fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path>
+        <path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z"
+              fill="currentColor" class="octo-body"></path>
+    </svg>
+</a>
+        
+    </nav>
+
+</header>
+
+    
+
+
+
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/1.jpg')">
+    <div class="container" style="right: 0px;left: 0px;">
+        <div class="row">
+            <div class="col s12 m12 l12">
+                <div class="brand">
+                    <h1 class="description center-align post-title">Array</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<main class="post-container content">
+
+    
+    <link rel="stylesheet" href="/libs/tocbot/tocbot.css">
+<style>
+    #articleContent h1::before,
+    #articleContent h2::before,
+    #articleContent h3::before,
+    #articleContent h4::before,
+    #articleContent h5::before,
+    #articleContent h6::before {
+        display: block;
+        content: " ";
+        height: 100px;
+        margin-top: -100px;
+        visibility: hidden;
+    }
+
+    #articleContent :focus {
+        outline: none;
+    }
+
+    .toc-fixed {
+        position: fixed;
+        top: 64px;
+    }
+
+    .toc-widget {
+        width: 345px;
+        padding-left: 20px;
+    }
+
+    .toc-widget .toc-title {
+        padding: 35px 0 15px 17px;
+        font-size: 1.5rem;
+        font-weight: bold;
+        line-height: 1.5rem;
+    }
+
+    .toc-widget ol {
+        padding: 0;
+        list-style: none;
+    }
+
+    #toc-content {
+        padding-bottom: 30px;
+        overflow: auto;
+    }
+
+    #toc-content ol {
+        padding-left: 10px;
+    }
+
+    #toc-content ol li {
+        padding-left: 10px;
+    }
+
+    #toc-content .toc-link:hover {
+        color: #42b983;
+        font-weight: 700;
+        text-decoration: underline;
+    }
+
+    #toc-content .toc-link::before {
+        background-color: transparent;
+        max-height: 25px;
+
+        position: absolute;
+        right: 23.5vw;
+        display: block;
+    }
+
+    #toc-content .is-active-link {
+        color: #42b983;
+    }
+
+    #floating-toc-btn {
+        position: fixed;
+        right: 15px;
+        bottom: 76px;
+        padding-top: 15px;
+        margin-bottom: 0;
+        z-index: 998;
+    }
+
+    #floating-toc-btn .btn-floating {
+        width: 48px;
+        height: 48px;
+    }
+
+    #floating-toc-btn .btn-floating i {
+        line-height: 48px;
+        font-size: 1.4rem;
+    }
+</style>
+<div class="row">
+    <div id="main-content" class="col s12 m12 l9">
+        <!-- 文章内容详情 -->
+<div id="artDetail">
+    <div class="card">
+        <div class="card-content article-info">
+            <div class="row tag-cate">
+                <div class="col s7">
+                    
+                          <div class="article-tag">
+                            <span class="chip bg-color">No tag</span>
+                          </div>
+                    
+                </div>
+                <div class="col s5 right-align">
+                    
+                    <div class="post-cate">
+                        <i class="fas fa-bookmark fa-fw icon-category"></i>
+                        
+                            <a href="/categories/Docs/" class="post-category">
+                                Docs
+                            </a>
+                        
+                            <a href="/categories/Docs/SQL-Syntax/" class="post-category">
+                                SQL_Syntax
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+
+            <div class="post-info">
+                
+                <div class="post-date info-break-policy">
+                    <i class="far fa-calendar-minus fa-fw"></i>Publish Date:&nbsp;&nbsp;
+                    2023-01-06
+                </div>
+                
+
+                
+
+                
+
+                
+
+                
+                
+                <div class="info-break-policy">
+                    
+                    <style>
+                        .github-edit-link {
+                            padding: 0 2px;
+                            color: #42b983;
+                            font-weight: 500;
+                            text-decoration: underline;
+                            word-wrap: break-word;
+                        }
+                    </style>
+                    <a class="github-edit-link" href="https://github.com/byConity/byconity.github.io/edit/main/source/_posts/SQL%E8%AF%AD%E6%B3%95%E8%AF%B4%E6%98%8E/functions/array.md" target="_blank">
+                        <i class="far fa-edit fa-fw"></i>Edit post
+                    </a>
+                </div>
+                
+            </div>
+        </div>
+        <hr class="clearfix">
+
+        
+
+        
+
+        <div class="card-content article-card-content">
+            <div id="articleContent">
+                <blockquote>
+<p>Notice:<br>Some of the examples below are referenced from <a target="_blank" rel="noopener" href="https://clickhouse.com/docs/en/sql-reference/functions/">ClickHouse Documentation</a> but have been adapted and modified to work in ByteHouse.</p>
+</blockquote>
+<h2 id="array"><a href="#array" class="headerlink" title="array"></a>array</h2><p>Creates an array from the function arguments.</p>
+<p>The arguments must be constants and have types that have the smallest common type. At least one argument must be passed, because otherwise it isn’t clear which type of array to create. That is, you can’t use this function to create an empty array (to do that, use the ‘emptyArray*’ function described above).</p>
+<p><strong>Syntax</strong></p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">array</span>(x1, …)</span><br></pre></td></tr></table></figure>
+
+<p><strong>Arguments</strong></p>
+<ul>
+<li><code>x1,...</code> – must be constants and have types that have the smallest common type</li>
+</ul>
+<p><strong>Returned value</strong></p>
+<ul>
+<li>Returns an ‘Array(T)’ type result, where ‘T’ is the smallest common type out of the passed arguments.</li>
+</ul>
+<p><strong>Example</strong></p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="keyword">array</span>(<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>);</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">┌─array(1, 2, 3)─┐</span><br><span class="line">│ [1, 2, 3]      │</span><br><span class="line">└────────────────┘</span><br></pre></td></tr></table></figure>
+
+<h2 id="arrayAll"><a href="#arrayAll" class="headerlink" title="arrayAll"></a>arrayAll</h2><p>Returns 1 if <code>func</code> returns something other than 0 for all the elements in <code>arr</code> . Otherwise, it returns 0.<br>Note that the <code>arrayAll</code> is a higher-order function. You can pass a lambda function to it as the first argument.</p>
+<p><strong>Syntax</strong></p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">arrayAll([func,] arr1, …)</span><br></pre></td></tr></table></figure>
+
+<p><strong>Arguments</strong></p>
+<ul>
+<li><code>func</code> – higher-order function which must return UInt8</li>
+<li><code>arr1,..</code> - arrays as input for func</li>
+</ul>
+<p><strong>Returned value</strong></p>
+<ul>
+<li>Returns 1 if <code>func</code> returns something other than 0 for all the elements in <code>arr</code></li>
+</ul>
+<p><strong>Example</strong></p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> arrayAll((x,y)<span class="operator">-</span><span class="operator">&gt;</span>x<span class="operator">=</span><span class="operator">=</span>y,[<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>],[<span class="number">4</span>,<span class="number">5</span>,<span class="number">6</span>]);</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">┌─arrayAll(lambda(tuple(x, y), equals(x, y)), [1, 2, 3], [4, 5, 6])─┐</span><br><span class="line">│ 0                                                                 │</span><br><span class="line">└───────────────────────────────────────────────────────────────────┘</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> arrayAll((x,y)<span class="operator">-</span><span class="operator">&gt;</span>x<span class="operator">=</span><span class="operator">=</span>y,[<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>],[<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>]);</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">┌─arrayAll(lambda(tuple(x, y), equals(x, y)), [1, 2, 3], [1, 2, 3])─┐</span><br><span class="line">│ 1                                                                 │</span><br><span class="line">└───────────────────────────────────────────────────────────────────┘</span><br></pre></td></tr></table></figure>
+
+<h2 id="arrayConcat"><a href="#arrayConcat" class="headerlink" title="arrayConcat"></a>arrayConcat</h2><p>Combines arrays passed as arguments.</p>
+<p><strong>Syntax</strong></p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">arrayConcat(arrays)</span><br></pre></td></tr></table></figure>
+
+<p><strong>Arguments</strong></p>
+<ul>
+<li><code>arrays</code> – Arbitrary number of arguments of Array type.</li>
+</ul>
+<p><strong>Returned value</strong></p>
+<ul>
+<li>A combined array.</li>
+</ul>
+<p><strong>Example</strong></p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> arrayConcat([<span class="number">1</span>, <span class="number">2</span>], [<span class="number">3</span>, <span class="number">4</span>], [<span class="number">5</span>, <span class="number">6</span>]) <span class="keyword">AS</span> res</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">┌─res───────────┐</span><br><span class="line">│ [1,2,3,4,5,6] │</span><br><span class="line">└───────────────┘</span><br></pre></td></tr></table></figure>
+<h2 id="arrayCount"><a href="#arrayCount" class="headerlink" title="arrayCount"></a>arrayCount</h2><p>Returns the number of elements in the arr array for which func returns something other than 0. If ‘func’ is not specified, it returns the number of non-zero elements in the array.</p>
+<p>Note that the <code>arrayCount</code> is a higher-order function. You can pass a lambda function to it as the first argument.</p>
+<p><strong>Syntax</strong></p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">arrayCount([func,] arr1, …)</span><br></pre></td></tr></table></figure>
+
+<p><strong>Arguments</strong></p>
+<ul>
+<li><code>func</code> – higher-order function which must return UInt8</li>
+<li><code>arr1,..</code> - arrays as input for func</li>
+</ul>
+<p><strong>Returned value</strong></p>
+<ul>
+<li>number of elements in the arr array for which func returns something other than 0</li>
+</ul>
+<p><strong>Example</strong></p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> arrayCount((x,y)<span class="operator">-</span><span class="operator">&gt;</span>x<span class="operator">=</span><span class="operator">=</span>y,[<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>],[<span class="number">1</span>,<span class="number">5</span>,<span class="number">3</span>]);</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">┌─arrayCount(lambda(tuple(x, y), equals(x, y)), [1, 2, 3], [1, 5, 3])─┐</span><br><span class="line">│ 2                                                                   │</span><br><span class="line">└─────────────────────────────────────────────────────────────────────┘</span><br></pre></td></tr></table></figure>
+
+<h2 id="arrayCumSum"><a href="#arrayCumSum" class="headerlink" title="arrayCumSum"></a>arrayCumSum</h2><p>Returns an array of partial sums of elements in the source array (a running sum). If the <code>func</code> function is specified, then the values of the array elements are converted by this function before summing.</p>
+<p>Note that the <code>arrayCumSum</code> is a higher-order function. You can pass a lambda function to it as the first argument.</p>
+<p><strong>Syntax</strong></p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">arrayCumSum([func,] arr1, …)</span><br></pre></td></tr></table></figure>
+
+<p><strong>Arguments</strong></p>
+<ul>
+<li><code>func</code> – higher-order function</li>
+<li><code>arr1,..</code> - arrays as input for func</li>
+</ul>
+<p><strong>Returned value</strong></p>
+<ul>
+<li>An array of partial sums of elements in the source array</li>
+</ul>
+<p><strong>Example</strong></p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> arrayCumSum([<span class="number">1</span>, <span class="number">1</span>, <span class="number">1</span>, <span class="number">1</span>]) <span class="keyword">AS</span> res</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">┌─res──────────┐</span><br><span class="line">│ [1, 2, 3, 4] │</span><br><span class="line">└──────────────┘</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> arrayCumSum(x<span class="operator">-</span><span class="operator">&gt;</span>x<span class="operator">+</span><span class="number">1</span>,[<span class="number">1</span>, <span class="number">1</span>, <span class="number">1</span>, <span class="number">1</span>]) <span class="keyword">AS</span> res</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">┌─res──────────┐</span><br><span class="line">│ [2, 4, 6, 8] │</span><br><span class="line">└──────────────┘</span><br></pre></td></tr></table></figure>
+
+<h2 id="arrayCumSumNonNegative"><a href="#arrayCumSumNonNegative" class="headerlink" title="arrayCumSumNonNegative"></a>arrayCumSumNonNegative</h2><p>Same as <code>arrayCumSum</code> , returns an array of partial sums of elements in the source array (a running sum). Different <code>arrayCumSum</code> , when returned value contains a value less than zero, the value is replace with zero and the subsequent calculation is performed with zero parameters. For example:</p>
+<p>Note that the <code>arraySumNonNegative</code> is a higher-order function. You can pass a lambda function to it as the first argument.</p>
+<p><strong>Syntax</strong></p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">arrayCumSumNonNegative([func,] arr1, …)</span><br></pre></td></tr></table></figure>
+
+<p><strong>Arguments</strong></p>
+<ul>
+<li><code>func</code> – higher-order function</li>
+<li><code>arr1,..</code> - arrays as input for func</li>
+</ul>
+<p><strong>Returned value</strong></p>
+<ul>
+<li>An array of partial sums of elements in the source array</li>
+</ul>
+<p><strong>Example</strong></p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> arrayCumSumNonNegative([<span class="number">1</span>, <span class="number">1</span>, <span class="number">-4</span>, <span class="number">1</span>]) <span class="keyword">AS</span> res</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">┌─res──────────┐</span><br><span class="line">│ [1, 2, 0, 1] │</span><br><span class="line">└──────────────┘</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> arrayCumSumNonNegative(x<span class="operator">-</span><span class="operator">&gt;</span>x<span class="number">-2</span>,[<span class="number">1</span>, <span class="number">1</span>, <span class="number">-4</span>, <span class="number">3</span>]) <span class="keyword">AS</span> res</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">┌─res──────────┐</span><br><span class="line">│ [0, 0, 0, 1] │</span><br><span class="line">└──────────────┘</span><br></pre></td></tr></table></figure>
+
+<h2 id="arrayDifference"><a href="#arrayDifference" class="headerlink" title="arrayDifference"></a>arrayDifference</h2><p>Calculates the difference between adjacent array elements. Returns an array where the first element will be 0, the second is the difference between <code>a[1] - a[0]</code> , etc. The type of elements in the resulting array is determined by the type inference rules for subtraction (e.g. <code>UInt8</code> - <code>UInt8</code> &#x3D; <code>Int16</code> ).</p>
+<p><strong>Syntax</strong></p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">arrayDifference(<span class="keyword">array</span>)</span><br></pre></td></tr></table></figure>
+
+<p><strong>Arguments</strong></p>
+<ul>
+<li><code>array</code> – an Array.</li>
+</ul>
+<p><strong>Returned values</strong><br>Returns an array of differences between adjacent elements.<br>Type: UInt*, Int*, Float*.</p>
+<p><strong>Example</strong></p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> arrayDifference([<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>]);</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">┌─arrayDifference([1, 2, 3, 4])─┐</span><br><span class="line">│ [0, 1, 1, 1]                  │</span><br><span class="line">└───────────────────────────────┘</span><br></pre></td></tr></table></figure>
+
+<p>Example of the overflow due to result type Int64:</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> arrayDifference([<span class="number">0</span>, <span class="number">10000000000000000000</span>]);</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">┌─arrayDifference([0, 10000000000000000000])─┐</span><br><span class="line">│ [0, -8446744073709551616]                  │</span><br><span class="line">└────────────────────────────────────────────┘</span><br></pre></td></tr></table></figure>
+
+<h2 id="arrayDistinct"><a href="#arrayDistinct" class="headerlink" title="arrayDistinct"></a>arrayDistinct</h2><p>Takes an array, returns an array containing the distinct elements only.</p>
+<p><strong>Syntax</strong></p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">arrayDistinct(<span class="keyword">array</span>)</span><br></pre></td></tr></table></figure>
+
+<p><strong>Arguments</strong></p>
+<ul>
+<li><code>array</code> – an Array.</li>
+</ul>
+<p><strong>Returned values</strong></p>
+<ul>
+<li>Returns an array containing the distinct elements.</li>
+</ul>
+<p><strong>Example</strong></p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> arrayDistinct([<span class="number">1</span>, <span class="number">2</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">1</span>]);</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">┌─arrayDistinct([1, 2, 2, 3, 1])─┐</span><br><span class="line">│ [1, 2, 3]                      │</span><br><span class="line">└────────────────────────────────┘</span><br></pre></td></tr></table></figure>
+
+<h2 id="arrayElement"><a href="#arrayElement" class="headerlink" title="arrayElement"></a>arrayElement</h2><p>Get the element with the index <code>n</code> from the array <code>arr</code> . <code>n</code> must be any integer type.<br>Indexes in an array begin from one.</p>
+<p>Negative indexes are supported. In this case, it selects the corresponding element numbered from the end. For example, <code>arr[-1]</code> is the last item in the array.</p>
+<p>If the index falls outside of the bounds of an array, it returns some default value (0 for numbers, an empty string for strings, etc.), except for the case with a non-constant array and a constant index 0 (in this case there will be an error <code>Array indices are 1-based</code> ).</p>
+<p><strong>Syntax</strong></p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">arrayElement(<span class="keyword">array</span>, n)</span><br></pre></td></tr></table></figure>
+
+<p><strong>Arguments</strong></p>
+<ul>
+<li><code>array</code> – an Array. </li>
+<li><code>n</code> - an Index in the array.</li>
+</ul>
+<p><strong>Returned values</strong></p>
+<ul>
+<li>Get the element with the index <code>n</code> from the array <code>arr</code></li>
+</ul>
+<p><strong>Example</strong></p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> arrayElement([<span class="number">1</span>, <span class="number">2</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">1</span>],<span class="number">3</span>);</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">┌─arrayElement([1, 2, 2, 3, 1], 3)─┐</span><br><span class="line">│ 2                                │</span><br><span class="line">└──────────────────────────────────┘</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="arrayEnumerate"><a href="#arrayEnumerate" class="headerlink" title="arrayEnumerate"></a>arrayEnumerate</h2><p>Returns the array [1, 2, 3, … ]</p>
+<p>This function is normally used with ARRAY JOIN. It allows counting something just once for each array after applying ARRAY JOIN.</p>
+<p><strong>Syntax</strong></p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">arrayEnumerate(arr)</span><br></pre></td></tr></table></figure>
+
+<p><strong>Arguments</strong></p>
+<ul>
+<li><code>arr</code> – an Array.</li>
+</ul>
+<p><strong>Returned values</strong></p>
+<ul>
+<li>Returns the array [1, 2, 3, … ]</li>
+</ul>
+<p><strong>Example</strong></p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> number, num <span class="keyword">FROM</span> numbers(<span class="number">5</span>) <span class="keyword">ARRAY</span> <span class="keyword">JOIN</span> arrayEnumerate([<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>]) <span class="keyword">as</span> num</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">┌─number─┬─num─┐</span><br><span class="line">│ 0      │ 1   │</span><br><span class="line">│ 0      │ 2   │</span><br><span class="line">│ 0      │ 3   │</span><br><span class="line">│ 1      │ 1   │</span><br><span class="line">│ 1      │ 2   │</span><br><span class="line">│ 1      │ 3   │</span><br><span class="line">│ 2      │ 1   │</span><br><span class="line">│ 2      │ 2   │</span><br><span class="line">│ 2      │ 3   │</span><br><span class="line">│ 3      │ 1   │</span><br><span class="line">│ 3      │ 2   │</span><br><span class="line">│ 3      │ 3   │</span><br><span class="line">│ 4      │ 1   │</span><br><span class="line">│ 4      │ 2   │</span><br><span class="line">│ 4      │ 3   │</span><br><span class="line">└────────┴─────┘</span><br></pre></td></tr></table></figure>
+
+<h2 id="arrayEnumerateDense"><a href="#arrayEnumerateDense" class="headerlink" title="arrayEnumerateDense"></a>arrayEnumerateDense</h2><p>Returns an array of the same size as the source array, indicating where each element first appears in the source array.</p>
+<p><strong>Syntax</strong></p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">arrayEnumerateDense(arr)</span><br></pre></td></tr></table></figure>
+
+<p><strong>Arguments</strong></p>
+<ul>
+<li><code>arr</code> – an Array.</li>
+</ul>
+<p><strong>Returned values</strong></p>
+<ul>
+<li>An array where each element first appears in the source array</li>
+</ul>
+<p><strong>Example</strong></p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> arrayEnumerateDense([<span class="number">10</span>, <span class="number">20</span>, <span class="number">10</span>, <span class="number">30</span>])</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">┌─arrayEnumerateDense([10, 20, 10, 30])─┐</span><br><span class="line">│ [1, 2, 1, 3]                          │</span><br><span class="line">└───────────────────────────────────────┘</span><br></pre></td></tr></table></figure>
+
+<h2 id="arrayEnumerateUniq"><a href="#arrayEnumerateUniq" class="headerlink" title="arrayEnumerateUniq"></a>arrayEnumerateUniq</h2><p>Returns an array the same size as the source array, indicating for each element what its position is among elements with the same value.</p>
+<p>For example: arrayEnumerateUniq([10, 20, 10, 30]) &#x3D; [1, 1, 2, 1].</p>
+<p>This function is useful when using ARRAY JOIN and aggregation of array elements.</p>
+<p><strong>Syntax</strong></p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">arrayEnumerateUniq(arr, …)</span><br></pre></td></tr></table></figure>
+
+<p><strong>Arguments</strong></p>
+<ul>
+<li><code>arr</code> – an Array.</li>
+</ul>
+<p><strong>Returned values</strong></p>
+<ul>
+<li>Returns an array the same size as the source array, indicating for each element what its position is among elements with the same value.</li>
+</ul>
+<p><strong>Example</strong></p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> arrayEnumerateUniq([<span class="number">10</span>, <span class="number">20</span>, <span class="number">10</span>, <span class="number">30</span>]) <span class="keyword">as</span> res</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">┌─res──────────┐</span><br><span class="line">│ [1, 1, 2, 1] │</span><br><span class="line">└──────────────┘</span><br></pre></td></tr></table></figure>
+
+<p>The arrayEnumerateUniq function can take multiple arrays of the same size as arguments. In this case, uniqueness is considered for tuples of elements in the same positions in all the arrays.</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> arrayEnumerateUniq([<span class="number">1</span>, <span class="number">1</span>, <span class="number">1</span>, <span class="number">2</span>, <span class="number">2</span>, <span class="number">2</span>], [<span class="number">1</span>, <span class="number">1</span>, <span class="number">2</span>, <span class="number">1</span>, <span class="number">1</span>, <span class="number">2</span>]) <span class="keyword">AS</span> res</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">┌─res────────────────┐</span><br><span class="line">│ [1, 2, 1, 1, 2, 1] │</span><br><span class="line">└────────────────────┘</span><br></pre></td></tr></table></figure>
+
+<p>This is necessary when using ARRAY JOIN with a nested data structure and further aggregation across multiple elements in this structure.</p>
+<h2 id="arrayExists"><a href="#arrayExists" class="headerlink" title="arrayExists"></a>arrayExists</h2><p>Returns 1 if there is at least one element in <code>arr</code> for which <code>func</code> returns something other than 0. Otherwise, it returns 0.</p>
+<p>Note that the <code>arrayExists</code> is a higher-order function.</p>
+<p><strong>Syntax</strong></p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">arrayExists([func,] arr1, …)</span><br></pre></td></tr></table></figure>
+
+<p><strong>Arguments</strong></p>
+<ul>
+<li><code>func</code> – higher-order function which must return UInt8</li>
+<li><code>arr1,..</code> - arrays as input for func</li>
+</ul>
+<p><strong>Returned values</strong></p>
+<ul>
+<li>Returns 1 if there is at least one element in <code>arr</code> for which <code>func</code> returns something other than 0. Otherwise, it returns 0.</li>
+</ul>
+<p><strong>Example</strong></p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> arrayExists((x,y)<span class="operator">-</span><span class="operator">&gt;</span>x<span class="operator">=</span><span class="operator">=</span>y,[<span class="number">1</span>, <span class="number">2</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">1</span>],[<span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>, <span class="number">7</span>, <span class="number">8</span>]);</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">┌─arrayExists(lambda(tuple(x, y), equals(x, y)), [1, 2, 2, 3, 1], [4, 5, 6, 7, 8])─┐</span><br><span class="line">│ 0                                                                                │</span><br><span class="line">└──────────────────────────────────────────────────────────────────────────────────┘</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> arrayExists((x,y)<span class="operator">-</span><span class="operator">&gt;</span>x<span class="operator">=</span><span class="operator">=</span>y,[<span class="number">1</span>, <span class="number">2</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">1</span>],[<span class="number">1</span>, <span class="number">5</span>, <span class="number">6</span>, <span class="number">7</span>, <span class="number">8</span>]);</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">┌─arrayExists(lambda(tuple(x, y), equals(x, y)), [1, 2, 2, 3, 1], [1, 5, 6, 7, 8])─┐</span><br><span class="line">│ 1                                                                                │</span><br><span class="line">└──────────────────────────────────────────────────────────────────────────────────┘</span><br></pre></td></tr></table></figure>
+
+<h2 id="arrayFilter"><a href="#arrayFilter" class="headerlink" title="arrayFilter"></a>arrayFilter</h2><p>Note that the <code>arrayFilter</code> is a higher-order function. You must pass a lambda function to it as the first argument, and it can’t be omitted.<br>Returns an array containing only the elements in <code>arr1</code> for which <code>func</code> returns something other than 0.</p>
+<p><strong>Syntax</strong></p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">arrayFilter(func, arr1, …)</span><br></pre></td></tr></table></figure>
+
+<p><strong>Arguments</strong></p>
+<ul>
+<li><code>func</code> – higher-order function which must return UInt8</li>
+<li><code>arr1,..</code> - arrays as input for func</li>
+</ul>
+<p><strong>Returned values</strong></p>
+<ul>
+<li>Returns an array containing only the elements in <code>arr1</code> for which <code>func</code> returns something other than 0.</li>
+</ul>
+<p><strong>Example</strong></p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> arrayFilter(x <span class="operator">-</span><span class="operator">&gt;</span> x <span class="keyword">LIKE</span> <span class="string">&#x27;%World%&#x27;</span>, [<span class="string">&#x27;Hello&#x27;</span>, <span class="string">&#x27;abc World&#x27;</span>]) <span class="keyword">AS</span> res</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">┌─res───────────┐</span><br><span class="line">│ [&#x27;abc World&#x27;] │</span><br><span class="line">└───────────────┘</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> arrayFilter((i, x) <span class="operator">-</span><span class="operator">&gt;</span> x <span class="keyword">LIKE</span> <span class="string">&#x27;%World%&#x27;</span>, arrayEnumerate(arr), [<span class="string">&#x27;Hello&#x27;</span>, <span class="string">&#x27;abc World&#x27;</span>] <span class="keyword">AS</span> arr) <span class="keyword">AS</span> res</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">┌─res─┐</span><br><span class="line">│ [2] │</span><br><span class="line">└─────┘</span><br></pre></td></tr></table></figure>
+
+
+
+<p>[block:api-header]<br>{<br>  “title”: “arrayFirst”<br>}<br>[&#x2F;block]<br>Returns the first element in the <code>arr1</code> array for which <code>func</code> returns something other than 0.<br>Note that the <code>arrayFirst</code> is a higher-order function. You must pass a lambda function to it as the first argument, and it can’t be omitted.</p>
+<p><strong>Syntax</strong></p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">arrayFirst(func, arr1, …)</span><br></pre></td></tr></table></figure>
+
+
+<p><strong>Arguments</strong></p>
+<ul>
+<li><code>func</code> – higher-order function which must return UInt8</li>
+<li><code>arr1,..</code> - arrays as input for func</li>
+</ul>
+<p><strong>Returned values</strong></p>
+<ul>
+<li>Returns the first element in the <code>arr1</code> array for which <code>func</code> returns something other than 0.</li>
+</ul>
+<p><strong>Example</strong></p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> arrayFirst(x <span class="operator">-</span><span class="operator">&gt;</span> x <span class="keyword">LIKE</span> <span class="string">&#x27;%World%&#x27;</span>, [<span class="string">&#x27;Hello World&#x27;</span>, <span class="string">&#x27;abc World&#x27;</span>]) <span class="keyword">AS</span> res</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">┌─res─────────┐</span><br><span class="line">│ Hello World │</span><br><span class="line">└─────────────┘</span><br></pre></td></tr></table></figure>
+
+
+<h2 id="arrayFirstIndex"><a href="#arrayFirstIndex" class="headerlink" title="arrayFirstIndex"></a>arrayFirstIndex</h2><p>Returns the index of the first element in the <code>arr1</code> array for which <code>func</code> returns something other than 0.</p>
+<p>Note that the <code>arrayFirstIndex</code> is a higher-order function. You must pass a lambda function to it as the first argument, and it can’t be omitted.</p>
+<p><strong>Syntax</strong></p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">arrayFirstIndex(func, arr1, …) </span><br></pre></td></tr></table></figure>
+
+<p><strong>Arguments</strong></p>
+<ul>
+<li><code>func</code> – higher-order function which must return UInt8</li>
+<li><code>arr1,..</code> - arrays as input for func</li>
+</ul>
+<p><strong>Returned values</strong></p>
+<ul>
+<li>Returns the index of the first element in the <code>arr1</code> array for which <code>func</code> returns something other than 0.</li>
+</ul>
+<p><strong>Example</strong></p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> arrayFirstIndex(x <span class="operator">-</span><span class="operator">&gt;</span> x <span class="keyword">LIKE</span> <span class="string">&#x27;%World%&#x27;</span>, [<span class="string">&#x27;Hello World&#x27;</span>, <span class="string">&#x27;abc World&#x27;</span>]) <span class="keyword">AS</span> res</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">┌─res─┐</span><br><span class="line">│ 1   │</span><br><span class="line">└─────┘</span><br></pre></td></tr></table></figure>
+
+<h2 id="arrayIntersect"><a href="#arrayIntersect" class="headerlink" title="arrayIntersect"></a>arrayIntersect</h2><p>Takes multiple arrays, returns an array with elements that are present in all source arrays. Elements order in the resulting array is the same as in the first array.</p>
+<p><strong>Syntax</strong></p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">arrayIntersect(arr)</span><br></pre></td></tr></table></figure>
+
+<p><strong>Arguments</strong></p>
+<ul>
+<li><code>arr1,..</code> - multiple arrays</li>
+</ul>
+<p><strong>Returned values</strong></p>
+<ul>
+<li>Returns an array with elements that are present in all source arrays</li>
+</ul>
+<p><strong>Example</strong></p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span></span><br><span class="line">    arrayIntersect([<span class="number">1</span>, <span class="number">2</span>], [<span class="number">1</span>, <span class="number">3</span>], [<span class="number">2</span>, <span class="number">3</span>]) <span class="keyword">AS</span> no_intersect,</span><br><span class="line">    arrayIntersect([<span class="number">1</span>, <span class="number">2</span>], [<span class="number">1</span>, <span class="number">3</span>], [<span class="number">1</span>, <span class="number">4</span>]) <span class="keyword">AS</span> <span class="keyword">intersect</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">┌─no_intersect─┬─intersect─┐</span><br><span class="line">│ []           │ [1]       │</span><br><span class="line">└──────────────┴───────────┘</span><br></pre></td></tr></table></figure>
+
+<h2 id="arrayJoin"><a href="#arrayJoin" class="headerlink" title="arrayJoin"></a>arrayJoin</h2><p>This is a very unusual function.<br>Normal functions do not change a set of rows, but just change the values in each row (map).<br>Aggregate functions compress a set of rows (fold or reduce).<br>The ‘arrayJoin’ function takes each row and generates a set of rows (unfold).</p>
+<p>This function takes an array as an argument, and propagates the source row to multiple rows for the number of elements in the array.</p>
+<p>All the values in columns are simply copied, except the values in the column where this function is applied; it is replaced with the corresponding array value.</p>
+<p>A query can use multiple <code>arrayJoin</code> functions. In this case, the transformation is performed multiple times.</p>
+<p>Note the ARRAY JOIN syntax in the SELECT query, which provides broader possibilities.</p>
+<p><strong>Syntax</strong></p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">arrayJoin(arr)</span><br></pre></td></tr></table></figure>
+
+<p><strong>Arguments</strong></p>
+<ul>
+<li><code>arr</code> - an Array</li>
+</ul>
+<p><strong>Returned values</strong></p>
+<ul>
+<li>Propagates the source row to multiple rows for the number of elements in the array.</li>
+</ul>
+<p><strong>Example</strong></p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> arrayJoin([<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>] <span class="keyword">AS</span> src) <span class="keyword">AS</span> dst, <span class="string">&#x27;Hello&#x27;</span>, src</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">┌─dst─┬─&#x27;Hello&#x27;─┬─src───────┐</span><br><span class="line">│ 1   │ Hello   │ [1, 2, 3] │</span><br><span class="line">│ 2   │ Hello   │ [1, 2, 3] │</span><br><span class="line">│ 3   │ Hello   │ [1, 2, 3] │</span><br><span class="line">└─────┴─────────┴───────────┘</span><br></pre></td></tr></table></figure>
+
+<h2 id="arrayMap"><a href="#arrayMap" class="headerlink" title="arrayMap"></a>arrayMap</h2><p>Returns an array obtained from the original application of the <code>func</code> function to each element in the <code>arr</code> array.</p>
+<p>Note that the <code>arrayMap</code> is a higher-order function. You must pass a lambda function to it as the first argument, and it can’t be omitted.</p>
+<p><strong>Syntax</strong></p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">arrayMap(func, arr1, …)</span><br></pre></td></tr></table></figure>
+
+<p><strong>Arguments</strong></p>
+<ul>
+<li><code>func</code>- higher-order function</li>
+<li><code>arr1,..</code> - multiple arrays</li>
+</ul>
+<p><strong>Returned values</strong></p>
+<ul>
+<li>Returns an array obtained from the original application of the <code>func</code> function to each element in the <code>arr</code> array.</li>
+</ul>
+<p><strong>Example</strong></p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> arrayMap(x <span class="operator">-</span><span class="operator">&gt;</span> (x <span class="operator">+</span> <span class="number">2</span>), [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>]) <span class="keyword">as</span> res;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">┌─res───────┐</span><br><span class="line">│ [3, 4, 5] │</span><br><span class="line">└───────────┘</span><br></pre></td></tr></table></figure>
+
+<p>The following example shows how to create a tuple of elements from different arrays:</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> arrayMap((x, y) <span class="operator">-</span><span class="operator">&gt;</span> (x, y), [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>], [<span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>]) <span class="keyword">AS</span> res</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">┌─res──────────────────────┐</span><br><span class="line">│ [(1, 4), (2, 5), (3, 6)] │</span><br><span class="line">└──────────────────────────┘</span><br></pre></td></tr></table></figure>
+
+<h2 id="arrayPopBack"><a href="#arrayPopBack" class="headerlink" title="arrayPopBack"></a>arrayPopBack</h2><p>Removes the last item from the array.</p>
+<p><strong>Syntax</strong></p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">arrayPopBack(<span class="keyword">array</span>)</span><br></pre></td></tr></table></figure>
+
+<p><strong>Arguments</strong></p>
+<ul>
+<li><code>array</code> – Array.</li>
+</ul>
+<p><strong>Returned values</strong></p>
+<ul>
+<li><code>array</code> – An Array removes the last item from the original array.</li>
+</ul>
+<p><strong>Example</strong></p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> arrayPopBack([<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>]) <span class="keyword">AS</span> res;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">┌─res────┐</span><br><span class="line">│ [1, 2] │</span><br><span class="line">└────────┘</span><br></pre></td></tr></table></figure>
+
+<h2 id="arrayPopFront"><a href="#arrayPopFront" class="headerlink" title="arrayPopFront"></a>arrayPopFront</h2><p>Removes the first item from the array.</p>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><code>array</code> – Array.</li>
+</ul>
+<p><strong>Returned values</strong></p>
+<ul>
+<li><code>array</code> – An Array removes the first item from the original array.</li>
+</ul>
+<p><strong>Example</strong></p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> arrayPopFront([<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>]) <span class="keyword">AS</span> res;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">┌─res────┐</span><br><span class="line">│ [2, 3] │</span><br><span class="line">└────────┘</span><br></pre></td></tr></table></figure>
+
+<h2 id="arrayPushBack"><a href="#arrayPushBack" class="headerlink" title="arrayPushBack"></a>arrayPushBack</h2><p>Adds one item to the end of the array.</p>
+<p><strong>Syntax</strong></p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">arrayPushBack(<span class="keyword">array</span>, single_value)</span><br></pre></td></tr></table></figure>
+
+<p><strong>Arguments</strong></p>
+<ul>
+<li><code>array</code> – Array. </li>
+<li><code>single_value</code> – A single value. Only numbers can be added to an array with numbers, and only strings can be added to an array of strings. When adding numbers, ByteHouse automatically sets the <code>single_value</code> type for the data type of the array. Can be <code>NULL</code> . The function adds a <code>NULL</code> element to an array, and the type of array elements converts to <code>Nullable</code> .</li>
+</ul>
+<p><strong>Returned values</strong></p>
+<ul>
+<li><code>array</code> – An Array with the new item adds to the end of original array.</li>
+</ul>
+<p><strong>Example</strong></p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> arrayPushBack([<span class="string">&#x27;a&#x27;</span>], <span class="string">&#x27;b&#x27;</span>) <span class="keyword">AS</span> res, toTypeName(arrayPushBack([<span class="string">&#x27;a&#x27;</span>], <span class="string">&#x27;b&#x27;</span>)) <span class="keyword">as</span> type;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">┌─res────┬─type──────────┐│ [a, b] │ Array(String) │└────────┴───────────────┘</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> arrayPushBack([<span class="string">&#x27;a&#x27;</span>], <span class="keyword">NULL</span>) <span class="keyword">AS</span> res, toTypeName(arrayPushBack([<span class="string">&#x27;a&#x27;</span>], <span class="keyword">NULL</span>)) <span class="keyword">as</span> type</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">┌─res───────┬─type────────────────────┐</span><br><span class="line">│ [a, ᴺᵁᴸᴸ] │ Array(Nullable(String)) │</span><br><span class="line">└───────────┴─────────────────────────┘</span><br></pre></td></tr></table></figure>
+
+<h2 id="arrayPushFront"><a href="#arrayPushFront" class="headerlink" title="arrayPushFront"></a>arrayPushFront</h2><p>Adds one element to the beginning of the array.</p>
+<p><strong>Syntax</strong></p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">arrayPushFront(<span class="keyword">array</span>, single_value)</span><br></pre></td></tr></table></figure>
+
+<p><strong>Arguments</strong></p>
+<ul>
+<li><code>array</code> – Array. </li>
+<li><code>single_value</code> – A single value. Only numbers can be added to an array with numbers, and only strings can be added to an array of strings. When adding numbers, ByteHouse automatically sets the <code>single_value</code> type for the data type of the array. Can be <code>NULL</code> . The function adds a <code>NULL</code> element to an array, and the type of array elements converts to <code>Nullable</code> .</li>
+</ul>
+<p><strong>Returned values</strong></p>
+<ul>
+<li><code>array</code> – An Array with the new item adds to the beginning of original array.</li>
+</ul>
+<p><strong>Example</strong></p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> arrayPushFront([<span class="string">&#x27;b&#x27;</span>], <span class="string">&#x27;a&#x27;</span>) <span class="keyword">AS</span> res, toTypeName(arrayPushFront([<span class="string">&#x27;b&#x27;</span>], <span class="string">&#x27;a&#x27;</span>)) <span class="keyword">as</span> type;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">┌─res────┬─type──────────┐</span><br><span class="line">│ [a, b] │ Array(String) │</span><br><span class="line">└────────┴───────────────┘</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> arrayPushFront([<span class="string">&#x27;b&#x27;</span>], <span class="keyword">NULL</span>) <span class="keyword">AS</span> res, toTypeName(arrayPushFront([<span class="string">&#x27;b&#x27;</span>], <span class="keyword">NULL</span>)) <span class="keyword">as</span> type;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">┌─res───────┬─type────────────────────┐</span><br><span class="line">│ [ᴺᵁᴸᴸ, b] │ Array(Nullable(String)) │</span><br><span class="line">└───────────┴─────────────────────────┘</span><br></pre></td></tr></table></figure>
+
+<h2 id="arrayReduce"><a href="#arrayReduce" class="headerlink" title="arrayReduce"></a>arrayReduce</h2><p>Applies an aggregate function to array elements and returns its result. The name of the aggregation function is passed as a string in single quotes <code>&#39;max&#39;</code> , <code>&#39;sum&#39;</code> . When using parametric aggregate functions, the parameter is indicated after the function name in parentheses <code>&#39;uniqUpTo(6)&#39;</code> .</p>
+<p><strong>Syntax</strong></p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">arrayReduce(agg_func, arr1, arr2, ..., arrN)</span><br></pre></td></tr></table></figure>
+
+<p><strong>Arguments</strong></p>
+<ul>
+<li><code>agg_func</code> — The name of an aggregate function which should be a constant string. </li>
+<li><code>arr</code> — Any number of array type columns as the parameters of the aggregation function.</li>
+</ul>
+<p><strong>Returned value</strong></p>
+<ul>
+<li>Result of aggregate function to array elements.</li>
+</ul>
+<p><strong>Example</strong></p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> arrayReduce(<span class="string">&#x27;max&#x27;</span>, [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>]);</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">┌─arrayReduce(&#x27;max&#x27;, [1, 2, 3])─┐│                             3 │└───────────────────────────────┘</span><br></pre></td></tr></table></figure>
+
+<p>If an aggregate function takes multiple arguments, then this function must be applied to multiple arrays of the same size.</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> arrayReduce(<span class="string">&#x27;maxIf&#x27;</span>, [<span class="number">3</span>, <span class="number">5</span>], [<span class="number">1</span>, <span class="number">0</span>]);</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">┌─arrayReduce(&#x27;maxIf&#x27;, [3, 5], [1, 0])─┐│                                    3 │└──────────────────────────────────────┘</span><br></pre></td></tr></table></figure>
+
+<p>Example with a parametric aggregate function.</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> arrayReduce(<span class="string">&#x27;uniqUpTo(3)&#x27;</span>, [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>, <span class="number">7</span>, <span class="number">8</span>, <span class="number">9</span>, <span class="number">10</span>]);</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">┌─arrayReduce(&#x27;uniqUpTo(3)&#x27;, [1, 2, 3, 4, 5, 6, 7, 8, 9, 10])─┐│                                                           4 │└─────────────────────────────────────────────────────────────┘</span><br></pre></td></tr></table></figure>
+
+<h2 id="arrayResize"><a href="#arrayResize" class="headerlink" title="arrayResize"></a>arrayResize</h2><p>Changes the length of the array.</p>
+<p><strong>Syntax</strong></p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">arrayResize(<span class="keyword">array</span>, size[, extender])</span><br></pre></td></tr></table></figure>
+
+<p><strong>Arguments</strong></p>
+<ul>
+<li><code>array</code> — Array. </li>
+<li><code>size</code> — Required length of the array. <ul>
+<li>If <code>size</code> is less than the original size of the array, the array is truncated from the right. </li>
+<li>If <code>size</code> is larger than the initial size of the array, the array is extended to the right with <code>extender</code> values or default values for the data type of the array items.</li>
+</ul>
+</li>
+<li><code>extender</code> — Value for extending an array. Can be <code>NULL</code> .</li>
+</ul>
+<p><strong>Returned value</strong></p>
+<ul>
+<li>An array of length <code>size</code> .</li>
+</ul>
+<p><strong>Examples of calls</strong></p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> arrayResize([<span class="number">1</span>], <span class="number">3</span>);</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">┌─arrayResize([1], 3)─┐</span><br><span class="line">│ [1, 0, 0]           │</span><br><span class="line">└─────────────────────┘</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> arrayResize([<span class="number">1</span>], <span class="number">3</span>, <span class="keyword">NULL</span>);</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">┌─arrayResize([1], 3, NULL)─┐</span><br><span class="line">│ [1, ᴺᵁᴸᴸ, ᴺᵁᴸᴸ]           │</span><br><span class="line">└───────────────────────────┘</span><br></pre></td></tr></table></figure>
+
+<h2 id="arrayReverse"><a href="#arrayReverse" class="headerlink" title="arrayReverse"></a>arrayReverse</h2><p>Returns an array of the same size as the original array containing the elements in reverse order.</p>
+<p><strong>Syntax</strong></p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">arrayReverse(<span class="keyword">array</span>)</span><br></pre></td></tr></table></figure>
+
+<p><strong>Arguments</strong></p>
+<ul>
+<li><code>array</code> — Array.</li>
+</ul>
+<p><strong>Returned value</strong></p>
+<ul>
+<li>Reversed orginal array.</li>
+</ul>
+<p><strong>Examples</strong></p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> arrayReverse([<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>])</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">┌─arrayReverse([1, 2, 3])─┐</span><br><span class="line">│ [3, 2, 1]               │</span><br><span class="line">└─────────────────────────┘</span><br></pre></td></tr></table></figure>
+
+<h2 id="arrayReverseSort"><a href="#arrayReverseSort" class="headerlink" title="arrayReverseSort"></a>arrayReverseSort</h2><p>Sorts the elements of the <code>arr</code> array in descending order. If the <code>func</code> function is specified, <code>arr</code> is sorted according to the result of the <code>func</code> function applied to the elements of the array, and then the sorted array is reversed. If <code>func</code> accepts multiple arguments, the <code>arrayReverseSort</code> function is passed several arrays that the arguments of <code>func</code> will correspond to. Detailed examples are shown at the end of <code>arrayReverseSort</code> description.</p>
+<p>Note that the <code>arrayReverseSort</code> is a higher-order function. You can pass a lambda function to it as the first argument. Example is shown below.</p>
+<p><strong>Syntax</strong></p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">arrayReverseSort([func,] arr, …)</span><br></pre></td></tr></table></figure>
+
+<p><strong>Arguments</strong></p>
+<ul>
+<li><code>func</code> - sort function.</li>
+<li><code>array</code> — Array.</li>
+</ul>
+<p><strong>Returned value</strong></p>
+<ul>
+<li>Reversed sorted array.</li>
+</ul>
+<p><strong>Examples</strong><br>Example of integer values sorting:</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> arrayReverseSort([<span class="number">1</span>, <span class="number">3</span>, <span class="number">3</span>, <span class="number">0</span>]);</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">┌─arrayReverseSort([1, 3, 3, 0])─┐</span><br><span class="line">│ [3, 3, 1, 0]                   │</span><br><span class="line">└────────────────────────────────┘</span><br></pre></td></tr></table></figure>
+
+<p>Example of string values sorting:</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> arrayReverseSort([<span class="string">&#x27;hello&#x27;</span>, <span class="string">&#x27;world&#x27;</span>, <span class="string">&#x27;!&#x27;</span>]);</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">┌─arrayReverseSort([&#x27;hello&#x27;, &#x27;world&#x27;, &#x27;!&#x27;])─┐</span><br><span class="line">│ [world, hello, !]                         │</span><br><span class="line">└───────────────────────────────────────────┘</span><br></pre></td></tr></table></figure>
+
+<p>Consider the following sorting order for the <code>NULL</code> , <code>NaN</code> and <code>Inf</code> values:</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> arrayReverseSort([<span class="number">1</span>, nan, <span class="number">2</span>, <span class="keyword">NULL</span>, <span class="number">3</span>, nan, <span class="number">-4</span>, <span class="keyword">NULL</span>, inf, <span class="operator">-</span>inf]) <span class="keyword">as</span> res;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">┌─res─────────────────────────────────────────────────────────────┐</span><br><span class="line">│ [+Inf, 3e+00, 2e+00, 1e+00, -4e+00, -Inf, NaN, NaN, ᴺᵁᴸᴸ, ᴺᵁᴸᴸ] │</span><br><span class="line">└─────────────────────────────────────────────────────────────────┘</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><code>Inf</code> values are first in the array. </li>
+<li><code>NULL</code> values are last in the array. </li>
+<li><code>NaN</code> values are right before <code>NULL</code> . </li>
+<li><code>-Inf</code> values are right before <code>NaN</code> .</li>
+</ul>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> arrayReverseSort((x) <span class="operator">-</span><span class="operator">&gt;</span> <span class="operator">-</span>x, [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>]) <span class="keyword">as</span> res;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">┌─res───────┐</span><br><span class="line">│ [1, 2, 3] │</span><br><span class="line">└───────────┘</span><br></pre></td></tr></table></figure>
+
+<p>The array is sorted in the following way:</p>
+<ol>
+<li>At first, the source array ([1, 2, 3]) is sorted according to the result of the lambda function applied to the elements of the array. The result is an array [3, 2, 1]. </li>
+<li>Array that is obtained on the previous step, is reversed. So, the final result is [1, 2, 3].</li>
+</ol>
+<p>The lambda function can accept multiple arguments. In this case, you need to pass the <code>arrayReverseSort</code> function several arrays of identical length that the arguments of lambda function will correspond to. The resulting array will consist of elements from the first input array; elements from the next input array(s) specify the sorting keys. For example:</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> arrayReverseSort((x, y) <span class="operator">-</span><span class="operator">&gt;</span> y, [<span class="string">&#x27;hello&#x27;</span>, <span class="string">&#x27;world&#x27;</span>], [<span class="number">2</span>, <span class="number">1</span>]) <span class="keyword">as</span> res;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">┌─res────────────┐</span><br><span class="line">│ [hello, world] │</span><br><span class="line">└────────────────┘</span><br></pre></td></tr></table></figure>
+
+<p>In this example, the array is sorted in the following way:</p>
+<ol>
+<li>At first, the source array ([‘hello’, ‘world’]) is sorted according to the result of the lambda function applied to the elements of the arrays. The elements that are passed in the second array ([2, 1]), define the sorting keys for corresponding elements from the source array. The result is an array [‘world’, ‘hello’]. </li>
+<li>Array that was sorted on the previous step, is reversed. So, the final result is [‘hello’, ‘world’].</li>
+</ol>
+<p>Other examples are shown below.</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> arrayReverseSort((x, y) <span class="operator">-</span><span class="operator">&gt;</span> y, [<span class="number">4</span>, <span class="number">3</span>, <span class="number">5</span>], [<span class="string">&#x27;a&#x27;</span>, <span class="string">&#x27;b&#x27;</span>, <span class="string">&#x27;c&#x27;</span>]) <span class="keyword">AS</span> res;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">┌─res───────┐</span><br><span class="line">│ [5, 3, 4] │</span><br><span class="line">└───────────┘</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> arrayReverseSort((x, y) <span class="operator">-</span><span class="operator">&gt;</span> <span class="operator">-</span>y, [<span class="number">4</span>, <span class="number">3</span>, <span class="number">5</span>], [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>]) <span class="keyword">AS</span> res;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">┌─res───────┐</span><br><span class="line">│ [4, 3, 5] │</span><br><span class="line">└───────────┘</span><br></pre></td></tr></table></figure>
+
+<h2 id="arraySlice"><a href="#arraySlice" class="headerlink" title="arraySlice"></a>arraySlice</h2><p>Returns a slice of the array.</p>
+<p><strong>Syntax</strong></p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">arraySlice(<span class="keyword">array</span>, <span class="keyword">offset</span>[, length])</span><br></pre></td></tr></table></figure>
+
+<p><strong>Arguments</strong></p>
+<ul>
+<li><code>array</code> – Array of data. </li>
+<li><code>offset</code> – Indent from the edge of the array. A positive value indicates an offset on the left, and a negative value is an indent on the right. Numbering of the array items begins with 1. </li>
+<li><code>length</code> – The length of the required slice. If you specify a negative value, the function returns an open slice <code>[offset, array_length - length)</code> . If you omit the value, the function returns the slice <code>[offset, the_end_of_array]</code> .</li>
+</ul>
+<p><strong>Returned value</strong></p>
+<ul>
+<li>Slice of array.</li>
+</ul>
+<p><strong>Example</strong></p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> arraySlice([<span class="number">1</span>, <span class="number">2</span>, <span class="keyword">NULL</span>, <span class="number">4</span>, <span class="number">5</span>], <span class="number">2</span>, <span class="number">3</span>) <span class="keyword">AS</span> res;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">┌─res──────────┐</span><br><span class="line">│ [2, ᴺᵁᴸᴸ, 4] │</span><br><span class="line">└──────────────┘</span><br></pre></td></tr></table></figure>
+
+<p>Array elements set to <code>NULL</code> are handled as normal values.</p>
+<h2 id="arraySort"><a href="#arraySort" class="headerlink" title="arraySort"></a>arraySort</h2><p>Sorts the elements of the <code>arr</code> array in ascending order. If the <code>func</code> function is specified, sorting order is determined by the result of the <code>func</code> function applied to the elements of the array. If <code>func</code> accepts multiple arguments, the <code>arraySort</code> function is passed several arrays that the arguments of <code>func</code> will correspond to. Detailed examples are shown at the end of <code>arraySort</code> description.</p>
+<p>Note that <code>arraySort</code> is a higher-order function. You can pass a lambda function to it as the first argument. In this case, sorting order is determined by the result of the lambda function applied to the elements of the array.</p>
+<p>To improve sorting efficiency, the <a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Schwartzian_transform">Schwartzian transform</a> is used.<br><strong>Syntax</strong></p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">arraySort([func,] arr, …)</span><br></pre></td></tr></table></figure>
+
+<p><strong>Arguments</strong></p>
+<ul>
+<li><code>func</code> - sort function.</li>
+<li><code>array</code> — Array.</li>
+</ul>
+<p><strong>Returned value</strong></p>
+<ul>
+<li>Sorted array.</li>
+</ul>
+<p><strong>Example</strong></p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> arraySort([<span class="number">1</span>, <span class="number">3</span>, <span class="number">3</span>, <span class="number">0</span>]);</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">┌─arraySort([1, 3, 3, 0])─┐</span><br><span class="line">│ [0, 1, 3, 3]            │</span><br><span class="line">└─────────────────────────┘</span><br></pre></td></tr></table></figure>
+
+<p>Example of string values sorting:</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> arraySort([<span class="string">&#x27;hello&#x27;</span>, <span class="string">&#x27;world&#x27;</span>, <span class="string">&#x27;!&#x27;</span>]);</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">┌─arraySort([&#x27;hello&#x27;, &#x27;world&#x27;, &#x27;!&#x27;])─┐</span><br><span class="line">│ [!, hello, world]                  │</span><br><span class="line">└────────────────────────────────────┘</span><br></pre></td></tr></table></figure>
+
+<p>Consider the following sorting order for the <code>NULL</code> , <code>NaN</code> and <code>Inf</code> values:</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> arraySort([<span class="number">1</span>, nan, <span class="number">2</span>, <span class="keyword">NULL</span>, <span class="number">3</span>, nan, <span class="number">-4</span>, <span class="keyword">NULL</span>, inf, <span class="operator">-</span>inf]);</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">┌─arraySort([1, nan, 2, NULL, 3, nan, -4, NULL, inf, -inf])───────┐│ [-Inf, -4e+00, 1e+00, 2e+00, 3e+00, +Inf, NaN, NaN, ᴺᵁᴸᴸ, ᴺᵁᴸᴸ] │└─────────────────────────────────────────────────────────────────┘</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><code>-Inf</code> values are first in the array. </li>
+<li><code>NULL</code> values are last in the array. </li>
+<li><code>NaN</code> values are right before <code>NULL</code> . </li>
+<li><code>Inf</code> values are right before <code>NaN</code> .</li>
+</ul>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> arraySort((x) <span class="operator">-</span><span class="operator">&gt;</span> <span class="operator">-</span>x, [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>]) <span class="keyword">as</span> res;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">┌─res───────┐</span><br><span class="line">│ [3, 2, 1] │</span><br><span class="line">└───────────┘</span><br></pre></td></tr></table></figure>
+
+<p>For each element of the source array, the lambda function returns the sorting key, that is, [1 –&gt; -1, 2 –&gt; -2, 3 –&gt; -3]. Since the <code>arraySort</code> function sorts the keys in ascending order, the result is [3, 2, 1]. Thus, the <code>(x) –&gt; -x</code> lambda function sets the descending order in a sorting.</p>
+<p>The lambda function can accept multiple arguments. In this case, you need to pass the <code>arraySort</code> function several arrays of identical length that the arguments of lambda function will correspond to. The resulting array will consist of elements from the first input array; elements from the next input array(s) specify the sorting keys. For example:</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> arraySort((x, y) <span class="operator">-</span><span class="operator">&gt;</span> y, [<span class="string">&#x27;hello&#x27;</span>, <span class="string">&#x27;world&#x27;</span>], [<span class="number">2</span>, <span class="number">1</span>]) <span class="keyword">as</span> res;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">┌─res────────────┐│ [world, hello] │└────────────────┘</span><br></pre></td></tr></table></figure>
+
+<p>Here, the elements that are passed in the second array ([2, 1]) define a sorting key for the corresponding element from the source array ([‘hello’, ‘world’]), that is, [‘hello’ –&gt; 2, ‘world’ –&gt; 1]. Since the lambda function does not use <code>x</code> , actual values of the source array do not affect the order in the result. So, ‘hello’ will be the second element in the result, and ‘world’ will be the first.</p>
+<p>Other examples are shown below.</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> arraySort((x, y) <span class="operator">-</span><span class="operator">&gt;</span> y, [<span class="number">0</span>, <span class="number">1</span>, <span class="number">2</span>], [<span class="string">&#x27;c&#x27;</span>, <span class="string">&#x27;b&#x27;</span>, <span class="string">&#x27;a&#x27;</span>]) <span class="keyword">as</span> res;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">┌─res───────┐</span><br><span class="line">│ [2, 1, 0] │</span><br><span class="line">└───────────┘</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> arraySort((x, y) <span class="operator">-</span><span class="operator">&gt;</span> <span class="operator">-</span>y, [<span class="number">0</span>, <span class="number">1</span>, <span class="number">2</span>], [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>]) <span class="keyword">as</span> res;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">┌─res───────┐</span><br><span class="line">│ [2, 1, 0] │</span><br><span class="line">└───────────┘</span><br></pre></td></tr></table></figure>
+
+<h2 id="arraySum"><a href="#arraySum" class="headerlink" title="arraySum"></a>arraySum</h2><p>Returns the sum of elements in the source array.</p>
+<p>If the <code>func</code> function is specified, returns the sum of elements converted by this function.</p>
+<p>Note that the <code>arraySum</code> is a higher-order function. You can pass a lambda function to it as the first argument.</p>
+<p><strong>Syntax</strong></p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">arraySum([func,] arr)</span><br></pre></td></tr></table></figure>
+
+<p><strong>Arguments</strong></p>
+<ul>
+<li><code>func</code> — higher-order function. </li>
+<li><code>arr</code> — Array.</li>
+</ul>
+<p><strong>Returned value</strong></p>
+<ul>
+<li>The sum of the function values (or the array sum).<br>Type: <ul>
+<li>for decimal numbers in source array (or for converted values, if <code>func</code> is specified) Decimal128 Float64</li>
+<li>for numeric unsigned UInt64</li>
+<li>and for numeric signed Int64</li>
+</ul>
+</li>
+</ul>
+<p><strong>Examples</strong></p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> arraySum([<span class="number">2</span>, <span class="number">3</span>]) <span class="keyword">AS</span> res;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">┌─res─┐</span><br><span class="line">│ 5   │</span><br><span class="line">└─────┘</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> arraySum(x <span class="operator">-</span><span class="operator">&gt;</span> x<span class="operator">*</span>x, [<span class="number">2</span>, <span class="number">3</span>]) <span class="keyword">AS</span> res;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">┌─res─┐</span><br><span class="line">│ 13  │</span><br><span class="line">└─────┘</span><br></pre></td></tr></table></figure>
+
+<h2 id="arrayUniq"><a href="#arrayUniq" class="headerlink" title="arrayUniq"></a>arrayUniq</h2><p>If one argument is passed, it counts the number of different elements in the array.</p>
+<p>If multiple arguments are passed, it counts the number of different tuples of elements at corresponding positions in multiple arrays.</p>
+<p>If you want to get a list of unique items in an array, you can use <code>arrayReduce(‘groupUniqArray’, arr)</code> .</p>
+<p><strong>Syntax</strong></p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">arrayUniq(arr, …)</span><br></pre></td></tr></table></figure>
+
+<p><strong>Arguments</strong></p>
+<ul>
+<li><code>arr</code> — Array.</li>
+</ul>
+<p><strong>Examples</strong></p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> arrayUniq([<span class="number">2</span>, <span class="number">3</span>]) <span class="keyword">AS</span> res;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">┌─res─┐</span><br><span class="line">│ 2   │</span><br><span class="line">└─────┘</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> arrayUniq([<span class="number">2</span>, <span class="number">3</span>, <span class="number">3</span>], [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>]) <span class="keyword">AS</span> res</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">┌─res─┐</span><br><span class="line">│ 3   │</span><br><span class="line">└─────┘</span><br></pre></td></tr></table></figure>
+
+<p>There are three different tuples (2,1),(3,2),(3,3).</p>
+<h2 id="countEqual"><a href="#countEqual" class="headerlink" title="countEqual"></a>countEqual</h2><p>Returns the number of elements in the array equal to x. Equivalent to arrayCount (elem -&gt; elem &#x3D; x, arr).</p>
+<p><code>NULL</code> elements are handled as separate values.</p>
+<p><strong>Syntax</strong></p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">countEqual(arr, x)</span><br></pre></td></tr></table></figure>
+
+<p><strong>Arguments</strong></p>
+<ul>
+<li><code>arr</code> — Array. </li>
+<li><code>x</code> - pivot element</li>
+</ul>
+<p><strong>Returned value</strong></p>
+<ul>
+<li>Number of elements in the array equal to x.</li>
+</ul>
+<p><strong>Examples</strong></p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> countEqual([<span class="number">1</span>, <span class="number">2</span>, <span class="keyword">NULL</span>, <span class="keyword">NULL</span>], <span class="keyword">NULL</span>)</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">┌─countEqual([1, 2, NULL, NULL], NULL)─┐</span><br><span class="line">│ 2                                    │</span><br><span class="line">└──────────────────────────────────────┘</span><br></pre></td></tr></table></figure>
+
+<h2 id="flatten"><a href="#flatten" class="headerlink" title="flatten"></a>flatten</h2><p>Converts an array of arrays to a flat array.Function:- Applies to any depth of nested arrays. - Does not change arrays that are already flat. The flattened array contains all the elements from all source arrays.</p>
+<p><strong>Syntax</strong></p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">flatten(array_of_arrays)</span><br></pre></td></tr></table></figure>
+
+<p>Alias: <code>flatten</code> .</p>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><code>array_of_arrays</code> — Array of arrays. For example, <code>[[1,2,3], [4,5]]</code> .</li>
+</ul>
+<p><strong>Returned value</strong></p>
+<ul>
+<li>The flattened array.</li>
+</ul>
+<p><strong>Examples</strong></p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> flatten([[[<span class="number">1</span>]], [[<span class="number">2</span>], [<span class="number">3</span>]]]);</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">┌─flatten(array(array([1]), array([2], [3])))─┐</span><br><span class="line">│ [1, 2, 3]                                   │</span><br><span class="line">└─────────────────────────────────────────────┘</span><br></pre></td></tr></table></figure>
+
+<h2 id="groupArrayInsertAt"><a href="#groupArrayInsertAt" class="headerlink" title="groupArrayInsertAt"></a>groupArrayInsertAt</h2><p>Inserts a value into the array at the specified position.</p>
+<p><strong>Syntax</strong></p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">groupArrayInsertAt(default_x, size)(x, pos)</span><br></pre></td></tr></table></figure>
+
+<p>If in one query several values are inserted into the same position, the function behaves in the following ways:</p>
+<ul>
+<li>If a query is executed in a single thread, the first one of the inserted values is used.</li>
+<li>If a query is executed in multiple threads, the resulting value is an undetermined one of the inserted values.</li>
+</ul>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><code>x</code> — Value to be inserted. Expression resulting in one of the supported data types.</li>
+<li><code>pos</code> — Position at which the specified element <code>x</code> is to be inserted. Index numbering in the array starts from zero. UInt32.</li>
+<li><code>default_x</code> — Default value for substituting in empty positions. Optional parameter. Expression resulting in the data type configured for the <code>x</code> parameter. If <code>default_x</code> is not defined, the default values are used.</li>
+<li><code>size</code> — Length of the resulting array. Optional parameter. When using this parameter, the default value <code>default_x</code> must be specified. UInt32.</li>
+</ul>
+<p><strong>Returned value</strong></p>
+<ul>
+<li>Array with inserted values.</li>
+</ul>
+<p><strong>Example</strong></p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> groupArrayInsertAt(toString(number), number <span class="operator">*</span> <span class="number">2</span>) <span class="keyword">FROM</span> numbers(<span class="number">5</span>);</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">┌─groupArrayInsertAt(toString(number), multiply(number, 2))─┐│ [&#x27;0&#x27;,&#x27;&#x27;,&#x27;1&#x27;,&#x27;&#x27;,&#x27;2&#x27;,&#x27;&#x27;,&#x27;3&#x27;,&#x27;&#x27;,&#x27;4&#x27;]                         │└───────────────────────────────────────────────────────────┘</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> groupArrayInsertAt(<span class="string">&#x27;-&#x27;</span>)(toString(number), number <span class="operator">*</span> <span class="number">2</span>) <span class="keyword">FROM</span> numbers(<span class="number">5</span>);</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">┌─groupArrayInsertAt(&#x27;-&#x27;)(toString(number), multiply(number, 2))─┐</span><br><span class="line">│ [&#x27;0&#x27;,&#x27;-&#x27;,&#x27;1&#x27;,&#x27;-&#x27;,&#x27;2&#x27;,&#x27;-&#x27;,&#x27;3&#x27;,&#x27;-&#x27;,&#x27;4&#x27;]                          │</span><br><span class="line">└────────────────────────────────────────────────────────────────┘</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> groupArrayInsertAt(<span class="string">&#x27;-&#x27;</span>, <span class="number">5</span>)(toString(number), number <span class="operator">*</span> <span class="number">2</span>) <span class="keyword">FROM</span> numbers(<span class="number">5</span>);</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">┌─groupArrayInsertAt(&#x27;-&#x27;, 5)(toString(number), multiply(number, 2))─┐</span><br><span class="line">│ [&#x27;0&#x27;,&#x27;-&#x27;,&#x27;1&#x27;,&#x27;-&#x27;,&#x27;2&#x27;]                                             │</span><br><span class="line">└───────────────────────────────────────────────────────────────────┘</span><br></pre></td></tr></table></figure>
+
+<!-- TODO: numbers_mt is not supported. This example may need to remove -->
+<!-- Multi-threaded insertion of elements into one position.
+
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> groupArrayInsertAt(number, <span class="number">0</span>) <span class="keyword">FROM</span> numbers_mt(<span class="number">10</span>) SETTINGS max_block_size <span class="operator">=</span> <span class="number">1</span>;</span><br></pre></td></tr></table></figure>
+
+<p>As a result of this query you get random integer in the <code>[0,9]</code> range. For example:</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">┌─groupArrayInsertAt(number, 0)─┐</span><br><span class="line">│ [7]                           │</span><br><span class="line">└───────────────────────────────┘</span><br><span class="line">``` --&gt;</span><br><span class="line">## hasAll</span><br><span class="line">Checks whether one array is a subset of another.</span><br><span class="line"></span><br><span class="line">**Syntax**</span><br><span class="line">```sql</span><br><span class="line">hasAll(set, subset)</span><br></pre></td></tr></table></figure>
+
+<p><strong>Arguments</strong></p>
+<ul>
+<li><code>set</code> – Array of any type with a set of elements. </li>
+<li><code>subset</code> – Array of any type with elements that should be tested to be a subset of <code>set</code> .</li>
+</ul>
+<p><strong>Return values</strong></p>
+<ul>
+<li><code>1</code> , if <code>set</code> contains all of the elements from <code>subset</code> . </li>
+<li><code>0</code> , otherwise.</li>
+</ul>
+<p><strong>Peculiar properties</strong></p>
+<ul>
+<li>An empty array is a subset of any array. </li>
+<li><code>Null</code> processed as a value. </li>
+<li>Order of values in both of arrays does not matter.</li>
+</ul>
+<p><strong>Examples</strong></p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> hasAll([], []);</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">┌─hasAll(array(), array())─┐</span><br><span class="line">│ 1                        │</span><br><span class="line">└──────────────────────────┘</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> hasAll([<span class="number">1</span>, <span class="keyword">Null</span>], [<span class="keyword">Null</span>]);</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">┌─hasAll([1, NULL], [NULL])─┐</span><br><span class="line">│ 1                         │</span><br><span class="line">└───────────────────────────┘</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> hasAll([<span class="number">1.0</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>], [<span class="number">1</span>, <span class="number">3</span>]);</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">┌─hasAll([1., 2, 3, 4], [1, 3])─┐</span><br><span class="line">│ 1                             │</span><br><span class="line">└───────────────────────────────┘</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> hasAll([<span class="string">&#x27;a&#x27;</span>, <span class="string">&#x27;b&#x27;</span>], [<span class="string">&#x27;a&#x27;</span>]);</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">┌─hasAll([&#x27;a&#x27;, &#x27;b&#x27;], [&#x27;a&#x27;])─┐</span><br><span class="line">│ 1                         │</span><br><span class="line">└───────────────────────────┘</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> hasAll([<span class="number">1</span>], [<span class="string">&#x27;a&#x27;</span>]);</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">┌─hasAll([1], [&#x27;a&#x27;])─┐</span><br><span class="line">│ 0                  │</span><br><span class="line">└────────────────────┘</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> hasAll([[<span class="number">1</span>, <span class="number">2</span>], [<span class="number">3</span>, <span class="number">4</span>]], [[<span class="number">1</span>, <span class="number">2</span>], [<span class="number">3</span>, <span class="number">5</span>]]);</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">┌─hasAll(array([1, 2], [3, 4]), array([1, 2], [3, 5]))─┐</span><br><span class="line">│ 0                                                    │</span><br><span class="line">└──────────────────────────────────────────────────────┘</span><br></pre></td></tr></table></figure>
+
+<h2 id="hasAny"><a href="#hasAny" class="headerlink" title="hasAny"></a>hasAny</h2><p>Checks whether two arrays have intersection by some elements.</p>
+<p><strong>Syntax</strong></p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hasAny(array1, array2)</span><br></pre></td></tr></table></figure>
+
+<p><strong>Arguments</strong></p>
+<ul>
+<li><code>array1</code> – Array of any type with a set of elements. </li>
+<li><code>array2</code> – Array of any type with a set of elements.</li>
+</ul>
+<p><strong>Return values</strong></p>
+<ul>
+<li><code>1</code> , if <code>array1</code> and <code>array2</code> have one similar element at least. </li>
+<li><code>0</code> , otherwise.</li>
+</ul>
+<p><strong>Peculiar properties</strong></p>
+<ul>
+<li><code>Null</code> processed as a value. </li>
+<li>Order of values in both of arrays does not matter.</li>
+</ul>
+<p><strong>Examples</strong></p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> hasAny([<span class="number">1</span>], []);</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">┌─hasAny([1], array())─┐</span><br><span class="line">│ 0                    │</span><br><span class="line">└──────────────────────┘</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> hasAny([<span class="keyword">Null</span>], [<span class="keyword">Null</span>, <span class="number">1</span>]);</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">┌─hasAny([NULL], [NULL, 1])─┐</span><br><span class="line">│ 1                         │</span><br><span class="line">└───────────────────────────┘</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> hasAny([<span class="number">-128</span>, <span class="number">1.</span>, <span class="number">512</span>], [<span class="number">1</span>]);</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">┌─hasAny([-128, 1., 512], [1])─┐</span><br><span class="line">│ 1                            │</span><br><span class="line">└──────────────────────────────┘</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> hasAny([[<span class="number">1</span>, <span class="number">2</span>], [<span class="number">3</span>, <span class="number">4</span>]], [<span class="string">&#x27;a&#x27;</span>, <span class="string">&#x27;c&#x27;</span>]);</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">┌─hasAny(array([1, 2], [3, 4]), [&#x27;a&#x27;, &#x27;c&#x27;])─┐</span><br><span class="line">│ 0                                         │</span><br><span class="line">└───────────────────────────────────────────┘</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> hasAll([[<span class="number">1</span>, <span class="number">2</span>], [<span class="number">3</span>, <span class="number">4</span>]], [[<span class="number">1</span>, <span class="number">2</span>], [<span class="number">1</span>, <span class="number">2</span>]]);</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">┌─hasAll(array([1, 2], [3, 4]), array([1, 2], [1, 2]))─┐</span><br><span class="line">│ 1                                                    │</span><br><span class="line">└──────────────────────────────────────────────────────┘</span><br></pre></td></tr></table></figure>
+
+<h2 id="indexOf"><a href="#indexOf" class="headerlink" title="indexOf"></a>indexOf</h2><p>Returns the index of the first ‘x’ element (starting from 1) if it is in the array, or 0 if it is not.</p>
+<p><strong>Syntax</strong></p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">indexOf(arr, x) </span><br></pre></td></tr></table></figure>
+
+<p><strong>Arguments</strong></p>
+<ul>
+<li><code>arr</code> – Array of any type with a set of elements. </li>
+<li><code>x</code> – an Element.</li>
+</ul>
+<p><strong>Return values</strong></p>
+<ul>
+<li>index of the first ‘x’ element (starting from 1)</li>
+</ul>
+<p><strong>Examples</strong></p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> indexOf([<span class="number">1</span>, <span class="number">3</span>, <span class="keyword">NULL</span>, <span class="keyword">NULL</span>], <span class="keyword">NULL</span>);</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">┌─indexOf([1, 3, NULL, NULL], NULL)─┐</span><br><span class="line">│ 3                                 │</span><br><span class="line">└───────────────────────────────────┘</span><br></pre></td></tr></table></figure>
+
+<p>Elements set to <code>NULL</code> are handled as normal values.</p>
+<h2 id="length"><a href="#length" class="headerlink" title="length"></a>length</h2><p>Returns the length of a arrays.</p>
+<p><strong>Syntax</strong></p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">length(<span class="keyword">array</span>)</span><br></pre></td></tr></table></figure>
+
+<p><strong>Arguments</strong></p>
+<ul>
+<li><code>array</code> – Array of any type with a set of elements.</li>
+</ul>
+<p><strong>Return values</strong></p>
+<ul>
+<li>length of array. UInt64</li>
+</ul>
+<p><strong>Examples</strong></p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> length([<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>]);</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">┌─length([1, 2, 3])─┐</span><br><span class="line">│ 3                 │</span><br><span class="line">└───────────────────┘</span><br><span class="line">```Returns an array of `UInt` numbers from 0 to `end - 1` by 1 .</span><br><span class="line"></span><br><span class="line">**Syntax**</span><br><span class="line">&lt;!-- Different with community --&gt;</span><br><span class="line">```sql</span><br><span class="line">range(end)</span><br></pre></td></tr></table></figure>
+
+<p><strong>Arguments</strong></p>
+<ul>
+<li><code>end</code> — The number before which the array is constructed. Required. UInt</li>
+</ul>
+<p><strong>Returned value</strong></p>
+<ul>
+<li>Array of <code>UInt</code> numbers from 0 to <code>end - 1</code> by 1 .</li>
+</ul>
+<p><strong>Implementation details</strong></p>
+<ul>
+<li>All arguments must be positive values.</li>
+<li>An exception is thrown if the query results in arrays with a total length of more than 100,000,000 elements.</li>
+</ul>
+<p><strong>Examples</strong></p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="keyword">range</span>(<span class="number">5</span>);</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">┌─range(5)────────┐</span><br><span class="line">│ [0, 1, 2, 3, 4] │</span><br><span class="line">└─────────────────┘</span><br></pre></td></tr></table></figure>
+                
+            </div>
+            <hr/>
+
+            
+
+
+
+            <div class="tag_share" style="display: block;">
+                <div class="post-meta__tag-list" style="display: inline-block;">
+                    
+                        <div class="article-tag">
+                            <span class="chip bg-color">No tag</span>
+                        </div>
+                    
+                </div>
+                <div class="post_share" style="zoom: 80%; width: fit-content; display: inline-block; float: right; margin: -0.15rem 0;">
+                    <link rel="stylesheet" type="text/css" href="/libs/share/css/share.min.css">
+<div id="article-share">
+
+    
+    <div class="social-share" data-sites="twitter,facebook,linkedin,qq,wechat,weibo" data-wechat-qrcode-helper="<p>微信扫一扫即可分享！</p>"></div>
+    <script src="/libs/share/js/social-share.min.js"></script>
+    
+
+    
+
+</div>
+
+                </div>
+            </div>
+            
+        </div>
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+<article id="prenext-posts" class="prev-next articles">
+    <div class="row article-row">
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge left-badge text-color">
+                <i class="fas fa-chevron-left"></i>&nbsp;Previous</div>
+            <div class="card">
+                <a href="/zh-cn/docs/SQL%E8%AF%AD%E6%B3%95%E8%AF%B4%E6%98%8E/functions/arithmetic/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/10.jpg" class="responsive-img" alt="Arithmetic">
+                        
+                        <span class="card-title">Arithmetic</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            
+                        
+                    </div>
+                    <div class="publish-info">
+                        <span class="publish-date">
+                            <i class="far fa-clock fa-fw icon-date"></i>2023-01-06
+                        </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/Docs/" class="post-category">
+                                    Docs
+                                </a>
+                            
+                            <a href="/categories/Docs/SQL-Syntax/" class="post-category">
+                                    SQL_Syntax
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                Next&nbsp;<i class="fas fa-chevron-right"></i>
+            </div>
+            <div class="card">
+                <a href="/zh-cn/docs/SQL%E8%AF%AD%E6%B3%95%E8%AF%B4%E6%98%8E/functions/bit-bitmap/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/20.jpg" class="responsive-img" alt="Bit &amp; Bitmap">
+                        
+                        <span class="card-title">Bit &amp; Bitmap</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2023-01-06
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/Docs/" class="post-category">
+                                    Docs
+                                </a>
+                            
+                            <a href="/categories/Docs/SQL-Syntax/" class="post-category">
+                                    SQL_Syntax
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+        
+    </div>
+</article>
+
+</div>
+
+
+
+<!-- 代码块功能依赖 -->
+<script type="text/javascript" src="/libs/codeBlock/codeBlockFuction.js"></script>
+
+<!-- 代码语言 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeLang.js"></script>
+
+
+<!-- 代码块复制 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeCopy.js"></script>
+
+
+<!-- 代码块收缩 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeShrink.js"></script>
+
+
+    </div>
+    <div id="toc-aside" class="expanded col l3 hide-on-med-and-down">
+        <div class="toc-widget card" style="background-color: white;">
+            <div class="toc-title"><i class="far fa-list-alt"></i>&nbsp;&nbsp;TOC</div>
+            <div id="toc-content"></div>
+        </div>
+    </div>
+</div>
+
+<!-- TOC 悬浮按钮. -->
+
+<div id="floating-toc-btn" class="hide-on-med-and-down">
+    <a class="btn-floating btn-large bg-color">
+        <i class="fas fa-list-ul"></i>
+    </a>
+</div>
+
+
+<script src="/libs/tocbot/tocbot.min.js"></script>
+<script>
+    $(function () {
+        tocbot.init({
+            tocSelector: '#toc-content',
+            contentSelector: '#articleContent',
+            headingsOffset: -($(window).height() * 0.4 - 45),
+            collapseDepth: Number('0'),
+            headingSelector: 'h2, h3, h4'
+        });
+
+        // modify the toc link href to support Chinese.
+        let i = 0;
+        let tocHeading = 'toc-heading-';
+        $('#toc-content a').each(function () {
+            $(this).attr('href', '#' + tocHeading + (++i));
+        });
+
+        // modify the heading title id to support Chinese.
+        i = 0;
+        $('#articleContent').children('h2, h3, h4').each(function () {
+            $(this).attr('id', tocHeading + (++i));
+        });
+
+        // Set scroll toc fixed.
+        let tocHeight = parseInt($(window).height() * 0.4 - 64);
+        let $tocWidget = $('.toc-widget');
+        $(window).scroll(function () {
+            let scroll = $(window).scrollTop();
+            /* add post toc fixed. */
+            if (scroll > tocHeight) {
+                $tocWidget.addClass('toc-fixed');
+            } else {
+                $tocWidget.removeClass('toc-fixed');
+            }
+        });
+
+        
+        /* 修复文章卡片 div 的宽度. */
+        let fixPostCardWidth = function (srcId, targetId) {
+            let srcDiv = $('#' + srcId);
+            if (srcDiv.length === 0) {
+                return;
+            }
+
+            let w = srcDiv.width();
+            if (w >= 450) {
+                w = w + 21;
+            } else if (w >= 350 && w < 450) {
+                w = w + 18;
+            } else if (w >= 300 && w < 350) {
+                w = w + 16;
+            } else {
+                w = w + 14;
+            }
+            $('#' + targetId).width(w);
+        };
+
+        // 切换TOC目录展开收缩的相关操作.
+        const expandedClass = 'expanded';
+        let $tocAside = $('#toc-aside');
+        let $mainContent = $('#main-content');
+        $('#floating-toc-btn .btn-floating').click(function () {
+            if ($tocAside.hasClass(expandedClass)) {
+                $tocAside.removeClass(expandedClass).hide();
+                $mainContent.removeClass('l9');
+            } else {
+                $tocAside.addClass(expandedClass).show();
+                $mainContent.addClass('l9');
+            }
+            fixPostCardWidth('artDetail', 'prenext-posts');
+        });
+        
+    });
+</script>
+
+    
+
+</main>
+
+
+
+
+    <footer class="page-footer bg-color">
+    
+    <div class="container row center-align" style="margin-bottom: 0px !important;">
+        <div class="col s12 m8 l8 copy-right">
+            Copyright&nbsp;&copy;
+            
+                <span id="year">2022-2023</span>
+            
+            <!-- <span id="year">2022</span> -->
+            <a href="/about" target="_blank">ByteDance Inc.</a>
+            |&nbsp;Powered by&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a>
+            |&nbsp;Theme&nbsp;<a href="https://github.com/blinkfox/hexo-theme-matery" target="_blank">Matery</a>
+            <br>
+            
+            
+            
+            
+            
+            <br>
+            
+            <br>
+            
+        </div>
+        <div class="col s12 m4 l4 social-link ">
+    <a href="https://github.com/byconity" class="tooltipped" target="_blank" data-tooltip="GitHub" data-position="top" data-delay="50">
+        <i class="fab fa-github"></i>
+    </a>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <a href="/atom.xml" class="tooltipped" target="_blank" data-tooltip="RSS" data-position="top" data-delay="50">
+        <i class="fas fa-rss"></i>
+    </a>
+
+</div>
+    </div>
+</footer>
+
+<div class="progress-bar"></div>
+
+
+    <!-- 搜索遮罩框 -->
+<div id="searchModal" class="modal">
+    <div class="modal-content">
+        <div class="search-header">
+            <span class="title"><i class="fas fa-search"></i>&nbsp;&nbsp;Search</span>
+            <input type="search" id="searchInput" name="s" placeholder="Please enter a search keyword"
+                   class="search-input">
+        </div>
+        <div id="searchResult"></div>
+    </div>
+</div>
+
+<script type="text/javascript">
+$(function () {
+    var searchFunc = function (path, search_id, content_id) {
+        'use strict';
+        $.ajax({
+            url: path,
+            dataType: "xml",
+            success: function (xmlResponse) {
+                // get the contents from search data
+                var datas = $("entry", xmlResponse).map(function () {
+                    return {
+                        title: $("title", this).text(),
+                        content: $("content", this).text(),
+                        url: $("url", this).text()
+                    };
+                }).get();
+                var $input = document.getElementById(search_id);
+                var $resultContent = document.getElementById(content_id);
+                $input.addEventListener('input', function () {
+                    var str = '<ul class=\"search-result-list\">';
+                    var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+                    $resultContent.innerHTML = "";
+                    if (this.value.trim().length <= 0) {
+                        return;
+                    }
+                    // perform local searching
+                    datas.forEach(function (data) {
+                        var isMatch = true;
+                        var data_title = data.title.trim().toLowerCase();
+                        var data_content = data.content.trim().replace(/<[^>]+>/g, "").toLowerCase();
+                        var data_url = data.url;
+                        data_url = data_url.indexOf('/') === 0 ? data.url : '/' + data_url;
+                        var index_title = -1;
+                        var index_content = -1;
+                        var first_occur = -1;
+                        // only match artiles with not empty titles and contents
+                        if (data_title !== '' && data_content !== '') {
+                            keywords.forEach(function (keyword, i) {
+                                index_title = data_title.indexOf(keyword);
+                                index_content = data_content.indexOf(keyword);
+                                if (index_title < 0 && index_content < 0) {
+                                    isMatch = false;
+                                } else {
+                                    if (index_content < 0) {
+                                        index_content = 0;
+                                    }
+                                    if (i === 0) {
+                                        first_occur = index_content;
+                                    }
+                                }
+                            });
+                        }
+                        // show search results
+                        if (isMatch) {
+                            str += "<li><a href='" + data_url + "' class='search-result-title'>" + data_title + "</a>";
+                            var content = data.content.trim().replace(/<[^>]+>/g, "");
+                            if (first_occur >= 0) {
+                                // cut out 100 characters
+                                var start = first_occur - 20;
+                                var end = first_occur + 80;
+                                if (start < 0) {
+                                    start = 0;
+                                }
+                                if (start === 0) {
+                                    end = 100;
+                                }
+                                if (end > content.length) {
+                                    end = content.length;
+                                }
+                                var match_content = content.substr(start, end);
+                                // highlight all keywords
+                                keywords.forEach(function (keyword) {
+                                    var regS = new RegExp(keyword, "gi");
+                                    match_content = match_content.replace(regS, "<em class=\"search-keyword\">" + keyword + "</em>");
+                                });
+
+                                str += "<p class=\"search-result\">" + match_content + "...</p>"
+                            }
+                            str += "</li>";
+                        }
+                    });
+                    str += "</ul>";
+                    $resultContent.innerHTML = str;
+                });
+            }
+        });
+    };
+
+    searchFunc('/search.xml', 'searchInput', 'searchResult');
+});
+</script>
+
+    <!-- 回到顶部按钮 -->
+<div id="backTop" class="top-scroll">
+    <a class="btn-floating btn-large waves-effect waves-light" href="#!">
+        <i class="fas fa-arrow-up"></i>
+    </a>
+</div>
+
+
+    <script src="/libs/materialize/materialize.min.js"></script>
+    <script src="/libs/masonry/masonry.pkgd.min.js"></script>
+    <script src="/libs/aos/aos.js"></script>
+    <script src="/libs/scrollprogress/scrollProgress.min.js"></script>
+    <script src="/libs/lightGallery/js/lightgallery-all.min.js"></script>
+    <script src="/js/matery.js"></script>
+
+    <!-- Baidu Analytics -->
+
+    <!-- Baidu Push -->
+
+<script>
+    (function () {
+        var bp = document.createElement('script');
+        var curProtocol = window.location.protocol.split(':')[0];
+        if (curProtocol === 'https') {
+            bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+        } else {
+            bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+        }
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(bp, s);
+    })();
+</script>
+
+    
+    
+
+    
+
+    
+
+	
+    
+
+    
+
+    
+
+    
+    <script src="/libs/instantpage/instantpage.js" type="module"></script>
+    
+
+</body>
+
+</html>

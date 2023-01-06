@@ -1,0 +1,180 @@
+<hr>
+<h2 id="title-“Encoding”slug-“encoding”hidden-falsecreatedAt-“2021-07-29T12-03-22-612Z”updatedAt-“2021-09-23T03-57-43-648Z”categories-Docs-SQL-Syntax"><a href="#title-“Encoding”slug-“encoding”hidden-falsecreatedAt-“2021-07-29T12-03-22-612Z”updatedAt-“2021-09-23T03-57-43-648Z”categories-Docs-SQL-Syntax" class="headerlink" title="title: “Encoding”slug: “encoding”hidden: falsecreatedAt: “2021-07-29T12:03:22.612Z”updatedAt: “2021-09-23T03:57:43.648Z”categories:- Docs- SQL_Syntax"></a>title: “Encoding”<br>slug: “encoding”<br>hidden: false<br>createdAt: “2021-07-29T12:03:22.612Z”<br>updatedAt: “2021-09-23T03:57:43.648Z”<br>categories:<br>- Docs<br>- SQL_Syntax</h2><blockquote>
+<p>Notice:<br>Some of the examples below are referenced from <a href="https://clickhouse.com/docs/en/sql-reference/functions/">ClickHouse Documentation</a> but have been adapted and modified to work in ByteHouse.</p>
+</blockquote>
+<h2 id="UUIDNumToString"><a href="#UUIDNumToString" class="headerlink" title="UUIDNumToString"></a>UUIDNumToString</h2><p>Accepts a FixedString(16) value, and returns a string containing 36 characters in text format.</p>
+<p><strong>Syntax</strong></p>
+<pre><code class="sql">UUIDNumToString(FixedString(16))
+</code></pre>
+<p><strong>Arguments</strong></p>
+<ul>
+<li>a FixedString(16) value</li>
+</ul>
+<p><strong>Returned value</strong></p>
+<ul>
+<li>String.</li>
+</ul>
+<p><strong>Example</strong></p>
+<pre><code class="sql">SELECT
+    &#39;a/&lt;@];!~p{jTj={)&#39; AS bytes,
+    UUIDNumToString(toFixedString(bytes, 16)) AS uuid
+</code></pre>
+<pre><code class="plain%20text">┌─bytes────────────┬─uuid─────────────────────────────────┐
+│ a/&lt;@];!~p{jTj={) │ 612f3c40-5d3b-217e-707b-6a546a3d7b29 │
+└──────────────────┴──────────────────────────────────────┘
+</code></pre>
+<h2 id="UUIDStringToNum"><a href="#UUIDStringToNum" class="headerlink" title="UUIDStringToNum"></a>UUIDStringToNum</h2><p>Accepts a string containing 36 characters in the format <code>xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx</code> , and returns it as a set of bytes in a FixedString(16).</p>
+<p><strong>Syntax</strong></p>
+<pre><code class="sql">UUIDStringToNum(String)
+</code></pre>
+<p><strong>Arguments</strong></p>
+<ul>
+<li>a string in uuid format</li>
+</ul>
+<p><strong>Returned value</strong></p>
+<ul>
+<li>FixedString(16)</li>
+</ul>
+<p><strong>Example</strong></p>
+<pre><code class="sql">SELECT
+    &#39;612f3c40-5d3b-217e-707b-6a546a3d7b29&#39; AS uuid,
+    UUIDStringToNum(uuid) AS bytes
+</code></pre>
+<pre><code class="plain%20text">┌─uuid─────────────────────────────────┬─bytes────────────┐
+│ 612f3c40-5d3b-217e-707b-6a546a3d7b29 │ a/&lt;@];!~p{jTj={) │
+└──────────────────────────────────────┴──────────────────┘
+</code></pre>
+<h2 id="bitmaskToArray"><a href="#bitmaskToArray" class="headerlink" title="bitmaskToArray"></a>bitmaskToArray</h2><p>Accepts an integer. Returns an array of UInt64 numbers containing the list of powers of two that total the source number when summed. Numbers in the array are in ascending order.</p>
+<p><strong>Syntax</strong></p>
+<pre><code class="sql">bitmaskToArray(num)
+</code></pre>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><code>num</code> – an integer</li>
+</ul>
+<p><strong>Returned value</strong></p>
+<ul>
+<li>an array of UInt64 numbers containing the list of powers of two that total the source number when summed.</li>
+</ul>
+<p><strong>Example</strong></p>
+<pre><code class="sql">SELECT bitmaskToArray(1), bitmaskToArray(3), bitmaskToArray(4)
+</code></pre>
+<pre><code class="plain%20text">┌─bitmaskToArray(1)─┬─bitmaskToArray(3)─┬─bitmaskToArray(4)─┐
+│ [1]               │ [1, 2]            │ [4]               │
+└───────────────────┴───────────────────┴───────────────────┘
+</code></pre>
+<p>1 &#x3D; power(2,0)<br>3 &#x3D; power(2,0) + power(2,1)<br>4 &#x3D; power(2,2)</p>
+<h2 id="bitmaskToList"><a href="#bitmaskToList" class="headerlink" title="bitmaskToList"></a>bitmaskToList</h2><p>Accepts an integer. Returns a string containing the list of powers of two that total the source number when summed. They are comma-separated without spaces in text format, in ascending order.</p>
+<p><strong>Syntax</strong></p>
+<pre><code class="sql">bitmaskToList(num)
+</code></pre>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><code>num</code> – an integer</li>
+</ul>
+<p><strong>Returned value</strong></p>
+<ul>
+<li>a string containing the list of powers of two that total the source number when summed</li>
+</ul>
+<p><strong>Example</strong></p>
+<pre><code class="sql">SELECT bitmaskToList(1), bitmaskToList(3), bitmaskToList(4)
+</code></pre>
+<pre><code class="plain%20text">┌─bitmaskToList(1)─┬─bitmaskToList(3)─┬─bitmaskToList(4)─┐
+│ 1                │ 1,2              │ 4                │
+└──────────────────┴──────────────────┴──────────────────┘
+</code></pre>
+<p>1 &#x3D; power(2,0)<br>3 &#x3D; power(2,0) + power(2,1)<br>4 &#x3D; power(2,2)</p>
+<h2 id="hex"><a href="#hex" class="headerlink" title="hex"></a>hex</h2><p>Returns a string containing the argument’s hexadecimal representation.</p>
+<p><strong>Syntax</strong></p>
+<pre><code class="sql">hex(arg)
+</code></pre>
+<p>The function is using uppercase letters <code>A-F</code> and not using any prefixes (like <code>0x</code> ) or suffixes (like <code>h</code> ).</p>
+<p>For integer arguments, it prints hex digits (“nibbles”) from the most significant to least significant (big endian or “human readable” order). It starts with the most significant non-zero byte (leading zero bytes are omitted) but always prints both digits of every byte even if leading digit is zero.</p>
+<p>Values of type <code>Date</code> and <code>DateTime</code> are formatted as corresponding integers (the number of days since Epoch for Date and the value of Unix Timestamp for DateTime).</p>
+<p>For <code>String</code> and <code>FixedString</code> , all bytes are simply encoded as two hexadecimal numbers. Zero bytes are not omitted.</p>
+<!-- Values of floating point and Decimal types are encoded as their representation in memory. As we support little endian architecture, they are encoded in little endian. Zero leading/trailing bytes are not omitted.
+
+**Arguments**
+- `arg` — A value to convert to hexadecimal. Types: String, UInts, Date or DateTime. 
+<!-- TODO: FLOAT & Decimal is not support by cnch
+
+**Returned value**
+- A string with the hexadecimal representation of the argument. Type: `String` .
+
+**Example**
+
+```sql
+SELECT hex('a'), hex(1), hex(toDate('2019-01-01')), hex(toDateTime('2019-01-01 00:00:00'))
+```
+
+```plain%20text
+┌─hex('a')─┬─hex(1)─┬─hex(toDate('2019-01-01'))─┬─hex(toDateTime('2019-01-01 00:00:00'))─┐
+│ 61       │ 01     │ 45E9                      │ 5C2A3D00                               │
+└──────────┴────────┴───────────────────────────┴────────────────────────────────────────┘
+```
+<!-- TODO: NOT SUPPORT BY CNCH
+
+```sql
+SELECT hex(toFloat32(number)) as hex_presentation FROM numbers(15, 2);
+```
+
+```plain%20text
+┌─hex_presentation─┐
+│ 00007041         │
+│ 00008041         │
+└──────────────────┘
+```
+
+```sql
+SELECT hex(toFloat64(number)) as hex_presentation FROM numbers(15, 2);
+```
+
+```plain%20text
+┌─hex_presentation─┐
+│ 0000000000002E40 │
+│ 0000000000003040 │
+└──────────────────┘
+```
+## unhex
+Performs the opposite operation of `hex`. It interprets each pair of hexadecimal digits (in the argument) as a number and converts it to the byte represented by the number. The return value is a binary string (BLOB).
+
+If you want to convert the result to a number, you can use the `reverse` and `reinterpretAs<Type>` functions.
+
+!!! note "Note"
+
+If `unhex` is invoked from within the `gateway-client` , binary strings display using UTF-8.
+
+**Syntax**
+
+```sql
+unhex(arg)
+```
+
+**Arguments**
+- `arg` — A string containing any number of hexadecimal digits. Type: String. 
+Supports both uppercase and lowercase letters `A-F` . The number of hexadecimal digits does not have to be even. If it is odd, the last digit is interpreted as the least significant half of the `00-0F` byte. If the argument string contains anything other than hexadecimal digits, some implementation-defined result is returned (an exception isn’t thrown). For a numeric argument the inverse of hex(N) is not performed by unhex().
+
+**Returned value**
+- A binary string (BLOB). Type: String.
+
+**Example**
+
+```sql
+SELECT unhex('303132'), unhex('4D7953514C');
+```
+
+```plain%20text
+┌─unhex('303132')─┬─unhex('4D7953514C')─┐
+│ 012             │ MySQL               │
+└─────────────────┴─────────────────────┘
+```
+
+```sql
+SELECT reinterpretAsUInt64(reverse(unhex('FFF'))) AS num;
+```
+
+```plain%20text
+┌─num──┐
+│ 4095 │
+└──────┘
+```

@@ -1,0 +1,1808 @@
+<hr>
+<h2 id="title-“Date-amp-Times”slug-“date-times”hidden-falsecreatedAt-“2021-07-29T12-02-04-877Z”updatedAt-“2021-09-23T03-55-04-783Z”categories-Docs-SQL-Syntax"><a href="#title-“Date-amp-Times”slug-“date-times”hidden-falsecreatedAt-“2021-07-29T12-02-04-877Z”updatedAt-“2021-09-23T03-55-04-783Z”categories-Docs-SQL-Syntax" class="headerlink" title="title: “Date &amp; Times”slug: “date-times”hidden: falsecreatedAt: “2021-07-29T12:02:04.877Z”updatedAt: “2021-09-23T03:55:04.783Z”categories:- Docs- SQL_Syntax"></a>title: “Date &amp; Times”<br>slug: “date-times”<br>hidden: false<br>createdAt: “2021-07-29T12:02:04.877Z”<br>updatedAt: “2021-09-23T03:55:04.783Z”<br>categories:<br>- Docs<br>- SQL_Syntax</h2><blockquote>
+<p>Notice:<br>Some of the examples below are referenced from <a href="https://clickhouse.com/docs/en/sql-reference/functions/">ClickHouse Documentation</a> but have been adapted and modified to work in ByteHouse.</p>
+</blockquote>
+<h2 id="addDays"><a href="#addDays" class="headerlink" title="addDays"></a>addDays</h2><p>Function adds a Date&#x2F;DateTime interval to a Date&#x2F;DateTime and then return the Date&#x2F;DateTime. </p>
+<p><strong>Syntax</strong></p>
+<pre><code class="sql">addDays(date, interval)
+addDays(datetime, interval)
+</code></pre>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><code>date/datetime</code>- Date&#x2F;DateTime</li>
+<li><code>interval</code> - Date&#x2F;DateTime</li>
+</ul>
+<p><strong>Returned value</strong></p>
+<ul>
+<li>Date&#x2F;DateTime</li>
+</ul>
+<p><strong>Example</strong></p>
+<pre><code class="sql">WITH
+    toDate(&#39;2018-01-01&#39;) AS date,
+    toDateTime(&#39;2018-01-01 00:00:00&#39;) AS date_time
+SELECT
+    addDays(date, 1) AS add_days_with_date,
+    addDays(date_time, 1) AS add_days_with_date_time
+</code></pre>
+<pre><code class="plain%20text">┌─add_days_with_date─┬─add_days_with_date_time─┐
+│ 2018-01-02         │ 2018-01-02 00:00:00     │
+└────────────────────┴─────────────────────────┘
+</code></pre>
+<h2 id="addHours"><a href="#addHours" class="headerlink" title="addHours"></a>addHours</h2><p>Function adds a Date&#x2F;DateTime interval to a Date&#x2F;DateTime and then return the Date&#x2F;DateTime.</p>
+<p><strong>Syntax</strong></p>
+<pre><code class="sql">addHours(date, interval)
+addHours(datetime, interval)
+</code></pre>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><code>date/datetime</code>- Date&#x2F;DateTime</li>
+<li><code>interval</code> - Date&#x2F;DateTime</li>
+</ul>
+<p><strong>Returned value</strong></p>
+<ul>
+<li>Date&#x2F;DateTime</li>
+</ul>
+<p><strong>Example</strong></p>
+<pre><code class="sql">WITH
+    toDate(&#39;2018-01-01&#39;) AS date,
+    toDateTime(&#39;2018-01-01 00:00:00&#39;) AS date_time
+SELECT
+    addHours(date, 1) AS add_hours_with_date,
+    addHours(date_time, 1) AS add_hours_with_date_time
+</code></pre>
+<pre><code class="plain%20text">┌─add_hours_with_date─┬─add_hours_with_date_time─┐
+│ 2018-01-01 01:00:00 │ 2018-01-01 01:00:00      │
+└─────────────────────┴──────────────────────────┘
+</code></pre>
+<h2 id="addMinutes"><a href="#addMinutes" class="headerlink" title="addMinutes"></a>addMinutes</h2><p>Function adds a Date&#x2F;DateTime interval to a Date&#x2F;DateTime and then return the Date&#x2F;DateTime.</p>
+<p><strong>Syntax</strong></p>
+<pre><code class="sql">addMinutes(date, interval)
+addMinutes(datetime, interval)
+</code></pre>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><code>date/datetime</code>- Date&#x2F;DateTime</li>
+<li><code>interval</code> - Date&#x2F;DateTime</li>
+</ul>
+<p><strong>Returned value</strong></p>
+<ul>
+<li>Date&#x2F;DateTime</li>
+</ul>
+<p><strong>Example</strong></p>
+<pre><code class="sql">WITH
+    toDate(&#39;2018-01-01&#39;) AS date,
+    toDateTime(&#39;2018-01-01 00:00:00&#39;) AS date_time
+SELECT
+    addMinutes(date, 1) AS add_minutes_with_date,
+    addMinutes(date_time, 1) AS add_minutes_with_date_time
+</code></pre>
+<pre><code class="plain%20text">┌─add_minutes_with_date─┬─add_minutes_with_date_time─┐
+│ 2018-01-01 00:01:00   │ 2018-01-01 00:01:00        │
+└───────────────────────┴────────────────────────────┘
+</code></pre>
+<h2 id="addMonths"><a href="#addMonths" class="headerlink" title="addMonths"></a>addMonths</h2><p>Function adds a Date&#x2F;DateTime interval to a Date&#x2F;DateTime and then return the Date&#x2F;DateTime. For example:</p>
+<p><strong>Syntax</strong></p>
+<pre><code class="sql">addMonths(date, interval)
+addMonths(datetime, interval)
+</code></pre>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><code>date/datetime</code>- Date&#x2F;DateTime</li>
+<li><code>interval</code> - Date&#x2F;DateTime</li>
+</ul>
+<p><strong>Returned value</strong></p>
+<ul>
+<li>Date&#x2F;DateTime</li>
+</ul>
+<p><strong>Example</strong></p>
+<pre><code class="sql">WITH
+    toDate(&#39;2018-01-01&#39;) AS date,
+    toDateTime(&#39;2018-01-01 00:00:00&#39;) AS date_time
+SELECT
+    addMonths(date, 1) AS add_months_with_date,
+    addMonths(date_time, 1) AS add_months_with_date_time
+</code></pre>
+<pre><code class="plain%20text">┌─add_months_with_date─┬─add_months_with_date_time─┐
+│ 2018-02-01           │ 2018-02-01 00:00:00       │
+└──────────────────────┴───────────────────────────┘
+</code></pre>
+<h2 id="addQuarters"><a href="#addQuarters" class="headerlink" title="addQuarters"></a>addQuarters</h2><p>Function adds a Date&#x2F;DateTime interval to a Date&#x2F;DateTime and then return the Date&#x2F;DateTime.</p>
+<p><strong>Syntax</strong></p>
+<pre><code class="sql">addQuarters(date, interval)
+addQuarters(datetime, interval)
+</code></pre>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><code>date/datetime</code>- Date&#x2F;DateTime</li>
+<li><code>interval</code> - Date&#x2F;DateTime</li>
+</ul>
+<p><strong>Returned value</strong></p>
+<ul>
+<li>Date&#x2F;DateTime</li>
+</ul>
+<p><strong>Example</strong></p>
+<pre><code class="sql">WITH
+    toDate(&#39;2018-01-01&#39;) AS date,
+    toDateTime(&#39;2018-01-01 00:00:00&#39;) AS date_time
+SELECT
+    addQuarters(date, 1) AS add_quarters_with_date,
+    addQuarters(date_time, 1) AS add_quarters_with_date_time
+</code></pre>
+<pre><code class="plain%20text">┌─add_quarters_with_date─┬─add_quarters_with_date_time─┐
+│ 2018-04-01             │ 2018-04-01 00:00:00         │
+└────────────────────────┴─────────────────────────────┘
+</code></pre>
+<h2 id="addSeconds"><a href="#addSeconds" class="headerlink" title="addSeconds"></a>addSeconds</h2><p>Function adds a Date&#x2F;DateTime interval to a Date&#x2F;DateTime and then return the Date&#x2F;DateTime. For example:</p>
+<p><strong>Syntax</strong></p>
+<pre><code class="sql">addSeconds(date, interval)
+addSeconds(datetime, interval)
+</code></pre>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><code>date/datetime</code>- Date&#x2F;DateTime</li>
+<li><code>interval</code> - Date&#x2F;DateTime</li>
+</ul>
+<p><strong>Returned value</strong></p>
+<ul>
+<li>Date&#x2F;DateTime</li>
+</ul>
+<p><strong>Example</strong></p>
+<pre><code class="sql">WITH
+    toDate(&#39;2018-01-01&#39;) AS date,
+    toDateTime(&#39;2018-01-01 00:00:00&#39;) AS date_time
+SELECT
+    addSeconds(date, 1) AS add_seconds_with_date,
+    addSeconds(date_time, 1) AS add_seconds_with_date_time
+</code></pre>
+<pre><code class="plain%20text">┌─add_seconds_with_date─┬─add_seconds_with_date_time─┐
+│ 2018-01-01 00:00:01   │ 2018-01-01 00:00:01        │
+└───────────────────────┴────────────────────────────┘
+</code></pre>
+<h2 id="addWeeks"><a href="#addWeeks" class="headerlink" title="addWeeks"></a>addWeeks</h2><p>Function adds a Date&#x2F;DateTime interval to a Date&#x2F;DateTime and then return the Date&#x2F;DateTime.</p>
+<p><strong>Syntax</strong></p>
+<pre><code class="sql">addWeeks(date, interval)
+addWeeks(datetime, interval)
+</code></pre>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><code>date/datetime</code>- Date&#x2F;DateTime</li>
+<li><code>interval</code> - Date&#x2F;DateTime</li>
+</ul>
+<p><strong>Returned value</strong></p>
+<ul>
+<li>Date&#x2F;DateTime</li>
+</ul>
+<p><strong>Example</strong></p>
+<pre><code class="sql">WITH
+    toDate(&#39;2018-01-01&#39;) AS date,
+    toDateTime(&#39;2018-01-01 00:00:00&#39;) AS date_time
+SELECT
+    addWeeks(date, 1) AS add_weeks_with_date,
+    addWeeks(date_time, 1) AS add_weeks_with_date_time
+</code></pre>
+<pre><code class="plain%20text">┌─add_weeks_with_date─┬─add_weeks_with_date_time─┐
+│ 2018-01-08          │ 2018-01-08 00:00:00      │
+└─────────────────────┴──────────────────────────┘
+</code></pre>
+<h2 id="addYears"><a href="#addYears" class="headerlink" title="addYears"></a>addYears</h2><p>Function adds a Date&#x2F;DateTime interval to a Date&#x2F;DateTime and then return the Date&#x2F;DateTime. For example:</p>
+<p><strong>Syntax</strong></p>
+<pre><code class="sql">addYears(date, interval)
+addYears(datetime, interval)
+</code></pre>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><code>date/datetime</code>- Date&#x2F;DateTime</li>
+<li><code>interval</code> - Date&#x2F;DateTime</li>
+</ul>
+<p><strong>Returned value</strong></p>
+<ul>
+<li>Date&#x2F;DateTime</li>
+</ul>
+<p><strong>Example</strong></p>
+<pre><code class="sql">WITH
+    toDate(&#39;2018-01-01&#39;) AS date,
+    toDateTime(&#39;2018-01-01 00:00:00&#39;) AS date_time
+SELECT
+    addYears(date, 1) AS add_years_with_date,
+    addYears(date_time, 1) AS add_years_with_date_time
+</code></pre>
+<pre><code class="plain%20text">┌─add_years_with_date─┬─add_years_with_date_time─┐
+│ 2019-01-01          │ 2019-01-01 00:00:00      │
+└─────────────────────┴──────────────────────────┘
+</code></pre>
+<h2 id="dateDiff"><a href="#dateDiff" class="headerlink" title="dateDiff"></a>dateDiff</h2><p>Returns the difference between two dates or dates with time values.</p>
+<p><strong>Syntax</strong></p>
+<pre><code class="sql">dateDiff(&#39;unit&#39;, startdate, enddate, [timezone])
+</code></pre>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><code>unit</code> — The type of interval for result. String.<br>Possible values:<ul>
+<li>second</li>
+<li>minute</li>
+<li>hour</li>
+<li>day</li>
+<li>week</li>
+<li>month</li>
+<li>quarter</li>
+<li>year</li>
+</ul>
+</li>
+<li><code>startdate</code> — The first time value to subtract (the subtrahend). Date or DateTime.</li>
+<li><code>enddate</code> — The second time value to subtract from (the minuend). Date or DateTime.</li>
+<li><code>timezone</code> — Timezone name (optional). If specified, it is applied to both startdate and enddate. If not specified, timezones of startdate and enddate are used. If they are not the same, the result is unspecified. String.</li>
+</ul>
+<p><strong>Example</strong></p>
+<pre><code class="sql">SELECT dateDiff(&#39;hour&#39;, toDateTime(&#39;2018-01-01 22:00:00&#39;), toDateTime(&#39;2018-01-02 23:00:00&#39;));
+</code></pre>
+<pre><code class="plain%20text">┌─dateDiff(&#39;hour&#39;, toDateTime(&#39;2018-01-01 22:00:00&#39;), toDateTime(&#39;2018-01-02 23:00:00&#39;))─┐
+│ 25                                                                                     │
+└────────────────────────────────────────────────────────────────────────────────────────┘
+</code></pre>
+<h2 id="date-add"><a href="#date-add" class="headerlink" title="date_add"></a>date_add</h2><p>Adds the time interval or date interval to the provided date or date with time.</p>
+<p><strong>Syntax</strong></p>
+<pre><code class="sql">date_add(date, value)
+date_add(datetime, value [,timezone])
+</code></pre>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><code>date</code> — The date or date with time to which <code>value</code> is added. Date or DateTime. </li>
+<li><code>timezone</code> - The timezone argument is allowed only when the 1st argument has the type DateTime</li>
+</ul>
+<p><strong>Returned value</strong><br>Date or date with time obtained by adding <code>value</code>.</p>
+<p>Type: Date or DateTime.</p>
+<p><strong>Example</strong></p>
+<pre><code class="sql">SELECT date_add(toDate(&#39;2018-01-01&#39;),3);
+</code></pre>
+<pre><code class="plain%20text">┌─date_add(toDate(&#39;2018-01-01&#39;), 3)─┐
+│ 2018-01-04                        │
+└───────────────────────────────────┘
+</code></pre>
+<pre><code class="sql">SELECT date_add(toDateTime(&#39;2018-01-01 00:00:00&#39;), 3, &#39;UTC&#39;);
+</code></pre>
+<pre><code class="plain%20text">┌─date_add(toDateTime(&#39;2018-01-01 00:00:00&#39;), 3, &#39;UTC&#39;)─┐
+│ 2018-01-03 16:00:00                                   │
+└───────────────────────────────────────────────────────┘
+</code></pre>
+<h2 id="date-sub"><a href="#date-sub" class="headerlink" title="date_sub"></a>date_sub</h2><p>Subtracts the time interval or date interval from the provided date or date with time.</p>
+<p><strong>Syntax</strong></p>
+<pre><code class="sql">date_sub(date, value)
+date_sub(datetime, value [,timezone])
+</code></pre>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><code>date</code> — The date or date with time to which <code>value</code> is added. Date or DateTime. </li>
+<li><code>timezone</code> - The timezone argument is allowed only when the 1st argument has the type DateTime</li>
+</ul>
+<p><strong>Returned value</strong><br>Date or date with time obtained by subtracting <code>value</code>.</p>
+<p>Type: Date or DateTime.</p>
+<p><strong>Example</strong></p>
+<pre><code class="sql">SELECT date_sub(toDate(&#39;2018-01-01&#39;),3);
+</code></pre>
+<pre><code class="plain%20text">┌─date_sub(toDate(&#39;2018-01-01&#39;), 3)─┐
+│ 2017-12-29                        │
+└───────────────────────────────────┘
+</code></pre>
+<pre><code class="sql">SELECT date_sub(toDateTime(&#39;2018-01-01 00:00:00&#39;), 3, &#39;UTC&#39;);
+</code></pre>
+<pre><code class="plain%20text">┌─date_sub(toDateTime(&#39;2018-01-01 00:00:00&#39;), 3, &#39;UTC&#39;)─┐
+│ 2017-12-28 16:00:00                                   │
+└───────────────────────────────────────────────────────┘
+</code></pre>
+<h2 id="formatDateTime"><a href="#formatDateTime" class="headerlink" title="formatDateTime"></a>formatDateTime</h2><p>Formats a Time according to the given Format string. Format is a constant expression, so you cannot have multiple formats for a single result column.</p>
+<p><strong>Syntax</strong></p>
+<pre><code class="sql">formatDateTime(Time, Format\[, Timezone\])
+</code></pre>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><code>Time</code> - Date&#x2F;DateTime</li>
+<li><code>Format</code> - Format pattern</li>
+</ul>
+<p><strong>Replacement fields</strong><br>Using replacement fields, you can define a pattern for the resulting string. “Example” column shows formatting result for <code>2018-01-02 22:33:44</code> .</p>
+<table>
+<thead>
+<tr>
+<th><strong>Placeholder</strong></th>
+<th><strong>Description</strong></th>
+<th><strong>Example</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>%C</td>
+<td>year divided by 100 and truncated to integer (00-99)</td>
+<td>20</td>
+</tr>
+<tr>
+<td>%d</td>
+<td>day of the month, zero-padded (01-31)</td>
+<td>02</td>
+</tr>
+<tr>
+<td>%D</td>
+<td>Short MM&#x2F;DD&#x2F;YY date, equivalent to %m&#x2F;%d&#x2F;%y</td>
+<td>01&#x2F;02&#x2F;18</td>
+</tr>
+<tr>
+<td>%e</td>
+<td>day of the month, space-padded ( 1-31)</td>
+<td>2</td>
+</tr>
+<tr>
+<td>%F</td>
+<td>short YYYY-MM-DD date, equivalent to %Y-%m-%d</td>
+<td>2018-01-02</td>
+</tr>
+<tr>
+<td>%H</td>
+<td>hour in 24h format (00-23)</td>
+<td>22</td>
+</tr>
+<tr>
+<td>%I</td>
+<td>hour in 12h format (01-12)</td>
+<td>10</td>
+</tr>
+<tr>
+<td>%j</td>
+<td>day of the year (001-366)</td>
+<td>002</td>
+</tr>
+<tr>
+<td>%m</td>
+<td>month as a decimal number (01-12)</td>
+<td>01</td>
+</tr>
+<tr>
+<td>%M</td>
+<td>minute (00-59)</td>
+<td>33</td>
+</tr>
+<tr>
+<td>%n</td>
+<td>new-line character (‘’)</td>
+<td></td>
+</tr>
+<tr>
+<td>%p</td>
+<td>AM or PM designation</td>
+<td>PM</td>
+</tr>
+<tr>
+<td>%R</td>
+<td>24-hour HH:MMtime, equivalent to %H:%M</td>
+<td>22:33</td>
+</tr>
+<tr>
+<td>%S</td>
+<td>second (00-59)</td>
+<td>44</td>
+</tr>
+<tr>
+<td>%t</td>
+<td>horizontal-tab character (’)</td>
+<td></td>
+</tr>
+<tr>
+<td>%T</td>
+<td>ISO8601 time format (HH:MM:SS), equivalent to %H:%M:%S</td>
+<td>22:33:44</td>
+</tr>
+<tr>
+<td>%u</td>
+<td>ISO8601 weekday as number with Monday as 1 (1-7)</td>
+<td>2</td>
+</tr>
+<tr>
+<td>%V</td>
+<td>ISO8601 week number (01-53)</td>
+<td>01</td>
+</tr>
+<tr>
+<td>%w</td>
+<td>weekday as a decimal number with Sunday as 0 (0-6)</td>
+<td>2</td>
+</tr>
+<tr>
+<td>%y</td>
+<td>Year, last two digits (00-99)</td>
+<td>18</td>
+</tr>
+<tr>
+<td>%Y</td>
+<td>Year</td>
+<td>2018</td>
+</tr>
+<tr>
+<td>%%</td>
+<td>a % sign</td>
+<td>%</td>
+</tr>
+</tbody></table>
+<p><strong>Returned value(s)</strong><br>Returns time and date values according to the determined format.</p>
+<p><strong>Example</strong></p>
+<pre><code class="sql">SELECT formatDateTime(toDate(&#39;2010-01-04&#39;), &#39;%d&#39;);
+</code></pre>
+<pre><code class="plain%20text">┌─formatDateTime(toDate(&#39;2010-01-04&#39;), &#39;%d&#39;)─┐
+│ 04                                         │
+└────────────────────────────────────────────┘
+```&lt;!-- TODO: NOT SUPPORT BY BYTEYARD --&gt;
+&lt;!-- ## from_unixtime 
+Function converts Unix timestamp to a calendar date and a time of a day. When there is only a single argument of Integer type, it acts in the same way as toDateTime and return DateTime type.
+
+**Example**
+
+```sql
+SELECT FROM_UNIXTIME(423543535);
+</code></pre>
+<pre><code class="plain%20text">┌─FROM_UNIXTIME(423543535)─┐
+│      1983-06-04 10:58:55 │
+└──────────────────────────┘
+</code></pre>
+<p>When there are two arguments: first is an Integer or DateTime, second is a constant format string — it acts in the same way as formatDateTime and return String type.</p>
+<p>For example:</p>
+<pre><code class="sql">SELECT FROM_UNIXTIME(1234334543, &#39;%Y-%m-%d %R:%S&#39;) AS DateTime;
+</code></pre>
+<pre><code class="plain%20text">
+┌─DateTime────────────┐
+
+│ 2009-02-11 14:42:23 │
+
+└─────────────────────┘
+</code></pre>
+<p> –&gt;</p>
+<h2 id="now"><a href="#now" class="headerlink" title="now"></a>now</h2><p>Returns the current date and time.</p>
+<p><strong>Syntax</strong></p>
+<pre><code class="sql">now()
+</code></pre>
+<p><strong>Returned value</strong></p>
+<ul>
+<li>Current date and time.</li>
+</ul>
+<p>Type: Datetime.</p>
+<p><strong>Example</strong></p>
+<pre><code class="sql">SELECT now();
+</code></pre>
+<pre><code class="plain%20text">┌─now()───────────────┐
+│ 2021-08-11 14:35:47 │
+└─────────────────────┘
+</code></pre>
+<h2 id="subtractDays"><a href="#subtractDays" class="headerlink" title="subtractDays"></a>subtractDays</h2><p>Function subtract a Date&#x2F;DateTime interval to a Date&#x2F;DateTime and then return the Date&#x2F;DateTime. </p>
+<p><strong>Syntax</strong></p>
+<pre><code class="sql">subtractDays(date, interval)
+subtractDays(datetime, interval)
+</code></pre>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><code>date/datetime</code>- Date&#x2F;DateTime</li>
+<li><code>interval</code> - Date&#x2F;DateTime</li>
+</ul>
+<p><strong>Returned value</strong></p>
+<ul>
+<li>Date&#x2F;DateTime</li>
+</ul>
+<p><strong>Example</strong></p>
+<pre><code class="sql">WITH
+    toDate(&#39;2019-01-01&#39;) AS date,
+    toDateTime(&#39;2019-01-01 00:00:00&#39;) AS date_time
+SELECT
+    subtractDays(date, 1) AS subtract_days_with_date,
+    subtractDays(date_time, 1) AS subtract_days_with_date_time
+</code></pre>
+<pre><code class="plain%20text">┌─subtract_days_with_date─┬─subtract_days_with_date_time─┐
+│ 2018-12-31              │ 2018-12-31 00:00:00          │
+└─────────────────────────┴──────────────────────────────┘
+</code></pre>
+<h2 id="subtractHours"><a href="#subtractHours" class="headerlink" title="subtractHours"></a>subtractHours</h2><p>Function subtract a Date&#x2F;DateTime interval to a Date&#x2F;DateTime and then return the Date&#x2F;DateTime. </p>
+<p><strong>Syntax</strong></p>
+<pre><code class="sql">subtractHours(date, interval)
+subtractHours(datetime, interval)
+</code></pre>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><code>date/datetime</code>- Date&#x2F;DateTime</li>
+<li><code>interval</code> - Date&#x2F;DateTime</li>
+</ul>
+<p><strong>Returned value</strong></p>
+<ul>
+<li>Date&#x2F;DateTime</li>
+</ul>
+<p><strong>Example</strong></p>
+<pre><code class="sql">WITH
+    toDate(&#39;2019-01-01&#39;) AS date,
+    toDateTime(&#39;2019-01-01 00:00:00&#39;) AS date_time
+SELECT
+    subtractHours(date, 1) AS subtract_hours_with_date,
+    subtractHours(date_time, 1) AS subtract_hours_with_date_time
+</code></pre>
+<!-- TODO: INCORRECT RESULT? -->
+
+<pre><code class="plain%20text">┌─subtract_hours_with_date─┬─subtract_hours_with_date_time─┐
+│ 2002-11-25               │ 2018-12-31 23:00:00           │
+└──────────────────────────┴───────────────────────────────┘
+</code></pre>
+<h2 id="subtractMinutes"><a href="#subtractMinutes" class="headerlink" title="subtractMinutes"></a>subtractMinutes</h2><p>Function subtract a Date&#x2F;DateTime interval to a Date&#x2F;DateTime and then return the Date&#x2F;DateTime. </p>
+<p><strong>Syntax</strong></p>
+<pre><code class="sql">subtractMinutes(date, interval)
+subtractMinutes(datetime, interval)
+</code></pre>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><code>date/datetime</code>- Date&#x2F;DateTime</li>
+<li><code>interval</code> - Date&#x2F;DateTime</li>
+</ul>
+<p><strong>Returned value</strong></p>
+<ul>
+<li>Date&#x2F;DateTime</li>
+</ul>
+<p><strong>Example</strong></p>
+<pre><code class="sql">WITH
+    toDate(&#39;2019-01-01&#39;) AS date,
+    toDateTime(&#39;2019-01-01 00:00:00&#39;) AS date_time
+SELECT
+    subtractMinutes(date, 1) AS subtract_minutes_with_date,
+    subtractMinutes(date_time, 1) AS subtract_minutes_with_date_time
+</code></pre>
+<!-- TODO: INCORRECT RESULT? -->
+
+<pre><code class="plain%20text">┌─subtract_minutes_with_date─┬─subtract_minutes_with_date_time─┐
+│ 2012-08-04                 │ 2018-12-31 23:59:00             │
+└────────────────────────────┴─────────────────────────────────┘
+</code></pre>
+<h2 id="subtractMonths"><a href="#subtractMonths" class="headerlink" title="subtractMonths"></a>subtractMonths</h2><p>Function subtract a Date&#x2F;DateTime interval to a Date&#x2F;DateTime and then return the Date&#x2F;DateTime. </p>
+<p><strong>Syntax</strong></p>
+<pre><code class="sql">subtractMonths(date, interval)
+subtractMonths(datetime, interval)
+</code></pre>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><code>date/datetime</code>- Date&#x2F;DateTime</li>
+<li><code>interval</code> - Date&#x2F;DateTime</li>
+</ul>
+<p><strong>Returned value</strong></p>
+<ul>
+<li>Date&#x2F;DateTime</li>
+</ul>
+<p><strong>Example</strong></p>
+<pre><code class="sql">WITH
+    toDate(&#39;2019-01-01&#39;) AS date,
+    toDateTime(&#39;2019-01-01 00:00:00&#39;) AS date_time
+SELECT
+    subtractMonths(date, 1) AS subtract_months_with_date,
+    subtractMonths(date_time, 1) AS subtract_months_with_date_time
+</code></pre>
+<pre><code class="plain%20text">┌─subtract_months_with_date─┬─subtract_months_with_date_time─┐
+│ 2018-12-01                │ 2018-12-01 00:00:00            │
+└───────────────────────────┴────────────────────────────────┘
+</code></pre>
+<h2 id="subtractQuarters"><a href="#subtractQuarters" class="headerlink" title="subtractQuarters"></a>subtractQuarters</h2><p>Function subtract a Date&#x2F;DateTime interval to a Date&#x2F;DateTime and then return the Date&#x2F;DateTime. </p>
+<p><strong>Syntax</strong></p>
+<pre><code class="sql">subtractQuarters(date, interval)
+subtractQuarters(datetime, interval)
+</code></pre>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><code>date/datetime</code>- Date&#x2F;DateTime</li>
+<li><code>interval</code> - Date&#x2F;DateTime</li>
+</ul>
+<p><strong>Returned value</strong></p>
+<ul>
+<li>Date&#x2F;DateTime</li>
+</ul>
+<p><strong>Example</strong></p>
+<pre><code class="sql">WITH
+    toDate(&#39;2019-01-01&#39;) AS date,
+    toDateTime(&#39;2019-01-01 00:00:00&#39;) AS date_time
+SELECT
+    subtractQuarters(date, 1) AS subtract_quarters_with_date,
+    subtractQuarters(date_time, 1) AS subtract_quarters_with_date_time
+</code></pre>
+<pre><code class="plain%20text">┌─subtract_quarters_with_date─┬─subtract_quarters_with_date_time─┐
+│ 2018-10-01                  │ 2018-10-01 00:00:00              │
+└─────────────────────────────┴──────────────────────────────────┘
+</code></pre>
+<h2 id="subtractSeconds"><a href="#subtractSeconds" class="headerlink" title="subtractSeconds"></a>subtractSeconds</h2><p>Function subtract a Date&#x2F;DateTime interval to a Date&#x2F;DateTime and then return the Date&#x2F;DateTime. </p>
+<p><strong>Syntax</strong></p>
+<pre><code class="sql">subtractSeconds(date, interval)
+subtractSeconds(datetime, interval)
+</code></pre>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><code>date/datetime</code>- Date&#x2F;DateTime</li>
+<li><code>interval</code> - Date&#x2F;DateTime</li>
+</ul>
+<p><strong>Returned value</strong></p>
+<ul>
+<li>Date&#x2F;DateTime</li>
+</ul>
+<p><strong>Example</strong></p>
+<pre><code class="sql">WITH
+    toDate(&#39;2019-01-01&#39;) AS date,
+    toDateTime(&#39;2019-01-01 00:00:00&#39;) AS date_time
+SELECT
+    subtractSeconds(date, 1) AS subtract_seconds_with_date,
+    subtractSeconds(date_time, 1) AS subtract_seconds_with_date_time
+</code></pre>
+<!-- TODO: INCORRECT RESULT? -->
+
+<pre><code class="plain%20text">┌─subtract_seconds_with_date─┬─subtract_seconds_with_date_time─┐
+│ 2012-10-02                 │ 2018-12-31 23:59:59             │
+└────────────────────────────┴─────────────────────────────────┘
+</code></pre>
+<h2 id="subtractWeeks"><a href="#subtractWeeks" class="headerlink" title="subtractWeeks"></a>subtractWeeks</h2><p>Function subtract a Date&#x2F;DateTime interval to a Date&#x2F;DateTime and then return the Date&#x2F;DateTime. </p>
+<p><strong>Syntax</strong></p>
+<pre><code class="sql">subtractWeeks(date, interval)
+subtractWeeks(datetime, interval)
+</code></pre>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><code>date/datetime</code>- Date&#x2F;DateTime</li>
+<li><code>interval</code> - Date&#x2F;DateTime</li>
+</ul>
+<p><strong>Returned value</strong></p>
+<ul>
+<li>Date&#x2F;DateTime</li>
+</ul>
+<p><strong>Example</strong></p>
+<pre><code class="sql">WITH
+    toDate(&#39;2019-01-01&#39;) AS date,
+    toDateTime(&#39;2019-01-01 00:00:00&#39;) AS date_time
+SELECT
+    subtractWeeks(date, 1) AS subtract_weeks_with_date,
+    subtractWeeks(date_time, 1) AS subtract_weeks_with_date_time
+</code></pre>
+<pre><code class="plain%20text">┌─subtract_weeks_with_date─┬─subtract_weeks_with_date_time─┐
+│ 2018-12-25               │ 2018-12-25 00:00:00           │
+└──────────────────────────┴───────────────────────────────┘
+</code></pre>
+<h2 id="subtractYears"><a href="#subtractYears" class="headerlink" title="subtractYears"></a>subtractYears</h2><p>Function subtract a Date&#x2F;DateTime interval to a Date&#x2F;DateTime and then return the Date&#x2F;DateTime. </p>
+<p><strong>Syntax</strong></p>
+<pre><code class="sql">subtractYears(date, interval)
+subtractYears(datetime, interval)
+</code></pre>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><code>date/datetime</code>- Date&#x2F;DateTime</li>
+<li><code>interval</code> - Date&#x2F;DateTime</li>
+</ul>
+<p><strong>Returned value</strong></p>
+<ul>
+<li>Date&#x2F;DateTime</li>
+</ul>
+<p><strong>Example</strong></p>
+<pre><code class="sql">WITH
+    toDate(&#39;2019-01-01&#39;) AS date,
+    toDateTime(&#39;2019-01-01 00:00:00&#39;) AS date_time
+SELECT
+    subtractYears(date, 1) AS subtract_years_with_date,
+    subtractYears(date_time, 1) AS subtract_years_with_date_time
+</code></pre>
+<pre><code class="plain%20text">┌─subtract_years_with_date─┬─subtract_years_with_date_time─┐
+│ 2018-01-01               │ 2018-01-01 00:00:00           │
+└──────────────────────────┴───────────────────────────────┘
+</code></pre>
+<h2 id="timeSlot"><a href="#timeSlot" class="headerlink" title="timeSlot"></a>timeSlot</h2><p>Rounds the time to the half hour.</p>
+<p>This function is specific to Yandex.Metrica, since half an hour is the minimum amount of time for breaking a session into two sessions if a tracking tag shows a single user’s consecutive pageviews that differ in time by strictly more than this amount. This means that tuples (the tag ID, user ID, and time slot) can be used to search for pageviews that are included in the corresponding session.</p>
+<p><strong>Syntax</strong></p>
+<pre><code class="sql">timeSlot(datetime)
+</code></pre>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><code>datetime</code>- DateTime</li>
+</ul>
+<p><strong>Returned value</strong></p>
+<ul>
+<li>DateTime</li>
+</ul>
+<p><strong>Example</strong></p>
+<pre><code class="sql">SELECT timeSlot(toDateTime(&#39;2018-01-01 01:01:01&#39;))
+</code></pre>
+<pre><code class="plain%20text">┌─timeSlot(toDateTime(&#39;2018-01-01 01:01:01&#39;))─┐
+│ 2018-01-01 01:00:00                         │
+└─────────────────────────────────────────────┘
+</code></pre>
+<h2 id="timeSlots"><a href="#timeSlots" class="headerlink" title="timeSlots"></a>timeSlots</h2><p>For a time interval starting at ‘StartTime’ and continuing for ‘Duration’ seconds, it returns an array of moments in time, consisting of points from this interval rounded down to the ‘Size’ in seconds. ‘Size’ is an optional parameter: a constant UInt32, set to 1800 by default.</p>
+<p>This is necessary for searching for pageviews in the corresponding session.</p>
+<p><strong>Syntax</strong></p>
+<pre><code class="sql">timeSlots(StartTime, Duration,[, Size])
+</code></pre>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><code>StartTime</code>- DateTime</li>
+<li><code>Duration</code> - Duration in seconds, UInt32</li>
+<li><code>Size</code> - Size of the interval.</li>
+</ul>
+<p><strong>Returned value</strong></p>
+<ul>
+<li>An array of timeSlot.</li>
+</ul>
+<p><strong>Example</strong></p>
+<pre><code class="sql">SELECT timeSlots(toDateTime(&#39;2012-01-01 12:20:00&#39;), toUInt32(600))
+</code></pre>
+<pre><code class="plain%20text">┌─timeSlots(toDateTime(&#39;2012-01-01 12:20:00&#39;), toUInt32(600))─┐
+│ [2012-01-01 12:00:00, 2012-01-01 12:30:00]                  │
+└─────────────────────────────────────────────────────────────┘
+</code></pre>
+<!-- TODO:Sensitive Function of Bytehouse -->
+<!-- ## timezone
+Returns the timezone of the server.
+
+**Syntax**
+
+```sql
+timezone()
+```
+Alias: `timezone` .
+
+**Returned value**
+- Timezone. 
+Type: String.
+
+**Example**
+
+```sql
+SELECT timezone()
+``` -->## toDayOfMonth
+<p>Converts a date or date with time to a UInt8 number containing the number of the day of the month (1-31).</p>
+<p><strong>Syntax</strong></p>
+<pre><code class="sql">toDayOfMonth(date)
+toDayOfMonth(datetime)
+</code></pre>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><code>date/datetime</code>- Date&#x2F;DateTime</li>
+</ul>
+<p><strong>Returned value</strong></p>
+<ul>
+<li>day of the month. UInt8</li>
+</ul>
+<p><strong>Example</strong></p>
+<pre><code class="sql">SELECT toDayOfMonth(toDate(&#39;2021-08-12&#39;))
+</code></pre>
+<pre><code>┌─toDayOfMonth(toDate(&#39;2021-08-12&#39;))─┐
+│ 12                                 │
+└────────────────────────────────────┘
+</code></pre>
+<pre><code class="sql">SELECT toDayOfMonth(toDateTime(&#39;2021-08-12 00:00:00&#39;))
+</code></pre>
+<pre><code>┌─toDayOfMonth(toDateTime(&#39;2021-08-12 00:00:00&#39;))─┐
+│ 12                                              │
+└─────────────────────────────────────────────────┘
+</code></pre>
+<h2 id="toDayOfWeek"><a href="#toDayOfWeek" class="headerlink" title="toDayOfWeek"></a>toDayOfWeek</h2><p>Converts a date or date with time to a UInt8 number containing the number of the day of the week (Monday is 1, and Sunday is 7).</p>
+<p><strong>Syntax</strong></p>
+<pre><code class="sql">toDayOfWeek(date)
+toDayOfWeek(datetime)
+</code></pre>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><code>date/datetime</code>- Date&#x2F;DateTime</li>
+</ul>
+<p><strong>Returned value</strong></p>
+<ul>
+<li>day of the week. UInt8</li>
+</ul>
+<p><strong>Example</strong></p>
+<pre><code class="sql">SELECT toDayOfWeek(toDate(&#39;2021-08-12&#39;))
+</code></pre>
+<pre><code>┌─toDayOfWeek(toDate(&#39;2021-08-12&#39;))─┐
+│ 4                                 │
+└───────────────────────────────────┘
+</code></pre>
+<pre><code class="sql">SELECT toDayOfWeek(toDateTime(&#39;2021-08-12 00:00:00&#39;))
+</code></pre>
+<pre><code>┌─toDayOfWeek(toDateTime(&#39;2021-08-12 00:00:00&#39;))─┐
+│ 4                                              │
+└────────────────────────────────────────────────┘
+</code></pre>
+<h2 id="toDayOfYear"><a href="#toDayOfYear" class="headerlink" title="toDayOfYear"></a>toDayOfYear</h2><p>Converts a date or date with time to a UInt16 number containing the number of the day of the year (1-366).</p>
+<p><strong>Syntax</strong></p>
+<pre><code class="sql">toDayOfYear(date)
+toDayOfYear(datetime)
+</code></pre>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><code>date/datetime</code>- Date&#x2F;DateTime</li>
+</ul>
+<p><strong>Returned value</strong></p>
+<ul>
+<li>day of the year. UInt8</li>
+</ul>
+<p><strong>Example</strong></p>
+<pre><code class="sql">SELECT toDayOfWeek(toDate(&#39;2021-08-12&#39;))
+</code></pre>
+<pre><code>┌─toDayOfWeek(toDate(&#39;2021-08-12&#39;))─┐
+│ 4                                 │
+└───────────────────────────────────┘
+</code></pre>
+<pre><code class="sql">SELECT toDayOfWeek(toDateTime(&#39;2021-08-12 00:00:00&#39;))
+</code></pre>
+<pre><code>┌─toDayOfWeek(toDateTime(&#39;2021-08-12 00:00:00&#39;))─┐
+│ 4                                              │
+└────────────────────────────────────────────────┘
+</code></pre>
+<h2 id="toHour"><a href="#toHour" class="headerlink" title="toHour"></a>toHour</h2><p>Converts a date with time to a UInt8 number containing the number of the hour in 24-hour time (0-23).</p>
+<p>This function assumes that if clocks are moved ahead, it is by one hour and occurs at 2 a.m., and if clocks are moved back, it is by one hour and occurs at 3 a.m. (which is not always true – even in Moscow the clocks were twice changed at a different time).</p>
+<p><strong>Syntax</strong></p>
+<pre><code class="sql">toHour(datetime)
+</code></pre>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><code>datetime</code>- DateTime</li>
+</ul>
+<p><strong>Returned value</strong></p>
+<ul>
+<li>number of the hour in 24-hour time. UInt8</li>
+</ul>
+<p><strong>Example</strong></p>
+<pre><code class="sql">SELECT toHour(toDateTime(&#39;2021-08-12 00:00:00&#39;))
+</code></pre>
+<pre><code>┌─toHour(toDateTime(&#39;2021-08-12 00:00:00&#39;))─┐
+│ 0                                         │
+└───────────────────────────────────────────┘
+</code></pre>
+<h2 id="toISOWeek"><a href="#toISOWeek" class="headerlink" title="toISOWeek"></a>toISOWeek</h2><p>Converts a date or date with time to a UInt8 number containing the ISO Week number.</p>
+<p><strong>Syntax</strong></p>
+<pre><code class="sql">toISOWeek(date)
+toISOWeek(datetime)
+</code></pre>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><code>date/datetime</code>- Date&#x2F;DateTime</li>
+</ul>
+<p><strong>Returned value</strong></p>
+<ul>
+<li>ISO Week number. UInt8</li>
+</ul>
+<p><strong>Example</strong></p>
+<pre><code class="sql">SELECT toISOWeek(toDate(&#39;2021-08-12&#39;))
+</code></pre>
+<pre><code>┌─toISOWeek(toDate(&#39;2021-08-12&#39;))─┐
+│ 32                              │
+└─────────────────────────────────┘
+</code></pre>
+<pre><code class="sql">SELECT toISOWeek(toDateTime(&#39;2021-08-12 00:00:00&#39;))
+</code></pre>
+<pre><code>┌─toISOWeek(toDateTime(&#39;2021-08-12 00:00:00&#39;))─┐
+│ 32                                           │
+└──────────────────────────────────────────────┘
+</code></pre>
+<h2 id="toISOYear"><a href="#toISOYear" class="headerlink" title="toISOYear"></a>toISOYear</h2><p>Converts a date or date with time to a UInt16 number containing the ISO Year number.</p>
+<p><strong>Syntax</strong></p>
+<pre><code class="sql">toISOYear(date)
+toISOYear(datetime)
+</code></pre>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><code>date/datetime</code>- Date&#x2F;DateTime</li>
+</ul>
+<p><strong>Returned value</strong></p>
+<ul>
+<li>ISO Year number. UInt16</li>
+</ul>
+<p><strong>Example</strong></p>
+<pre><code class="sql">SELECT toISOYear(toDate(&#39;2021-08-12&#39;))
+</code></pre>
+<pre><code>┌─toISOYear(toDate(&#39;2021-08-12&#39;))─┐
+│ 2021                            │
+└─────────────────────────────────┘
+</code></pre>
+<pre><code class="sql">SELECT toISOYear(toDateTime(&#39;2021-08-12 00:00:00&#39;))
+</code></pre>
+<pre><code>┌─toISOYear(toDateTime(&#39;2021-08-12 00:00:00&#39;))─┐
+│ 2021                                         │
+└──────────────────────────────────────────────┘
+</code></pre>
+<h2 id="toMinute"><a href="#toMinute" class="headerlink" title="toMinute"></a>toMinute</h2><p>Converts a date with time to a UInt8 number containing the number of the minute of the hour (0-59).</p>
+<p><strong>Syntax</strong></p>
+<pre><code class="sql">toMinute(datetime)
+</code></pre>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><code>datetime</code>- DateTime</li>
+</ul>
+<p><strong>Returned value</strong></p>
+<ul>
+<li>minute of the hour. UInt8</li>
+</ul>
+<p><strong>Example</strong></p>
+<pre><code class="sql">SELECT toMinute(toDateTime(&#39;2021-08-12 00:00:00&#39;))
+</code></pre>
+<pre><code>┌─toMinute(toDateTime(&#39;2021-08-12 00:00:00&#39;))─┐
+│ 0                                           │
+└─────────────────────────────────────────────┘
+</code></pre>
+<h2 id="toMonday"><a href="#toMonday" class="headerlink" title="toMonday"></a>toMonday</h2><p>Rounds down a date or date with time to the nearest Monday.</p>
+<p>Returns the date.</p>
+<p><strong>Syntax</strong></p>
+<pre><code class="sql">toMonday(date)
+toMonday(datetime)
+</code></pre>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><code>date/datetime</code>- Date&#x2F;DateTime</li>
+</ul>
+<p><strong>Returned value</strong></p>
+<ul>
+<li>date to the nearest Monday. Date</li>
+</ul>
+<p><strong>Example</strong></p>
+<pre><code class="sql">SELECT toMonday(toDate(&#39;2021-08-12&#39;))
+</code></pre>
+<pre><code>┌─toMonday(toDate(&#39;2021-08-12&#39;))─┐
+│ 2021-08-09                     │
+└────────────────────────────────┘
+</code></pre>
+<pre><code class="sql">SELECT toMonday(toDateTime(&#39;2021-08-12 00:00:00&#39;))
+</code></pre>
+<pre><code>┌─toMonday(toDateTime(&#39;2021-08-12 00:00:00&#39;))─┐
+│ 2021-08-09                                  │
+└─────────────────────────────────────────────┘
+</code></pre>
+<h2 id="toMonth"><a href="#toMonth" class="headerlink" title="toMonth"></a>toMonth</h2><p>Converts a date or date with time to a UInt8 number containing the month number (1-12).</p>
+<p><strong>Syntax</strong></p>
+<pre><code class="sql">toMonth(date)
+toMonth(datetime)
+</code></pre>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><code>date/datetime</code>- Date&#x2F;DateTime</li>
+</ul>
+<p><strong>Returned value</strong></p>
+<ul>
+<li>date to the nearest Monday. Date</li>
+</ul>
+<p><strong>Example</strong></p>
+<pre><code class="sql">SELECT toMonday(toDate(&#39;2021-08-12&#39;))
+</code></pre>
+<pre><code>┌─toMonday(toDate(&#39;2021-08-12&#39;))─┐
+│ 2021-08-09                     │
+└────────────────────────────────┘
+</code></pre>
+<pre><code class="sql">SELECT toMonday(toDateTime(&#39;2021-08-12 00:00:00&#39;))
+</code></pre>
+<pre><code>┌─toMonday(toDateTime(&#39;2021-08-12 00:00:00&#39;))─┐
+│ 2021-08-09                                  │
+└─────────────────────────────────────────────┘
+</code></pre>
+<h2 id="toQuarter"><a href="#toQuarter" class="headerlink" title="toQuarter"></a>toQuarter</h2><p>Converts a date or date with time to a UInt8 number containing the quarter number.</p>
+<p><strong>Syntax</strong></p>
+<pre><code class="sql">toQuarter(date)
+toQuarter(datetime)
+</code></pre>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><code>date/datetime</code>- Date&#x2F;DateTime</li>
+</ul>
+<p><strong>Returned value</strong></p>
+<ul>
+<li>quarter number. UInt8</li>
+</ul>
+<p><strong>Example</strong></p>
+<pre><code class="sql">SELECT toQuarter(toDate(&#39;2021-08-12&#39;))
+</code></pre>
+<pre><code>┌─toQuarter(toDate(&#39;2021-08-12&#39;))─┐
+│ 3                               │
+└─────────────────────────────────┘
+</code></pre>
+<pre><code class="sql">SELECT toQuarter(toDateTime(&#39;2021-08-12 00:00:00&#39;))
+</code></pre>
+<pre><code>┌─toQuarter(toDateTime(&#39;2021-08-12 00:00:00&#39;))─┐
+│ 3                                            │
+└──────────────────────────────────────────────┘
+</code></pre>
+<h2 id="toRelativeDayNum"><a href="#toRelativeDayNum" class="headerlink" title="toRelativeDayNum"></a>toRelativeDayNum</h2><p>Converts a date with time or date to the number of the day, starting from a certain fixed point in the past.</p>
+<p><strong>Syntax</strong></p>
+<pre><code class="sql">toRelativeDayNum(date)
+toRelativeDayNum(datetime)
+</code></pre>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><code>date/datetime</code>- Date&#x2F;DateTime</li>
+</ul>
+<p><strong>Returned value</strong></p>
+<ul>
+<li>number of the day, starting from a certain fixed point in the past. UInt16</li>
+</ul>
+<p><strong>Example</strong></p>
+<pre><code class="sql">SELECT toRelativeDayNum(toDate(&#39;2021-08-12&#39;))
+</code></pre>
+<pre><code>┌─toRelativeDayNum(toDate(&#39;2021-08-12&#39;))─┐
+│ 18851                                  │
+└────────────────────────────────────────┘
+</code></pre>
+<pre><code class="sql">SELECT toRelativeDayNum(toDateTime(&#39;2021-08-12 00:00:00&#39;))
+</code></pre>
+<pre><code>┌─toRelativeDayNum(toDateTime(&#39;2021-08-12 00:00:00&#39;))─┐
+│ 18851                                               │
+└─────────────────────────────────────────────────────┘
+</code></pre>
+<h2 id="toRelativeHourNum"><a href="#toRelativeHourNum" class="headerlink" title="toRelativeHourNum"></a>toRelativeHourNum</h2><p>Converts a date with time or date to the number of the hour, starting from a certain fixed point in the past.</p>
+<p><strong>Syntax</strong></p>
+<pre><code class="sql">toRelativeHourNum(date)
+toRelativeHourNum(datetime)
+</code></pre>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><code>date/datetime</code>- Date&#x2F;DateTime</li>
+</ul>
+<p><strong>Returned value</strong></p>
+<ul>
+<li>number of the hour, starting from a certain fixed point in the past. UInt32</li>
+</ul>
+<p><strong>Example</strong></p>
+<pre><code class="sql">SELECT toRelativeHourNum(toDate(&#39;2021-08-12&#39;))
+</code></pre>
+<pre><code>┌─toRelativeHourNum(toDate(&#39;2021-08-12&#39;))─┐
+│ 452416                                  │
+└─────────────────────────────────────────┘
+</code></pre>
+<pre><code class="sql">SELECT toRelativeHourNum(toDateTime(&#39;2021-08-12 00:00:00&#39;))
+</code></pre>
+<pre><code>┌─toRelativeHourNum(toDateTime(&#39;2021-08-12 00:00:00&#39;))─┐
+│ 452416                                               │
+└──────────────────────────────────────────────────────┘
+</code></pre>
+<h2 id="toRelativeMinuteNum"><a href="#toRelativeMinuteNum" class="headerlink" title="toRelativeMinuteNum"></a>toRelativeMinuteNum</h2><p>Converts a date with time or date to the number of the minute, starting from a certain fixed point in the past.</p>
+<p><strong>Syntax</strong></p>
+<pre><code class="sql">toRelativeMinuteNum(date)
+toRelativeMinuteNum(datetime)
+</code></pre>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><code>date/datetime</code>- Date&#x2F;DateTime</li>
+</ul>
+<p><strong>Returned value</strong></p>
+<ul>
+<li>number of the minute, starting from a certain fixed point in the past. UInt32</li>
+</ul>
+<p><strong>Example</strong></p>
+<pre><code class="sql">SELECT toRelativeMinuteNum(toDate(&#39;2021-08-12&#39;))
+</code></pre>
+<pre><code>┌─toRelativeMinuteNum(toDate(&#39;2021-08-12&#39;))─┐
+│ 27144960                                  │
+└───────────────────────────────────────────┘
+</code></pre>
+<pre><code class="sql">SELECT toRelativeMinuteNum(toDateTime(&#39;2021-08-12 00:00:00&#39;))
+</code></pre>
+<pre><code>┌─toRelativeMinuteNum(toDateTime(&#39;2021-08-12 00:00:00&#39;))─┐
+│ 27144960                                               │
+└────────────────────────────────────────────────────────┘
+</code></pre>
+<h2 id="toRelativeMonthNum"><a href="#toRelativeMonthNum" class="headerlink" title="toRelativeMonthNum"></a>toRelativeMonthNum</h2><p>Converts a date with time or date to the number of the month, starting from a certain fixed point in the past.</p>
+<p><strong>Syntax</strong></p>
+<pre><code class="sql">toRelativeMonthNum(date)
+toRelativeMonthNum(datetime)
+</code></pre>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><code>date/datetime</code>- Date&#x2F;DateTime</li>
+</ul>
+<p><strong>Returned value</strong></p>
+<ul>
+<li>number of the month, starting from a certain fixed point in the past. UInt16</li>
+</ul>
+<p><strong>Example</strong></p>
+<pre><code class="sql">SELECT toRelativeMonthNum(toDate(&#39;2021-08-12&#39;))
+</code></pre>
+<pre><code>┌─toRelativeMonthNum(toDate(&#39;2021-08-12&#39;))─┐
+│ 24260                                    │
+└──────────────────────────────────────────┘
+</code></pre>
+<pre><code class="sql">SELECT toRelativeMonthNum(toDateTime(&#39;2021-08-12 00:00:00&#39;))
+</code></pre>
+<pre><code>┌─toRelativeMonthNum(toDateTime(&#39;2021-08-12 00:00:00&#39;))─┐
+│ 24260                                                 │
+└───────────────────────────────────────────────────────┘
+</code></pre>
+<h2 id="toRelativeQuarterNum"><a href="#toRelativeQuarterNum" class="headerlink" title="toRelativeQuarterNum"></a>toRelativeQuarterNum</h2><p>Converts a date with time or date to the number of the quarter, starting from a certain fixed point in the past.</p>
+<p><strong>Syntax</strong></p>
+<pre><code class="sql">toRelativeQuarterNum(date)
+toRelativeQuarterNum(datetime)
+</code></pre>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><code>date/datetime</code>- Date&#x2F;DateTime</li>
+</ul>
+<p><strong>Returned value</strong></p>
+<ul>
+<li>number of the quarter, starting from a certain fixed point in the past. UInt16</li>
+</ul>
+<p><strong>Example</strong></p>
+<pre><code class="sql">SELECT toRelativeQuarterNum(toDate(&#39;2021-08-12&#39;))
+</code></pre>
+<pre><code>┌─toRelativeQuarterNum(toDate(&#39;2021-08-12&#39;))─┐
+│ 8086                                       │
+└────────────────────────────────────────────┘
+</code></pre>
+<pre><code class="sql">SELECT toRelativeQuarterNum(toDateTime(&#39;2021-08-12 00:00:00&#39;))
+</code></pre>
+<pre><code>┌─toRelativeQuarterNum(toDateTime(&#39;2021-08-12 00:00:00&#39;))─┐
+│ 8086                                                    │
+└─────────────────────────────────────────────────────────┘
+</code></pre>
+<h2 id="toRelativeSecondNum"><a href="#toRelativeSecondNum" class="headerlink" title="toRelativeSecondNum"></a>toRelativeSecondNum</h2><p>Converts a date with time or date to the number of the second, starting from a certain fixed point in the past.</p>
+<p><strong>Syntax</strong></p>
+<pre><code class="sql">toRelativeSecondNum(date)
+toRelativeSecondNum(datetime)
+</code></pre>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><code>date/datetime</code>- Date&#x2F;DateTime</li>
+</ul>
+<p><strong>Returned value</strong></p>
+<ul>
+<li>number of the second, starting from a certain fixed point in the past. UInt32</li>
+</ul>
+<p><strong>Example</strong></p>
+<pre><code class="sql">SELECT toRelativeSecondNum(toDate(&#39;2021-08-12&#39;))
+</code></pre>
+<pre><code>┌─toRelativeSecondNum(toDate(&#39;2021-08-12&#39;))─┐
+│ 1628697600                                │
+└───────────────────────────────────────────┘
+</code></pre>
+<pre><code class="sql">SELECT toRelativeSecondNum(toDateTime(&#39;2021-08-12 00:00:00&#39;))
+</code></pre>
+<pre><code>┌─toRelativeSecondNum(toDateTime(&#39;2021-08-12 00:00:00&#39;))─┐
+│ 1628697600                                             │
+└────────────────────────────────────────────────────────┘
+</code></pre>
+<h2 id="toRelativeWeekNum"><a href="#toRelativeWeekNum" class="headerlink" title="toRelativeWeekNum"></a>toRelativeWeekNum</h2><p>Converts a date with time or date to the number of the week, starting from a certain fixed point in the past.</p>
+<p><strong>Syntax</strong></p>
+<pre><code class="sql">toRelativeWeekNum(date)
+toRelativeWeekNum(datetime)
+</code></pre>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><code>date/datetime</code>- Date&#x2F;DateTime</li>
+</ul>
+<p><strong>Returned value</strong></p>
+<ul>
+<li>number of the week, starting from a certain fixed point in the past. UInt16</li>
+</ul>
+<p><strong>Example</strong></p>
+<pre><code class="sql">SELECT toRelativeWeekNum(toDate(&#39;2021-08-12&#39;))
+</code></pre>
+<pre><code>┌─toRelativeWeekNum(toDate(&#39;2021-08-12&#39;))─┐
+│ 2693                                    │
+└─────────────────────────────────────────┘
+</code></pre>
+<pre><code class="sql">SELECT toRelativeWeekNum(toDateTime(&#39;2021-08-12 00:00:00&#39;))
+</code></pre>
+<pre><code>┌─toRelativeWeekNum(toDateTime(&#39;2021-08-12 00:00:00&#39;))─┐
+│ 2693                                                 │
+└──────────────────────────────────────────────────────┘
+</code></pre>
+<h2 id="toRelativeYearNum"><a href="#toRelativeYearNum" class="headerlink" title="toRelativeYearNum"></a>toRelativeYearNum</h2><p>Converts a date with time or date to the number of the year, starting from a certain fixed point in the past.</p>
+<p><strong>Syntax</strong></p>
+<pre><code class="sql">toRelativeYearNum(date)
+toRelativeYearNum(datetime)
+</code></pre>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><code>date/datetime</code>- Date&#x2F;DateTime</li>
+</ul>
+<p><strong>Returned value</strong></p>
+<ul>
+<li>number of the year, starting from a certain fixed point in the past. UInt16</li>
+</ul>
+<p><strong>Example</strong></p>
+<pre><code class="sql">SELECT toRelativeYearNum(toDate(&#39;2021-08-12&#39;))
+</code></pre>
+<pre><code>┌─toRelativeYearNum(toDate(&#39;2021-08-12&#39;))─┐
+│ 2021                                    │
+└─────────────────────────────────────────┘
+</code></pre>
+<pre><code class="sql">SELECT toRelativeYearNum(toDateTime(&#39;2021-08-12 00:00:00&#39;))
+</code></pre>
+<pre><code>┌─toRelativeYearNum(toDateTime(&#39;2021-08-12 00:00:00&#39;))─┐
+│ 2021                                                 │
+└──────────────────────────────────────────────────────┘
+</code></pre>
+<h2 id="toSecond"><a href="#toSecond" class="headerlink" title="toSecond"></a>toSecond</h2><p>Converts a date with time to a UInt8 number containing the number of the second in the minute (0-59).</p>
+<p>Leap seconds are not accounted for.</p>
+<p><strong>Syntax</strong></p>
+<pre><code class="sql">toSecond(datetime)
+</code></pre>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><code>datetime</code>- DateTime</li>
+</ul>
+<p><strong>Returned value</strong></p>
+<ul>
+<li>number of the second in the minute. UInt8</li>
+</ul>
+<p><strong>Example</strong></p>
+<pre><code class="sql">SELECT toSecond(toDateTime(&#39;2021-08-12 00:00:00&#39;))
+</code></pre>
+<pre><code>┌─toSecond(toDateTime(&#39;2021-08-12 00:00:00&#39;))─┐
+│ 0                                           │
+└─────────────────────────────────────────────┘
+</code></pre>
+<h2 id="toStartOfDay"><a href="#toStartOfDay" class="headerlink" title="toStartOfDay"></a>toStartOfDay</h2><p>Rounds down a date with time to the start of the day.</p>
+<p><strong>Syntax</strong></p>
+<pre><code class="sql">toStartOfDay(datetime)
+</code></pre>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><code>datetime</code>- DateTime</li>
+</ul>
+<p><strong>Returned value</strong></p>
+<ul>
+<li>Rounds down a date with time to the start of the day. DateTime</li>
+</ul>
+<p><strong>Example</strong></p>
+<pre><code class="sql">SELECT toStartOfDay(toDateTime(&#39;2021-08-12 08:00:00&#39;))
+</code></pre>
+<pre><code>┌─toStartOfDay(toDateTime(&#39;2021-08-12 08:00:00&#39;))─┐
+│ 2021-08-12 00:00:00                             │
+└─────────────────────────────────────────────────┘
+</code></pre>
+<h2 id="toStartOfFifteenMinutes"><a href="#toStartOfFifteenMinutes" class="headerlink" title="toStartOfFifteenMinutes"></a>toStartOfFifteenMinutes</h2><p>Rounds down the date with time to the start of the fifteen-minute interval.</p>
+<p><strong>Syntax</strong></p>
+<pre><code class="sql">toStartOfFifteenMinutes(datetime)
+</code></pre>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><code>datetime</code>- DateTime</li>
+</ul>
+<p><strong>Returned value</strong></p>
+<ul>
+<li>Rounds down the date with time to the start of the fifteen-minute interval. DateTime</li>
+</ul>
+<p><strong>Example</strong></p>
+<pre><code class="sql">SELECT toStartOfFifteenMinutes(toDateTime(&#39;2021-08-12 00:10:00&#39;))
+</code></pre>
+<pre><code>┌─toStartOfFifteenMinutes(toDateTime(&#39;2021-08-12 00:10:00&#39;))─┐
+│ 2021-08-12 00:00:00                                        │
+└────────────────────────────────────────────────────────────┘
+</code></pre>
+<h2 id="toStartOfFiveMinute"><a href="#toStartOfFiveMinute" class="headerlink" title="toStartOfFiveMinute"></a>toStartOfFiveMinute</h2><p>Rounds down a date with time to the start of the five-minute interval.</p>
+<p><strong>Syntax</strong></p>
+<pre><code class="sql">toStartOfFiveMinute(datetime)
+</code></pre>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><code>datetime</code>- DateTime</li>
+</ul>
+<p><strong>Returned value</strong></p>
+<ul>
+<li>Rounds down a date with time to the start of the five-minute interval. DateTime</li>
+</ul>
+<p><strong>Example</strong></p>
+<pre><code class="sql">SELECT toStartOfFiveMinute(toDateTime(&#39;2021-08-12 00:09:00&#39;))
+</code></pre>
+<pre><code>┌─toStartOfFiveMinute(toDateTime(&#39;2021-08-12 00:09:00&#39;))─┐
+│ 2021-08-12 00:05:00                                    │
+└────────────────────────────────────────────────────────┘
+</code></pre>
+<h2 id="toStartOfHour"><a href="#toStartOfHour" class="headerlink" title="toStartOfHour"></a>toStartOfHour</h2><p>Rounds down a date with time to the start of the hour.</p>
+<p><strong>Syntax</strong></p>
+<pre><code class="sql">toStartOfHour(datetime)
+</code></pre>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><code>datetime</code>- DateTime</li>
+</ul>
+<p><strong>Returned value</strong></p>
+<ul>
+<li>Rounds down a date with time to the start of the hour. DateTime</li>
+</ul>
+<p><strong>Example</strong></p>
+<pre><code class="sql">SELECT toStartOfHour(toDateTime(&#39;2021-08-12 01:09:00&#39;))
+</code></pre>
+<pre><code>┌─toStartOfHour(toDateTime(&#39;2021-08-12 01:09:00&#39;))─┐
+│ 2021-08-12 01:00:00                              │
+└──────────────────────────────────────────────────┘
+</code></pre>
+<h2 id="toStartOfISOYear"><a href="#toStartOfISOYear" class="headerlink" title="toStartOfISOYear"></a>toStartOfISOYear</h2><p>Rounds down a date or date with time to the first day of ISO year.</p>
+<p>Returns the date.</p>
+<p><strong>Syntax</strong></p>
+<pre><code class="sql">toStartOfISOYear(date)
+toStartOfISOYear(datetime)
+</code></pre>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><code>date/datetime</code>- Date&#x2F;DateTime</li>
+</ul>
+<p><strong>Returned value</strong></p>
+<ul>
+<li>Rounds down a date or date with time to the first day of ISO year. Date</li>
+</ul>
+<p><strong>Example</strong></p>
+<pre><code class="sql">SELECT toStartOfISOYear(toDate(&#39;2021-08-12&#39;))
+</code></pre>
+<pre><code>┌─toStartOfISOYear(toDate(&#39;2021-08-12&#39;))─┐
+│ 2021-01-04                             │
+└────────────────────────────────────────┘
+</code></pre>
+<pre><code class="sql">SELECT toStartOfISOYear(toDateTime(&#39;2021-08-12 00:00:00&#39;))
+</code></pre>
+<pre><code>┌─toStartOfISOYear(toDateTime(&#39;2021-08-12 00:00:00&#39;))─┐
+│ 2021-01-04                                          │
+└─────────────────────────────────────────────────────┘
+</code></pre>
+<h2 id="toStartOfInterval"><a href="#toStartOfInterval" class="headerlink" title="toStartOfInterval"></a>toStartOfInterval</h2><p>This is a generalization of other functions named <code>toStartOf*</code> . For example,<br><code>toStartOfInterval(t, INTERVAL 1 year)</code> returns the same as <code>toStartOfYear(t)</code> ,<br><code>toStartOfInterval(t, INTERVAL 1 month)</code> returns the same as <code>toStartOfMonth(t)</code> ,<br><code>toStartOfInterval(t, INTERVAL 1 day)</code> returns the same as <code>toStartOfDay(t)</code> ,<br><code>toStartOfInterval(t, INTERVAL 15 minute)</code> returns the same as <code>toStartOfFifteenMinutes(t)</code> etc.</p>
+<p><strong>Syntax</strong></p>
+<pre><code class="sql">toStartOfInterval(time_or_data, INTERVAL x unit [, time_zone])
+</code></pre>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><code>time_or_data</code>- Date&#x2F;DateTime</li>
+<li><code>x unit</code> - x is UInt*, unit can be second, minute, hour, day, month, year, quarter</li>
+</ul>
+<p><strong>Returned value</strong></p>
+<ul>
+<li>Date&#x2F;DateTime</li>
+</ul>
+<p><strong>Example</strong></p>
+<pre><code class="sql">SELECT toStartOfInterval(toDateTime(&#39;2021-08-12 01:09:00&#39;), INTERVAL 2 minute)
+</code></pre>
+<pre><code>┌─toStartOfInterval(toDateTime(&#39;2021-08-12 01:09:00&#39;), toIntervalMinute(2))─┐
+│ 2021-08-12 01:08:00                                                       │
+└───────────────────────────────────────────────────────────────────────────┘
+</code></pre>
+<h2 id="toStartOfMinute"><a href="#toStartOfMinute" class="headerlink" title="toStartOfMinute"></a>toStartOfMinute</h2><p>Rounds down a date with time to the start of the minute.</p>
+<p><strong>Syntax</strong></p>
+<pre><code class="sql">toStartOfMinute(datetime)
+</code></pre>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><code>datetime</code>- DateTime</li>
+</ul>
+<p><strong>Returned value</strong></p>
+<ul>
+<li>Rounds down a date with time to the start of the minute. DateTime</li>
+</ul>
+<p><strong>Example</strong></p>
+<pre><code class="sql">SELECT toStartOfMinute(toDateTime(&#39;2021-08-12 00:01:30&#39;))
+</code></pre>
+<pre><code>┌─toStartOfMinute(toDateTime(&#39;2021-08-12 00:01:30&#39;))─┐
+│ 2021-08-12 00:01:00                                │
+└────────────────────────────────────────────────────┘
+</code></pre>
+<h2 id="toStartOfMonth"><a href="#toStartOfMonth" class="headerlink" title="toStartOfMonth"></a>toStartOfMonth</h2><p>Rounds down a date or date with time to the first day of the month.</p>
+<p>Returns the date.</p>
+<p><strong>Syntax</strong></p>
+<pre><code class="sql">toStartOfMonth(date)
+toStartOfMonth(datetime)
+</code></pre>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><code>date/datetime</code>- Date&#x2F;DateTime</li>
+</ul>
+<p><strong>Returned value</strong></p>
+<ul>
+<li>Rounds down a date or date with time to the first day of the month. Date</li>
+</ul>
+<p><strong>Example</strong></p>
+<pre><code class="sql">SELECT toStartOfMonth(toDate(&#39;2021-08-12&#39;))
+</code></pre>
+<pre><code>┌─toStartOfMonth(toDate(&#39;2021-08-12&#39;))─┐
+│ 2021-08-01                           │
+└──────────────────────────────────────┘
+</code></pre>
+<pre><code class="sql">SELECT toStartOfMonth(toDateTime(&#39;2021-08-12 00:01:30&#39;))
+</code></pre>
+<pre><code>┌─toStartOfMonth(toDateTime(&#39;2021-08-12 00:01:30&#39;))─┐
+│ 2021-08-01                                        │
+└───────────────────────────────────────────────────┘
+</code></pre>
+<h2 id="toStartOfQuarter"><a href="#toStartOfQuarter" class="headerlink" title="toStartOfQuarter"></a>toStartOfQuarter</h2><p>Rounds down a date or date with time to the first day of the quarter.<br>The first day of the quarter is either 1 January, 1 April, 1 July, or 1 October.<br>Returns the date.</p>
+<p><strong>Syntax</strong></p>
+<pre><code class="sql">toStartOfQuarter(date)
+toStartOfQuarter(datetime)
+</code></pre>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><code>date/datetime</code>- Date&#x2F;DateTime</li>
+</ul>
+<p><strong>Returned value</strong></p>
+<ul>
+<li>Rounds down a date or date with time to the first day of the quarter. Date</li>
+</ul>
+<p><strong>Example</strong></p>
+<pre><code class="sql">SELECT toStartOfQuarter(toDate(&#39;2021-08-12&#39;))
+</code></pre>
+<pre><code>┌─toStartOfQuarter(toDate(&#39;2021-08-12&#39;))─┐
+│ 2021-07-01                             │
+└────────────────────────────────────────┘
+</code></pre>
+<pre><code class="sql">SELECT toStartOfQuarter(toDateTime(&#39;2021-08-12 00:01:30&#39;))
+</code></pre>
+<pre><code>┌─toStartOfQuarter(toDateTime(&#39;2021-08-12 00:01:30&#39;))─┐
+│ 2021-07-01                                          │
+└─────────────────────────────────────────────────────┘
+</code></pre>
+<h2 id="toStartOfTenMinutes"><a href="#toStartOfTenMinutes" class="headerlink" title="toStartOfTenMinutes"></a>toStartOfTenMinutes</h2><p>Rounds down a date with time to the start of the ten-minute interval.</p>
+<p><strong>Syntax</strong></p>
+<pre><code class="sql">toStartOfTenMinutes(datetime)
+</code></pre>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><code>datetime</code>- DateTime</li>
+</ul>
+<p><strong>Returned value</strong></p>
+<ul>
+<li>Rounds down a date with time to the start of the ten-minute interval. DateTime</li>
+</ul>
+<p><strong>Example</strong></p>
+<pre><code class="sql">SELECT toStartOfTenMinutes(toDateTime(&#39;2021-08-12 00:01:30&#39;))
+</code></pre>
+<pre><code>┌─toStartOfTenMinutes(toDateTime(&#39;2021-08-12 00:01:30&#39;))─┐
+│ 2021-08-12 00:00:00                                    │
+└────────────────────────────────────────────────────────┘
+</code></pre>
+<h2 id="toStartOfWeek"><a href="#toStartOfWeek" class="headerlink" title="toStartOfWeek"></a>toStartOfWeek</h2><p>Rounds down a date or date with time to the nearest Sunday or Monday by mode.<br>Returns the date.<br>The mode argument works exactly like the mode argument to toWeek(). For the single-argument syntax, a mode value of 0 is used.</p>
+<p><strong>Syntax</strong></p>
+<pre><code class="sql">toStartOfWeek(date\[,mode\])
+toStartOfWeek(datetime\[,mode\])
+</code></pre>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><code>date/datetime</code>- Date&#x2F;DateTime</li>
+<li><code>mode</code> - Refer toWeek mode.</li>
+</ul>
+<p><strong>Returned value</strong></p>
+<ul>
+<li>Rounds down a date or date with time to the nearest Sunday or Monday by mode. DateTime</li>
+</ul>
+<p><strong>Example</strong></p>
+<pre><code class="sql">SELECT toStartOfWeek(toDateTime(&#39;2021-08-12 00:01:30&#39;))
+</code></pre>
+<pre><code>┌─toStartOfWeek(toDateTime(&#39;2021-08-12 00:01:30&#39;))─┐
+│ 2021-08-08                                       │
+└──────────────────────────────────────────────────┘
+</code></pre>
+<h2 id="toStartOfYear"><a href="#toStartOfYear" class="headerlink" title="toStartOfYear"></a>toStartOfYear</h2><p>Rounds down a date or date with time to the first day of the year.</p>
+<p>Returns the date.</p>
+<p><strong>Syntax</strong></p>
+<pre><code class="sql">toStartOfYear(date)
+toStartOfYear(datetime)
+</code></pre>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><code>date/datetime</code>- Date&#x2F;DateTime</li>
+</ul>
+<p><strong>Returned value</strong></p>
+<ul>
+<li>Rounds down a date or date with time to the first day of the year. Date</li>
+</ul>
+<p><strong>Example</strong></p>
+<pre><code class="sql">SELECT toStartOfYear(toDateTime(&#39;2021-08-12 00:01:30&#39;))
+</code></pre>
+<pre><code>┌─toStartOfYear(toDateTime(&#39;2021-08-12 00:01:30&#39;))─┐
+│ 2021-01-01                                       │
+└──────────────────────────────────────────────────┘
+</code></pre>
+<h2 id="toTime"><a href="#toTime" class="headerlink" title="toTime"></a>toTime</h2><p>Converts a date with time to a certain fixed date, while preserving the time.</p>
+<p><strong>Syntax</strong></p>
+<pre><code class="sql">toTime(date)
+toTime(datetime)
+</code></pre>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><code>date/datetime</code>- Date&#x2F;DateTime</li>
+</ul>
+<p><strong>Returned value</strong></p>
+<ul>
+<li>DateTime</li>
+</ul>
+<p><strong>Example</strong></p>
+<pre><code class="sql">SELECT toTime(toDateTime(&#39;2021-08-12 00:01:30&#39;))
+</code></pre>
+<pre><code>┌─toTypeName(toTime(toDateTime(&#39;2021-08-12 00:01:30&#39;)))─┐
+│ DateTime(&#39;PRC&#39;)                                       │
+└───────────────────────────────────────────────────────┘
+</code></pre>
+<h2 id="toTimeZone"><a href="#toTimeZone" class="headerlink" title="toTimeZone"></a>toTimeZone</h2><p>Converts time or date and time to the specified time zone. The time zone is an attribute of the <code>Date</code> and <code>DateTime</code> data types. The internal value (number of seconds) of the table field or of the resultset’s column does not change, the column’s type changes and its string representation changes accordingly.</p>
+<p><strong>Syntax</strong></p>
+<pre><code class="sql">toTimezone(value, timezone)
+</code></pre>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><code>value</code> — Time or date and time. Date&#x2F;DateTime. </li>
+<li><code>timezone</code> — Timezone for the returned value. String.</li>
+</ul>
+<p><strong>Returned value</strong></p>
+<ul>
+<li>Date and time. DateTime.</li>
+</ul>
+<p><strong>Example</strong></p>
+<pre><code class="sql">SELECT toDateTime(&#39;2019-01-01 00:00:00&#39;, &#39;UTC&#39;) AS time_utc,
+    toTypeName(time_utc) AS type_utc,
+    toInt32(time_utc) AS int32utc,
+    toTimeZone(time_utc, &#39;Asia/Yekaterinburg&#39;) AS time_yekat,
+    toTypeName(time_yekat) AS type_yekat,
+    toInt32(time_yekat) AS int32yekat,
+    toTimeZone(time_utc, &#39;US/Samoa&#39;) AS time_samoa,
+    toTypeName(time_samoa) AS type_samoa,
+    toInt32(time_samoa) AS int32samoa
+FORMAT Vertical;
+</code></pre>
+<pre><code class="plain%20text">Row 1:
+──────
+time_utc:   2019-01-01 00:00:00
+type_utc:   DateTime(&#39;UTC&#39;)
+int32utc:   1546300800
+time_yekat: 2019-01-01 05:00:00
+type_yekat: DateTime(&#39;Asia/Yekaterinburg&#39;)
+int32yekat: 1546300800
+time_samoa: 2018-12-31 13:00:00
+type_samoa: DateTime(&#39;US/Samoa&#39;)
+int32samoa: 1546300800
+</code></pre>
+<p><code>toTimeZone(time_utc, &#39;Asia/Yekaterinburg&#39;)</code> changes the <code>DateTime(&#39;UTC&#39;)</code> type to <code>DateTime(&#39;Asia/Yekaterinburg&#39;)</code> . The value (Unixtimestamp) 1546300800 stays the same, but the string representation (the result of the toString() function) changes from <code>time_utc: 2019-01-01 00:00:00</code> to <code>time_yekat: 2019-01-01 05:00:00</code> .</p>
+<h2 id="toWeek"><a href="#toWeek" class="headerlink" title="toWeek"></a>toWeek</h2><p>This function returns the week number for date or datetime. The two-argument form of toWeek() enables you to specify whether the week starts on Sunday or Monday and whether the return value should be in the range from 0 to 53 or from 1 to 53. If the mode argument is omitted, the default mode is 0.</p>
+<p><code>toISOWeek()</code> is a compatibility function that is equivalent to <code>toWeek(date,3)</code> .</p>
+<p>The following table describes how the mode argument works.</p>
+<table>
+<thead>
+<tr>
+<th><strong>Mode</strong></th>
+<th><strong>First day of week</strong></th>
+<th><strong>Range</strong></th>
+<th><strong>Week 1 is the first week …</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>0</td>
+<td>Sunday</td>
+<td>0-53</td>
+<td>with a Sunday in this year</td>
+</tr>
+<tr>
+<td>1</td>
+<td>Monday</td>
+<td>0-53</td>
+<td>with 4 or more days this year</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Sunday</td>
+<td>1-53</td>
+<td>with a Sunday in this year</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Monday</td>
+<td>1-53</td>
+<td>with 4 or more days this year</td>
+</tr>
+<tr>
+<td>4</td>
+<td>Sunday</td>
+<td>0-53</td>
+<td>with 4 or more days this year</td>
+</tr>
+<tr>
+<td>5</td>
+<td>Monday</td>
+<td>0-53</td>
+<td>with a Monday in this year</td>
+</tr>
+<tr>
+<td>6</td>
+<td>Sunday</td>
+<td>1-53</td>
+<td>with 4 or more days this year</td>
+</tr>
+<tr>
+<td>7</td>
+<td>Monday</td>
+<td>1-53</td>
+<td>with a Monday in this year</td>
+</tr>
+<tr>
+<td>8</td>
+<td>Sunday</td>
+<td>1-53</td>
+<td>contains January 1</td>
+</tr>
+<tr>
+<td>9</td>
+<td>Monday</td>
+<td>1-53</td>
+<td>contains January 1</td>
+</tr>
+</tbody></table>
+<p>For mode values with a meaning of “with 4 or more days this year,” weeks are numbered according to ISO 8601:1988:</p>
+<ul>
+<li><p>If the week containing January 1 has 4 or more days in the new year, it is week 1. </p>
+</li>
+<li><p>Otherwise, it is the last week of the previous year, and the next week is week 1.</p>
+</li>
+</ul>
+<p>For mode values with a meaning of “contains January 1”, the week contains January 1 is week 1. It does not matter how many days in the new year the week contained, even if it contained only one day.</p>
+<p><strong>Syntax</strong></p>
+<pre><code class="sql">toWeek(date, [, mode][, Timezone])
+</code></pre>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><code>date</code> – Date or DateTime. </li>
+<li><code>mode</code> – Optional parameter, Range of values is [0,9], default is 0.</li>
+<li><code>Timezone</code> – Optional parameter, it behaves like any other conversion function.</li>
+</ul>
+<p><strong>Returned value</strong></p>
+<ul>
+<li>week number. UInt8</li>
+</ul>
+<p><strong>Example</strong></p>
+<pre><code class="sql">SELECT toDate(&#39;2016-12-27&#39;) AS date, toWeek(date) AS week0, toWeek(date,1) AS week1, toWeek(date,9) AS week9;
+</code></pre>
+<pre><code class="plain%20text">┌─date───────┬─week0─┬─week1─┬─week9─┐
+│ 2016-12-27 │ 52    │ 52    │ 1     │
+└────────────┴───────┴───────┴───────┘
+</code></pre>
+<h2 id="toYYYYMM"><a href="#toYYYYMM" class="headerlink" title="toYYYYMM"></a>toYYYYMM</h2><p>Converts a date or date with time to a UInt32 number containing the year and month number (YYYY * 100 + MM).</p>
+<p><strong>Syntax</strong></p>
+<pre><code class="sql">toYYYYMM(date)
+toYYYYMM(datetime)
+</code></pre>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><code>date/datetime</code>- Date&#x2F;DateTime</li>
+</ul>
+<p><strong>Returned value</strong></p>
+<ul>
+<li>number containing the year and month number. UInt32</li>
+</ul>
+<p><strong>Example</strong></p>
+<pre><code class="sql">SELECT toYYYYMM(toDate(&#39;2021-08-12&#39;))
+</code></pre>
+<pre><code>┌─toYYYYMM(toDate(&#39;2021-08-12&#39;))─┐
+│ 202108                         │
+└────────────────────────────────┘
+</code></pre>
+<pre><code class="sql">SELECT toYYYYMM(toDateTime(&#39;2021-08-12 00:00:00&#39;))
+</code></pre>
+<pre><code>┌─toYYYYMM(toDateTime(&#39;2021-08-12 00:00:00&#39;))─┐
+│ 202108                                      │
+└─────────────────────────────────────────────┘
+</code></pre>
+<h2 id="toYYYYMMDD"><a href="#toYYYYMMDD" class="headerlink" title="toYYYYMMDD"></a>toYYYYMMDD</h2><p>Converts a date or date with time to a UInt32 number containing the year and month, and day (YYYY * 10000 + MM * 100 + DD).</p>
+<p><strong>Syntax</strong></p>
+<pre><code class="sql">toYYYYMMDD(date)
+toYYYYMMDD(datetime)
+</code></pre>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><code>date/datetime</code>- Date&#x2F;DateTime</li>
+</ul>
+<p><strong>Returned value</strong></p>
+<ul>
+<li>number containing the year and month, and day. UInt32</li>
+</ul>
+<p><strong>Example</strong></p>
+<pre><code class="sql">SELECT toYYYYMMDD(toDate(&#39;2021-08-12&#39;))
+</code></pre>
+<pre><code>┌─toYYYYMMDD(toDate(&#39;2021-08-12&#39;))─┐
+│ 20210812                         │
+└──────────────────────────────────┘
+</code></pre>
+<pre><code class="sql">SELECT toYYYYMMDD(toDateTime(&#39;2021-08-12 00:00:00&#39;))
+</code></pre>
+<pre><code>┌─toYYYYMMDD(toDateTime(&#39;2021-08-12 00:00:00&#39;))─┐
+│ 20210812                                      │
+└───────────────────────────────────────────────┘
+</code></pre>
+<h2 id="toYYYYMMDDhhmmss"><a href="#toYYYYMMDDhhmmss" class="headerlink" title="toYYYYMMDDhhmmss"></a>toYYYYMMDDhhmmss</h2><p>Converts a date or date with time to a UInt64 number containing the year, month, day, hour,minutes and seconds (YYYY * 10000000000 + MM * 100000000 + DD * 1000000 + hh * 10000 + mm * 100 + ss).</p>
+<p><strong>Syntax</strong></p>
+<pre><code class="sql">toYYYYMMDDhhmmss(date)
+toYYYYMMDDhhmmss(datetime)
+</code></pre>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><code>date/datetime</code>- Date&#x2F;DateTime</li>
+</ul>
+<p><strong>Returned value</strong></p>
+<ul>
+<li>number containing the year, month, day, hour,minutes and seconds. UInt32</li>
+</ul>
+<p><strong>Example</strong></p>
+<pre><code class="sql">SELECT toYYYYMMDDhhmmss(toDate(&#39;2021-08-12&#39;))
+</code></pre>
+<pre><code>┌─toYYYYMMDDhhmmss(toDate(&#39;2021-08-12&#39;))─┐
+│ 20210812000000                         │
+└────────────────────────────────────────┘
+</code></pre>
+<pre><code class="sql">SELECT toYYYYMMDDhhmmss(toDateTime(&#39;2021-08-12 00:00:00&#39;))
+</code></pre>
+<pre><code>┌─toYYYYMMDDhhmmss(toDateTime(&#39;2021-08-12 00:00:00&#39;))─┐
+│ 20210812000000                                      │
+└─────────────────────────────────────────────────────┘
+</code></pre>
+<h2 id="toYear"><a href="#toYear" class="headerlink" title="toYear"></a>toYear</h2><p>Converts a date or date with time to a UInt16 number containing the year number (AD).</p>
+<p><strong>Syntax</strong></p>
+<pre><code class="sql">toYear(date)
+toYear(datetime)
+</code></pre>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><code>date/datetime</code>- Date&#x2F;DateTime</li>
+</ul>
+<p><strong>Returned value</strong></p>
+<ul>
+<li>Converts a date or date with time to a UInt16 number containing the year number (AD). UInt16</li>
+</ul>
+<p><strong>Example</strong></p>
+<pre><code class="sql">SELECT toYear(toDate(&#39;2021-08-12&#39;))
+</code></pre>
+<pre><code>┌─toYear(toDate(&#39;2021-08-12&#39;))─┐
+│ 2021                         │
+└──────────────────────────────┘
+</code></pre>
+<pre><code class="sql">SELECT toYear(toDateTime(&#39;2021-08-12 00:00:00&#39;))
+</code></pre>
+<pre><code>┌─toYear(toDateTime(&#39;2021-08-12 00:00:00&#39;))─┐
+│ 2021                                      │
+└───────────────────────────────────────────┘
+</code></pre>
+<h2 id="toYearWeek"><a href="#toYearWeek" class="headerlink" title="toYearWeek"></a>toYearWeek</h2><p>Returns year and week for a date. The year in the result may be different from the year in the date argument for the first and the last week of the year.</p>
+<p>The mode argument works exactly like the mode argument to toWeek(). For the single-argument syntax, a mode value of 0 is used.</p>
+<p><code>toISOYear()</code> is a compatibility function that is equivalent to <code>intDiv(toYearWeek(date,3),100)</code> .</p>
+<p><strong>Syntax</strong></p>
+<pre><code class="sql">toYearWeek(date[,mode])
+toYearWeek(datetime[,mode])
+</code></pre>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><code>date/datetime</code>- Date&#x2F;DateTime</li>
+<li><code>mode</code> - Refer toWeek mode.</li>
+</ul>
+<p><strong>Returned value</strong></p>
+<ul>
+<li>year and week for a date. UInt32</li>
+</ul>
+<p><strong>Example</strong></p>
+<pre><code class="sql">SELECT toDate(&#39;2016-12-27&#39;) AS date, toYearWeek(date) AS yearWeek0, toYearWeek(date,1) AS yearWeek1, toYearWeek(date,9) AS yearWeek9;
+</code></pre>
+<pre><code class="plain%20text">┌─date───────┬─yearWeek0─┬─yearWeek1─┬─yearWeek9─┐
+│ 2016-12-27 │ 201652    │ 201652    │ 201701    │
+└────────────┴───────────┴───────────┴───────────┘
+</code></pre>
+<h2 id="today"><a href="#today" class="headerlink" title="today"></a>today</h2><p>Accepts zero arguments and returns the current date at one of the moments of request execution.</p>
+<p>The same as ‘toDate(now())’.</p>
+<p><strong>Syntax</strong></p>
+<pre><code class="sql">today()
+</code></pre>
+<p><strong>Returned value</strong></p>
+<ul>
+<li>Date.</li>
+</ul>
+<p><strong>Example</strong></p>
+<pre><code class="sql">SELECT today()
+</code></pre>
+<h2 id="week"><a href="#week" class="headerlink" title="week"></a>week</h2><p>Alias to ToWeek</p>
+<h2 id="year"><a href="#year" class="headerlink" title="year"></a>year</h2><p>Alias to toYear</p>
+<h2 id="yearweek"><a href="#yearweek" class="headerlink" title="yearweek"></a>yearweek</h2><p>Returns year and week for a date. The year in the result may be different from the year in the date argument for the first and the last week of the year.</p>
+<p>The mode argument works exactly like the mode argument to toWeek(). For the single-argument syntax, a mode value of 0 is used.</p>
+<p><code>toISOYear()</code> is a compatibility function that is equivalent to <code>intDiv(toYearWeek(date,3),100)</code> .</p>
+<p><strong>Syntax</strong></p>
+<pre><code class="sql">toYearWeek(date[,mode])
+</code></pre>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><code>date/datetime</code>- Date&#x2F;DateTime</li>
+</ul>
+<p><strong>Returned value</strong></p>
+<ul>
+<li>Rounds down a date or date with time to the first day of ISO year. Date</li>
+</ul>
+<p><strong>Example</strong></p>
+<pre><code class="sql">SELECT toDate(&#39;2016-12-27&#39;) AS date, toYearWeek(date) AS yearWeek0, toYearWeek(date,1) AS yearWeek1, toYearWeek(date,9) AS yearWeek9;
+</code></pre>
+<pre><code class="plain%20text">┌─date───────┬─yearWeek0─┬─yearWeek1─┬─yearWeek9─┐
+│ 2016-12-27 │ 201652    │ 201652    │ 201701    │
+└────────────┴───────────┴───────────┴───────────┘
+</code></pre>
+<h2 id="yesterday"><a href="#yesterday" class="headerlink" title="yesterday"></a>yesterday</h2><p>Accepts zero arguments and returns yesterday’s date at one of the moments of request execution.</p>
+<p>The same as ‘today() - 1’.</p>
+<p><strong>Syntax</strong></p>
+<pre><code class="sql">yesterday()
+</code></pre>
+<p><strong>Returned value</strong></p>
+<ul>
+<li>Date.</li>
+</ul>
+<p><strong>Example</strong></p>
+<pre><code class="sql">SELECT yesterday()
+</code></pre>

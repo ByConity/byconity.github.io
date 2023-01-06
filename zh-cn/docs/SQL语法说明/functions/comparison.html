@@ -1,0 +1,83 @@
+<hr>
+<h2 id="title-“Comparison”slug-“comparison”hidden-falsecreatedAt-“2021-07-29T02-30-51-384Z”updatedAt-“2021-09-23T03-46-42-532Z”categories-Docs-SQL-Syntax"><a href="#title-“Comparison”slug-“comparison”hidden-falsecreatedAt-“2021-07-29T02-30-51-384Z”updatedAt-“2021-09-23T03-46-42-532Z”categories-Docs-SQL-Syntax" class="headerlink" title="title: “Comparison”slug: “comparison”hidden: falsecreatedAt: “2021-07-29T02:30:51.384Z”updatedAt: “2021-09-23T03:46:42.532Z”categories:- Docs- SQL_Syntax"></a>title: “Comparison”<br>slug: “comparison”<br>hidden: false<br>createdAt: “2021-07-29T02:30:51.384Z”<br>updatedAt: “2021-09-23T03:46:42.532Z”<br>categories:<br>- Docs<br>- SQL_Syntax</h2><blockquote>
+<p>Notice:<br>Some of the examples below are referenced from <a href="https://clickhouse.com/docs/en/sql-reference/functions/">ClickHouse Documentation</a> but have been adapted and modified to work in ByteHouse.</p>
+</blockquote>
+<h2 id="greatest"><a href="#greatest" class="headerlink" title="greatest"></a>greatest</h2><p>Returns the largest value of a and b.</p>
+<p><strong>Syntax</strong></p>
+<pre><code class="sql">greatest(a, b)
+</code></pre>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><code>a,b</code> – two values to compare</li>
+</ul>
+<p><strong>Returned value</strong></p>
+<ul>
+<li>the larger value of a,b.</li>
+</ul>
+<p><strong>Example</strong></p>
+<pre><code class="sql">SELECT greatest(1, 2)
+</code></pre>
+<pre><code class="plain%20text">┌─greatest(1, 2)─┐
+│ 2              │
+└────────────────┘
+</code></pre>
+<pre><code class="sql">SELECT greatest(toDate(&#39;2019-01-01&#39;), toDate(&#39;2019-01-02&#39;))
+</code></pre>
+<pre><code class="plain%20text">┌─greatest(toDate(&#39;2019-01-01&#39;), toDate(&#39;2019-01-02&#39;))─┐
+│ 2019-01-02                                           │
+└──────────────────────────────────────────────────────┘
+</code></pre>
+<h2 id="notEquals"><a href="#notEquals" class="headerlink" title="notEquals"></a>notEquals</h2><p>notEquals, a !&#x3D; b and a &lt;&gt; b operator</p>
+<p><strong>Syntax</strong></p>
+<pre><code class="sql">notEquals(a, b)
+a!=b
+a&lt;&gt;b
+</code></pre>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><code>a,b</code> – two values to compare</li>
+</ul>
+<p><strong>Returned value</strong></p>
+<ul>
+<li>UInt8</li>
+</ul>
+<p><strong>Example</strong></p>
+<pre><code class="sql">SELECT notEquals(1, 1), 1!=1, 1&lt;&gt;1
+</code></pre>
+<pre><code class="plain%20text">┌─notEquals(1, 1)─┬─notEquals(1, 1)─┬─notEquals(1, 1)─┐
+│ 0               │ 0               │ 0               │
+└─────────────────┴─────────────────┴─────────────────┘
+</code></pre>
+<pre><code class="sql">SELECT notEquals(1, 2), 1!=2, 1&lt;&gt;2
+</code></pre>
+<pre><code class="plain%20text">┌─notEquals(1, 2)─┬─notEquals(1, 2)─┬─notEquals(1, 2)─┐
+│ 1               │ 1               │ 1               │
+└─────────────────┴─────────────────┴─────────────────┘
+</code></pre>
+<p>[block:api-header]<br>{<br>  “title”: “notEquals”<br>}<br>[&#x2F;block]<br>notEquals, a !&#x3D; b and a &lt;&gt; b operator</p>
+<p><strong>Syntax</strong></p>
+<pre><code class="sql">notEquals(a, b)
+a!=b
+a&lt;&gt;b
+</code></pre>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><code>a,b</code> – two values to compare</li>
+</ul>
+<p><strong>Returned value</strong></p>
+<ul>
+<li>UInt8</li>
+</ul>
+<p><strong>Example</strong></p>
+<pre><code class="sql">SELECT notEquals(1, 1), 1!=1, 1&lt;&gt;1
+</code></pre>
+<pre><code class="plain%20text">┌─notEquals(1, 1)─┬─notEquals(1, 1)─┬─notEquals(1, 1)─┐
+│ 0               │ 0               │ 0               │
+└─────────────────┴─────────────────┴─────────────────┘
+</code></pre>
+<pre><code class="sql">SELECT notEquals(1, 2), 1!=2, 1&lt;&gt;2
+</code></pre>
+<pre><code class="plain%20text">┌─notEquals(1, 2)─┬─notEquals(1, 2)─┬─notEquals(1, 2)─┐
+│ 1               │ 1               │ 1               │
+└─────────────────┴─────────────────┴─────────────────┘
+</code></pre>

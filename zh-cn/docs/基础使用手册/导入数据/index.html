@@ -1,0 +1,1480 @@
+<!DOCTYPE HTML>
+<html lang="en,zh-cn,default">
+
+
+<head>
+    <meta charset="utf-8">
+    <meta name="keywords" content="导入数据, ByConity keywords">
+    <meta name="description" content="theme.home.header.description">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="renderer" content="webkit|ie-stand|ie-comp">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+
+
+    <title>导入数据 | ByConity</title>
+    <link rel="icon" type="image/png" href="/favicon.png">
+
+    <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
+    <link rel="stylesheet" type="text/css" href="/libs/materialize/materialize.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/aos/aos.css">
+    <link rel="stylesheet" type="text/css" href="/libs/animate/animate.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/lightGallery/css/lightgallery.min.css">
+    <link rel="stylesheet" type="text/css" href="/css/matery.css">
+    <link rel="stylesheet" type="text/css" href="/css/my.css">
+
+    <script src="/libs/jquery/jquery.min.js"></script>
+
+<meta name="generator" content="Hexo 6.3.0"><link rel="alternate" href="/atom.xml" title="ByConity" type="application/atom+xml">
+</head>
+
+
+
+
+<body>
+    <header class="navbar-fixed">
+    <nav id="headNav" class="bg-color nav-transparent">
+        <div id="navContainer" class="nav-wrapper container">
+            <div class="brand-logo">
+                <a href="/" class="waves-effect waves-light">
+                    
+                    <img src="/medias/logo.png" class="logo-img" alt="LOGO">
+                    
+                    <span class="logo-span">ByConity</span>
+                </a>
+            </div>
+            
+
+<a href="#" data-target="mobile-nav" class="sidenav-trigger button-collapse"><i class="fas fa-bars"></i></a>
+<ul class="right nav-menu">
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/" class="waves-effect waves-light">
+      
+      <i class="fas fa-home" style="zoom: 0.6;"></i>
+      
+      <span>Home</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/zh-cn/docs" class="waves-effect waves-light">
+      
+      <i class="fas fa-archive" style="zoom: 0.6;"></i>
+      
+      <span>Docs</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a target="_blank" rel="noopener" href="https://github.com/byconity" class="waves-effect waves-light">
+      
+      <i class="fas fa-user-circle" style="zoom: 0.6;"></i>
+      
+      <span>Community</span>
+    </a>
+    
+  </li>
+  
+  <li>
+    <a href="#searchModal" class="modal-trigger waves-effect waves-light">
+      <i id="searchIcon" class="fas fa-search" title="Search" style="zoom: 0.85;"></i>
+    </a>
+  </li>
+</ul>
+
+
+<div id="mobile-nav" class="side-nav sidenav">
+
+    <div class="mobile-head bg-color">
+        
+        <img src="/medias/logo.png" class="logo-img circle responsive-img">
+        
+        <div class="logo-name">ByConity</div>
+        <div class="logo-desc">
+            
+            theme.home.header.description
+            
+        </div>
+    </div>
+
+    
+
+    <ul class="menu-list mobile-menu-list">
+        
+        <li class="m-nav-item">
+	  
+		<a href="/" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-home"></i>
+			
+			Home
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/zh-cn/docs" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-archive"></i>
+			
+			Docs
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a target="_blank" rel="noopener" href="https://github.com/byconity" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-user-circle"></i>
+			
+			Community
+		</a>
+          
+        </li>
+        
+        
+        <li><div class="divider"></div></li>
+        <li>
+            <a href="https://github.com/byConity" class="waves-effect waves-light" target="_blank">
+                <i class="fab fa-github-square fa-fw"></i>Contribute with us
+            </a>
+        </li>
+        
+    </ul>
+</div>
+
+
+        </div>
+
+        
+            <style>
+    .nav-transparent .github-corner {
+        display: none !important;
+    }
+
+    .github-corner {
+        position: absolute;
+        z-index: 10;
+        top: 0;
+        right: 0;
+        border: 0;
+        transform: scale(1.1);
+    }
+
+    .github-corner svg {
+        color: #0f9d58;
+        fill: #fff;
+        height: 64px;
+        width: 64px;
+    }
+
+    .github-corner:hover .octo-arm {
+        animation: a 0.56s ease-in-out;
+    }
+
+    .github-corner .octo-arm {
+        animation: none;
+    }
+
+    @keyframes a {
+        0%,
+        to {
+            transform: rotate(0);
+        }
+        20%,
+        60% {
+            transform: rotate(-25deg);
+        }
+        40%,
+        80% {
+            transform: rotate(10deg);
+        }
+    }
+</style>
+
+<a href="https://github.com/byConity" class="github-corner tooltipped hide-on-med-and-down" target="_blank"
+   data-tooltip="Contribute with us" data-position="left" data-delay="50">
+    <svg viewBox="0 0 250 250" aria-hidden="true">
+        <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path>
+        <path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2"
+              fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path>
+        <path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z"
+              fill="currentColor" class="octo-body"></path>
+    </svg>
+</a>
+        
+    </nav>
+
+</header>
+
+    
+
+
+
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/23.jpg')">
+    <div class="container" style="right: 0px;left: 0px;">
+        <div class="row">
+            <div class="col s12 m12 l12">
+                <div class="brand">
+                    <h1 class="description center-align post-title">导入数据</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<main class="post-container content">
+
+    
+    <link rel="stylesheet" href="/libs/tocbot/tocbot.css">
+<style>
+    #articleContent h1::before,
+    #articleContent h2::before,
+    #articleContent h3::before,
+    #articleContent h4::before,
+    #articleContent h5::before,
+    #articleContent h6::before {
+        display: block;
+        content: " ";
+        height: 100px;
+        margin-top: -100px;
+        visibility: hidden;
+    }
+
+    #articleContent :focus {
+        outline: none;
+    }
+
+    .toc-fixed {
+        position: fixed;
+        top: 64px;
+    }
+
+    .toc-widget {
+        width: 345px;
+        padding-left: 20px;
+    }
+
+    .toc-widget .toc-title {
+        padding: 35px 0 15px 17px;
+        font-size: 1.5rem;
+        font-weight: bold;
+        line-height: 1.5rem;
+    }
+
+    .toc-widget ol {
+        padding: 0;
+        list-style: none;
+    }
+
+    #toc-content {
+        padding-bottom: 30px;
+        overflow: auto;
+    }
+
+    #toc-content ol {
+        padding-left: 10px;
+    }
+
+    #toc-content ol li {
+        padding-left: 10px;
+    }
+
+    #toc-content .toc-link:hover {
+        color: #42b983;
+        font-weight: 700;
+        text-decoration: underline;
+    }
+
+    #toc-content .toc-link::before {
+        background-color: transparent;
+        max-height: 25px;
+
+        position: absolute;
+        right: 23.5vw;
+        display: block;
+    }
+
+    #toc-content .is-active-link {
+        color: #42b983;
+    }
+
+    #floating-toc-btn {
+        position: fixed;
+        right: 15px;
+        bottom: 76px;
+        padding-top: 15px;
+        margin-bottom: 0;
+        z-index: 998;
+    }
+
+    #floating-toc-btn .btn-floating {
+        width: 48px;
+        height: 48px;
+    }
+
+    #floating-toc-btn .btn-floating i {
+        line-height: 48px;
+        font-size: 1.4rem;
+    }
+</style>
+<div class="row">
+    <div id="main-content" class="col s12 m12 l9">
+        <!-- 文章内容详情 -->
+<div id="artDetail">
+    <div class="card">
+        <div class="card-content article-info">
+            <div class="row tag-cate">
+                <div class="col s7">
+                    
+                          <div class="article-tag">
+                            <span class="chip bg-color">No tag</span>
+                          </div>
+                    
+                </div>
+                <div class="col s5 right-align">
+                    
+                    <div class="post-cate">
+                        <i class="fas fa-bookmark fa-fw icon-category"></i>
+                        
+                            <a href="/categories/Docs/" class="post-category">
+                                Docs
+                            </a>
+                        
+                            <a href="/categories/Docs/Getting-Started/" class="post-category">
+                                Getting_Started
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+
+            <div class="post-info">
+                
+                <div class="post-date info-break-policy">
+                    <i class="far fa-calendar-minus fa-fw"></i>Publish Date:&nbsp;&nbsp;
+                    2023-01-06
+                </div>
+                
+
+                
+
+                
+
+                
+
+                
+                
+                <div class="info-break-policy">
+                    
+                    <style>
+                        .github-edit-link {
+                            padding: 0 2px;
+                            color: #42b983;
+                            font-weight: 500;
+                            text-decoration: underline;
+                            word-wrap: break-word;
+                        }
+                    </style>
+                    <a class="github-edit-link" href="https://github.com/byConity/byconity.github.io/edit/main/source/_posts/%E5%9F%BA%E7%A1%80%E4%BD%BF%E7%94%A8%E6%89%8B%E5%86%8C/%E5%AF%BC%E5%85%A5%E6%95%B0%E6%8D%AE.md" target="_blank">
+                        <i class="far fa-edit fa-fw"></i>Edit post
+                    </a>
+                </div>
+                
+            </div>
+        </div>
+        <hr class="clearfix">
+
+        
+
+        
+
+        <div class="card-content article-card-content">
+            <div id="articleContent">
+                <h1 id="导入数据"><a href="#导入数据" class="headerlink" title="导入数据"></a>导入数据</h1><p>文档类型：教程型</p>
+<p>文档结构：教程目的，前置准备，分步骤讲解原理 &amp; 示例，相关文档推荐；</p>
+<p>内容提要：</p>
+<ol>
+<li>支持哪些方式导入数据，导入方式上是否有建议（比如直接写入和合并 part 文件后 attach）</li>
+<li>如何连接上游支持的数据源</li>
+<li>如何查看数据导入情况</li>
+<li>常见的导入报错该做什么</li>
+</ol>
+<h1 id="支持的数据源"><a href="#支持的数据源" class="headerlink" title="支持的数据源"></a>支持的数据源</h1><p>提供多种数据导入方案，可以针对不同的数据源进行选择不同的数据导入方式。</p>
+<h2 id="按场景划分"><a href="#按场景划分" class="headerlink" title="按场景划分"></a>按场景划分</h2><p>数据源</p>
+<p>导入方式</p>
+<p>本地文件</p>
+<p>流式导入数据(本地文件及内存数据)</p>
+<p>HDFS</p>
+<p>通过外部存储数据导入</p>
+<p>Kafka</p>
+<p>通过 Kafka 导入数据</p>
+<p>通过 spark 导入</p>
+<p>通过 Spark 导入外部数据</p>
+<p>Mysql、Hive</p>
+<p>通过 ByConity 访问外部数据源</p>
+<h2 id="支持的数据格式"><a href="#支持的数据格式" class="headerlink" title="支持的数据格式"></a>支持的数据格式</h2><p>导入方式</p>
+<p>支持的数据格式</p>
+<p>HDFS</p>
+<p>Parquet，ORC，csv，gzip</p>
+<p>本地文件以及内存数据</p>
+<p>snappy 压缩格式</p>
+<p>json, csv, TSKV，Parquet，ORC</p>
+<p>Kafka</p>
+<p>csv, gzip,json</p>
+<h1 id="导入方式"><a href="#导入方式" class="headerlink" title="导入方式"></a>导入方式</h1><h2 id="流式导入数据-本地文件及内存数据"><a href="#流式导入数据-本地文件及内存数据" class="headerlink" title="流式导入数据(本地文件及内存数据)"></a>流式导入数据(本地文件及内存数据)</h2><h3 id="方式一："><a href="#方式一：" class="headerlink" title="方式一："></a>方式一：</h3><p>方式一使用 VALUES 格式的常规语法，适合临时插入少量的数据用来测试：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">INSERT INTO [db.]table [(c1, c2, c3...)] VALUES (v11, v12, v13), (v21, v22, v23), ...</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>其中，c1、c2、c3 是列字段声明，可忽略。VALUES 后紧跟的是由元组组成的代写入的数据，通过下标位与列字段声明一一对应。数据支持批量声明写入，多行数据之间使用逗号分隔。</p>
+<p>例如，考虑该表：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">CREATE TABLE test.insert_select_testtable</span><br><span class="line">(</span><br><span class="line">    `a` Int8,</span><br><span class="line">    `b` String,</span><br><span class="line">    `c` Int8,</span><br><span class="line">    `date` Date</span><br><span class="line">)</span><br><span class="line">ENGINE = CnchMergeTree()</span><br><span class="line">PARTITION by toYYYYMM(date)</span><br><span class="line">ORDER BY tuple()</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">INSERT INTO insert_select_testtable VALUES (1, &#x27;a&#x27;, 1,&#x27;2022-11-10&#x27;);</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>在使用 VALUES 格式的语法写入数据时，支持加入表达式或者函数，例如：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">INSERT INTO insert_select_testtable VALUES (1, &#x27;a&#x27;, 1, now());</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h3 id="方式二："><a href="#方式二：" class="headerlink" title="方式二："></a>方式二：</h3><p>方式二是使用指定格式的语法：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">INSERT INTO [db.]table [(c1, c2, c3...)] FORMAT format_name data_set</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>ByConity 支持多种数据格式，以常用的 CSV 格式写入为例：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">INSERT INTO insert_select_testtable FORMAT CSV \</span><br><span class="line">1, &#x27;a&#x27;, 1, &#x27;2022-11-10&#x27;\</span><br><span class="line">2, &#x27;b&#x27;, 2, &#x27;2022-11-11&#x27;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>同时，还支持从文件向表中插入数据。例如：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">INSERT INTO [db.]table [(c1, c2, c3)] FORMAT format_name INFILE file_name</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>使用上面的语句可以从客户端的文件上读取数据并插入表中，file_name 和 type 都是 String 类型，输入文件的格式一定要在 FORMAT 语句中设置。</p>
+<h3 id="方式三："><a href="#方式三：" class="headerlink" title="方式三："></a>方式三：</h3><p>方式三是使用 SELECT 子句的形式，适合需要保存某张表结果并供后续查询的情况：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">INSERT INTO [db.]table [(c1, c2, c3...)] SELECT ...</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">写入时与SELECT的列的对应关系是使用位置来进行对应的，尽管在SELECT表达式与INSERT中的名称是不同的。如果需要，会进行对应的类型转换。</span><br></pre></td></tr></table></figure>
+
+<p>通过 SELECT 子句可将查询结果写入数据表，假设需要将 insert_select_testtable_1 的数据写入 insert_select_testtable，则可以使用下面的语句：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">INSERT INTO insert_select_testtable SELECT * from insert_select_testtable_1</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>在通过 SELECT 子句写入数据的时候，同样也支持加入表达式或者函数，例如：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">INSERT INTO insert_select_testtable SELECT 1, &#x27;a&#x27;, 1, now();</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>虽然 VALUES 和 SELECT 子句的形式都支持声明表达式或函数，但是表达式和函数会带来额外的性能开销，从而导致写入性能下降。所以如果追求极致的写入性能。所以如果追求极致的写入性能，就应该避免使用它们。</p>
+<h2 id="通过外部存储数据导入"><a href="#通过外部存储数据导入" class="headerlink" title="通过外部存储数据导入"></a>通过外部存储数据导入</h2><p>ByConity 同样支持从本地或者 HDFS 上导入数据，例如：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">INSERT INTO [db.]table [(c1, c2, c3)] FORMAT format_name INFILE &#x27;hdfs://ip:port/file_name&#x27;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h2 id="使用-kakfa-导入数据"><a href="#使用-kakfa-导入数据" class="headerlink" title="使用 kakfa 导入数据"></a>使用 kakfa 导入数据</h2><h3 id="功能定义"><a href="#功能定义" class="headerlink" title="功能定义"></a>功能定义</h3><p>CnchKafka 是 ByteHouse 基于社区 ClickHouse Kafka 表引擎自研实现的适配云原生架构的表引擎，用于高效快速地将用户数据从 Apache Kafka 实时导入 ByteHouse；其设计与实现既适配了云原生新架构，同时在社区实现基础上增强了部分功能。</p>
+<p>CnchKafka 主要功能特点包括：</p>
+<ul>
+<li>提供基于云原生架构优势的自动容错能力，降低运维成本；</li>
+<li>可扩展的消费能力：支持通过 SYSTEM 命令调节消费者数目，最高适配 topic 对应的 partition 数；</li>
+<li>增强消费语义：依赖 Transaction 保证，通过引擎管理 offset 实现 Exactly-Once 消费语义；</li>
+<li>消费性能：很大程度依赖用户表的 schema 复杂度，通常经验值 2k-2M 条&#x2F;秒，吞吐 15MiB&#x2F;s 左右；</li>
+<li>支持多种数据类型，包括但不限于 Json、ProtoBuf、CSV 等；</li>
+<li>支持记录消费日志，既方便排查问题，也提供了数据审计的能力。</li>
+</ul>
+<h3 id="实现原理"><a href="#实现原理" class="headerlink" title="实现原理"></a>实现原理</h3><h4 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h4><p>CnchKafka 继承了社区的基本设计，即通过一个 &lt;CnchKafka 消费表、Materialized View 物化视图表、存储表 &gt; 三元组实现整个消费链路，其中：</p>
+<ul>
+<li>CnchKafka 消费表：负责订阅 Kafka topic 并消费消息；将得到的消息解析后写为 Block；</li>
+<li>Materialized View 物化视图表：构建从消费表到存储表的数据通路，将 CnchKafka 消费的 Block 写入存储表，并提供简单的过滤功能；</li>
+<li>存储表：支持 Cnch 多种 MergeTree 存储表。</li>
+</ul>
+<p>基本数据通路如下：</p>
+<p><img src="/static/boxcnbeMipMsWmYggoqbR4DT88c.png"></p>
+<p>图中各组件是 ByteHouse 云原生架构部分涉及 CnchKafka 的组件，为避免读者不了解，此处对各组件做简单说明；但限于篇幅和重点，更详细的架构设计细节请参考架构文档。</p>
+<ul>
+<li><strong>Server</strong></li>
+<li>应用接入层，所有查询和导入任务的入口；</li>
+<li>轻量级设计，本身不做具体查询和导入，主要负责任务调度转发和元数据访问，包括：</li>
+<li>预处理查询请求，从 Catalog 读取元数据，将原数据和查询 sql 下发查询节点，将查询结果返回上层（调用接口或用户等）；</li>
+<li>管理导入任务：选择导入节点执行导入任务；</li>
+<li>和 Catalog 交互，查询或更新元数据；</li>
+<li>和 Resource Manager 交互，选择任务执行节点保证负载均衡；</li>
+<li><strong>Virtual WareHouse</strong></li>
+<li>计算层，所有查询和导入任务的执行节点，无状态服务；</li>
+<li>支持租户独享，实现资源和数据隔离；</li>
+<li>支持读写分离，查询和导入可创建和指定不同 Virtual WareHouse；</li>
+<li><strong>Catalog</strong></li>
+<li>KV 数据库，用于元数据管理，包括数据库表元信息、part 元信息等；</li>
+<li>CnchKafka 消费 offset 也存储在 catalog；</li>
+<li><strong>VFS</strong></li>
+<li>底层存储，支持多种存储系统，包括 HDFS、S3 等。</li>
+</ul>
+<h4 id="KafkaConsumeManager"><a href="#KafkaConsumeManager" class="headerlink" title="KafkaConsumeManager"></a>KafkaConsumeManager</h4><p>每张 CnchKafka 消费表会在 Server 层启动一个 Manager 负责调度和管理所有的消费者任务。Manager 本身是 Server 端的一个常驻线程，通过 Server 的高可用和 DaemonManager 保证其服务稳定。</p>
+<p>KafkaConsumeManager 主要实现和功能包括：</p>
+<ul>
+<li>根据配置的 consumer 数目将 topic partition 均匀分发到每个 consumer；</li>
+<li>与 Catalog 交互，获取 partition 消费的 offset；</li>
+<li>调度 consumer 到配置的 Virtual Warehouse 节点执行：</li>
+<li>节点选择支持多种策略配置，保证负载均衡；</li>
+<li>定期探活每个 consumer 任务，保证任务执行的稳定性。</li>
+</ul>
+<h4 id="KafkaConsumer"><a href="#KafkaConsumer" class="headerlink" title="KafkaConsumer"></a>KafkaConsumer</h4><p>每个 KafkaConsumer 实现为一个常驻线程在 Virtual Warehouse 节点执行，负责从指定的 topic partition 消费数据，转换为 part 写入 VFS，并将元信息提交回 Server 端写入 Catalog。主要特点：</p>
+<ul>
+<li>继承社区的攒批写入模式（每次消费周期默认 8 秒）；</li>
+<li>每次消费过程通过 Transaction 保证原子性：</li>
+<li>通过与 Server RPC 交互创建事务；</li>
+<li>事务提交会同时提交写入的 part 元信息以及最新消费的 offset。</li>
+</ul>
+<p>单次消费执行流程可参考下图：</p>
+<p><img src="/static/boxcnlEuwS4ogryA87WHPdDK1Md.png"></p>
+<h4 id="Exactly-Once"><a href="#Exactly-Once" class="headerlink" title="Exactly-Once"></a>Exactly-Once</h4><p>与社区实现相比，CnchKafka 实现增强了消费语义，即从社区的 At-Least-Once 语义，升级为 Exactly-Once 语义。这主要得益于新架构 Transaction 事务的保证。</p>
+<p>由于每轮消费都会通过事务管理，且每次提交数据元信息的同时提交对应的 offset。由于事务保证了提交的原子性，那么数据元信息和 offset 要么同时提交成功，要么都提交失败。</p>
+<p>这样就保证了数据和 offset 始终一致，每次消费重启都从上次提交的 offset 位置继续消费，从而实现了 Exactly-Once。</p>
+<h4 id="自动容错实现"><a href="#自动容错实现" class="headerlink" title="自动容错实现"></a>自动容错实现</h4><p>CnchKafka 整体容错策略采取<strong>快速失败</strong>方式，即：</p>
+<ul>
+<li>KafkaConsumeManager 定期探活 consumer 任务，探活失败，立即拉起一个新的 consumer；</li>
+<li>KafkaConsumer 每次执行中，与 Server RPC 的两次交互（创建事务和提交事务）都会向 Manager 校验自身的有效性，如果校验失败（比如 Manager 已经拉起了一个新的 consumer 等），会主动 kill 自己。</li>
+</ul>
+<h3 id="使用指南"><a href="#使用指南" class="headerlink" title="使用指南"></a>使用指南</h3><h4 id="建表"><a href="#建表" class="headerlink" title="建表"></a>建表</h4><p>创建 CnchKafka 消费表和社区原生建 Kafka 表类似，需要通过 Setting 参数配置 Kafka 数据源及消费参数。示例如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">CREATE TABLE kafka_test.cnch_kafka_consume</span><br><span class="line">(</span><br><span class="line">    `i` Int64,</span><br><span class="line">    `ts` DateTime</span><br><span class="line">)</span><br><span class="line">ENGINE = CnchKafka()</span><br><span class="line">SETTINGS </span><br><span class="line">kafka_broker_list = &#x27;10.10.10.10:9092&#x27;,  -- replace with your own broker list</span><br><span class="line">kafka_topic_list = &#x27;my_kafka_test_topic&#x27;, -- topic name to subcribe</span><br><span class="line">kafka_group_name = &#x27;hansome_boy_consume_group&#x27;, -- your consumer-group name</span><br><span class="line">kafka_format = &#x27;JSONEachRow&#x27;, -- always be json</span><br><span class="line">kafka_row_delimiter = &#x27;\n&#x27;, -- always be \n</span><br><span class="line">kafka_num_consumers = 1</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>（Setting 参数说明及其他更多参数支持请参考下方说明）</p>
+<p>由于 Kafka 消费设计需要三张表，所以还需要同步创建另外两张表。</p>
+<p>首先创建存储表（以 CnchMergeTree 为例）：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">CREATE TABLE kafka_test.cnch_store_kafka</span><br><span class="line">(</span><br><span class="line">    `i` Int64,</span><br><span class="line">    `ts` DateTime</span><br><span class="line">)</span><br><span class="line">ENGINE = CnchMergeTree</span><br><span class="line">PARTITION BY toDate(ts)</span><br><span class="line">ORDER BY ts</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>最后创建物化视图表（必须 Kafka 表和存储表创建成功后才能创建）：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">CREATE MATERIALIZED VIEW kafka_test.cnch_kafka_view</span><br><span class="line">TO kafka_test.cnch_store_kafka</span><br><span class="line">(</span><br><span class="line">    `i` Int64,</span><br><span class="line">    `ts` DateTime</span><br><span class="line">)</span><br><span class="line">AS</span><br><span class="line">SELECT * -- you can add virtual columns here if you need</span><br><span class="line">FROM kafka_test.cnch_kafka_consume</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>如果你有对应 topic 的消费权限，那么三张表创建好以后，消费就会自动开始执行。</p>
+<h4 id="虚拟列支持"><a href="#虚拟列支持" class="headerlink" title="虚拟列支持"></a>虚拟列支持</h4><p>有时候业务需要获取 Kafka 消息的元数据（e.g. 消息的 partition, offset 等）。此时可以使用 virtual columns 功能来满足这个需求。virtual columns 不需要在建表的时候指定，是表引擎本身的属性。可以放到 VIEW 表的 SELECT 语句中存储到底表中（当底表添加了对应列）：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">SELECT </span><br><span class="line">    _topic,    -- String</span><br><span class="line">    _partition,    -- UInt64</span><br><span class="line">    _key,    -- String</span><br><span class="line">    _offset,    -- UInt64</span><br><span class="line">    _content,  -- String: 完整的消息内容 </span><br><span class="line">    *    -- 正常列可以通过*展开，虚拟列则不能</span><br><span class="line">FROM kafka_test.cnch_kafka_consume</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h4 id="Setting-参数说明"><a href="#Setting-参数说明" class="headerlink" title="Setting 参数说明"></a>Setting 参数说明</h4><p><strong>参数名</strong></p>
+<p><strong>类型</strong></p>
+<p><strong>必填&#x2F;默认值</strong></p>
+<p><strong>说明</strong></p>
+<p>kafka_cluster &#x2F; kafka_broker_list</p>
+<p>String</p>
+<p>必填</p>
+<p>公司内部 Kafka 集群；</p>
+<p>社区版本 Kafka 请使用 <code>kafka_broker_list</code> 参数</p>
+<p>kafka_topic_list</p>
+<p>String</p>
+<p>必填</p>
+<p>可以多个，逗号分隔</p>
+<p>kafka_group_name</p>
+<p>String</p>
+<p>必填</p>
+<p>consumer group name，消费组</p>
+<p>kafka_format</p>
+<p>String</p>
+<p>必填</p>
+<p>消息格式；目前最常用 JSONEachRow</p>
+<p>kafka_row_delimiter</p>
+<p>String</p>
+<p>‘\0’</p>
+<p>一般使用 ‘\n’</p>
+<p>kafka_num_consumers</p>
+<p>UInt64</p>
+<p>1</p>
+<p>消费者个数，建议不超过 topic 中最大 partition 数目</p>
+<p>kafka_max_block_size</p>
+<p>UInt64</p>
+<p>65536</p>
+<p>写入 block_size，上限 1M</p>
+<p>kafka_max_poll_interval_ms</p>
+<p>Milliseconds</p>
+<p>7500</p>
+<p>the max time to poll from broker each iteration</p>
+<p>kafka_schema</p>
+<p>String</p>
+<p>“”</p>
+<p>schema 文件设置参数，以文件名 + 冒号 + 消息名格式设置</p>
+<p>如： <code>schema.proto:MyMessage</code></p>
+<p>kafka_format_schema_path</p>
+<p>String</p>
+<p>“”</p>
+<p>远端 schema 文件路径(不含文件名)设置参数，目前只支持 hdfs.</p>
+<p>（如果没有设置这个参数，将从配置文件设置的默认路径读取）</p>
+<p>kafka_protobuf_enable_multiple_message</p>
+<p>bool</p>
+<p>true</p>
+<p>设置为 true，表示可以从一条 kafka 消息中读取多个 protobuf 的 message，彼此以各自长度为间隔</p>
+<p>kafka_protobuf_default_length_parser</p>
+<p>bool</p>
+<p>false</p>
+<p>仅在 <code>kafka_protobuf_enable_multiple_message</code> 为 true 生效：true 表示消息头部有变量记录长度；false 表示用一个固定的 8 字节作为头部记录长度。</p>
+<p>kafka_extra_librdkafka_config</p>
+<p>Json format string</p>
+<p>“”</p>
+<p>(More params refer to <a target="_blank" rel="noopener" href="https://github.com/edenhill/librdkafka/blob/master/CONFIGURATION.md#:~:text=see%20dedicated%20API-,ssl.ca.location,-*">here</a>)</p>
+<p>其他 rdkafka 支持的参数，通常用于鉴权</p>
+<ul>
+<li><strong>SCRAM</strong>: “{“sasl.mechanisms”:”SCRAM-SHA-512”,”sasl.password”:”***”,”sasl.username”:”bytehouse-dev”,”security.protocol”:”sasl_ssl”,”ssl.ca.location”:”**”}”</li>
+<li><strong>PLAIN</strong>: “{“sasl.mechanisms”:”PLAIN”,”sasl.password”:”admin”,”sasl.username”:”admin”,”security.protocol”:”sasl_plaintext”}”</li>
+</ul>
+<p>cnch_vw_write</p>
+<p>String</p>
+<p>“vw_write”</p>
+<p>配置消费使用 Virtual WareHouse，consumer 任务将被调度到配置的 Virtual Warehouse 节点执行</p>
+<p>kafka_cnch_schedule_mode</p>
+<p>String</p>
+<p>“random”</p>
+<p>ConsumeManager 调度 consumer 任务时候采取的调度策略，目前支持：random, hash, and <strong>least_consumers；</strong>如果是独立 vw 或消费者数目大于 10，推荐使用** least_consumers**</p>
+<h4 id="修改消费参数"><a href="#修改消费参数" class="headerlink" title="修改消费参数"></a>修改消费参数</h4><p>支持通过 ALTER 命令快速修改 Setting 参数，主要用于调整消费者数目等提升消费能力。</p>
+<p>命令：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ALTER TABLE &lt;cnch_kafka_name&gt; MODIFY SETTING &lt;name1&gt; = &lt;value1&gt;, &lt;name2&gt; = &lt;value2&gt;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>该命令执行会自动重启消费任务。</p>
+<h4 id="手动启停消费"><a href="#手动启停消费" class="headerlink" title="手动启停消费"></a>手动启停消费</h4><p>在一些场景中用户可能需要手动停止消费，随后手动恢复；我们提供了对应的 SYSTEM 命令实现：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">SYSTEM START/STOP/RESTART CONSUME &lt;cnch_kafka_name&gt;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>注意：START&#x2F;STOP 命令会将对应状态持久化到 Catalog，因此在执行 STOP 命令后，如果不执行 START，即使服务重启，消费任务也不会恢复。</p>
+<h4 id="重置-offset"><a href="#重置-offset" class="headerlink" title="重置 offset"></a>重置 offset</h4><p>由于 CnchKafka 的 offset 由引擎自身管理和保存，当用户需要重启 offset 时，我们同样实现了 SYSTEM 命令操作。具体支持以下三种方式：</p>
+<h5 id="A-重置到特殊位置：最新位置-x2F-起始位置"><a href="#A-重置到特殊位置：最新位置-x2F-起始位置" class="headerlink" title="A 重置到特殊位置：最新位置&#x2F;起始位置"></a>A 重置到特殊位置：最新位置&#x2F;起始位置</h5><p>命令：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">SYSTEM RESET CONSUME OFFSET &#x27;&#123;&quot;database_name&quot;:&quot;XXX&quot;, &quot;table_name&quot;: &quot;XXX&quot;, &quot;offset_value&quot;:-1&#125;&#x27;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>可能的特殊位置的 value 值：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">enum Offset &#123;</span><br><span class="line">    OFFSET_BEGINNING = -2,</span><br><span class="line">    OFFSET_END = -1,</span><br><span class="line">    OFFSET_STORED = -1000,</span><br><span class="line">    OFFSET_INVALID = -1001</span><br><span class="line">&#125;;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h5 id="B-按时间戳重置"><a href="#B-按时间戳重置" class="headerlink" title="B 按时间戳重置"></a>B 按时间戳重置</h5><p>（版本要求 &gt;&#x3D; cnch-1.4）命令：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">SYSTEM RESET CONSUME OFFSET &#x27;&#123;&quot;database_name&quot;:&quot;XXX&quot;, &quot;table_name&quot;: &quot;XXX&quot;, &quot;timestamp&quot;:1646125258000&#125;&#x27;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>其中 timestamp 的值应该为 Kafka 侧数据有效期内的某个时间的时间戳，且为毫秒级。</p>
+<h5 id="C-指定-offset-具体-value"><a href="#C-指定-offset-具体-value" class="headerlink" title="C 指定 offset 具体 value"></a>C 指定 offset 具体 value</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">system reset consume offset &#x27;&#123;&quot;database_name&quot;:&quot;XXX&quot;, &quot;table_name&quot;: &quot;XXX&quot;, &quot;topic_name&quot;: &quot;XXX&quot;, &quot;offset_values&quot;:[&#123;&quot;partition&quot;:0, &quot;offset&quot;:100&#125;, &#123;&quot;partition&quot;:10, &quot;offset&quot;:101&#125;]&#125;&#x27;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>指定特定 topic partition 到特定 offset value，比较少见。</p>
+<h3 id="运维手册"><a href="#运维手册" class="headerlink" title="运维手册"></a>运维手册</h3><h4 id="常见消费性能调优"><a href="#常见消费性能调优" class="headerlink" title="常见消费性能调优"></a>常见消费性能调优</h4><p>当消费持续出现 lag，通常为消费能力不足。CnchKafka 建表默认 1 个消费，单次消费写入最大 block size 为 65536. 当消费能力不足时，优先调整消费者和 block-size 参数。调整方式参考上文<strong>修改消费参数</strong></p>
+<h5 id="调整-max-block-size"><a href="#调整-max-block-size" class="headerlink" title="调整 max-block-size"></a>调整 max-block-size</h5><ul>
+<li>该参数直接影响消费内存使用，值越大所需内存越大。对于一些单条数据较大的消费表，谨慎调整该参数，避免爆内存。（上限为 1M）</li>
+<li>当用户对数据延时要求不高，且数据量大 内存充足时，可同步调整此参数以及“kafka_max_poll_interval_ms”参数，让每一轮消费时间增加，每次写入的 part 变大，降低 MERGE 压力，提升查询性能。</li>
+</ul>
+<h5 id="调整-num-consumers"><a href="#调整-num-consumers" class="headerlink" title="调整 num_consumers"></a>调整 num_consumers</h5><ul>
+<li>该参数上限为消费 topic 对应的 partition 数目。</li>
+<li>在消费无 lag 情况下，尽可能减少此参数（即避免无意义增大此参数），减少资源使用，同时避免消费产生过多碎 part，增大 MERGE 压力，且不利于查询。</li>
+</ul>
+<h4 id="用于辅助排查的系统表"><a href="#用于辅助排查的系统表" class="headerlink" title="用于辅助排查的系统表"></a>用于辅助排查的系统表</h4><h5 id="消费事件：cnch-system-cnch-kafka-log"><a href="#消费事件：cnch-system-cnch-kafka-log" class="headerlink" title="消费事件：cnch_system.cnch_kafka_log"></a>消费事件：cnch_system.cnch_kafka_log</h5><p>kakfa_log 表记录了一些消费的基本事件，开启需要在 config.xml 中配置 kafka_log 项（server&amp;worker 均需配置），重启之后生效。</p>
+<p>kafka_log 在 Virtual Warehouse 由 consumer 任务写入，实时汇聚到全局的 cnch_system.cnch_kafka_log 表中，实现从 Server 段查看所有消费表的消费记录。</p>
+<p><strong>字段说明</strong></p>
+<p><strong>列名</strong></p>
+<p><strong>类型</strong></p>
+<p><strong>说明</strong></p>
+<p>event_type</p>
+<p>Enum8</p>
+<p>见下表</p>
+<p>event_date</p>
+<p>Date</p>
+<p>时间发生日期。分区字段，建议每次查询都带上。</p>
+<p>event_time</p>
+<p>DateTime</p>
+<p>时间发生时间，单位秒</p>
+<p>duration_ms</p>
+<p>UInt64</p>
+<p>事件持续时间，单位秒</p>
+<p>cnch_database</p>
+<p>String</p>
+<p>CnchKafka 库名</p>
+<p>cnch_table</p>
+<p>String</p>
+<p>CnchKafka 表名</p>
+<p>database</p>
+<p>String</p>
+<p>consumer 任务库名（目前同 cnch_database）</p>
+<p>table</p>
+<p>String</p>
+<p>consumer 任务表名（通常为 cnch_table 加时间戳及消费者编号后缀）</p>
+<p>consumer</p>
+<p>String</p>
+<p>消费者编号</p>
+<p>metric</p>
+<p>UInt64</p>
+<p>消费行数</p>
+<p>has_error</p>
+<p>UInt8</p>
+<p>1 代表有异常；0 代表无异常。</p>
+<p>exception</p>
+<p>String</p>
+<p>异常说明，</p>
+<p><strong>事件说明</strong></p>
+<p><strong>UInt8 值</strong></p>
+<p><strong>String 值</strong></p>
+<p><strong>说明</strong></p>
+<p>1</p>
+<p>POLL</p>
+<p>metric 表示消费了多少条数据，duration_ms 覆盖了一次完整的消费流程，包含 WRITE 的时间。</p>
+<p>2</p>
+<p>PARSE_ERROR</p>
+<p>metric 表示解析出错的消费条数，如果有多条解析出错，仅挑选一条打印出来。</p>
+<p>3</p>
+<p>WRITE</p>
+<p>metric 表示写入数据的行数，duration_ms 基本上等同于数据持久化的时间</p>
+<p>4</p>
+<p>EXCEPTION</p>
+<p>消费过程的异常。常见的有：鉴权异常，数据持久化失败，VIEW SELECT 执行失败。</p>
+<p>5</p>
+<p>EMPTY_MESSAGE</p>
+<p>空消息条数。</p>
+<p>6</p>
+<p>FILTER</p>
+<p>写入阶段被过滤的数据。</p>
+<p>7</p>
+<p>COMMIT</p>
+<p>最后事务提交记录，只有该条记录才表示数据写入成功，可作为数据审计标准</p>
+<h5 id="消费状态：system-cnch-kafka-tables"><a href="#消费状态：system-cnch-kafka-tables" class="headerlink" title="消费状态：system.cnch_kafka_tables"></a>消费状态：system.cnch_kafka_tables</h5><p>kafka_tables 记录了 CnchKafka 表的实时状态，默认开始，为内存表；</p>
+<p><strong>字段说明</strong></p>
+<p><strong>字段名</strong></p>
+<p><strong>数据类型</strong></p>
+<p><strong>说明</strong></p>
+<p>database</p>
+<p>String</p>
+<p>数据库名</p>
+<p>name</p>
+<p>String</p>
+<p>Kafka 表名</p>
+<p>uuid</p>
+<p>String</p>
+<p>kafka 表唯一标识 UUID</p>
+<p>kafka_cluster</p>
+<p>String</p>
+<p>kafka 集群</p>
+<p>topics</p>
+<p>Array(String)</p>
+<p>消费 topic 列表</p>
+<p>consumer_group</p>
+<p>String</p>
+<p>所属消费组</p>
+<p>num_consumers</p>
+<p>UInt32</p>
+<p>当前实际正在执行的消费者数目</p>
+<p>consumer_tables</p>
+<p>Array(String)</p>
+<p>各个消费者对应的数据表名</p>
+<p>consumer_hosts</p>
+<p>Array(String)</p>
+<p>各个消费者分发到的执行节点</p>
+<p>consuemr_partitions</p>
+<p>Array(String)</p>
+<p>各个消费者分配到的需要消费的 partition</p>
+<h4 id="常见排查消费异常记录"><a href="#常见排查消费异常记录" class="headerlink" title="常见排查消费异常记录"></a>常见排查消费异常记录</h4><h5 id="查看-CnchKafka-消费表实时状态"><a href="#查看-CnchKafka-消费表实时状态" class="headerlink" title="查看 CnchKafka 消费表实时状态"></a>查看 CnchKafka 消费表实时状态</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">SELECT * FROM system.cnch_kafka_tables</span><br><span class="line">WHERE database = &lt;database_name&gt; AND name = &lt;cnch_kafka_table&gt;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h5 id="查看最近消费记录"><a href="#查看最近消费记录" class="headerlink" title="查看最近消费记录"></a>查看最近消费记录</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">SELECT * FROM cnch_system.cnch_kafka_log</span><br><span class="line">WHERE event_date = today()</span><br><span class="line"> AND cnch_database = &lt;database_name&gt;</span><br><span class="line"> AND cnch_table = &lt;cnch_kafka_table&gt;</span><br><span class="line"> AND event_time &gt; now() - 600 -- 最近十分钟</span><br><span class="line">ORDER BY event_time</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h5 id="按小时统计当天消费记录"><a href="#按小时统计当天消费记录" class="headerlink" title="按小时统计当天消费记录"></a>按小时统计当天消费记录</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">SELECT</span><br><span class="line"> toHour(event_time) as hour,</span><br><span class="line"> sumIf(metric, event_type = &#x27;POLL&#x27;) as poll_rows,</span><br><span class="line"> sumIf(metric, event_type = &#x27;PARSE_ERROR&#x27;) as error_rows,</span><br><span class="line"> sumIf(metric, event_type = &#x27;COMMIT&#x27;) as commit_rows</span><br><span class="line">FROM cnch_system.cnch_kafka_log</span><br><span class="line">WHERE event_date = today()</span><br><span class="line"> AND cnch_database = &lt;database_name&gt;</span><br><span class="line"> AND cnch_table = &lt;cnch_kafka_table&gt;</span><br><span class="line">GROUP BY hour</span><br><span class="line">ORDER BY hour</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h2 id="通过-Spark-导入外部数据"><a href="#通过-Spark-导入外部数据" class="headerlink" title="通过 Spark 导入外部数据"></a>通过 Spark 导入外部数据</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">使用part writer工具导入ByConity，part writer工具可以不经过ByConity引擎，直接将数据文件转化为part文件。使用part writer可以实现ByConity查询与构建分离，一定程度缓解数据导入和查询的资源竞争，提高查询性能。目前，part writer及ByConity对应的加载part文件功能的开发基本完成，下面介绍如何使用part writer将数据导入到ByConity。</span><br><span class="line"></span><br><span class="line"> （1）使用part writer生成part文件</span><br></pre></td></tr></table></figure>
+
+<p>part writer 接收一个 sql 语句作为参数，用户通过 sql 语句指定源数据文件、数据文件格式、数据 schema、part 文件保存路径等详细信息，使用方式如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">./part_writer &quot;load CSV file &#x27;/path/to/data/test.csv&#x27; as table db.tablename(col1 UInt64, col2 String, col3 Nullable(String)) partition by col1 order by (col2, col3) location &#x27;/path/to/dest/&#x27;&quot;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>示例 SQL 中，</p>
+<ol>
+<li>‘CSV’指定源数据文件格式；此外，part writer 还可使用 CSVWithNames， JSONEachRow 等多种 clickhouse 原生支持的数据文件格式。</li>
+<li>‘&#x2F;path&#x2F;to&#x2F;data&#x2F;test.csv’ 指定了源数据文件；支持从本地和 hdfs 读取源数据。如使用 hdfs 数据文件，指定路径为：‘hdfs:&#x2F;&#x2F;host:port&#x2F;path&#x2F;to&#x2F;data&#x2F;file’;</li>
+<li>‘&#x2F;path&#x2F;to&#x2F;dest&#x2F;‘指定 part 文件写入的目标文件夹；支持将 part 文件直接写到 hdfs 上，ByConity 可以从 hdfs 上拉取并加载 part 文件。</li>
+<li>as table 指定了插入数据的 schema 信息</li>
+<li>partition by 和 order by 分别指定了数据表的分区键和排序键，多个键之间使用逗号进行分割并且需要用圆括号包裹， 如: partition by (name, id)。</li>
+<li>ByConity 特殊选项，settings cnch&#x3D;1，用于将生成的 part 直接 dump 成 ByConity 的 part 格式并写入 location 选项指定的 hdfs 路径。</li>
+</ol>
+<p>（2）part 文件导入 ByConity</p>
+<p>生成好的 part 文件可以直接 copy 到 ByConity 表对应的数据文件路径下，然后通过重启 ByConity server 加载；</p>
+<p>也可以将 part 文件目录 copy 到表的 detached 目录下，通过 attach 命令加载 part 文件, 如</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">alter table test attach part &#x27;partfile&#x27;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>如果使用 part writer 生成 part 文件时指定了直接上传到 hdfs，可以执行如下命令：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">system fetch parts into db.table &#x27;hdfs://host:port/path/to/part/&#x27;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>ByConity 将自动从 hdfs 路径下拉取 part 文件并进行加载。</p>
+<p>ByConity attach 语法：</p>
+<p>用于将 dump 到 hdfs 的 parts 导入到目标表：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">alter table test attach parts from &#x27;/hdfs/path/to/dumped/dir&#x27;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>同时，形式四还支持 spark 导入：</p>
+<p>实际应用场景下，需要往 ByConity 集群导入大量数据，可以考虑使用 spark。首先从外部将数据读入 spark dataset；然后根据 sharding key 对 dataset 进行 repartition，保证将要发送到不同 ByConity 节点到数据落在不同的 partition 上（可能需要根据实际情况，调整 spark.sql.shuffle.partitions 参数使 partition 不小于 ByConity 主节点数）；对于每个 partition， 首先通过调用 part writer 生成 part 文件，并指定 part 文件上传到 hdfs，然后通过向对应 ByConity 节点发送 http 请求，通知 ByConity 加载 part 文件。数据流图如下：</p>
+<p><img src="/static/boxcnlSkMX0zkWno7WT7250zU1f.png"></p>
+<h2 id="通过-ByConity-访问外部数据源"><a href="#通过-ByConity-访问外部数据源" class="headerlink" title="通过 ByConity 访问外部数据源"></a>通过 ByConity 访问外部数据源</h2><h3 id="MySQL"><a href="#MySQL" class="headerlink" title="MySQL"></a>MySQL</h3><p><code>MySQL</code> 引擎允许用户通过 ByConity 访问 MySQL 表，并可以进行 SELECT 和 INSERT 查询。</p>
+<h4 id="在-MySQL-中创建表"><a href="#在-MySQL-中创建表" class="headerlink" title="在 MySQL 中创建表"></a>在 MySQL 中创建表</h4><ul>
+<li>创建 database</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">CREATE DATABASE db1;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>在 mysql 中创建表</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">CREATE TABLE db1.table1(</span><br><span class="line">    id Int,</span><br><span class="line">    column1 VARCHAR(255)</span><br><span class="line">);</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>插入一些数据</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">INSERT INTO db1.table1 </span><br><span class="line">    (id, column1)</span><br><span class="line">values</span><br><span class="line">    (1, &#x27;mysql-ab&#x27;),</span><br><span class="line">    (2, &#x27;mysql-cd&#x27;);</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>在 mysql 中创建 user 以在 ByConity 中连接 mysql</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">CREATE USER &#x27;mysql_byconity&#x27;@&#x27;%&#x27; IDENTIFIED BY &#x27;Password123!&#x27;;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>授予权限。(这里为了展示，授予了 <code>mysql_byconity</code> 用户 admin 权限)</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">GRANT ALL PRIVILEGES ON *.* TO &#x27;mysql_byconity&#x27;@&#x27;%&#x27;;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h4 id="在-ByConity-中创建-MySQL-表"><a href="#在-ByConity-中创建-MySQL-表" class="headerlink" title="在 ByConity 中创建 MySQL 表"></a>在 ByConity 中创建 MySQL 表</h4><p>Now let’s create a ByConity table that uses the <strong>MySQL</strong> table engine:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">CREATE TABLE mysql_table1 (</span><br><span class="line">  id UInt64,</span><br><span class="line">  column1 String</span><br><span class="line">)</span><br><span class="line">ENGINE = MySQL(&#x27;mysql-host.domain.com&#x27;,&#x27;db1&#x27;,&#x27;table1&#x27;,&#x27;mysql_byconity&#x27;,&#x27;Password123!&#x27;);</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p><code>MySQL</code> 引擎的参数如下表：</p>
+<p>参数</p>
+<p>描述</p>
+<p>例子</p>
+<p>host</p>
+<p>域名或 IP:Port</p>
+<p>mysql-host.domain.com</p>
+<p>database</p>
+<p>mysql 数据库名</p>
+<p>db1</p>
+<p>tabele</p>
+<p>mysql 表名</p>
+<p>table1</p>
+<p>user</p>
+<p>连接 mysql 的用户</p>
+<p>mysql_byconity</p>
+<p>password</p>
+<p>连接 mysql 的密码</p>
+<p>Password123!</p>
+<h4 id="在-ByConity-中测试连接-mysql-表"><a href="#在-ByConity-中测试连接-mysql-表" class="headerlink" title="在 ByConity 中测试连接 mysql 表"></a>在 ByConity 中测试连接 mysql 表</h4><ul>
+<li>测试 SELECT 查询</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">select * from mysql_table1;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p><img src="/static/boxcnJv89B9UChc3nI0EPHoba6c.png"></p>
+<ul>
+<li>测试 INSERT 查询</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">INSERT INTO mysql_table1</span><br><span class="line">    (id, column1)</span><br><span class="line">VALUES </span><br><span class="line">    (3, &#x27;byconity-test&#x27;);</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>在 MySQL 中验证从 ByConity 中插入的数据</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; select id, column1 from db1.table1;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p><img src="/static/boxcnQdV8Jpg8jcqEKwAOjONxkh.png"></p>
+<h3 id="Hive"><a href="#Hive" class="headerlink" title="Hive"></a>Hive</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">CnchHive为ByConity提供的一种表引擎，支持使用外表的方式进行联邦查询，用户无需通过数据导入，可以直接进行数据查询加速。</span><br></pre></td></tr></table></figure>
+
+<h3 id="使用："><a href="#使用：" class="headerlink" title="使用："></a>使用：</h3><h4 id="实例-1：构建-hive-表的全集"><a href="#实例-1：构建-hive-表的全集" class="headerlink" title="实例 1：构建 hive 表的全集"></a>实例 1：构建 hive 表的全集</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">--创建hive外表</span><br><span class="line">CREATE TABLE t</span><br><span class="line">(</span><br><span class="line">  client_ip   String,</span><br><span class="line">  request     String,</span><br><span class="line">  status_code INT,</span><br><span class="line">  object_size INT,</span><br><span class="line">  date String</span><br><span class="line">)</span><br><span class="line">ENGINE = CnchHive(&#x27;psm&#x27;, &#x27;hive_database_name&#x27;, &#x27;hive_table_name&#x27;)</span><br><span class="line">PARTITION BY date;</span><br><span class="line"></span><br><span class="line">--参数说明：</span><br><span class="line">--psm：hivemetastore psm</span><br><span class="line">--hive_database_name：hive表database name</span><br><span class="line">--hive_table_name：hive表table name</span><br><span class="line"></span><br><span class="line">--查询hive外表</span><br><span class="line">select * from  t where xxx;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h4 id="实例-2：构建-hive-表的子集"><a href="#实例-2：构建-hive-表的子集" class="headerlink" title="实例 2：构建 hive 表的子集"></a>实例 2：构建 hive 表的子集</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">CREATE TABLE t</span><br><span class="line">(</span><br><span class="line">  client_ip   String,</span><br><span class="line">  request     String,</span><br><span class="line">  date String</span><br><span class="line">)</span><br><span class="line">ENGINE = CnchHive(&#x27;psm&#x27;, &#x27;hive_database_name&#x27;, &#x27;hive_table_name&#x27;)</span><br><span class="line">PARTITION BY date</span><br><span class="line"></span><br><span class="line">--参数说明：</span><br><span class="line">--psm：hivemetastore psm</span><br><span class="line">--hive_database_name：hive表database name</span><br><span class="line">--hive_table_name：hive表table name</span><br><span class="line"></span><br><span class="line">--查询hive外表</span><br><span class="line">select * from  t where xxx;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h4 id="实例-3：hive-bucket-表构建"><a href="#实例-3：hive-bucket-表构建" class="headerlink" title="实例 3：hive bucket 表构建"></a>实例 3：hive bucket 表构建</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">CREATE TABLE t</span><br><span class="line">(</span><br><span class="line">  client_ip   String,</span><br><span class="line">  request     String,</span><br><span class="line">  device_id   String,</span><br><span class="line">  server_time String,</span><br><span class="line">  date String</span><br><span class="line">)</span><br><span class="line">ENGINE = CnchHive(&#x27;psm&#x27;, &#x27;hive_database_name&#x27;, &#x27;hive_table_name&#x27;)</span><br><span class="line">PARTITION BY date</span><br><span class="line">CLUSTER BY device_id INTO 65536 BUCKETS </span><br><span class="line">ORDER BY server_time</span><br><span class="line">SETTINGS cnch_vw_default =&#x27;vw_default&#x27;</span><br><span class="line"></span><br><span class="line">--参数说明：</span><br><span class="line">--psm：hivemetastore psm</span><br><span class="line">--hive_database_name：hive表database name</span><br><span class="line">--hive_table_name：hive表table name</span><br><span class="line"></span><br><span class="line">--查询hive外表</span><br><span class="line">select * from  t where xxx;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>说明：</p>
+<ul>
+<li>外表列</li>
+<li>列名需要与 hive 表一一对应</li>
+<li>列的顺序不需要与 hive 一一对应</li>
+<li>可以只选择 hive 表中的部分列，但分区列必须要全部包含。</li>
+<li>外表列的分区需要通过 partition by 语句指定，同时需要与普通列一样定义到描述列表中。</li>
+<li>当 Hive 表为 bucket 表时，建 CnchHive 引擎时需指定分桶列以及分桶数量。（CLUSTER BY xxx INTO xxx BUCKETS ）</li>
+<li>当 Hive 表中有 ORDER BY 字段，建 CnchHive 引擎时需指定 ORDER BY 字段。</li>
+<li>ENGINE 指定为 CnchHive</li>
+<li>引擎参数</li>
+<li>psm：hivemetastore psm</li>
+<li>hive_database_name：指定 hive 中的数据库</li>
+<li>hive_table_name：指定 hive 中的表，不支持 view。</li>
+<li>支持的列类型对应关系如下表：</li>
+</ul>
+<p>hive 列类型</p>
+<p>CnchHive 列类型</p>
+<p>描述</p>
+<p>INT&#x2F;INTERGER</p>
+<p>INT&#x2F;INTERGER</p>
+<p>BIGINT</p>
+<p>BIGINT</p>
+<p>TIMESTAMP</p>
+<p>DateTime</p>
+<p>STRING</p>
+<p>String</p>
+<p>VARCHAR</p>
+<p>FixedString</p>
+<p>内部转换为 FixedString</p>
+<p>CHAR</p>
+<p>FixedString</p>
+<p>内部转换为 FixedString</p>
+<p>DOUBLE</p>
+<p>DOUBLE</p>
+<p>FLOAT</p>
+<p>FLOAT</p>
+<p>DECIMAL</p>
+<p>DECIMAL</p>
+<p>MAP</p>
+<p>Map</p>
+<p>ARRAY</p>
+<p>Array</p>
+<p>说明：</p>
+<ul>
+<li>hive 表 schema 变更不会自动同步，需要在 Clickhouse 中重建 hive 外表</li>
+<li>当前 hive 存储格式仅支持 Parquet</li>
+<li>当前 CnchHive 不支持 insert、alter 操作</li>
+</ul>
+<h4 id="SETTINGS"><a href="#SETTINGS" class="headerlink" title="SETTINGS"></a>SETTINGS</h4><p>cnch_vw_default：用于指定 vw。</p>
+<p>max_read_row_group_threads：用于指定并发读取 Parquet row group 的并发数量。</p>
+<h4 id="运维手册-1"><a href="#运维手册-1" class="headerlink" title="运维手册"></a>运维手册</h4><p>关键字</p>
+<p>解决办法</p>
+<p>DB::Exception: Can not insert NULL data into non-nullable column “name”</p>
+<p>列字段添加 Nullable 属性。</p>
+<p>DB::Exception: The hive type is not match in cnch.</p>
+<p>CnchHive schema type 与 Hive schema 不匹配。</p>
+<p>DB::Exception: column name xxx doesn’t match.</p>
+<p>CnchHive schema name 与 Hive schema 不匹配。</p>
+<p>DB::Exception: CnchHive only support parquet format. Current format is org.apache.hadoop.hive.ql.io.HiveIgnoreKeyTextOutputFormat.</p>
+<p>CnchHive 目前仅支持存储格式为 Parquet。</p>
+<p>DB::Exception: No available nnproxy xxx.</p>
+<p>HiveMetastore 的 psm 有问题，需 check HiveMetastore psm 是否可访问。</p>
+<h1 id="常见报错及处理"><a href="#常见报错及处理" class="headerlink" title="常见报错及处理"></a>常见报错及处理</h1><p>关键字</p>
+<p>原因</p>
+<p>解决办法</p>
+<p>Too many map keys in table</p>
+<p>(more than 10000)</p>
+<p>Map 列中 key 种类超 10000</p>
+<p>超 10000 则无法导入，请导入数据减少 map key 数量</p>
+<p>Memory limit (total)</p>
+<p>导入过程中内存超限制</p>
+<p>Cannot parse JSON</p>
+<p>json 中数据类型与 clickhouse 的不符</p>
+<p>请用户检查上游生成数据类型是否匹配；</p>
+<p>Duplicate field found while parsing JSONEachRow format: hour</p>
+<p>json 数据有字段重复，这里的重复字段是 hour，即”format:”后的就是重复字段</p>
+<p>检查上游数据是否正确，配置是否正确</p>
+<p>HDFS json size xxx &gt; 1099511627776</p>
+<p>导入数据太大(1T)，禁止导入</p>
+<p>减少导入数据量</p>
+<p>Unable to parse hdfs json file</p>
+<p>hdfs 中数据格式错误</p>
+<p>请用户检查 hdfs 中文件是否为合法的 json</p>
+<p>DB::Exception: Error while reading parquet data: IOError: definition level exceeds maximum. Stack trace</p>
+<p>hdsf 文件错误读取错误，多数为丢块等造成。</p>
+<p>需要重新生产 HDFS 文件</p>
+<p>DB::Exception: Cannot parse string ‘time&#x3D;”2021-11-12’ as Date: syntax error at position 10 (parsed just ‘time&#x3D;”2021’). Note: there are toDateOrZero and toDateOrNull functions, which returns zero&#x2F;NULL instead of throwing exception.: while pushing to view</p>
+<p>这种情况是用户 topic 中有脏数据；Kafka 表消费的时候按 string 正常解析；但是写入底表通过 toDate 等函数转换发现不合法，导致写入失败阻塞消费</p>
+<p>1.临时可修改 VIEW 表，过滤脏数据；</p>
+<p>2.用户上游添加数据清洗和保护机制</p>
+<p>3.Kafka 表解析与底表保持一致，不建议在写入阶段再转换，Kafka 解析失败可以丢弃脏数据，不阻塞整个消费</p>
+<p>Code: 1001, type: cppkafka::Exception, e.what() &#x3D; Failed to create consumer handle: consumer regist error, please check output!</p>
+<p>打开 trace 日志，查看 Kafka 侧具体报错信息</p>
+<p>根据报错信息处理</p>
+<p>Code: 49, e.displayText() &#x3D; DB::Exception: Check dependencies failed for</p>
+<p>VIEW 表找不到</p>
+<p>重建 VIEW 表</p>
+<p>Code: 6001. DB::Exception: DB::Exception: Cannot get metadata of table XXX by UUID : XXX.</p>
+<p>执行 ALTER TABLE 命令时报错，cnch 表是和 server 绑定，这个是由于没在表对应 server 执行导致</p>
+<p>先查询 system.cnch_table_host 获得该表对应的 server，然后在对应 server 执行</p>
+<p>No space left on device: while pushing to view</p>
+<p>磁盘用满</p>
+<p>清理磁盘</p>
+<h1 id="导入参数调优"><a href="#导入参数调优" class="headerlink" title="导入参数调优"></a>导入参数调优</h1><h2 id="直接写入方式调优"><a href="#直接写入方式调优" class="headerlink" title="直接写入方式调优"></a>直接写入方式调优</h2><p>在使用 INSERT VALUES, INSERT INFILE 或者 PartWriter 工具写入时，最后生成的 Part 数量会影响写入 HDFS 的次数进而影响写入整体的耗时，因此应当尽量减少 Part 的数量。直接写入的流程如下：</p>
+<ul>
+<li>读取部分文件数据</li>
+<li>将这部分数据按照 PartitionBy 进行切分</li>
+<li>将这部分数据按照 ClusterBy 进行切分</li>
+<li>将切分完的数据写成新的 Part 并写入 HDFS</li>
+</ul>
+<p>调优手段：</p>
+<ol>
+<li>为了减少 Part 的数量，我们可以将文件中具有相同的分区和 Bucket 的数据排列在一起，这样每次读取一些新的数据后，生成的 Part 数量会尽可能少。可以将数据按照分区相同，分区内 Bucket 相同的要求进行排序，Bucket 的计算规则是：</li>
+</ol>
+<ul>
+<li>如果没有指定 SPLIT_NUMBER，会将 ClusterByKey 所使用的列计算 SipHash 后对 BucketNumber 取模得到 BucketNumber</li>
+<li>如果指定了 SPLIT_NUMBER</li>
+<li>计算 SplitValue</li>
+<li>如果 ClusterBy 某一列，利用 dtspartition 函数计算出对应的 SplitValue</li>
+<li>如果 ClusterBy 多列，则将这些列利用 SipHash 计算出对应的 SplitValue</li>
+<li>计算 BucketNumber</li>
+<li>如果是 WithRange，则用 SplitValue * BucketCount &#x2F; SplitNumber 计算对应 BucketNumber</li>
+<li>如果不是 WithRange，则用 SplitValue % BucketCount 计算对应 BucketNumber</li>
+</ul>
+<ol>
+<li>读取文件时</li>
+<li>如果每行数据大小并不大，可以通过调大 max_insert_block_size 来一次读取更大的 Block，从而生成更大的 Part</li>
+<li>如果读取的文件不是 HDFS&#x2F;CFS 的，同时使用通配符匹配了多个文件，也可以同时调大 min_insert_block_size_rows 和 min_insert_block_size_bytes</li>
+</ol>
+
+                
+            </div>
+            <hr/>
+
+            
+
+
+
+            <div class="tag_share" style="display: block;">
+                <div class="post-meta__tag-list" style="display: inline-block;">
+                    
+                        <div class="article-tag">
+                            <span class="chip bg-color">No tag</span>
+                        </div>
+                    
+                </div>
+                <div class="post_share" style="zoom: 80%; width: fit-content; display: inline-block; float: right; margin: -0.15rem 0;">
+                    <link rel="stylesheet" type="text/css" href="/libs/share/css/share.min.css">
+<div id="article-share">
+
+    
+    <div class="social-share" data-sites="twitter,facebook,linkedin,qq,wechat,weibo" data-wechat-qrcode-helper="<p>微信扫一扫即可分享！</p>"></div>
+    <script src="/libs/share/js/social-share.min.js"></script>
+    
+
+    
+
+</div>
+
+                </div>
+            </div>
+            
+        </div>
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+<article id="prenext-posts" class="prev-next articles">
+    <div class="row article-row">
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge left-badge text-color">
+                <i class="fas fa-chevron-left"></i>&nbsp;Previous</div>
+            <div class="card">
+                <a href="/zh-cn/docs/%E5%8F%82%E4%B8%8E%E7%A4%BE%E5%8C%BA/%E7%A4%BE%E5%8C%BA%E8%A1%8C%E4%B8%BA%E5%87%86%E5%88%99%20Community%20Code%20of%20Conduct/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/3.jpg" class="responsive-img" alt="社区行为准则">
+                        
+                        <span class="card-title">社区行为准则</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            
+                        
+                    </div>
+                    <div class="publish-info">
+                        <span class="publish-date">
+                            <i class="far fa-clock fa-fw icon-date"></i>2023-01-06
+                        </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/Docs/" class="post-category">
+                                    Docs
+                                </a>
+                            
+                            <a href="/categories/Docs/Community/" class="post-category">
+                                    Community
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                Next&nbsp;<i class="fas fa-chevron-right"></i>
+            </div>
+            <div class="card">
+                <a href="/zh-cn/docs/%E5%9F%BA%E7%A1%80%E4%BD%BF%E7%94%A8%E6%89%8B%E5%86%8C/%E5%AF%BC%E5%87%BA%E6%95%B0%E6%8D%AE/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/4.jpg" class="responsive-img" alt="导出数据">
+                        
+                        <span class="card-title">导出数据</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2023-01-06
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/Docs/" class="post-category">
+                                    Docs
+                                </a>
+                            
+                            <a href="/categories/Docs/Getting-Started/" class="post-category">
+                                    Getting_Started
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+        
+    </div>
+</article>
+
+</div>
+
+
+
+<!-- 代码块功能依赖 -->
+<script type="text/javascript" src="/libs/codeBlock/codeBlockFuction.js"></script>
+
+<!-- 代码语言 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeLang.js"></script>
+
+
+<!-- 代码块复制 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeCopy.js"></script>
+
+
+<!-- 代码块收缩 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeShrink.js"></script>
+
+
+    </div>
+    <div id="toc-aside" class="expanded col l3 hide-on-med-and-down">
+        <div class="toc-widget card" style="background-color: white;">
+            <div class="toc-title"><i class="far fa-list-alt"></i>&nbsp;&nbsp;TOC</div>
+            <div id="toc-content"></div>
+        </div>
+    </div>
+</div>
+
+<!-- TOC 悬浮按钮. -->
+
+<div id="floating-toc-btn" class="hide-on-med-and-down">
+    <a class="btn-floating btn-large bg-color">
+        <i class="fas fa-list-ul"></i>
+    </a>
+</div>
+
+
+<script src="/libs/tocbot/tocbot.min.js"></script>
+<script>
+    $(function () {
+        tocbot.init({
+            tocSelector: '#toc-content',
+            contentSelector: '#articleContent',
+            headingsOffset: -($(window).height() * 0.4 - 45),
+            collapseDepth: Number('0'),
+            headingSelector: 'h2, h3, h4'
+        });
+
+        // modify the toc link href to support Chinese.
+        let i = 0;
+        let tocHeading = 'toc-heading-';
+        $('#toc-content a').each(function () {
+            $(this).attr('href', '#' + tocHeading + (++i));
+        });
+
+        // modify the heading title id to support Chinese.
+        i = 0;
+        $('#articleContent').children('h2, h3, h4').each(function () {
+            $(this).attr('id', tocHeading + (++i));
+        });
+
+        // Set scroll toc fixed.
+        let tocHeight = parseInt($(window).height() * 0.4 - 64);
+        let $tocWidget = $('.toc-widget');
+        $(window).scroll(function () {
+            let scroll = $(window).scrollTop();
+            /* add post toc fixed. */
+            if (scroll > tocHeight) {
+                $tocWidget.addClass('toc-fixed');
+            } else {
+                $tocWidget.removeClass('toc-fixed');
+            }
+        });
+
+        
+        /* 修复文章卡片 div 的宽度. */
+        let fixPostCardWidth = function (srcId, targetId) {
+            let srcDiv = $('#' + srcId);
+            if (srcDiv.length === 0) {
+                return;
+            }
+
+            let w = srcDiv.width();
+            if (w >= 450) {
+                w = w + 21;
+            } else if (w >= 350 && w < 450) {
+                w = w + 18;
+            } else if (w >= 300 && w < 350) {
+                w = w + 16;
+            } else {
+                w = w + 14;
+            }
+            $('#' + targetId).width(w);
+        };
+
+        // 切换TOC目录展开收缩的相关操作.
+        const expandedClass = 'expanded';
+        let $tocAside = $('#toc-aside');
+        let $mainContent = $('#main-content');
+        $('#floating-toc-btn .btn-floating').click(function () {
+            if ($tocAside.hasClass(expandedClass)) {
+                $tocAside.removeClass(expandedClass).hide();
+                $mainContent.removeClass('l9');
+            } else {
+                $tocAside.addClass(expandedClass).show();
+                $mainContent.addClass('l9');
+            }
+            fixPostCardWidth('artDetail', 'prenext-posts');
+        });
+        
+    });
+</script>
+
+    
+
+</main>
+
+
+
+
+    <footer class="page-footer bg-color">
+    
+    <div class="container row center-align" style="margin-bottom: 0px !important;">
+        <div class="col s12 m8 l8 copy-right">
+            Copyright&nbsp;&copy;
+            
+                <span id="year">2022-2023</span>
+            
+            <!-- <span id="year">2022</span> -->
+            <a href="/about" target="_blank">ByteDance Inc.</a>
+            |&nbsp;Powered by&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a>
+            |&nbsp;Theme&nbsp;<a href="https://github.com/blinkfox/hexo-theme-matery" target="_blank">Matery</a>
+            <br>
+            
+            
+            
+            
+            
+            <br>
+            
+            <br>
+            
+        </div>
+        <div class="col s12 m4 l4 social-link ">
+    <a href="https://github.com/byconity" class="tooltipped" target="_blank" data-tooltip="GitHub" data-position="top" data-delay="50">
+        <i class="fab fa-github"></i>
+    </a>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <a href="/atom.xml" class="tooltipped" target="_blank" data-tooltip="RSS" data-position="top" data-delay="50">
+        <i class="fas fa-rss"></i>
+    </a>
+
+</div>
+    </div>
+</footer>
+
+<div class="progress-bar"></div>
+
+
+    <!-- 搜索遮罩框 -->
+<div id="searchModal" class="modal">
+    <div class="modal-content">
+        <div class="search-header">
+            <span class="title"><i class="fas fa-search"></i>&nbsp;&nbsp;Search</span>
+            <input type="search" id="searchInput" name="s" placeholder="Please enter a search keyword"
+                   class="search-input">
+        </div>
+        <div id="searchResult"></div>
+    </div>
+</div>
+
+<script type="text/javascript">
+$(function () {
+    var searchFunc = function (path, search_id, content_id) {
+        'use strict';
+        $.ajax({
+            url: path,
+            dataType: "xml",
+            success: function (xmlResponse) {
+                // get the contents from search data
+                var datas = $("entry", xmlResponse).map(function () {
+                    return {
+                        title: $("title", this).text(),
+                        content: $("content", this).text(),
+                        url: $("url", this).text()
+                    };
+                }).get();
+                var $input = document.getElementById(search_id);
+                var $resultContent = document.getElementById(content_id);
+                $input.addEventListener('input', function () {
+                    var str = '<ul class=\"search-result-list\">';
+                    var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+                    $resultContent.innerHTML = "";
+                    if (this.value.trim().length <= 0) {
+                        return;
+                    }
+                    // perform local searching
+                    datas.forEach(function (data) {
+                        var isMatch = true;
+                        var data_title = data.title.trim().toLowerCase();
+                        var data_content = data.content.trim().replace(/<[^>]+>/g, "").toLowerCase();
+                        var data_url = data.url;
+                        data_url = data_url.indexOf('/') === 0 ? data.url : '/' + data_url;
+                        var index_title = -1;
+                        var index_content = -1;
+                        var first_occur = -1;
+                        // only match artiles with not empty titles and contents
+                        if (data_title !== '' && data_content !== '') {
+                            keywords.forEach(function (keyword, i) {
+                                index_title = data_title.indexOf(keyword);
+                                index_content = data_content.indexOf(keyword);
+                                if (index_title < 0 && index_content < 0) {
+                                    isMatch = false;
+                                } else {
+                                    if (index_content < 0) {
+                                        index_content = 0;
+                                    }
+                                    if (i === 0) {
+                                        first_occur = index_content;
+                                    }
+                                }
+                            });
+                        }
+                        // show search results
+                        if (isMatch) {
+                            str += "<li><a href='" + data_url + "' class='search-result-title'>" + data_title + "</a>";
+                            var content = data.content.trim().replace(/<[^>]+>/g, "");
+                            if (first_occur >= 0) {
+                                // cut out 100 characters
+                                var start = first_occur - 20;
+                                var end = first_occur + 80;
+                                if (start < 0) {
+                                    start = 0;
+                                }
+                                if (start === 0) {
+                                    end = 100;
+                                }
+                                if (end > content.length) {
+                                    end = content.length;
+                                }
+                                var match_content = content.substr(start, end);
+                                // highlight all keywords
+                                keywords.forEach(function (keyword) {
+                                    var regS = new RegExp(keyword, "gi");
+                                    match_content = match_content.replace(regS, "<em class=\"search-keyword\">" + keyword + "</em>");
+                                });
+
+                                str += "<p class=\"search-result\">" + match_content + "...</p>"
+                            }
+                            str += "</li>";
+                        }
+                    });
+                    str += "</ul>";
+                    $resultContent.innerHTML = str;
+                });
+            }
+        });
+    };
+
+    searchFunc('/search.xml', 'searchInput', 'searchResult');
+});
+</script>
+
+    <!-- 回到顶部按钮 -->
+<div id="backTop" class="top-scroll">
+    <a class="btn-floating btn-large waves-effect waves-light" href="#!">
+        <i class="fas fa-arrow-up"></i>
+    </a>
+</div>
+
+
+    <script src="/libs/materialize/materialize.min.js"></script>
+    <script src="/libs/masonry/masonry.pkgd.min.js"></script>
+    <script src="/libs/aos/aos.js"></script>
+    <script src="/libs/scrollprogress/scrollProgress.min.js"></script>
+    <script src="/libs/lightGallery/js/lightgallery-all.min.js"></script>
+    <script src="/js/matery.js"></script>
+
+    <!-- Baidu Analytics -->
+
+    <!-- Baidu Push -->
+
+<script>
+    (function () {
+        var bp = document.createElement('script');
+        var curProtocol = window.location.protocol.split(':')[0];
+        if (curProtocol === 'https') {
+            bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+        } else {
+            bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+        }
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(bp, s);
+    })();
+</script>
+
+    
+    
+
+    
+
+    
+
+	
+    
+
+    
+
+    
+
+    
+    <script src="/libs/instantpage/instantpage.js" type="module"></script>
+    
+
+</body>
+
+</html>

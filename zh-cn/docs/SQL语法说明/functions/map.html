@@ -1,0 +1,75 @@
+<hr>
+<h2 id="title-“Map”slug-“map”hidden-truecreatedAt-“2021-07-29T12-29-27-367Z”updatedAt-“2021-07-29T12-29-27-367Z”categories-Docs-SQL-Syntax"><a href="#title-“Map”slug-“map”hidden-truecreatedAt-“2021-07-29T12-29-27-367Z”updatedAt-“2021-07-29T12-29-27-367Z”categories-Docs-SQL-Syntax" class="headerlink" title="title: “Map”slug: “map”hidden: truecreatedAt: “2021-07-29T12:29:27.367Z”updatedAt: “2021-07-29T12:29:27.367Z”categories:- Docs- SQL_Syntax"></a>title: “Map”<br>slug: “map”<br>hidden: true<br>createdAt: “2021-07-29T12:29:27.367Z”<br>updatedAt: “2021-07-29T12:29:27.367Z”<br>categories:<br>- Docs<br>- SQL_Syntax</h2><h2 id="map"><a href="#map" class="headerlink" title="map"></a>map</h2><p>Arranges <code>key:value</code> pairs into <a href="https://bytedance.feishu.cn/sql-reference/data-types/map.md">Map(key, value)</a> data type.</p>
+<p><strong>Syntax</strong> </p>
+<pre><code class="sql">
+map(key1, value1[, key2, value2, ...])
+</code></pre>
+<p><strong>Arguments</strong> </p>
+<ul>
+<li><p><code>key</code> — The key part of the pair. <a href="https://bytedance.feishu.cn/sql-reference/data-types/string.md">String</a> or <a href="https://bytedance.feishu.cn/sql-reference/data-types/int-uint.md">Integer</a> . </p>
+</li>
+<li><p><code>value</code> — The value part of the pair. <a href="https://bytedance.feishu.cn/sql-reference/data-types/string.md">String</a> , <a href="https://bytedance.feishu.cn/sql-reference/data-types/int-uint.md">Integer</a> or <a href="https://bytedance.feishu.cn/sql-reference/data-types/array.md">Array</a> .</p>
+</li>
+</ul>
+<p><strong>Returned value</strong></p>
+<ul>
+<li>Data structure as <code>key:value</code> pairs.</li>
+</ul>
+<p>Type: <a href="https://bytedance.feishu.cn/sql-reference/data-types/map.md">Map(key, value)</a> .</p>
+<p><strong>Examples</strong></p>
+<p>Query:</p>
+<pre><code class="sql">
+SELECT map(&#39;key1&#39;, number, &#39;key2&#39;, number * 2) FROM numbers(3);
+</code></pre>
+<p>Result:</p>
+<pre><code class="plain%20text">
+┌─map(&#39;key1&#39;, number, &#39;key2&#39;, multiply(number, 2))─┐
+
+│ {&#39;key1&#39;:0,&#39;key2&#39;:0}                              │
+
+│ {&#39;key1&#39;:1,&#39;key2&#39;:2}                              │
+
+│ {&#39;key1&#39;:2,&#39;key2&#39;:4}                              │
+
+└──────────────────────────────────────────────────┘
+</code></pre>
+<p>Query:</p>
+<pre><code class="sql">
+CREATE TABLE table_map (a Map(String, UInt64)) ENGINE = MergeTree() ORDER BY a;
+
+INSERT INTO table_map SELECT map(&#39;key1&#39;, number, &#39;key2&#39;, number * 2) FROM numbers(3);
+
+SELECT a[&#39;key2&#39;] FROM table_map;
+</code></pre>
+<p>Result:</p>
+<pre><code class="plain%20text">
+┌─arrayElement(a, &#39;key2&#39;)─┐
+
+│                       0 │
+
+│                       2 │
+
+│                       4 │
+
+└─────────────────────────┘
+</code></pre>
+<p><strong>See Also</strong> </p>
+<ul>
+<li><a href="https://bytedance.feishu.cn/sql-reference/data-types/map.md">Map(key, value)</a> data type</li>
+</ul>
+<h2 id="tuple"><a href="#tuple" class="headerlink" title="tuple"></a>tuple</h2><p>A function that allows grouping multiple columns.</p>
+<p>For columns with the types T1, T2, …, it returns a Tuple(T1, T2, …) type tuple containing these columns. There is no cost to execute the function.</p>
+<p>Tuples are normally used as intermediate values for an argument of IN operators, or for creating a list of formal parameters of lambda functions. Tuples can’t be written to a table.</p>
+<p>The function implements the operator <code>(x, y, …)</code> .</p>
+<p><strong>Syntax</strong></p>
+<pre><code class="sql">
+tuple(x, y, …)
+</code></pre>
+<h2 id="tupleElement"><a href="#tupleElement" class="headerlink" title="tupleElement"></a>tupleElement</h2><p>A function that allows getting a column from a tuple.</p>
+<p>‘N’ is the column index, starting from 1. N must be a constant. ‘N’ must be a constant. ‘N’ must be a strict postive integer no greater than the size of the tuple.</p>
+<p>There is no cost to execute the function.</p>
+<p>The function implements the operator <code>x.N</code> .</p>
+<p><strong>Syntax</strong></p>
+<pre><code class="sql">
+tupleElement(tuple, n)
+</code></pre>

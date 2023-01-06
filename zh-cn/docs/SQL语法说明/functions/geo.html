@@ -1,0 +1,108 @@
+<hr>
+<h2 id="title-“Geo”slug-“geo”hidden-falsecreatedAt-“2021-07-29T12-05-09-208Z”updatedAt-“2021-09-23T04-01-15-690Z”categories-Docs-SQL-Syntax"><a href="#title-“Geo”slug-“geo”hidden-falsecreatedAt-“2021-07-29T12-05-09-208Z”updatedAt-“2021-09-23T04-01-15-690Z”categories-Docs-SQL-Syntax" class="headerlink" title="title: “Geo”slug: “geo”hidden: falsecreatedAt: “2021-07-29T12:05:09.208Z”updatedAt: “2021-09-23T04:01:15.690Z”categories:- Docs- SQL_Syntax"></a>title: “Geo”<br>slug: “geo”<br>hidden: false<br>createdAt: “2021-07-29T12:05:09.208Z”<br>updatedAt: “2021-09-23T04:01:15.690Z”<br>categories:<br>- Docs<br>- SQL_Syntax</h2><blockquote>
+<p>Notice:<br>Some of the examples below are referenced from <a href="https://clickhouse.com/docs/en/sql-reference/functions/">ClickHouse Documentation</a> but have been adapted and modified to work in ByteHouse.</p>
+</blockquote>
+<h2 id="geohashDecode"><a href="#geohashDecode" class="headerlink" title="geohashDecode"></a>geohashDecode</h2><p>Decodes any geohash-encoded string into longitude and latitude.</p>
+<p><strong>Syntax</strong></p>
+<pre><code class="sql">geohashDecode(encoded_string)
+</code></pre>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><code>encoded_string</code> - geohash-encoded string.</li>
+</ul>
+<p><strong>Returned values</strong></p>
+<ul>
+<li>longitude and latitude.</li>
+</ul>
+<p><strong>Example</strong></p>
+<pre><code class="sql">SELECT geohashDecode(&#39;ezs42d000000&#39;) as res;
+</code></pre>
+<pre><code class="plain%20text">┌─res─────────────────────────────────────┐
+│ (-5.603027176111937, 42.59399422444403) │
+└─────────────────────────────────────────┘
+</code></pre>
+<h2 id="geohashEncode"><a href="#geohashEncode" class="headerlink" title="geohashEncode"></a>geohashEncode</h2><p>Encodes latitude and longitude as a geohash-string.</p>
+<p><strong>Syntax</strong></p>
+<pre><code class="sql">geohashEncode(longitude, latitude, [precision])
+</code></pre>
+<p><strong>Arguments</strong></p>
+<ul>
+<li>longitude - longitude part of the coordinate you want to encode. Floating in range <code>[-180°, 180°]</code> </li>
+<li>latitude - latitude part of the coordinate you want to encode. Floating in range <code>[-90°, 90°]</code> </li>
+<li>precision - Optional, length of the resulting encoded string, defaults to <code>12</code> . Integer in range <code>[1, 12]</code> . Any value less than <code>1</code> or greater than <code>12</code> is silently converted to <code>12</code> .</li>
+</ul>
+<p><strong>Returned values</strong></p>
+<ul>
+<li>alphanumeric <code>String</code> of encoded coordinate (modified version of the base32-encoding alphabet is used).</li>
+</ul>
+<p><strong>Example</strong></p>
+<pre><code class="sql">SELECT geohashEncode(-5.60302734375, 42.593994140625, 0) AS res;
+</code></pre>
+<pre><code class="plain%20text">┌─res──────────┐
+│ ezs42d000000 │
+└──────────────┘
+</code></pre>
+<h2 id="greatCircleDistance"><a href="#greatCircleDistance" class="headerlink" title="greatCircleDistance"></a>greatCircleDistance</h2><p>Calculates the distance between two points on the Earth’s surface using <a href="https://en.wikipedia.org/wiki/Great-circle_distance">the great-circle formula</a> .</p>
+<p><strong>Syntax</strong></p>
+<pre><code class="sql">greatCircleDistance(lon1Deg, lat1Deg, lon2Deg, lat2Deg)
+</code></pre>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><code>lon1Deg</code> — Longitude of the first point in degrees. Range: <code>[-180°, 180°]</code> . </li>
+<li><code>lat1Deg</code> — Latitude of the first point in degrees. Range: <code>[-90°, 90°]</code> . </li>
+<li><code>lon2Deg</code> — Longitude of the second point in degrees. Range: <code>[-180°, 180°]</code> . </li>
+<li><code>lat2Deg</code> — Latitude of the second point in degrees. Range: <code>[-90°, 90°]</code> .<br>Positive values correspond to North latitude and East longitude, and negative values correspond to South latitude and West longitude.</li>
+</ul>
+<p><strong>Returned value</strong></p>
+<ul>
+<li>The distance between two points on the Earth’s surface, in meters. Generates an exception when the input parameter values fall outside of the range.</li>
+</ul>
+<p><strong>Example</strong></p>
+<pre><code class="sql">SELECT greatCircleDistance(55.755831, 37.617673, -55.755831, -37.617673);
+</code></pre>
+<pre><code class="plain%20text">┌─greatCircleDistance(55.755831, 37.617673, -55.755831, -37.617673)─┐
+│ 1.4132374194975413e+07                                            │
+└───────────────────────────────────────────────────────────────────┘
+</code></pre>
+<h2 id="pointInEllipses"><a href="#pointInEllipses" class="headerlink" title="pointInEllipses"></a>pointInEllipses</h2><p>Checks whether the point belongs to at least one of the ellipses.<br>Coordinates are geometric in the Cartesian coordinate system.</p>
+<p><strong>Syntax</strong></p>
+<pre><code class="sql">pointInEllipses(x, y, x₀, y₀, a₀, b₀,...,xₙ, yₙ, aₙ, bₙ)
+</code></pre>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><code>x, y</code> — Coordinates of a point on the plane. </li>
+<li><code>xᵢ, yᵢ</code> — Coordinates of the center of the <code>i</code> -th ellipsis. </li>
+<li><code>aᵢ, bᵢ</code> — Axes of the <code>i</code> -th ellipsis in units of x, y coordinates.<br>The input parameters must be <code>2+4⋅n</code> , where <code>n</code> is the number of ellipses.</li>
+</ul>
+<p><strong>Returned values</strong></p>
+<ul>
+<li><code>1</code> if the point is inside at least one of the ellipses; <code>0</code> if it is not.</li>
+</ul>
+<p><strong>Example</strong></p>
+<pre><code class="sql">SELECT pointInEllipses(10., 10., 10., 9.1, 1., 0.9999)
+</code></pre>
+<pre><code class="plain%20text">┌─pointInEllipses(10., 10., 10., 9.1, 1., 0.9999)─┐
+│ 1                                               │
+└─────────────────────────────────────────────────┘
+</code></pre>
+<h2 id="pointInPolygon"><a href="#pointInPolygon" class="headerlink" title="pointInPolygon"></a>pointInPolygon</h2><p>Checks whether the point belongs to the polygon on the plane.</p>
+<p><strong>Syntax</strong></p>
+<pre><code class="sql">pointInPolygon((x, y), [(a, b), (c, d) ...], ...)
+</code></pre>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><code>(x, y)</code> — Coordinates of a point on the plane. Data type — Tuple — A tuple of two numbers. </li>
+<li><code>[(a, b), (c, d) ...]</code> — Polygon vertices. Data type — Array. Each vertex is represented by a pair of coordinates <code>(a, b)</code> . Vertices should be specified in a clockwise or counterclockwise order. The minimum number of vertices is 3. The polygon must be constant. </li>
+<li>The function also supports polygons with holes (cut out sections). In this case, add polygons that define the cut out sections using additional arguments of the function. The function does not support non-simply-connected polygons.</li>
+</ul>
+<p><strong>Returned values</strong></p>
+<ul>
+<li><code>1</code> if the point is inside the polygon, <code>0</code> if it is not. If the point is on the polygon boundary, the function may return either 0 or 1.</li>
+</ul>
+<p><strong>Example</strong></p>
+<pre><code class="sql">SELECT pointInPolygon((3., 3.), [(6, 0), (8, 4), (5, 8), (0, 2)]) AS res
+</code></pre>
+<pre><code class="plain%20text">┌─res─┐
+│ 1   │
+└─────┘
+</code></pre>

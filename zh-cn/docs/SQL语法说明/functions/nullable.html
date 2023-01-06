@@ -1,0 +1,202 @@
+<hr>
+<h2 id="title-“Nullable”slug-“nullable”hidden-falsecreatedAt-“2021-07-29T12-24-54-251Z”updatedAt-“2021-09-23T06-35-02-401Z”categories-Docs-SQL-Syntax"><a href="#title-“Nullable”slug-“nullable”hidden-falsecreatedAt-“2021-07-29T12-24-54-251Z”updatedAt-“2021-09-23T06-35-02-401Z”categories-Docs-SQL-Syntax" class="headerlink" title="title: “Nullable”slug: “nullable”hidden: falsecreatedAt: “2021-07-29T12:24:54.251Z”updatedAt: “2021-09-23T06:35:02.401Z”categories:- Docs- SQL_Syntax"></a>title: “Nullable”<br>slug: “nullable”<br>hidden: false<br>createdAt: “2021-07-29T12:24:54.251Z”<br>updatedAt: “2021-09-23T06:35:02.401Z”<br>categories:<br>- Docs<br>- SQL_Syntax</h2><blockquote>
+<p>Notice:<br>Some of the examples below are referenced from <a href="https://clickhouse.com/docs/en/sql-reference/functions/">ClickHouse Documentation</a> but have been adapted and modified to work in ByteHouse.</p>
+</blockquote>
+<h2 id="assumeNotNull"><a href="#assumeNotNull" class="headerlink" title="assumeNotNull"></a>assumeNotNull</h2><p>Results in an equivalent non- <code>Nullable</code> value for a Nullable type. In case the original value is <code>NULL</code> the result is undetermined. See also <code>ifNull</code> and <code>coalesce</code> functions.</p>
+<p><strong>Syntax</strong></p>
+<pre><code class="sql">assumeNotNull(x)
+</code></pre>
+<p><strong>Arguments:</strong></p>
+<ul>
+<li><code>x</code> — The original value.</li>
+</ul>
+<p><strong>Returned values</strong></p>
+<ul>
+<li>The original value from the non- <code>Nullable</code> type, if it is not <code>NULL</code> . </li>
+<li>Implementation specific result if the original value was <code>NULL</code> .</li>
+</ul>
+<p><strong>Example</strong></p>
+<pre><code class="sql">CREATE TABLE IF NOT EXISTS test.functionAssumeNotNull ( x Int8,  y Nullable(Int8)) ENGINE = CnchMergeTree ORDER BY x;
+INSERT INTO test.functionAssumeNotNull VALUES (1,NULL),(2,3);
+SELECT * FROM test.functionAssumeNotNull;
+</code></pre>
+<pre><code class="plain%20text">┌─x─┬─y────┐
+│ 1 │ ᴺᵁᴸᴸ │
+│ 2 │ 3    │
+└───┴──────┘
+</code></pre>
+<p>Apply the <code>assumeNotNull</code> function to the <code>y</code> column.</p>
+<pre><code class="sql">SELECT assumeNotNull(y),toTypeName(assumeNotNull(y))  FROM test.functionAssumeNotNull;
+</code></pre>
+<pre><code class="plain%20text">┌─assumeNotNull(y)─┬─toTypeName(assumeNotNull(y))─┐
+│ 0                │ Int8                         │
+│ 3                │ Int8                         │
+└──────────────────┴──────────────────────────────┘
+</code></pre>
+<h2 id="coalesce"><a href="#coalesce" class="headerlink" title="coalesce"></a>coalesce</h2><p>Checks from left to right whether <code>NULL</code> arguments were passed and returns the first non- <code>NULL</code> argument.</p>
+<p><strong>Syntax</strong></p>
+<pre><code class="sql">coalesce(x,...)
+</code></pre>
+<p><strong>Arguments</strong></p>
+<ul>
+<li>Any number of parameters of a non-compound type. All parameters must be compatible by data type.</li>
+</ul>
+<p><strong>Returned values</strong></p>
+<ul>
+<li>The first non- <code>NULL</code> argument.</li>
+<li><code>NULL</code> , if all arguments are <code>NULL</code> .</li>
+</ul>
+<p><strong>Example</strong><br>Consider a list of contacts that may specify multiple ways to contact a customer.</p>
+<pre><code class="sql">CREATE TABLE IF NOT EXISTS test.functionCoalesce (name String, mail Nullable(String), phone Nullable(String), icq Nullable(UInt32)) ENGINE=CnchMergeTree ORDER BY name;
+INSERT INTO test.functionCoalesce VALUES (&#39;client 1&#39;, NULL, &#39;123-45-67&#39;, 123), (&#39;client 2&#39;, NULL, NULL, NULL);
+SELECT * FROM test.functionCoalesce;
+</code></pre>
+<pre><code class="plain%20text">┌─name─────┬─mail─┬─phone─────┬─icq──┐
+│ client 1 │ ᴺᵁᴸᴸ │ 123-45-67 │ 123  │
+│ client 2 │ ᴺᵁᴸᴸ │ ᴺᵁᴸᴸ      │ ᴺᵁᴸᴸ │
+└──────────┴──────┴───────────┴──────┘
+</code></pre>
+<p>The <code>mail</code> and <code>phone</code> fields are of type String, but the <code>icq</code> field is <code>UInt32</code> , so it needs to be converted to <code>String</code> .<br>Get the first available contact method for the customer from the contact list:</p>
+<pre><code class="sql">SELECT name, coalesce(mail, phone, CAST(icq,&#39;Nullable(String)&#39;)) FROM test.functionCoalesce;
+</code></pre>
+<pre><code class="plain%20text">┌─name─────┬─coalesce(mail, phone, CAST(icq, &#39;Nullable(String)&#39;))─┐
+│ client 1 │ 123-45-67                                            │
+│ client 2 │ ᴺᵁᴸᴸ                                                 │
+└──────────┴──────────────────────────────────────────────────────┘
+</code></pre>
+<h2 id="ifNull"><a href="#ifNull" class="headerlink" title="ifNull"></a>ifNull</h2><p>Returns an alternative value if the main argument is <code>NULL</code> .</p>
+<p><strong>Syntax</strong></p>
+<pre><code class="sql">ifNull(x,alt)
+</code></pre>
+<p><strong>Arguments:</strong></p>
+<ul>
+<li><code>x</code> — The value to check for <code>NULL</code> . </li>
+<li><code>alt</code> — The value that the function returns if <code>x</code> is <code>NULL</code> .</li>
+</ul>
+<p><strong>Returned values</strong></p>
+<ul>
+<li>The value <code>x</code> , if <code>x</code> is not <code>NULL</code> . </li>
+<li>The value <code>alt</code> , if <code>x</code> is <code>NULL</code> .</li>
+</ul>
+<p><strong>Example</strong></p>
+<pre><code class="sql">SELECT ifNull(&#39;a&#39;, &#39;b&#39;);
+</code></pre>
+<pre><code class="plain%20text">┌─ifNull(&#39;a&#39;, &#39;b&#39;)─┐
+│ a                │
+└──────────────────┘
+</code></pre>
+<pre><code class="sql">SELECT ifNull(NULL, &#39;b&#39;);
+</code></pre>
+<pre><code class="plain%20text">┌─ifNull(NULL, &#39;b&#39;)─┐
+│ b                 │
+└───────────────────┘
+</code></pre>
+<h2 id="isNotNull"><a href="#isNotNull" class="headerlink" title="isNotNull"></a>isNotNull</h2><p>Checks whether the argument is NULL.</p>
+<p><strong>Syntax</strong></p>
+<pre><code class="sql">isNotNull(x)
+</code></pre>
+<p><strong>Arguments:</strong></p>
+<ul>
+<li><code>x</code> — A value with a non-compound data type.</li>
+</ul>
+<p><strong>Returned value</strong></p>
+<ul>
+<li><code>0</code> if <code>x</code> is <code>NULL</code> . </li>
+<li><code>1</code> if <code>x</code> is not <code>NULL</code> .</li>
+</ul>
+<p><strong>Example</strong><br>Input table</p>
+<pre><code class="sql">CREATE TABLE IF NOT EXISTS test.functionIsNotNull (x UInt8, y Nullable(UInt8)) ENGINE=CnchMergeTree ORDER BY x;
+INSERT INTO test.functionIsNotNull VALUES (1, NULL),(2,3);
+SELECT * FROM test.functionIsNotNull;
+</code></pre>
+<pre><code class="plain%20text">┌─x─┬─y────┐
+│ 1 │ ᴺᵁᴸᴸ │
+│ 2 │ 3    │
+└───┴──────┘
+</code></pre>
+<pre><code class="sql">SELECT x FROM test.functionIsNotNull WHERE isNotNull(y);
+</code></pre>
+<pre><code class="plain%20text">┌─x─┐
+│ 2 │
+└───┘
+</code></pre>
+<h2 id="isNull"><a href="#isNull" class="headerlink" title="isNull"></a>isNull</h2><p>Checks whether the argument is NULL.</p>
+<p><strong>Syntax</strong></p>
+<pre><code class="sql">isNull(x)
+</code></pre>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><code>x</code> — A value with a non-compound data type.</li>
+</ul>
+<p><strong>Returned value</strong></p>
+<ul>
+<li><code>1</code> if <code>x</code> is <code>NULL</code> . </li>
+<li><code>0</code> if <code>x</code> is not <code>NULL</code> .</li>
+</ul>
+<p><strong>Example</strong><br>Input table</p>
+<pre><code class="sql">CREATE TABLE IF NOT EXISTS test.functionIsNull (x UInt8, y Nullable(UInt8)) ENGINE=CnchMergeTree ORDER BY x;
+INSERT INTO test.functionIsNull VALUES (1, NULL),(2,3);
+SELECT * FROM test.functionIsNull;
+</code></pre>
+<pre><code class="plain%20text">┌─x─┬─y────┐
+│ 1 │ ᴺᵁᴸᴸ │
+│ 2 │ 3    │
+└───┴──────┘
+</code></pre>
+<pre><code class="sql">SELECT x FROM test.functionIsNull WHERE isNull(y);
+</code></pre>
+<pre><code class="plain%20text">┌─x─┐
+│ 1 │
+└───┘
+</code></pre>
+<h2 id="nullIf"><a href="#nullIf" class="headerlink" title="nullIf"></a>nullIf</h2><p>Returns <code>NULL</code> if the arguments are equal.</p>
+<p><strong>Syntax</strong></p>
+<pre><code class="sql">nullIf(x, y)
+</code></pre>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><code>x</code> , <code>y</code> — Values for comparison. They must be compatible types, or Bytehouse will generate an exception.</li>
+</ul>
+<p><strong>Returned values</strong></p>
+<ul>
+<li><code>NULL</code> , if the arguments are equal. </li>
+<li>The <code>x</code> value, if the arguments are not equal.</li>
+</ul>
+<p><strong>Example</strong></p>
+<pre><code class="sql">SELECT nullIf(1, 1);
+</code></pre>
+<pre><code class="plain%20text">┌─nullIf(1, 1)─┐
+│ ᴺᵁᴸᴸ         │
+└──────────────┘
+</code></pre>
+<pre><code class="sql">SELECT nullIf(1, 2);
+</code></pre>
+<pre><code class="plain%20text">┌─nullIf(1, 2)─┐
+│ 1            │
+└──────────────┘
+</code></pre>
+<h2 id="toNullable"><a href="#toNullable" class="headerlink" title="toNullable"></a>toNullable</h2><p>Converts the argument type to <code>Nullable</code> .</p>
+<p><strong>Syntax</strong></p>
+<pre><code class="sql">toNullable(x)
+</code></pre>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><code>x</code> — The value of any non-compound type.</li>
+</ul>
+<p><strong>Returned value</strong></p>
+<ul>
+<li>The input value with a <code>Nullable</code> type.</li>
+</ul>
+<p><strong>Example</strong></p>
+<pre><code class="sql">SELECT toTypeName(10);
+</code></pre>
+<pre><code class="plain%20text">┌─toTypeName(10)─┐
+│ UInt8          │
+└────────────────┘
+</code></pre>
+<pre><code class="sql">SELECT toTypeName(toNullable(10));
+</code></pre>
+<pre><code class="plain%20text">┌─toTypeName(toNullable(10))─┐
+│ Nullable(UInt8)            │
+└────────────────────────────┘
+</code></pre>

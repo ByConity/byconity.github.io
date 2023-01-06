@@ -1,0 +1,506 @@
+<hr>
+<h2 id="title-“Bit-amp-Bitmap”slug-“bit-bitmap”hidden-falsecreatedAt-“2021-07-29T11-55-49-053Z”updatedAt-“2021-09-23T03-43-39-051Z”categories-Docs-SQL-Syntax"><a href="#title-“Bit-amp-Bitmap”slug-“bit-bitmap”hidden-falsecreatedAt-“2021-07-29T11-55-49-053Z”updatedAt-“2021-09-23T03-43-39-051Z”categories-Docs-SQL-Syntax" class="headerlink" title="title: “Bit &amp; Bitmap”slug: “bit-bitmap”hidden: falsecreatedAt: “2021-07-29T11:55:49.053Z”updatedAt: “2021-09-23T03:43:39.051Z”categories:- Docs- SQL_Syntax"></a>title: “Bit &amp; Bitmap”<br>slug: “bit-bitmap”<br>hidden: false<br>createdAt: “2021-07-29T11:55:49.053Z”<br>updatedAt: “2021-09-23T03:43:39.051Z”<br>categories:<br>- Docs<br>- SQL_Syntax</h2><blockquote>
+<p>Notice:<br>Some of the examples below are referenced from <a href="https://clickhouse.com/docs/en/sql-reference/functions/">ClickHouse Documentation</a> but have been adapted and modified to work in ByteHouse.</p>
+</blockquote>
+<h2 id="bitTest"><a href="#bitTest" class="headerlink" title="bitTest"></a>bitTest</h2><p>Takes any integer and converts it into [binary form].</p>
+<p><strong>Syntax</strong></p>
+<pre><code class="sql">SELECT bitTest(number, index)
+</code></pre>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><p><code>number</code> – Integer number. </p>
+</li>
+<li><p><code>index</code> – Position of bit.</p>
+</li>
+</ul>
+<p><strong>Returned values</strong></p>
+<p>Returns a value of bit at specified position.</p>
+<p>Type: <code>UInt8</code> .</p>
+<p><strong>Example</strong></p>
+<p>For example, the number 43 in base-2 (binary) numeral system is 101011.</p>
+<p>Query:</p>
+<pre><code class="sql">SELECT bitTest(43, 1);
+</code></pre>
+<p>Result:</p>
+<pre><code class="plain%20text">┌─bitTest(43, 1)─┐
+│ 1              │
+└────────────────┘
+</code></pre>
+<p>Another example:</p>
+<p>Query:</p>
+<pre><code class="sql">SELECT bitTest(43, 2);
+</code></pre>
+<p>Result:</p>
+<pre><code class="plain%20text">┌─bitTest(43, 2)─┐
+│ 0              │
+└────────────────┘
+</code></pre>
+<h2 id="bitTestAll"><a href="#bitTestAll" class="headerlink" title="bitTestAll"></a>bitTestAll</h2><p>Returns result of [logical conjuction] (AND operator) of all bits at given positions. The countdown starts from 0 from the right to the left.</p>
+<p>The conjuction for bitwise operations:</p>
+<p>0 AND 0 &#x3D; 0</p>
+<p>0 AND 1 &#x3D; 0</p>
+<p>1 AND 0 &#x3D; 0</p>
+<p>1 AND 1 &#x3D; 1</p>
+<p><strong>Syntax</strong></p>
+<pre><code class="sql">SELECT bitTestAll(number, index1, index2, index3, index4, ...)
+</code></pre>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><p><code>number</code> – Integer number. </p>
+</li>
+<li><p><code>index1</code> , <code>index2</code> , <code>index3</code> , <code>index4</code> – Positions of bit. For example, for set of positions ( <code>index1</code> , <code>index2</code> , <code>index3</code> , <code>index4</code> ) is true if and only if all of its positions are true ( <code>index1</code> ⋀ <code>index2</code> , ⋀ <code>index3</code> ⋀ <code>index4</code> ).</p>
+</li>
+</ul>
+<p><strong>Returned values</strong></p>
+<p>Returns result of logical conjuction.</p>
+<p>Type: <code>UInt8</code> .</p>
+<p><strong>Example</strong></p>
+<p>For example, the number 43 in base-2 (binary) numeral system is 101011.</p>
+<p>Query:</p>
+<pre><code class="sql">SELECT bitTestAll(43, 0, 1, 3, 5);
+</code></pre>
+<p>Result:</p>
+<pre><code class="plain%20text">┌─bitTestAll(43, 0, 1, 3, 5)─┐
+│ 1                          │
+└────────────────────────────┘
+</code></pre>
+<p>Another example:</p>
+<p>Query:</p>
+<pre><code class="sql">SELECT bitTestAll(43, 0, 1, 3, 5, 2);
+</code></pre>
+<p>Result:</p>
+<pre><code class="plain%20text">┌─bitTestAll(43, 0, 1, 3, 5, 2)─┐
+│ 0                             │
+└───────────────────────────────┘
+</code></pre>
+<h2 id="bitTestAny"><a href="#bitTestAny" class="headerlink" title="bitTestAny"></a>bitTestAny</h2><p>Returns result of [logical disjunction](OR operator) of all bits at given positions. The countdown starts from 0 from the right to the left.</p>
+<p>The disjunction for bitwise operations:</p>
+<p>0 OR 0 &#x3D; 0</p>
+<p>0 OR 1 &#x3D; 1</p>
+<p>1 OR 0 &#x3D; 1</p>
+<p>1 OR 1 &#x3D; 1</p>
+<p><strong>Syntax</strong></p>
+<pre><code class="sql">
+SELECT bitTestAny(number, index1, index2, index3, index4, ...)
+</code></pre>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><p><code>number</code> – Integer number. </p>
+</li>
+<li><p><code>index1</code> , <code>index2</code> , <code>index3</code> , <code>index4</code> – Positions of bit.</p>
+</li>
+</ul>
+<p><strong>Returned values</strong></p>
+<p>Returns result of logical disjuction.</p>
+<p>Type: <code>UInt8</code> .</p>
+<p><strong>Example</strong></p>
+<p>For example, the number 43 in base-2 (binary) numeral system is 101011.</p>
+<p>Query:</p>
+<pre><code class="sql">SELECT bitTestAny(43, 0, 2);
+</code></pre>
+<p>Result:</p>
+<pre><code class="plain%20text">┌─bitTestAny(43, 0, 2)─┐
+│ 1                    │
+└──────────────────────┘
+</code></pre>
+<p>Another example:</p>
+<p>Query:</p>
+<pre><code class="sql">SELECT bitTestAny(43, 4, 2);
+</code></pre>
+<p>Result:</p>
+<pre><code class="plain%20text">┌─bitTestAny(43, 4, 2)─┐
+│ 0                    │
+└──────────────────────┘
+</code></pre>
+<h2 id="bitmapAnd"><a href="#bitmapAnd" class="headerlink" title="bitmapAnd"></a>bitmapAnd</h2><p>Two bitmap and calculation, the result is a new bitmap.</p>
+<p><strong>Syntax</strong></p>
+<pre><code class="sql">bitmapAnd(bitmap,bitmap)
+</code></pre>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><code>bitmap</code> – Bitmap object.</li>
+</ul>
+<p><strong>Returned value</strong></p>
+<ul>
+<li>The Bitmap object</li>
+</ul>
+<p><strong>Example</strong></p>
+<pre><code class="sql">SELECT bitmapToArray(bitmapAnd(bitmapBuild([1,2,3]),bitmapBuild([3,4,5]))) AS res;
+</code></pre>
+<p>Result:</p>
+<pre><code class="plain%20text">┌─res─┐
+│ [3] │
+└─────┘
+</code></pre>
+<h2 id="bitmapAndCardinality"><a href="#bitmapAndCardinality" class="headerlink" title="bitmapAndCardinality"></a>bitmapAndCardinality</h2><p>Two bitmap and calculation, return cardinality of type UInt64.</p>
+<p><strong>Syntax</strong></p>
+<pre><code class="sql">bitmapAndCardinality(bitmap,bitmap)
+</code></pre>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><code>bitmap</code> – Bitmap object.</li>
+</ul>
+<p><strong>Returned value</strong></p>
+<ul>
+<li>The cardinality in type <code>UInt64</code>.</li>
+</ul>
+<p>Type:<code>Uint64</code></p>
+<p><strong>Example</strong></p>
+<pre><code class="sql">SELECT bitmapAndCardinality(bitmapBuild([1,2,3]),bitmapBuild([3,4,5])) AS res;
+</code></pre>
+<p>Result:</p>
+<pre><code class="plain%20text">┌─res─┐
+│ 1   │
+└─────┘
+</code></pre>
+<h2 id="bitmapAndnot"><a href="#bitmapAndnot" class="headerlink" title="bitmapAndnot"></a>bitmapAndnot</h2><p>Two bitmap andnot calculation, the result is a new bitmap.</p>
+<p><strong>Syntax</strong></p>
+<pre><code class="sql">bitmapAndnot(bitmap,bitmap)
+</code></pre>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><code>bitmap</code> – Bitmap object.</li>
+</ul>
+<p><strong>Returned value</strong></p>
+<ul>
+<li>The Bitmap object</li>
+</ul>
+<p>Type: <code>Bitmap object</code>.</p>
+<p><strong>Example</strong></p>
+<pre><code class="sql">SELECT bitmapToArray(bitmapAndnot(bitmapBuild([1,2,3]),bitmapBuild([3,4,5]))) AS res;
+</code></pre>
+<p>Result:</p>
+<pre><code class="plain%20text">┌─res────┐
+│ [1, 2] │
+└────────┘
+</code></pre>
+<h2 id="bitmapAndnotCardinality"><a href="#bitmapAndnotCardinality" class="headerlink" title="bitmapAndnotCardinality"></a>bitmapAndnotCardinality</h2><p>Two bitmap andnot calculation, return cardinality of type UInt64.</p>
+<p><strong>Syntax</strong></p>
+<pre><code class="sql">bitmapAndnotCardinality(bitmap,bitmap)
+</code></pre>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><code>bitmap</code> – Bitmap object.</li>
+</ul>
+<p><strong>Returned value</strong></p>
+<ul>
+<li>The cardinality in <code>UInt64</code>.</li>
+</ul>
+<p>Type: <code>UInt64</code></p>
+<p><strong>Example</strong></p>
+<pre><code class="sql">SELECT bitmapAndnotCardinality(bitmapBuild([1,2,3]),bitmapBuild([3,4,5])) AS res;
+</code></pre>
+<p>Result:</p>
+<pre><code class="plain%20text">┌─res─┐
+│ 2   │
+└─────┘
+</code></pre>
+<h2 id="bitmapBuild"><a href="#bitmapBuild" class="headerlink" title="bitmapBuild"></a>bitmapBuild</h2><p>Build a bitmap from unsigned integer array.</p>
+<p><strong>Syntax</strong></p>
+<pre><code class="sql">bitmapBuild(array)
+</code></pre>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><code>array</code> – Unsigned integer array.</li>
+</ul>
+<p><strong>Returned value</strong></p>
+<ul>
+<li>The bitmap object</li>
+</ul>
+<p>Type: <code>Bitmap object</code>.</p>
+<p><strong>Example</strong></p>
+<pre><code class="sql">SELECT toTypeName(bitmapBuild([1, 2, 3, 4, 5]));
+</code></pre>
+<p>Result:</p>
+<pre><code class="plain%20text">┌─toTypeName(bitmapBuild([1, 2, 3, 4, 5]))─┐
+│ AggregateFunction(groupBitmap, UInt8)    │
+└──────────────────────────────────────────┘
+</code></pre>
+<h2 id="bitmapCardinality"><a href="#bitmapCardinality" class="headerlink" title="bitmapCardinality"></a>bitmapCardinality</h2><p>Return bitmap cardinality of type UInt64.</p>
+<p><strong>Syntax</strong></p>
+<pre><code class="sql">bitmapCardinality(bitmap)
+</code></pre>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><code>bitmap</code> – Bitmap object.</li>
+</ul>
+<p><strong>Returned value</strong></p>
+<ul>
+<li>The bitmap cardinality in type <code>UInt64</code>.</li>
+</ul>
+<p>Type: <code>UInt64</code> .</p>
+<p><strong>Example</strong></p>
+<pre><code class="sql">SELECT bitmapCardinality(bitmapBuild([1, 2, 3, 4, 5])) AS res;
+</code></pre>
+<p>Result:</p>
+<pre><code class="plain%20text">┌─res─┐
+│ 5   │
+└─────┘
+</code></pre>
+<h2 id="bitmapContains"><a href="#bitmapContains" class="headerlink" title="bitmapContains"></a>bitmapContains</h2><p>Checks whether the bitmap contains an element.</p>
+<p><strong>Syntax</strong></p>
+<pre><code class="sql">bitmapContains(haystack, needle)
+</code></pre>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><code>haystack</code> – [Bitmap object], where the function searches.</li>
+<li><code>needle</code> – Value that the function searches. Type: [UInt32] .</li>
+</ul>
+<p><strong>Returned values</strong></p>
+<ul>
+<li>0 — If <code>haystack</code> does not contain <code>needle</code> .</li>
+<li>1 — If <code>haystack</code> contains <code>needle</code> .</li>
+</ul>
+<p>Type: <code>UInt8</code> .</p>
+<p><strong>Example</strong></p>
+<pre><code class="sql">SELECT bitmapContains(bitmapBuild([1,5,7,9]), toUInt32(9)) AS res;
+</code></pre>
+<p>Result:</p>
+<pre><code class="plain%20text">┌─res─┐
+│ 1   │
+└─────┘
+</code></pre>
+<h2 id="bitmapHasAll"><a href="#bitmapHasAll" class="headerlink" title="bitmapHasAll"></a>bitmapHasAll</h2><p>Analogous to <code>hasAll(array, array)</code> returns 1 if the first bitmap contains all the elements of the second one, 0 otherwise.</p>
+<p>If the second argument is an empty bitmap then returns 1.</p>
+<p><strong>Syntax</strong></p>
+<pre><code class="sql">bitmapHasAll(bitmap,bitmap)
+</code></pre>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><code>bitmap</code> – Bitmap object.</li>
+</ul>
+<p><strong>Returned value</strong></p>
+<ul>
+<li><code>1</code> , returns 1 if the first bitmap contains all the elements of the second one or If the second argument is an empty bitmap . </li>
+<li><code>0</code> , otherwise.</li>
+</ul>
+<p>Type: <code>UInt8</code></p>
+<p><strong>Example</strong></p>
+<pre><code class="sql">SELECT bitmapHasAll(bitmapBuild([1,2,3]),bitmapBuild([3,4,5])) AS res;
+</code></pre>
+<p>Result:</p>
+<pre><code class="plain%20text">┌─res─┐
+│ 0   │
+└─────┘
+</code></pre>
+<h2 id="bitmapHasAny"><a href="#bitmapHasAny" class="headerlink" title="bitmapHasAny"></a>bitmapHasAny</h2><p>Checks whether two bitmaps have intersection by some elements.</p>
+<p><strong>Syntax</strong></p>
+<pre><code class="sql">bitmapHasAny(bitmap1, bitmap2)
+</code></pre>
+<p>If you are sure that <code>bitmap2</code> contains strictly one element, consider using the [bitmapContains] function. It works more efficiently.</p>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><code>bitmap*</code> – Bitmap object.</li>
+</ul>
+<p><strong>Return values</strong></p>
+<ul>
+<li><code>1</code> , if <code>bitmap1</code> and <code>bitmap2</code> have one similar element at least.</li>
+<li><code>0</code> , otherwise.</li>
+</ul>
+<p><strong>Example</strong></p>
+<pre><code class="sql">SELECT bitmapHasAny(bitmapBuild([1,2,3]),bitmapBuild([3,4,5])) AS res;
+</code></pre>
+<p>Result:</p>
+<pre><code class="plain%20text">┌─res─┐
+│ 1   │
+└─────┘
+</code></pre>
+<h2 id="bitmapMax"><a href="#bitmapMax" class="headerlink" title="bitmapMax"></a>bitmapMax</h2><p>Return the greatest value of type UInt64 in the set, 0 if the set is empty.</p>
+<p><strong>Syntax</strong></p>
+<pre><code class="sql">bitmapMax(bitmap)
+</code></pre>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><code>bitmap</code> – Bitmap object.</li>
+</ul>
+<p><strong>Return values</strong></p>
+<ul>
+<li>Return the greatest value of type UInt64 in the set.</li>
+</ul>
+<p>Type: <code>UInt64</code></p>
+<p><strong>Example</strong></p>
+<pre><code class="sql">SELECT bitmapMax(bitmapBuild([1, 2, 3, 4, 5])) AS res;
+</code></pre>
+<p>Result:</p>
+<pre><code class="plain%20text">┌─res─┐
+│ 5   │
+└─────┘
+</code></pre>
+<h2 id="bitmapMin"><a href="#bitmapMin" class="headerlink" title="bitmapMin"></a>bitmapMin</h2><p>Return the smallest value of type UInt64 in the set, UINT32_MAX if the set is empty.</p>
+<p><strong>Syntax</strong></p>
+<pre><code class="sql">bitmapMin(bitmap)
+</code></pre>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><code>bitmap</code> – Bitmap object.</li>
+</ul>
+<p><strong>Return values</strong></p>
+<ul>
+<li>Return the smallest value of type UInt64 in the set.</li>
+</ul>
+<p>Type: <code>UInt64</code></p>
+<p><strong>Example</strong></p>
+<pre><code class="sql">SELECT bitmapMin(bitmapBuild([1, 2, 3, 4, 5])) AS res;
+</code></pre>
+<p>Result:</p>
+<pre><code class="plain%20text">┌─res─┐
+│ 1   │
+└─────┘
+</code></pre>
+<h2 id="bitmapOr"><a href="#bitmapOr" class="headerlink" title="bitmapOr"></a>bitmapOr</h2><p>Two bitmap or calculation, the result is a new bitmap.</p>
+<pre><code class="sql">bitmapOr(bitmap,bitmap)
+</code></pre>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><code>bitmap</code> – Bitmap object.</li>
+</ul>
+<p><strong>Returned value</strong></p>
+<ul>
+<li>The Bitmap object</li>
+</ul>
+<p>Type: <code>Bitmap object</code>.</p>
+<p><strong>Example</strong></p>
+<pre><code class="sql">SELECT bitmapToArray(bitmapOr(bitmapBuild([1,2,3]),bitmapBuild([3,4,5]))) AS res;
+</code></pre>
+<p>Result:</p>
+<pre><code class="plain%20text">┌─res─────────────┐
+│ [1, 2, 3, 4, 5] │
+└─────────────────┘
+</code></pre>
+<h2 id="bitmapOrCardinality"><a href="#bitmapOrCardinality" class="headerlink" title="bitmapOrCardinality"></a>bitmapOrCardinality</h2><p>Two bitmap or calculation, return cardinality of type UInt64.</p>
+<p><strong>Syntax</strong></p>
+<pre><code class="sql">bitmapOrCardinality(bitmap,bitmap)
+</code></pre>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><code>bitmap</code> – Bitmap object.</li>
+</ul>
+<p><strong>Return values</strong></p>
+<ul>
+<li>Return or calculation result in cardinality.</li>
+</ul>
+<p>Type:<code>UInt64</code></p>
+<p><strong>Example</strong></p>
+<pre><code class="sql">SELECT bitmapOrCardinality(bitmapBuild([1,2,3]),bitmapBuild([3,4,5])) AS res;
+</code></pre>
+<p>Result:</p>
+<pre><code class="plain%20text">┌─res─┐
+│ 5   │
+└─────┘
+</code></pre>
+<h2 id="bitmapSubsetInRange"><a href="#bitmapSubsetInRange" class="headerlink" title="bitmapSubsetInRange"></a>bitmapSubsetInRange</h2><p>Return subset in specified range (not include the range_end).</p>
+<p><strong>Syntax</strong></p>
+<pre><code class="sql">bitmapSubsetInRange(bitmap, range_start, range_end)
+</code></pre>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><p><code>bitmap</code> – [Bitmap object].</p>
+</li>
+<li><p><code>range_start</code> – Range start point. Type: [UInt32]. </p>
+</li>
+<li><p><code>range_end</code> – Range end point (excluded). Type: [UInt32].</p>
+</li>
+</ul>
+<p><strong>Return values</strong></p>
+<ul>
+<li>Return or calculation result.</li>
+</ul>
+<p>Type:<code>array</code></p>
+<p><strong>Example</strong></p>
+<pre><code class="sql">SELECT bitmapToArray(bitmapSubsetInRange(bitmapBuild([0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,100,200,500]), toUInt32(30), toUInt32(200))) AS res;
+</code></pre>
+<p>Result:</p>
+<pre><code class="plain%20text">┌─res───────────────────┐
+│ [30, 31, 32, 33, 100] │
+└───────────────────────┘
+</code></pre>
+<h2 id="bitmapSubsetLimit"><a href="#bitmapSubsetLimit" class="headerlink" title="bitmapSubsetLimit"></a>bitmapSubsetLimit</h2><p>Creates a subset of bitmap with n elements taken between <code>range_start</code> and <code>cardinality_limit</code> .</p>
+<p><strong>Syntax</strong></p>
+<pre><code class="sql">bitmapSubsetLimit(bitmap, range_start, cardinality_limit)
+</code></pre>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><p><code>bitmap</code> – [Bitmap object]. </p>
+</li>
+<li><p><code>range_start</code> – The subset starting point. Type: [UInt32]. </p>
+</li>
+<li><p><code>cardinality_limit</code> – The subset cardinality upper limit. Type: [UInt32].</p>
+</li>
+</ul>
+<p><strong>Returned value</strong></p>
+<ul>
+<li>The subset.</li>
+</ul>
+<p>Type: <code>Bitmap object</code> .</p>
+<p><strong>Example</strong></p>
+<p>Query:</p>
+<pre><code class="sql">SELECT bitmapToArray(bitmapSubsetLimit(bitmapBuild([0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,100,200,500]), toUInt32(30), toUInt32(200))) AS res;
+</code></pre>
+<p>Result:</p>
+<pre><code class="plain%20text">┌─res─────────────────────────────┐
+│ [30, 31, 32, 33, 100, 200, 500] │
+└─────────────────────────────────┘
+</code></pre>
+<h2 id="bitmapToArray"><a href="#bitmapToArray" class="headerlink" title="bitmapToArray"></a>bitmapToArray</h2><p>Convert bitmap to integer array.</p>
+<p><strong>Syntax</strong></p>
+<pre><code class="sql">bitmapToArray(bitmap)
+</code></pre>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><code>bitmap</code> – Bitmap object.</li>
+</ul>
+<p><strong>Returned value</strong></p>
+<ul>
+<li>An array.</li>
+</ul>
+<p>Type: <code>array</code> .</p>
+<p><strong>Example</strong></p>
+<pre><code class="sql">SELECT bitmapToArray(bitmapBuild([1, 2, 3, 4, 5])) AS res;
+</code></pre>
+<p>Result:</p>
+<pre><code class="plain%20text">┌─res─────────────┐
+│ [1, 2, 3, 4, 5] │
+└─────────────────┘
+</code></pre>
+<h2 id="bitmapXor"><a href="#bitmapXor" class="headerlink" title="bitmapXor"></a>bitmapXor</h2><p>Two bitmap xor calculation, the result is a new bitmap.</p>
+<pre><code class="sql">bitmapXor(bitmap,bitmap)
+</code></pre>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><code>bitmap</code> – Bitmap object.</li>
+</ul>
+<p><strong>Returned value</strong></p>
+<ul>
+<li>The Bitmap object</li>
+</ul>
+<p>Type: <code>Bitmap object</code>.</p>
+<p><strong>Example</strong></p>
+<pre><code class="sql">SELECT bitmapToArray(bitmapXor(bitmapBuild([1,2,3]),bitmapBuild([3,4,5]))) AS res;
+</code></pre>
+<p>Result:</p>
+<pre><code class="plain%20text">┌─res──────────┐
+│ [1, 2, 4, 5] │
+└──────────────┘
+</code></pre>
+<h2 id="bitmapXorCardinality"><a href="#bitmapXorCardinality" class="headerlink" title="bitmapXorCardinality"></a>bitmapXorCardinality</h2><p>Two bitmap xor calculation, return cardinality of type UInt64.</p>
+<p><strong>Syntax</strong></p>
+<pre><code class="sql">bitmapXorCardinality(bitmap,bitmap)
+</code></pre>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><p><code>bitmap</code> – Bitmap object. </p>
+</li>
+<li><p><strong>Returned value</strong></p>
+</li>
+<li><p>The Bitmap object</p>
+</li>
+</ul>
+<p>Type: <code>Bitmap object</code>.</p>
+<p><strong>Example</strong></p>
+<pre><code class="sql">SELECT bitmapXorCardinality(bitmapBuild([1,2,3]),bitmapBuild([3,4,5])) AS res;
+</code></pre>
+<p>Result:</p>
+<pre><code class="plain%20text">┌─res─┐
+│ 4   │
+└─────┘
+</code></pre>

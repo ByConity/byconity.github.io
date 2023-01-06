@@ -1,0 +1,32 @@
+<hr>
+<h2 id="title-“Conditional”slug-“conditional”hidden-falsecreatedAt-“2021-07-29T11-58-23-803Z”updatedAt-“2021-09-23T03-47-59-032Z”categories-Docs-SQL-Syntax"><a href="#title-“Conditional”slug-“conditional”hidden-falsecreatedAt-“2021-07-29T11-58-23-803Z”updatedAt-“2021-09-23T03-47-59-032Z”categories-Docs-SQL-Syntax" class="headerlink" title="title: “Conditional”slug: “conditional”hidden: falsecreatedAt: “2021-07-29T11:58:23.803Z”updatedAt: “2021-09-23T03:47:59.032Z”categories:- Docs- SQL_Syntax"></a>title: “Conditional”<br>slug: “conditional”<br>hidden: false<br>createdAt: “2021-07-29T11:58:23.803Z”<br>updatedAt: “2021-09-23T03:47:59.032Z”<br>categories:<br>- Docs<br>- SQL_Syntax</h2><blockquote>
+<p>Notice:<br>Some of the examples below are referenced from <a href="https://clickhouse.com/docs/en/sql-reference/functions/">ClickHouse Documentation</a> but have been adapted and modified to work in ByteHouse.</p>
+</blockquote>
+<h2 id="multiIf"><a href="#multiIf" class="headerlink" title="multiIf"></a>multiIf</h2><p>Allows you to write the CASE operator more compactly in the query.</p>
+<p><strong>Syntax</strong></p>
+<pre><code class="sql">multiIf(cond_1, then_1, cond_2, then_2, ..., else)
+</code></pre>
+<p><strong>Arguments:</strong></p>
+<ul>
+<li><code>cond_N</code> — The condition for the function to return <code>then_N</code> . </li>
+<li><code>then_N</code> — The result of the function when executed. </li>
+<li><code>else</code> — The result of the function if none of the conditions is met.<br>The function accepts <code>2N+1</code> parameters.</li>
+</ul>
+<p><strong>Returned values</strong><br>The function returns one of the values <code>then_N</code> or <code>else</code> , depending on the conditions <code>cond_N</code> .</p>
+<p><strong>Example</strong></p>
+<pre><code class="sql">CREATE TABLE IF NOT EXISTS test.functionMultiIf (id UInt8, left Nullable(UInt8), right Nullable(UInt8)) ENGINE=CnchMergeTree ORDER BY id;
+INSERT INTO test.functionMultiIf VALUES (1,NULL,4),(2,1,3),(3,2,2),(4,3,1),(5,4,NULL);
+SELECT
+    left,
+    right,
+    multiIf(left &lt; right, &#39;left is smaller&#39;, left &gt; right, &#39;left is greater&#39;, left = right, &#39;Both equal&#39;, &#39;Null value&#39;) AS result
+FROM test.functionMultiIf
+</code></pre>
+<pre><code class="plain%20text">┌─left─┬─right─┬─result──────────┐
+│ ᴺᵁᴸᴸ │ 4     │ Null value      │
+│ 1    │ 3     │ left is smaller │
+│ 2    │ 2     │ Both equal      │
+│ 3    │ 1     │ left is greater │
+│ 4    │ ᴺᵁᴸᴸ  │ Null value      │
+└──────┴───────┴─────────────────┘
+</code></pre>

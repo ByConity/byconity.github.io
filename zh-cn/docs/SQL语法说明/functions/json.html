@@ -1,0 +1,570 @@
+<hr>
+<h2 id="title-“JSON”slug-“json”hidden-falsecreatedAt-“2021-07-29T12-12-52-763Z”updatedAt-“2021-09-23T04-06-29-273Z”categories-Docs-SQL-Syntax"><a href="#title-“JSON”slug-“json”hidden-falsecreatedAt-“2021-07-29T12-12-52-763Z”updatedAt-“2021-09-23T04-06-29-273Z”categories-Docs-SQL-Syntax" class="headerlink" title="title: “JSON”slug: “json”hidden: falsecreatedAt: “2021-07-29T12:12:52.763Z”updatedAt: “2021-09-23T04:06:29.273Z”categories:- Docs- SQL_Syntax"></a>title: “JSON”<br>slug: “json”<br>hidden: false<br>createdAt: “2021-07-29T12:12:52.763Z”<br>updatedAt: “2021-09-23T04:06:29.273Z”<br>categories:<br>- Docs<br>- SQL_Syntax</h2><blockquote>
+<p>Notice:<br>Some of the examples below are referenced from <a href="https://clickhouse.com/docs/en/sql-reference/functions/">ClickHouse Documentation</a> but have been adapted and modified to work in ByteHouse.</p>
+</blockquote>
+<h2 id="JSONExtract"><a href="#JSONExtract" class="headerlink" title="JSONExtract"></a>JSONExtract</h2><p>Parses a JSON and extract a value of the given ByteHouse data type.<br>This is a generalization of the previous <code>JSONExtract&lt;type&gt;</code> functions.<br>This means<br><code>JSONExtract(..., &#39;String&#39;)</code> returns exactly the same as <code>JSONExtractString()</code> ,<br><code>JSONExtract(..., &#39;Float64&#39;)</code> returns exactly the same as <code>JSONExtractFloat()</code> .</p>
+<p><strong>Syntax</strong></p>
+<pre><code class="sql">JSONExtract(json[, indices_or_keys…], Return_type)
+</code></pre>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><code>json</code> – json string. </li>
+<li><code>indices_or_keys</code> - is a list of zero or more arguments each of them can be either string or integer.<ul>
+<li>String &#x3D; access object member by key. </li>
+<li>Positive integer &#x3D; access the n-th member&#x2F;key from the beginning. </li>
+<li>Negative integer &#x3D; access the n-th member&#x2F;key from the end. </li>
+<li>Minimum index of the element is 1. Thus the element 0 does not exist.</li>
+<li>You may use integers to access both JSON arrays and JSON objects.</li>
+</ul>
+</li>
+<li><code>Return_type</code> – ByteHouse data type.</li>
+</ul>
+<p><strong>Returned value</strong></p>
+<ul>
+<li>Extracted value of the given ByteHouse data type.</li>
+</ul>
+<p><strong>Example</strong></p>
+<pre><code class="sql">SELECT JSONExtract(&#39;{&quot;a&quot;: &quot;hello&quot;, &quot;b&quot;: [-100, 200.0, 300]}&#39;, &#39;Tuple(String, Array(Float64))&#39;)
+</code></pre>
+<pre><code class="plain%20text">┌─JSONExtract(&#39;{&quot;a&quot;: &quot;hello&quot;, &quot;b&quot;: [-100, 200.0, 300]}&#39;, &#39;Tuple(String, Array(Float64))&#39;)─┐
+│ (hello, [-1e+02, 2e+02, 3e+02])                                                         │
+└─────────────────────────────────────────────────────────────────────────────────────────┘
+</code></pre>
+<!-- TODO: Gateway client returns errors for this query
+
+```sql
+SELECT JSONExtract('{"a": "hello", "b": [-100, 200.0, 300]}', 'Tuple(b Array(Float64), a String)')
+```
+
+```plain%20text
+``` -->
+
+<pre><code class="sql">SELECT JSONExtract(&#39;{&quot;a&quot;: &quot;hello&quot;, &quot;b&quot;: [-100, 200.0, 300]}&#39;, &#39;b&#39;, &#39;Array(Nullable(Int8))&#39;)
+</code></pre>
+<pre><code class="plain%20text">┌─JSONExtract(&#39;{&quot;a&quot;: &quot;hello&quot;, &quot;b&quot;: [-100, 200.0, 300]}&#39;, &#39;b&#39;, &#39;Array(Nullable(Int8))&#39;)─┐
+│ [-100, ᴺᵁᴸᴸ, ᴺᵁᴸᴸ]                                                                   │
+└──────────────────────────────────────────────────────────────────────────────────────┘
+</code></pre>
+<pre><code class="sql">SELECT JSONExtract(&#39;{&quot;a&quot;: &quot;hello&quot;, &quot;b&quot;: [-100, 200.0, 300]}&#39;, &#39;b&#39;, 4, &#39;Nullable(Int64)&#39;)
+</code></pre>
+<pre><code class="plain%20text">┌─JSONExtract(&#39;{&quot;a&quot;: &quot;hello&quot;, &quot;b&quot;: [-100, 200.0, 300]}&#39;, &#39;b&#39;, 4, &#39;Nullable(Int64)&#39;)─┐
+│ ᴺᵁᴸᴸ                                                                              │
+└───────────────────────────────────────────────────────────────────────────────────┘
+</code></pre>
+<pre><code class="sql">SELECT JSONExtract(&#39;{&quot;passed&quot;: true}&#39;, &#39;passed&#39;, &#39;UInt8&#39;)
+</code></pre>
+<pre><code class="plain%20text">┌─JSONExtract(&#39;{&quot;passed&quot;: true}&#39;, &#39;passed&#39;, &#39;UInt8&#39;)─┐
+│ 1                                                  │
+└────────────────────────────────────────────────────┘
+</code></pre>
+<pre><code class="sql">SELECT JSONExtract(&#39;{&quot;day&quot;: &quot;Thursday&quot;}&#39;, &#39;day&#39;, &#39;Enum8(\&#39;Sunday\&#39; = 0, \&#39;Monday\&#39; = 1, \&#39;Tuesday\&#39; = 2, \&#39;Wednesday\&#39; = 3, \&#39;Thursday\&#39; = 4, \&#39;Friday\&#39; = 5, \&#39;Saturday\&#39; = 6)&#39;)
+</code></pre>
+<pre><code class="plain%20text">┌─JSONExtract(&#39;{&quot;day&quot;: &quot;Thursday&quot;}&#39;, &#39;day&#39;, &#39;Enum8(\&#39;Sunday\&#39; = 0, \&#39;Monday\&#39; = 1, \&#39;Tuesday\&#39; = 2, \&#39;Wednesday\&#39; = 3, \&#39;Thursday\&#39; = 4, \&#39;Friday\&#39; = 5, \&#39;Saturday\&#39; = 6)&#39;)─┐
+│ Thursday                                                                                                                                                                   │
+└────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┘
+</code></pre>
+<pre><code class="sql">SELECT JSONExtract(&#39;{&quot;day&quot;: 5}&#39;, &#39;day&#39;, &#39;Enum8(\&#39;Sunday\&#39; = 0, \&#39;Monday\&#39; = 1, \&#39;Tuesday\&#39; = 2, \&#39;Wednesday\&#39; = 3, \&#39;Thursday\&#39; = 4, \&#39;Friday\&#39; = 5, \&#39;Saturday\&#39; = 6)&#39;)
+</code></pre>
+<pre><code class="plain%20text">┌─JSONExtract(&#39;{&quot;day&quot;: 5}&#39;, &#39;day&#39;, &#39;Enum8(\&#39;Sunday\&#39; = 0, \&#39;Monday\&#39; = 1, \&#39;Tuesday\&#39; = 2, \&#39;Wednesday\&#39; = 3, \&#39;Thursday\&#39; = 4, \&#39;Friday\&#39; = 5, \&#39;Saturday\&#39; = 6)&#39;)─┐
+│ Friday                                                                                                                                                            │
+└───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┘
+</code></pre>
+<h2 id="JSONExtractBool"><a href="#JSONExtractBool" class="headerlink" title="JSONExtractBool"></a>JSONExtractBool</h2><p>Parses a JSON and extract a value. These functions are similar to <code>visitParam</code> functions.<br>If the value does not exist or has a wrong type, <code>0</code> will be returned.</p>
+<p><strong>Syntax</strong></p>
+<pre><code class="sql">JSONExtractBool(json\[, indices_or_keys\]…) 
+</code></pre>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><code>json</code> – json string. </li>
+<li><code>indices_or_keys</code> - is a list of zero or more arguments each of them can be either string or integer.<ul>
+<li>String &#x3D; access object member by key. </li>
+<li>Positive integer &#x3D; access the n-th member&#x2F;key from the beginning. </li>
+<li>Negative integer &#x3D; access the n-th member&#x2F;key from the end. </li>
+<li>Minimum index of the element is 1. Thus the element 0 does not exist.</li>
+<li>You may use integers to access both JSON arrays and JSON objects.</li>
+</ul>
+</li>
+</ul>
+<p><strong>Returned value</strong></p>
+<ul>
+<li>UInt8.</li>
+</ul>
+<p><strong>Example</strong></p>
+<pre><code class="sql">SELECT JSONExtractBool(&#39;{&quot;passed&quot;: true}&#39;,&#39;passed&#39;)
+</code></pre>
+<pre><code class="plain%20text">┌─JSONExtractBool(&#39;{&quot;passed&quot;: true}&#39;, &#39;passed&#39;)─┐
+│ 1                                             │
+└───────────────────────────────────────────────┘
+</code></pre>
+<pre><code class="sql">SELECT JSONExtractBool(&#39;{&quot;passed&quot;: false}&#39;,&#39;passed&#39;)
+</code></pre>
+<pre><code class="plain%20text">┌─JSONExtractBool(&#39;{&quot;passed&quot;: false}&#39;, &#39;passed&#39;)─┐
+│ 0                                              │
+└────────────────────────────────────────────────┘
+</code></pre>
+<h2 id="JSONExtractFloat"><a href="#JSONExtractFloat" class="headerlink" title="JSONExtractFloat"></a>JSONExtractFloat</h2><p>Parses a JSON and extract a value. These functions are similar to <code>visitParam</code> functions.<br>If the value does not exist or has a wrong type, <code>0</code> will be returned.</p>
+<p><strong>Syntax</strong></p>
+<pre><code class="sql">JSONExtractFloat(json\[, indices_or_keys\]…) 
+</code></pre>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><code>json</code> – json string. </li>
+<li><code>indices_or_keys</code> - is a list of zero or more arguments each of them can be either string or integer.<ul>
+<li>String &#x3D; access object member by key. </li>
+<li>Positive integer &#x3D; access the n-th member&#x2F;key from the beginning. </li>
+<li>Negative integer &#x3D; access the n-th member&#x2F;key from the end. </li>
+<li>Minimum index of the element is 1. Thus the element 0 does not exist.</li>
+<li>You may use integers to access both JSON arrays and JSON objects.</li>
+</ul>
+</li>
+</ul>
+<p><strong>Returned value</strong></p>
+<ul>
+<li>Float64.</li>
+</ul>
+<p><strong>Example</strong></p>
+<pre><code class="sql">SELECT JSONExtractFloat(&#39;{&quot;a&quot;: &quot;hello&quot;, &quot;b&quot;: [-100, 200.0, 300]}&#39;, &#39;b&#39;, 2)
+</code></pre>
+<pre><code class="plain%20text">┌─JSONExtractFloat(&#39;{&quot;a&quot;: &quot;hello&quot;, &quot;b&quot;: [-100, 200.0, 300]}&#39;, &#39;b&#39;, 2)─┐
+│ 2e+02                                                               │
+└─────────────────────────────────────────────────────────────────────┘
+</code></pre>
+<h2 id="JSONExtractInt"><a href="#JSONExtractInt" class="headerlink" title="JSONExtractInt"></a>JSONExtractInt</h2><p>Parses a JSON and extract a value. These functions are similar to <code>visitParam</code> functions.<br>If the value does not exist or has a wrong type, <code>0</code> will be returned.</p>
+<p><strong>Syntax</strong></p>
+<pre><code class="sql">JSONExtractInt(json\[, indices_or_keys\]…) 
+</code></pre>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><code>json</code> – json string. </li>
+<li><code>indices_or_keys</code> - is a list of zero or more arguments each of them can be either string or integer.<ul>
+<li>String &#x3D; access object member by key. </li>
+<li>Positive integer &#x3D; access the n-th member&#x2F;key from the beginning. </li>
+<li>Negative integer &#x3D; access the n-th member&#x2F;key from the end. </li>
+<li>Minimum index of the element is 1. Thus the element 0 does not exist.</li>
+<li>You may use integers to access both JSON arrays and JSON objects.</li>
+</ul>
+</li>
+</ul>
+<p><strong>Returned value</strong></p>
+<ul>
+<li>Int64.</li>
+</ul>
+<p><strong>Example</strong></p>
+<pre><code class="sql">SELECT JSONExtractInt(&#39;{&quot;a&quot;: &quot;hello&quot;, &quot;b&quot;: [-100, 200.0, 300]}&#39;, &#39;b&#39;, 1)
+</code></pre>
+<pre><code class="plain%20text">┌─JSONExtractInt(&#39;{&quot;a&quot;: &quot;hello&quot;, &quot;b&quot;: [-100, 200.0, 300]}&#39;, &#39;b&#39;, 1)─┐
+│ -100                                                              │
+└───────────────────────────────────────────────────────────────────┘
+</code></pre>
+<h2 id="JSONExtractKeysAndValues"><a href="#JSONExtractKeysAndValues" class="headerlink" title="JSONExtractKeysAndValues"></a>JSONExtractKeysAndValues</h2><p>Parses key-value pairs from a JSON where the values are of the given ByteHouse data type.</p>
+<p><strong>Syntax</strong></p>
+<pre><code class="sql">JSONExtractKeysAndValues(json[, indices_or_keys…], Value_type)
+</code></pre>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><code>json</code> – json string. </li>
+<li><code>indices_or_keys</code> - is a list of zero or more arguments each of them can be either string or integer.<ul>
+<li>String &#x3D; access object member by key. </li>
+<li>Positive integer &#x3D; access the n-th member&#x2F;key from the beginning. </li>
+<li>Negative integer &#x3D; access the n-th member&#x2F;key from the end. </li>
+<li>Minimum index of the element is 1. Thus the element 0 does not exist.</li>
+<li>You may use integers to access both JSON arrays and JSON objects.</li>
+</ul>
+</li>
+<li><code>Value_type</code> - json value data type</li>
+</ul>
+<p><strong>Returned value</strong></p>
+<ul>
+<li>key-value pairs</li>
+</ul>
+<p><strong>Example</strong></p>
+<pre><code class="sql">SELECT JSONExtractKeysAndValues(&#39;{&quot;x&quot;: {&quot;a&quot;: 5, &quot;b&quot;: 7, &quot;c&quot;: 11}}&#39;, &#39;x&#39;, &#39;Int8&#39;);
+</code></pre>
+<pre><code class="plain%20text">┌─JSONExtractKeysAndValues(&#39;{&quot;x&quot;: {&quot;a&quot;: 5, &quot;b&quot;: 7, &quot;c&quot;: 11}}&#39;, &#39;x&#39;, &#39;Int8&#39;)─┐
+│ [(a, 5), (b, 7), (c, 11)]                                                 │
+└───────────────────────────────────────────────────────────────────────────┘
+</code></pre>
+<h2 id="JSONExtractRaw"><a href="#JSONExtractRaw" class="headerlink" title="JSONExtractRaw"></a>JSONExtractRaw</h2><p>Returns a part of JSON as unparsed string.<br>If the part does not exist or has a wrong type, an empty string will be returned.</p>
+<p><strong>Syntax</strong></p>
+<pre><code class="sql">JSONExtractRaw(json\[, indices_or_keys\]…)
+</code></pre>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><code>json</code> – json string. </li>
+<li><code>indices_or_keys</code> - is a list of zero or more arguments each of them can be either string or integer.<ul>
+<li>String &#x3D; access object member by key. </li>
+<li>Positive integer &#x3D; access the n-th member&#x2F;key from the beginning. </li>
+<li>Negative integer &#x3D; access the n-th member&#x2F;key from the end. </li>
+<li>Minimum index of the element is 1. Thus the element 0 does not exist.</li>
+<li>You may use integers to access both JSON arrays and JSON objects.</li>
+</ul>
+</li>
+</ul>
+<p><strong>Returned value</strong></p>
+<ul>
+<li>String</li>
+</ul>
+<p><strong>Example</strong></p>
+<pre><code class="sql">SELECT JSONExtractRaw(&#39;{&quot;a&quot;: &quot;hello&quot;, &quot;b&quot;: [-100, 200.0, 300]}&#39;, &#39;b&#39;);
+</code></pre>
+<pre><code class="plain%20text">┌─JSONExtractRaw(&#39;{&quot;a&quot;: &quot;hello&quot;, &quot;b&quot;: [-100, 200.0, 300]}&#39;, &#39;b&#39;)─┐
+│ [-100,200,300]                                                 │
+└────────────────────────────────────────────────────────────────┘
+</code></pre>
+<h2 id="JSONExtractString"><a href="#JSONExtractString" class="headerlink" title="JSONExtractString"></a>JSONExtractString</h2><p>Parse a JSON and extract a string. This function is similar to <code>visitParamExtractString</code> functions.<br>If the value does not exist or has a wrong type, an empty string will be returned.<br>The value is unescaped. If unescaping failed, it returns an empty string.</p>
+<p><strong>Syntax</strong></p>
+<pre><code class="sql">JSONExtractString(json\[, indices_or_keys\]…)
+</code></pre>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><code>json</code> – json string. </li>
+<li><code>indices_or_keys</code> - is a list of zero or more arguments each of them can be either string or integer.<ul>
+<li>String &#x3D; access object member by key. </li>
+<li>Positive integer &#x3D; access the n-th member&#x2F;key from the beginning. </li>
+<li>Negative integer &#x3D; access the n-th member&#x2F;key from the end. </li>
+<li>Minimum index of the element is 1. Thus the element 0 does not exist.</li>
+<li>You may use integers to access both JSON arrays and JSON objects.</li>
+</ul>
+</li>
+</ul>
+<p><strong>Returned value</strong></p>
+<ul>
+<li>String</li>
+</ul>
+<p><strong>Example</strong></p>
+<pre><code class="sql">SELECT JSONExtractString(&#39;{&quot;a&quot;: &quot;hello&quot;, &quot;b&quot;: [-100, 200.0, 300]}&#39;, &#39;a&#39;)
+</code></pre>
+<pre><code class="plain%20text">┌─JSONExtractString(&#39;{&quot;a&quot;: &quot;hello&quot;, &quot;b&quot;: [-100, 200.0, 300]}&#39;, &#39;a&#39;)─┐
+│ hello                                                             │
+└───────────────────────────────────────────────────────────────────┘
+</code></pre>
+<pre><code class="sql">SELECT JSONExtractString(&#39;{&quot;abc&quot;:&quot;\\u263a&quot;}&#39;, &#39;abc&#39;)
+</code></pre>
+<pre><code class="plain%20text">┌─JSONExtractString(&#39;{&quot;abc&quot;:&quot;\\u263a&quot;}&#39;, &#39;abc&#39;)─┐
+│ ☺                                             │
+└───────────────────────────────────────────────┘
+</code></pre>
+<pre><code class="sql">SELECT JSONExtractString(&#39;{&quot;abc&quot;:&quot;\\u263&quot;}&#39;, &#39;abc&#39;)
+</code></pre>
+<pre><code class="plain%20text">┌─JSONExtractString(&#39;{&quot;abc&quot;:&quot;\\u263&quot;}&#39;, &#39;abc&#39;)─┐
+│                                              │
+└──────────────────────────────────────────────┘
+</code></pre>
+<pre><code class="sql">SELECT JSONExtractString(&#39;{&quot;abc&quot;:&quot;hello}&#39;, &#39;abc&#39;)
+</code></pre>
+<pre><code class="plain%20text">┌─JSONExtractString(&#39;{&quot;abc&quot;:&quot;hello}&#39;, &#39;abc&#39;)─┐
+│                                            │
+└────────────────────────────────────────────┘
+</code></pre>
+<h2 id="JSONExtractUInt"><a href="#JSONExtractUInt" class="headerlink" title="JSONExtractUInt"></a>JSONExtractUInt</h2><p>Parses a JSON and extract a value. These functions are similar to <code>visitParam</code> functions.<br>If the value does not exist or has a wrong type, <code>0</code> will be returned.</p>
+<p><strong>Syntax</strong></p>
+<pre><code class="sql">JSONExtractUInt(json\[, indices_or_keys\]…) 
+</code></pre>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><code>json</code> – json string. </li>
+<li><code>indices_or_keys</code> - is a list of zero or more arguments each of them can be either string or integer.<ul>
+<li>String &#x3D; access object member by key. </li>
+<li>Positive integer &#x3D; access the n-th member&#x2F;key from the beginning. </li>
+<li>Negative integer &#x3D; access the n-th member&#x2F;key from the end. </li>
+<li>Minimum index of the element is 1. Thus the element 0 does not exist.</li>
+<li>You may use integers to access both JSON arrays and JSON objects.</li>
+</ul>
+</li>
+</ul>
+<p><strong>Returned value</strong></p>
+<ul>
+<li>UInt64.</li>
+</ul>
+<p><strong>Example</strong></p>
+<pre><code class="sql">SELECT JSONExtractUInt(&#39;{&quot;a&quot;: &quot;hello&quot;, &quot;b&quot;: [-100, 200.0, 300]}&#39;, &#39;b&#39;, -1)
+</code></pre>
+<pre><code class="plain%20text">┌─JSONExtractUInt(&#39;{&quot;a&quot;: &quot;hello&quot;, &quot;b&quot;: [-100, 200.0, 300]}&#39;, &#39;b&#39;, -1)─┐
+│ 300                                                                 │
+└─────────────────────────────────────────────────────────────────────┘
+</code></pre>
+<h2 id="JSONHas"><a href="#JSONHas" class="headerlink" title="JSONHas"></a>JSONHas</h2><p>If the value exists in the JSON document, <code>1</code> will be returned.<br>If the value does not exist, <code>0</code> will be returned.</p>
+<p><strong>Syntax</strong></p>
+<pre><code class="sql">JSONHas(json[, indices_or_keys]…)
+</code></pre>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><code>json</code> – json string. </li>
+<li><code>indices_or_keys</code> - is a list of zero or more arguments each of them can be either string or integer.<ul>
+<li>String &#x3D; access object member by key. </li>
+<li>Positive integer &#x3D; access the n-th member&#x2F;key from the beginning. </li>
+<li>Negative integer &#x3D; access the n-th member&#x2F;key from the end. </li>
+<li>Minimum index of the element is 1. Thus the element 0 does not exist.</li>
+<li>You may use integers to access both JSON arrays and JSON objects.</li>
+</ul>
+</li>
+</ul>
+<p><strong>Returned value</strong></p>
+<ul>
+<li>UInt8.</li>
+</ul>
+<p><strong>Example</strong></p>
+<pre><code class="sql">SELECT JSONExtractUInt(&#39;{&quot;a&quot;: &quot;hello&quot;, &quot;b&quot;: [-100, 200.0, 300]}&#39;, &#39;b&#39;, -1)
+</code></pre>
+<pre><code class="plain%20text">┌─JSONHas(&#39;{&quot;a&quot;: &quot;hello&quot;, &quot;b&quot;: [-100, 200.0, 300]}&#39;, &#39;b&#39;)─┐
+│ 1                                                       │
+└─────────────────────────────────────────────────────────┘
+</code></pre>
+<pre><code class="sql">SELECT JSONHas(&#39;{&quot;a&quot;: &quot;hello&quot;, &quot;b&quot;: [-100, 200.0, 300]}&#39;, &#39;b&#39;, 4)
+</code></pre>
+<pre><code class="plain%20text">┌─JSONHas(&#39;{&quot;a&quot;: &quot;hello&quot;, &quot;b&quot;: [-100, 200.0, 300]}&#39;, &#39;b&#39;, 4)─┐
+│ 0                                                          │
+└────────────────────────────────────────────────────────────┘
+</code></pre>
+<h2 id="JSONLength"><a href="#JSONLength" class="headerlink" title="JSONLength"></a>JSONLength</h2><p>Return the length of a JSON array or a JSON object.</p>
+<p>If the value does not exist or has a wrong type, <code>0</code> will be returned.</p>
+<p><strong>Syntax</strong></p>
+<pre><code class="sql">JSONLength(json\[, indices_or_keys\]…)
+</code></pre>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><code>json</code> – json string. </li>
+<li><code>indices_or_keys</code> - is a list of zero or more arguments each of them can be either string or integer.<ul>
+<li>String &#x3D; access object member by key. </li>
+<li>Positive integer &#x3D; access the n-th member&#x2F;key from the beginning. </li>
+<li>Negative integer &#x3D; access the n-th member&#x2F;key from the end. </li>
+<li>Minimum index of the element is 1. Thus the element 0 does not exist.</li>
+<li>You may use integers to access both JSON arrays and JSON objects.</li>
+</ul>
+</li>
+</ul>
+<p><strong>Returned value</strong></p>
+<ul>
+<li>UInt64.</li>
+</ul>
+<p><strong>Example</strong></p>
+<pre><code class="sql">SELECT JSONLength(&#39;{&quot;a&quot;: &quot;hello&quot;, &quot;b&quot;: [-100, 200.0, 300]}&#39;, &#39;b&#39;)
+</code></pre>
+<pre><code class="plain%20text">┌─JSONLength(&#39;{&quot;a&quot;: &quot;hello&quot;, &quot;b&quot;: [-100, 200.0, 300]}&#39;, &#39;b&#39;)─┐
+│ 3                                                          │
+└────────────────────────────────────────────────────────────┘
+</code></pre>
+<pre><code class="sql">SELECT JSONLength(&#39;{&quot;a&quot;: &quot;hello&quot;, &quot;b&quot;: [-100, 200.0, 300]}&#39;)
+</code></pre>
+<pre><code class="plain%20text">┌─JSONLength(&#39;{&quot;a&quot;: &quot;hello&quot;, &quot;b&quot;: [-100, 200.0, 300]}&#39;)─┐
+│ 2                                                     │
+└───────────────────────────────────────────────────────┘
+</code></pre>
+<h2 id="JSONType"><a href="#JSONType" class="headerlink" title="JSONType"></a>JSONType</h2><p>Return the type of a JSON value.</p>
+<p>If the value does not exist, <code>Null</code> will be returned.</p>
+<p><strong>Syntax</strong></p>
+<pre><code class="sql">JSONType(json\[, indices_or_keys\]…)
+</code></pre>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><code>json</code> – json string. </li>
+<li><code>indices_or_keys</code> - is a list of zero or more arguments each of them can be either string or integer.<ul>
+<li>String &#x3D; access object member by key. </li>
+<li>Positive integer &#x3D; access the n-th member&#x2F;key from the beginning. </li>
+<li>Negative integer &#x3D; access the n-th member&#x2F;key from the end. </li>
+<li>Minimum index of the element is 1. Thus the element 0 does not exist.</li>
+<li>You may use integers to access both JSON arrays and JSON objects.</li>
+</ul>
+</li>
+</ul>
+<p><strong>Returned value</strong></p>
+<ul>
+<li>ByteHouse data type.</li>
+</ul>
+<p><strong>Example</strong></p>
+<pre><code class="sql">SELECT JSONType(&#39;{&quot;a&quot;: &quot;hello&quot;, &quot;b&quot;: [-100, 200.0, 300]}&#39;)
+</code></pre>
+<pre><code class="plain%20text">┌─JSONType(&#39;{&quot;a&quot;: &quot;hello&quot;, &quot;b&quot;: [-100, 200.0, 300]}&#39;)─┐
+│ Object                                              │
+└─────────────────────────────────────────────────────┘
+</code></pre>
+<pre><code class="sql">SELECT JSONType(&#39;{&quot;a&quot;: &quot;hello&quot;, &quot;b&quot;: [-100, 200.0, 300]}&#39;, &#39;a&#39;)
+</code></pre>
+<pre><code class="plain%20text">┌─JSONType(&#39;{&quot;a&quot;: &quot;hello&quot;, &quot;b&quot;: [-100, 200.0, 300]}&#39;, &#39;a&#39;)─┐
+│ String                                                   │
+└──────────────────────────────────────────────────────────┘
+</code></pre>
+<pre><code class="sql">SELECT JSONType(&#39;{&quot;a&quot;: &quot;hello&quot;, &quot;b&quot;: [-100, 200.0, 300]}&#39;, &#39;b&#39;)
+</code></pre>
+<pre><code class="plain%20text">┌─JSONType(&#39;{&quot;a&quot;: &quot;hello&quot;, &quot;b&quot;: [-100, 200.0, 300]}&#39;, &#39;b&#39;)─┐
+│ Array                                                    │
+└──────────────────────────────────────────────────────────┘
+</code></pre>
+<h2 id="visitParamExtractBool"><a href="#visitParamExtractBool" class="headerlink" title="visitParamExtractBool"></a>visitParamExtractBool</h2><p>Parses a true&#x2F;false value. The result is UInt8.</p>
+<p><strong>Syntax</strong></p>
+<pre><code class="sql">visitParamExtractBool(params, name)
+</code></pre>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><code>params</code> – json string. </li>
+<li><code>name</code> - json key</li>
+</ul>
+<p><strong>Returned value</strong></p>
+<ul>
+<li>UInt8.</li>
+</ul>
+<p><strong>Example</strong></p>
+<pre><code class="sql">SELECT visitParamExtractBool(&#39;{&quot;abc&quot;:true}&#39;, &#39;abc&#39;)
+</code></pre>
+<pre><code class="plain%20text">┌─visitParamExtractBool(&#39;{&quot;abc&quot;:true}&#39;, &#39;abc&#39;)─┐
+│ 1                                            │
+└──────────────────────────────────────────────┘
+</code></pre>
+<pre><code class="sql">SELECT visitParamExtractBool(&#39;{&quot;abc&quot;:false}&#39;, &#39;abc&#39;)
+</code></pre>
+<pre><code class="plain%20text">┌─visitParamExtractBool(&#39;{&quot;abc&quot;:false}&#39;, &#39;abc&#39;)─┐
+│ 0                                             │
+└───────────────────────────────────────────────┘
+</code></pre>
+<h2 id="visitParamExtractFloat"><a href="#visitParamExtractFloat" class="headerlink" title="visitParamExtractFloat"></a>visitParamExtractFloat</h2><p>Parses a float value. The result is Float64.</p>
+<p><strong>Syntax</strong></p>
+<pre><code class="sql">visitParamExtractFloat(params, name)
+</code></pre>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><code>params</code> – json string. </li>
+<li><code>name</code> - json key</li>
+</ul>
+<p><strong>Returned value</strong></p>
+<ul>
+<li>UInt8.</li>
+</ul>
+<p><strong>Example</strong></p>
+<pre><code class="sql">SELECT visitParamExtractFloat(&#39;{&quot;abc&quot;:123.0}&#39;, &#39;abc&#39;)
+</code></pre>
+<pre><code class="plain%20text">┌─visitParamExtractFloat(&#39;{&quot;abc&quot;:123.1}&#39;, &#39;abc&#39;)─┐
+│ 123.1                                          │
+└────────────────────────────────────────────────┘
+</code></pre>
+<h2 id="visitParamExtractInt"><a href="#visitParamExtractInt" class="headerlink" title="visitParamExtractInt"></a>visitParamExtractInt</h2><p>Parses a Int value. The result is Int64.</p>
+<p><strong>Syntax</strong></p>
+<pre><code class="sql">visitParamExtractInt(params, name)
+</code></pre>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><code>params</code> – json string. </li>
+<li><code>name</code> - json key</li>
+</ul>
+<p><strong>Returned value</strong></p>
+<ul>
+<li>Int64.</li>
+</ul>
+<p><strong>Example</strong></p>
+<pre><code class="sql">SELECT visitParamExtractInt(&#39;{&quot;abc&quot;:123}&#39;, &#39;abc&#39;)
+</code></pre>
+<pre><code class="plain%20text">┌─visitParamExtractInt(&#39;{&quot;abc&quot;:123}&#39;, &#39;abc&#39;)─┐
+│ 123                                        │
+└────────────────────────────────────────────┘
+</code></pre>
+<h2 id="visitParamExtractRaw"><a href="#visitParamExtractRaw" class="headerlink" title="visitParamExtractRaw"></a>visitParamExtractRaw</h2><p>Returns the value of a field, including separators.</p>
+<p><strong>Syntax</strong></p>
+<pre><code class="sql">visitParamExtractRaw(params, name)
+</code></pre>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><code>params</code> – json string. </li>
+<li><code>name</code> - json key</li>
+</ul>
+<p><strong>Returned value</strong></p>
+<ul>
+<li>String.</li>
+</ul>
+<p><strong>Example</strong></p>
+<pre><code class="sql">SELECT visitParamExtractRaw(&#39;{&quot;abc&quot;:&quot;\\n\\u0000&quot;}&#39;, &#39;abc&#39;)
+</code></pre>
+<pre><code class="plain%20text">┌─visitParamExtractRaw(&#39;{&quot;abc&quot;:&quot;\\n\\u0000&quot;}&#39;, &#39;abc&#39;)─┐
+│ &quot;\n\u0000&quot;                                          │
+└─────────────────────────────────────────────────────┘
+</code></pre>
+<pre><code class="sql">SELECT visitParamExtractRaw(&#39;{&quot;abc&quot;:{&quot;def&quot;:[1,2,3]}}&#39;, &#39;abc&#39;)
+</code></pre>
+<pre><code class="plain%20text">┌─visitParamExtractRaw(&#39;{&quot;abc&quot;:{&quot;def&quot;:[1,2,3]}}&#39;, &#39;abc&#39;)─┐
+│ {&quot;def&quot;:[1,2,3]}                                        │
+└────────────────────────────────────────────────────────┘
+</code></pre>
+<h2 id="visitParamExtractString"><a href="#visitParamExtractString" class="headerlink" title="visitParamExtractString"></a>visitParamExtractString</h2><p>Parses the string in double quotes. The value is unescaped. If unescaping failed, it returns an empty string.</p>
+<p><strong>Syntax</strong></p>
+<pre><code class="sql">visitParamExtractString(params, name)
+</code></pre>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><code>params</code> – json string. </li>
+<li><code>name</code> - json key</li>
+</ul>
+<p><strong>Returned value</strong></p>
+<ul>
+<li>String.</li>
+</ul>
+<p><strong>Example</strong></p>
+<!-- TODO: Gateway Client formatting issue
+
+```sql
+SELECT visitParamExtractString('{"abc":"\\n\\u0000"}', 'abc')
+```
+
+```plain%20text
+┌─visitParamExtractRaw('{"abc":"\\n\\u0000"}', 'abc')─┐
+│ "\n\u0000"                                          │
+└─────────────────────────────────────────────────────┘
+``` -->
+
+<pre><code class="sql">SELECT visitParamExtractString(&#39;{&quot;abc&quot;:&quot;\\u263a&quot;}&#39;, &#39;abc&#39;)
+</code></pre>
+<pre><code class="plain%20text">┌─visitParamExtractString(&#39;{&quot;abc&quot;:&quot;\\u263a&quot;}&#39;, &#39;abc&#39;)─┐
+│ ☺                                                   │
+└─────────────────────────────────────────────────────┘
+</code></pre>
+<pre><code class="sql">SELECT visitParamExtractString(&#39;{&quot;abc&quot;:&quot;\\u263&quot;}&#39;, &#39;abc&#39;)
+</code></pre>
+<pre><code class="plain%20text">┌─visitParamExtractString(&#39;{&quot;abc&quot;:&quot;\\u263&quot;}&#39;, &#39;abc&#39;)─┐
+│                                                    │
+└────────────────────────────────────────────────────┘
+</code></pre>
+<pre><code class="sql">SELECT visitParamExtractString(&#39;{&quot;abc&quot;:&quot;hello}&#39;, &#39;abc&#39;)
+</code></pre>
+<pre><code class="plain%20text">┌─visitParamExtractString(&#39;{&quot;abc&quot;:&quot;hello}&#39;, &#39;abc&#39;)─┐
+│                                                  │
+└──────────────────────────────────────────────────┘
+</code></pre>
+<p>There is currently no support for code points in the format <code>\uXXXX\uYYYY</code> that are not from the basic multilingual plane (they are converted to CESU-8 instead of UTF-8).</p>
+<p>The following functions are based on <a href="https://github.com/lemire/simdjson">simdjson</a> designed for more complex JSON parsing requirements. The assumption 2 mentioned above still applies.</p>
+<h2 id="visitParamExtractUInt"><a href="#visitParamExtractUInt" class="headerlink" title="visitParamExtractUInt"></a>visitParamExtractUInt</h2><p>Parses UInt64 from the value of the field named <code>name</code> . If this is a string field, it tries to parse a number from the beginning of the string. If the field does not exist, or it exists but does not contain a number, it returns 0.</p>
+<p><strong>Syntax</strong></p>
+<pre><code class="sql">visitParamExtractUInt(params, name)
+</code></pre>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><code>params</code> – json string. </li>
+<li><code>name</code> - json key</li>
+</ul>
+<p><strong>Returned value</strong></p>
+<ul>
+<li>UInt64.</li>
+</ul>
+<p><strong>Example</strong></p>
+<pre><code class="sql">SELECT visitParamExtractUInt(&#39;{&quot;abc&quot;:2}&#39;, &#39;abc&#39;)
+</code></pre>
+<pre><code class="plain%20text">┌─visitParamExtractUInt(&#39;{&quot;abc&quot;:2}&#39;, &#39;abc&#39;)─┐
+│ 2                                         │
+└───────────────────────────────────────────┘
+</code></pre>
+<h2 id="visitParamHas"><a href="#visitParamHas" class="headerlink" title="visitParamHas"></a>visitParamHas</h2><p>Checks whether there is a field with the <code>name</code> name.</p>
+<p><strong>Syntax</strong></p>
+<pre><code class="sql">visitParamHas(params, name)
+</code></pre>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><code>params</code> – json string. </li>
+<li><code>name</code> - json key</li>
+</ul>
+<p><strong>Returned value</strong></p>
+<ul>
+<li>UInt8.</li>
+</ul>
+<p><strong>Example</strong></p>
+<pre><code class="sql">SELECT visitParamHas(&#39;{&quot;abc&quot;:&quot;def&quot;}&#39;, &#39;abc&#39;)
+</code></pre>
+<pre><code class="plain%20text">┌─visitParamHas(&#39;{&quot;abc&quot;:&quot;def&quot;}&#39;, &#39;abc&#39;)─┐
+│ 1                                     │
+└───────────────────────────────────────┘
+</code></pre>

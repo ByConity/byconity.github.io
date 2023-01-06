@@ -1,0 +1,66 @@
+<hr>
+<h2 id="title-“Random”slug-“random”hidden-falsecreatedAt-“2021-07-29T12-26-05-181Z”updatedAt-“2021-09-23T06-37-41-756Z”categories-Docs-SQL-Syntax"><a href="#title-“Random”slug-“random”hidden-falsecreatedAt-“2021-07-29T12-26-05-181Z”updatedAt-“2021-09-23T06-37-41-756Z”categories-Docs-SQL-Syntax" class="headerlink" title="title: “Random”slug: “random”hidden: falsecreatedAt: “2021-07-29T12:26:05.181Z”updatedAt: “2021-09-23T06:37:41.756Z”categories:- Docs- SQL_Syntax"></a>title: “Random”<br>slug: “random”<br>hidden: false<br>createdAt: “2021-07-29T12:26:05.181Z”<br>updatedAt: “2021-09-23T06:37:41.756Z”<br>categories:<br>- Docs<br>- SQL_Syntax</h2><blockquote>
+<p>Notice:<br>Some of the examples below are referenced from <a href="https://clickhouse.com/docs/en/sql-reference/functions/">ClickHouse Documentation</a> but have been adapted and modified to work in ByteHouse.</p>
+</blockquote>
+<h2 id="rand"><a href="#rand" class="headerlink" title="rand"></a>rand</h2><p>Returns a pseudo-random UInt32 number, evenly distributed among all UInt32-type numbers.<br>Uses a linear congruential generator.</p>
+<p><strong>Syntax</strong></p>
+<pre><code class="sql">rand([x])
+</code></pre>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><code>x</code> — Expression resulting in any of the supported data types. The resulting value is discarded, but the expression itself if used for bypassing common subexpression elimination if the function is called multiple times in one query. Optional parameter.</li>
+</ul>
+<p><strong>Returned values</strong></p>
+<ul>
+<li>a pseudo-random UInt32 number. Type: UInt32</li>
+</ul>
+<p><strong>Example</strong></p>
+<pre><code class="sql">SELECT rand(), rand(number) FROM numbers(2);
+</code></pre>
+<pre><code class="plain%20text">┌─rand()─────┬─rand(number)─┐
+│ 3882830473 │ 2236253349   │
+│ 4122795699 │ 3720179576   │
+└────────────┴──────────────┘
+</code></pre>
+<h2 id="rand64"><a href="#rand64" class="headerlink" title="rand64"></a>rand64</h2><p>Returns a pseudo-random UInt64 number, evenly distributed among all UInt64-type numbers.<br>Uses a linear congruential generator.</p>
+<p><strong>Syntax</strong></p>
+<pre><code class="sql">rand64([x])
+</code></pre>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><code>x</code> — Expression resulting in any of the supported data types. The resulting value is discarded, but the expression itself if used for bypassing common subexpression elimination if the function is called multiple times in one query. Optional parameter.</li>
+</ul>
+<p><strong>Returned values</strong></p>
+<ul>
+<li>a pseudo-random UInt64 number. Type: UInt64</li>
+</ul>
+<p><strong>Example</strong></p>
+<pre><code class="sql">SELECT rand64(), rand64(number) FROM numbers(2);
+</code></pre>
+<pre><code class="plain%20text">┌─rand64()────────────┬─rand64(number)───────┐
+│ 4216084906413806748 │ 17404981640646529534 │
+│ 874879808660605772  │ 941470430861381566   │
+└─────────────────────┴──────────────────────┘
+</code></pre>
+<h2 id="randConstant"><a href="#randConstant" class="headerlink" title="randConstant"></a>randConstant</h2><p>Produces a constant column with a random value.</p>
+<p><strong>Syntax</strong></p>
+<pre><code class="sql">randConstant([x])
+</code></pre>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><code>x</code> — Expression resulting in any of the supported data types. The resulting value is discarded, but the expression itself if used for bypassing common subexpression elimination if the function is called multiple times in one query. Optional parameter.</li>
+</ul>
+<p><strong>Returned value</strong></p>
+<ul>
+<li>Pseudo-random number. Type: UInt32.</li>
+</ul>
+<p><strong>Example</strong></p>
+<pre><code class="sql">SELECT rand(), rand(1), rand(number), randConstant(), randConstant(1), randConstant(number)
+FROM numbers(3)
+</code></pre>
+<pre><code class="plain%20text">┌─rand()─────┬─rand(1)────┬─rand(number)─┬─randConstant()─┬─randConstant(1)─┬─randConstant(number)─┐
+│ 1617218167 │ 3030783952 │ 3660442590   │ 3335999329     │ 1508515848      │ 1880875990           │
+│ 432450540  │ 2987789840 │ 653572307    │ 3335999329     │ 1508515848      │ 1880875990           │
+│ 3698169875 │ 79826010   │ 458167070    │ 3335999329     │ 1508515848      │ 1880875990           │
+└────────────┴────────────┴──────────────┴────────────────┴─────────────────┴──────────────────────┘
+</code></pre>

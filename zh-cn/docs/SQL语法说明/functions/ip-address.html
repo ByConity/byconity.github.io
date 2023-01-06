@@ -1,0 +1,214 @@
+<hr>
+<h2 id="title-“IP-Address”slug-“ip-address”hidden-falsecreatedAt-“2021-07-29T12-06-52-617Z”updatedAt-“2021-09-23T04-04-27-184Z”categories-Docs-SQL-Syntax"><a href="#title-“IP-Address”slug-“ip-address”hidden-falsecreatedAt-“2021-07-29T12-06-52-617Z”updatedAt-“2021-09-23T04-04-27-184Z”categories-Docs-SQL-Syntax" class="headerlink" title="title: “IP Address”slug: “ip-address”hidden: falsecreatedAt: “2021-07-29T12:06:52.617Z”updatedAt: “2021-09-23T04:04:27.184Z”categories:- Docs- SQL_Syntax"></a>title: “IP Address”<br>slug: “ip-address”<br>hidden: false<br>createdAt: “2021-07-29T12:06:52.617Z”<br>updatedAt: “2021-09-23T04:04:27.184Z”<br>categories:<br>- Docs<br>- SQL_Syntax</h2><blockquote>
+<p>Notice:<br>Some of the examples below are referenced from <a href="https://clickhouse.com/docs/en/sql-reference/functions/">ClickHouse Documentation</a> but have been adapted and modified to work in ByteHouse.</p>
+</blockquote>
+<h2 id="IPv4NumToString"><a href="#IPv4NumToString" class="headerlink" title="IPv4NumToString"></a>IPv4NumToString</h2><p>Takes a UInt32 number. Interprets it as an IPv4 address in big endian. Returns a string containing the corresponding IPv4 address in the format A.B.C.d (dot-separated numbers in decimal form).</p>
+<p><strong>Syntax</strong></p>
+<pre><code class="sql">IPv4NumToString(num)
+</code></pre>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><code>num</code> – a UInt32 number.</li>
+</ul>
+<p><strong>Returned value</strong></p>
+<ul>
+<li>A string in ipv4 representation.</li>
+</ul>
+<p><strong>Examples</strong></p>
+<pre><code class="sql">SELECT toIPv4(&#39;116.106.34.242&#39;) as ipv4, toTypeName(ipv4), IPv4NumToString(ipv4) as ipv4_string, toTypeName(ipv4_string)
+</code></pre>
+<pre><code class="plain%20text">┌─ipv4───────────┬─toTypeName(toIPv4(&#39;116.106.34.242&#39;))─┬─ipv4_string────┬─toTypeName(IPv4NumToString(toIPv4(&#39;116.106.34.242&#39;)))─┐
+│ 242.34.106.116 │ IPv4                                 │ 116.106.34.242 │ String                                                │
+└────────────────┴──────────────────────────────────────┴────────────────┴───────────────────────────────────────────────────────┘
+</code></pre>
+<h2 id="IPv4NumToStringClassC"><a href="#IPv4NumToStringClassC" class="headerlink" title="IPv4NumToStringClassC"></a>IPv4NumToStringClassC</h2><p>Similar to <code>IPv4NumToString</code>, but using xxx instead of the last octet.</p>
+<p><strong>Syntax</strong></p>
+<pre><code class="sql">IPv4NumToStringClassC(num)
+</code></pre>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><code>num</code> – a UInt32 number.</li>
+</ul>
+<p><strong>Returned value</strong></p>
+<ul>
+<li>An string in ipv4 representation, but using xxx instead of the last octet.</li>
+</ul>
+<p><strong>Examples</strong></p>
+<pre><code class="sql">SELECT toIPv4(&#39;116.106.34.242&#39;) as ipv4, toTypeName(ipv4), IPv4NumToStringClassC(ipv4) as ipv4_string, toTypeName(ipv4_string)
+</code></pre>
+<pre><code class="plain%20text">┌─ipv4───────────┬─toTypeName(toIPv4(&#39;116.106.34.242&#39;))─┬─ipv4_string────┬─toTypeName(IPv4NumToStringClassC(toIPv4(&#39;116.106.34.242&#39;)))─┐
+│ 242.34.106.116 │ IPv4                                 │ 116.106.34.xxx │ String                                                      │
+└────────────────┴──────────────────────────────────────┴────────────────┴─────────────────────────────────────────────────────────────┘
+</code></pre>
+<h2 id="IPv4StringToNum"><a href="#IPv4StringToNum" class="headerlink" title="IPv4StringToNum"></a>IPv4StringToNum</h2><p>The reverse function of IPv4NumToString. If the IPv4 address has an invalid format, it returns 0.</p>
+<p><strong>Syntax</strong></p>
+<pre><code class="sql">IPv4StringToNum(s)
+</code></pre>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><code>s</code> – ipv4 in string representation.</li>
+</ul>
+<p><strong>Returned value</strong></p>
+<ul>
+<li>UInt32.</li>
+</ul>
+<p><strong>Examples</strong></p>
+<pre><code class="sql">SELECT IPv4StringToNum(&#39;116.106.34.242&#39;) as ipv4, toTypeName(ipv4), IPv4NumToString(ipv4) as ipv4_string, toTypeName(ipv4_string)
+</code></pre>
+<pre><code class="plain%20text">┌─ipv4───────┬─toTypeName(IPv4StringToNum(&#39;116.106.34.242&#39;))─┬─ipv4_string────┬─toTypeName(IPv4NumToString(IPv4StringToNum(&#39;116.106.34.242&#39;)))─┐
+│ 1953112818 │ UInt32                                        │ 116.106.34.242 │ String                                                         │
+└────────────┴───────────────────────────────────────────────┴────────────────┴────────────────────────────────────────────────────────────────┘
+</code></pre>
+<h2 id="IPv4ToIPv6"><a href="#IPv4ToIPv6" class="headerlink" title="IPv4ToIPv6"></a>IPv4ToIPv6</h2><p>Takes a <code>UInt32</code> number. Interprets it as an IPv4 address in <a href="https://en.wikipedia.org/wiki/Endianness">big endian</a> . Returns a <code>FixedString(16)</code> value containing the IPv6 address in binary format.</p>
+<p><strong>Syntax</strong></p>
+<pre><code class="sql">IPv4ToIPv6(x)
+</code></pre>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><code>x</code> – a <code>UInt32</code> number</li>
+</ul>
+<p><strong>Returned value</strong></p>
+<ul>
+<li>IPv6 address in binary format.FixedString(16)</li>
+</ul>
+<p><strong>Examples</strong></p>
+<pre><code class="sql">SELECT IPv4StringToNum(&#39;192.168.0.1&#39;) as ipv4, IPv6NumToString(IPv4ToIPv6(ipv4)) as ipv6_string
+</code></pre>
+<pre><code class="plain%20text">┌─ipv4───────┬─ipv6_string────────┐
+│ 3232235521 │ ::ffff:192.168.0.1 │
+└────────────┴────────────────────┘
+</code></pre>
+<h2 id="IPv6NumToString"><a href="#IPv6NumToString" class="headerlink" title="IPv6NumToString"></a>IPv6NumToString</h2><p>Accepts a FixedString(16) value containing the IPv6 address in binary format. Returns a string containing this address in text format.</p>
+<p>IPv6-mapped IPv4 addresses are output in the format ::ffff:111.222.33.44.</p>
+<p><strong>Syntax</strong></p>
+<pre><code class="sql">IPv6NumToString(x)
+</code></pre>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><code>x</code> – FixedString(16) value containing the IPv6 address in binary format</li>
+</ul>
+<p><strong>Returned value</strong></p>
+<ul>
+<li>A string in ipv6 representation.</li>
+</ul>
+<p><strong>Examples</strong></p>
+<pre><code class="sql">SELECT IPv6NumToString(toFixedString(unhex(&#39;2A0206B8000000000000000000000011&#39;), 16)) AS addr;
+</code></pre>
+<pre><code class="plain%20text">┌─addr─────────┐
+│ 2a02:6b8::11 │
+└──────────────┘
+</code></pre>
+<h2 id="IPv6StringToNum"><a href="#IPv6StringToNum" class="headerlink" title="IPv6StringToNum"></a>IPv6StringToNum</h2><p>The reverse function of <code>IPv6NumToString</code>. If the IPv6 address has an invalid format, it returns a string of null bytes.<br>If the input string contains a valid IPv4 address, returns its IPv6 equivalent.<br>HEX can be uppercase or lowercase.</p>
+<p><strong>Syntax</strong></p>
+<pre><code class="sql">IPv6StringToNum(string)
+</code></pre>
+<p><strong>Argument</strong> </p>
+<ul>
+<li><code>string</code> — IP address. String.</li>
+</ul>
+<p><strong>Returned value</strong></p>
+<ul>
+<li>IPv6 address in binary format. Type: FixedString(16).</li>
+</ul>
+<p><strong>Example</strong></p>
+<pre><code class="sql">SELECT addr, cutIPv6(IPv6StringToNum(addr), 0, 0) FROM (SELECT [&#39;notaddress&#39;, &#39;127.0.0.1&#39;, &#39;1111::ffff&#39;] AS addr) ARRAY JOIN addr;
+</code></pre>
+<pre><code class="plain%20text">┌─addr───────┬─cutIPv6(IPv6StringToNum(addr), 0, 0)─┐
+│ notaddress │ ::                                   │
+│ 127.0.0.1  │ ::                                   │
+│ 1111::ffff │ 1111::ffff                           │
+└────────────┴──────────────────────────────────────┘
+</code></pre>
+<h2 id="cutIPv6"><a href="#cutIPv6" class="headerlink" title="cutIPv6"></a>cutIPv6</h2><p>Accepts a FixedString(16) value containing the IPv6 address in binary format. Returns a string containing the address of the specified number of bytes removed in text format.</p>
+<p><strong>Syntax</strong></p>
+<pre><code class="sql">cutIPv6(x, bytesToCutForIPv6, bytesToCutForIPv4)
+</code></pre>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><code>x</code> – a FixedString(16) value containing the IPv6 address in binary format</li>
+<li><code>bytesToCutForIPv6</code> - number of bytes to cut for ipv6 represenration</li>
+<li><code>bytesToCutForIPv4</code> - number of bytes to cut for ipv4 represenration</li>
+</ul>
+<p><strong>Returned value</strong><br>A <code>Uint64</code> data type hash value.</p>
+<p>Type: <code>UInt64</code></p>
+<p><strong>Examples</strong></p>
+<pre><code class="sql">WITH
+    IPv6StringToNum(&#39;2001:0DB8:AC10:FE01:FEED:BABE:CAFE:F00D&#39;) AS ipv6,
+    IPv4ToIPv6(IPv4StringToNum(&#39;192.168.0.1&#39;)) AS ipv4
+SELECT
+    cutIPv6(ipv6, 2, 0),
+    cutIPv6(ipv4, 0, 2)
+</code></pre>
+<pre><code class="plain%20text">┌─cutIPv6(ipv6, 2, 0)─────────────────┬─cutIPv6(ipv4, 0, 2)─┐
+│ 2001:db8:ac10:fe01:feed:babe:cafe:0 │ ::ffff:192.168.0.0  │
+└─────────────────────────────────────┴─────────────────────┘
+</code></pre>
+<h2 id="toIPv4"><a href="#toIPv4" class="headerlink" title="toIPv4"></a>toIPv4</h2><p>An alias to <code>IPv4StringToNum()</code> that takes a string form of IPv4 address and returns value of IPv4 type, which is binary equal to value returned by <code>IPv4StringToNum()</code> .</p>
+<p><strong>Syntax</strong></p>
+<pre><code class="sql">toIPv4(string)
+</code></pre>
+<p><strong>Argument</strong> </p>
+<ul>
+<li><code>string</code> — IP address. String.</li>
+</ul>
+<p><strong>Returned value</strong></p>
+<ul>
+<li>IPv4 type</li>
+</ul>
+<p><strong>Example</strong></p>
+<pre><code class="sql">WITH
+    &#39;171.225.130.45&#39; as IPv4_string
+SELECT
+    toTypeName(IPv4StringToNum(IPv4_string)),
+    toTypeName(toIPv4(IPv4_string))
+</code></pre>
+<pre><code class="plain%20text">┌─toTypeName(IPv4StringToNum(IPv4_string))─┬─toTypeName(toIPv4(IPv4_string))─┐
+│ UInt32                                   │ IPv4                            │
+└──────────────────────────────────────────┴─────────────────────────────────┘
+</code></pre>
+<pre><code class="sql">WITH
+    &#39;171.225.130.45&#39; as IPv4_string
+SELECT
+    hex(IPv4StringToNum(IPv4_string)),
+    hex(toIPv4(IPv4_string))
+</code></pre>
+<pre><code class="plain%20text">┌─hex(IPv4StringToNum(IPv4_string))─┬─hex(toIPv4(IPv4_string))─┐
+│ ABE1822D                          │ ABE1822D                 │
+└───────────────────────────────────┴──────────────────────────┘
+</code></pre>
+<h2 id="toIPv6"><a href="#toIPv6" class="headerlink" title="toIPv6"></a>toIPv6</h2><p>Converts a string form of IPv6 address to IPv6 type. If the IPv6 address has an invalid format, returns an empty value.<br>Similar to IPv6StringToNum function, which converts IPv6 address to binary format.</p>
+<!-- TODO: CNCH does not support convert IPv4 to IPv6 so far
+If the input string contains a valid IPv4 address, then the IPv6 equivalent of the IPv4 address is returned. -->
+
+<p><strong>Syntax</strong></p>
+<pre><code class="sql">toIPv6(string)
+</code></pre>
+<p><strong>Argument</strong></p>
+<ul>
+<li><code>string</code> — IP address. String</li>
+</ul>
+<p><strong>Returned value</strong></p>
+<ul>
+<li>IP address. Type: IPv6.</li>
+</ul>
+<p><strong>Examples</strong></p>
+<pre><code class="sql">WITH &#39;2001:438:ffff::407d:1bc1&#39; AS IPv6_string
+SELECT
+    hex(IPv6StringToNum(IPv6_string)),
+    hex(toIPv6(IPv6_string));
+</code></pre>
+<pre><code class="plain%20text">┌─hex(IPv6StringToNum(IPv6_string))─┬─hex(toIPv6(IPv6_string))─────────┐
+│ 20010438FFFF000000000000407D1BC1  │ 20010438FFFF000000000000407D1BC1 │
+└───────────────────────────────────┴──────────────────────────────────┘
+</code></pre>
+<!-- TODO: ByteHouse not work as expected
+
+```sql
+SELECT toIPv6('127.0.0.1');
+```
+
+```plain%20text
+┌─toIPv6('127.0.0.1')─┐
+│ ::ffff:127.0.0.1    │
+└─────────────────────┘
+``` -->

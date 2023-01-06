@@ -1,0 +1,266 @@
+<hr>
+<h2 id="title-“Arithmetic”slug-“arithmetic”hidden-falsecreatedAt-“2021-07-29T11-53-16-539Z”updatedAt-“2021-09-23T03-36-30-482Z”categories-Docs-SQL-Syntax"><a href="#title-“Arithmetic”slug-“arithmetic”hidden-falsecreatedAt-“2021-07-29T11-53-16-539Z”updatedAt-“2021-09-23T03-36-30-482Z”categories-Docs-SQL-Syntax" class="headerlink" title="title: “Arithmetic”slug: “arithmetic”hidden: falsecreatedAt: “2021-07-29T11:53:16.539Z”updatedAt: “2021-09-23T03:36:30.482Z”categories:- Docs- SQL_Syntax"></a>title: “Arithmetic”<br>slug: “arithmetic”<br>hidden: false<br>createdAt: “2021-07-29T11:53:16.539Z”<br>updatedAt: “2021-09-23T03:36:30.482Z”<br>categories:<br>- Docs<br>- SQL_Syntax</h2><blockquote>
+<p>Notice:<br>Some of the examples below are referenced from <a href="https://clickhouse.com/docs/en/sql-reference/functions/">ClickHouse Documentation</a> but have been adapted and modified to work in ByteHouse.</p>
+</blockquote>
+<h2 id="abs"><a href="#abs" class="headerlink" title="abs"></a>abs</h2><p>Calculates the absolute value of the number (a). That is, if a &lt; 0, it returns -a. For unsigned types it does not do anything. For signed integer types, it returns an unsigned number.</p>
+<p><strong>Syntax</strong></p>
+<pre><code class="sql">abs(x)
+</code></pre>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><code>x</code> – The number.</li>
+</ul>
+<p><strong>Returned value</strong></p>
+<ul>
+<li>The absolute value of the number.</li>
+</ul>
+<p><strong>Example</strong></p>
+<pre><code class="sql">SELECT abs(-2);
+</code></pre>
+<p>Result:</p>
+<pre><code class="plain%20text">┌─abs(-2)─┐
+│ 2       │
+└─────────┘
+</code></pre>
+<h2 id="divide"><a href="#divide" class="headerlink" title="divide"></a>divide</h2><p>Calculates the quotient of the numbers. The result type is always a floating-point type.</p>
+<p>It is not integer division. For integer division, use the ‘intDiv’ function.</p>
+<p>When dividing by zero you get ‘inf’, ‘-inf’, or ‘nan’.</p>
+<p><strong>Syntax</strong></p>
+<pre><code class="sql">
+divide(a, b) # a / b operator
+</code></pre>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><code>a</code> – The number.</li>
+<li><code>b</code> – The number.</li>
+</ul>
+<p><strong>Returned value</strong></p>
+<ul>
+<li>Value in floating-point type</li>
+</ul>
+<p><strong>Example</strong></p>
+<pre><code class="sql">SELECT divide(50, 2);
+</code></pre>
+<p>Result:</p>
+<pre><code class="plain%20text">┌─divide(50, 2)─┐
+│ 2.5e+01       │
+└───────────────┘
+</code></pre>
+<h2 id="gcd"><a href="#gcd" class="headerlink" title="gcd"></a>gcd</h2><p>Returns the greatest common divisor of the numbers.</p>
+<p>An exception is thrown when dividing by zero or when dividing a minimal negative number by minus one.</p>
+<p><strong>Syntax</strong></p>
+<pre><code class="sql">gcd(a, b)
+</code></pre>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><code>a</code> – The number.</li>
+<li><code>b</code> – The number.</li>
+</ul>
+<p><strong>Returned value</strong></p>
+<ul>
+<li>The greatest common divisor of the numbers</li>
+</ul>
+<p><strong>Example</strong></p>
+<pre><code class="sql">SELECT gcd(27,18);
+</code></pre>
+<p>Result:</p>
+<pre><code class="plain%20text">┌─gcd(27, 18)─┐
+│ 9           │
+└─────────────┘
+</code></pre>
+<h2 id="intDiv"><a href="#intDiv" class="headerlink" title="intDiv"></a>intDiv</h2><p>Calculates the quotient of the numbers. Divides into integers, rounding down (by the absolute value).</p>
+<p>An exception is thrown when dividing by zero or when dividing a minimal negative number by minus one.</p>
+<p><strong>Syntax</strong></p>
+<pre><code class="sql">intDiv(a, b)
+</code></pre>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><code>a</code> – The number.</li>
+<li><code>b</code> – The number.</li>
+</ul>
+<p><strong>Returned value</strong></p>
+<ul>
+<li>Quotient of the numbers in integer</li>
+</ul>
+<p><strong>Example</strong></p>
+<pre><code class="sql">SELECT intDiv(10, 2);
+</code></pre>
+<p>Result:</p>
+<pre><code class="plain%20text">┌─intDiv(10, 2)─┐
+│ 5             │
+└───────────────┘
+</code></pre>
+<h2 id="intDivOrZero"><a href="#intDivOrZero" class="headerlink" title="intDivOrZero"></a>intDivOrZero</h2><p>Differs from ‘intDiv’ in that it returns zero when dividing by zero or when dividing a minimal negative number by minus one.</p>
+<p><strong>Syntax</strong></p>
+<pre><code class="sql">intDivOrZero(a, b)
+</code></pre>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><code>a</code> – The number.</li>
+<li><code>b</code> – The number.</li>
+</ul>
+<p><strong>Returned value</strong></p>
+<ul>
+<li>Quotient of the numbers in integer</li>
+</ul>
+<p><strong>Example</strong></p>
+<pre><code class="sql">SELECT intDivOrZero(10, -2);
+</code></pre>
+<p>Result:</p>
+<pre><code class="plain%20text">┌─intDivOrZero(10, -2)─┐
+│ -5                   │
+└──────────────────────┘
+</code></pre>
+<h2 id="lcm"><a href="#lcm" class="headerlink" title="lcm"></a>lcm</h2><p>Returns the least common multiple of the numbers.</p>
+<p>An exception is thrown when dividing by zero or when dividing a minimal negative number by minus one.</p>
+<p><strong>Syntax</strong></p>
+<pre><code class="sql">lcm(a, b)
+</code></pre>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><code>a</code> – The number.</li>
+<li><code>b</code> – The number.</li>
+</ul>
+<p><strong>Returned value</strong></p>
+<ul>
+<li>The least greatest common divisor of the numbers</li>
+</ul>
+<p><strong>Example</strong></p>
+<pre><code class="sql">SELECT lcm(27,18);
+</code></pre>
+<p>Result:</p>
+<pre><code class="plain%20text">┌─lcm(27, 18)─┐
+│ 54          │
+└─────────────┘
+</code></pre>
+<h2 id="min"><a href="#min" class="headerlink" title="min"></a>min</h2><p>Aggregate function that calculates the minimum across a group of values.</p>
+<p><strong>Syntax</strong></p>
+<pre><code class="sql">min(column)
+</code></pre>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><code>column</code> – The column name.</li>
+</ul>
+<p><strong>Returned value</strong></p>
+<ul>
+<li>The minimum number in group of values</li>
+</ul>
+<p><strong>Example</strong></p>
+<pre><code class="sql">CREATE TABLE test.test_min(id Int32) ENGINE = CnchMergeTree ORDER BY id;
+INSERT INTO test.test_min(id) VALUES(1),(2),(3),(4),(5); -- insert 1,2,3,4,5 to table
+SELECT min(id) FROM test.test_min;
+</code></pre>
+<p>Result:</p>
+<pre><code class="plain%20text">┌─min(id)─┐
+│       1 │
+└─────────┘
+</code></pre>
+<h2 id="minus"><a href="#minus" class="headerlink" title="minus"></a>minus</h2><p>Calculates the difference. The result is always signed.</p>
+<p>You can also calculate integer numbers from a date or date with time. The idea is the same – see above for ‘plus’.</p>
+<p><strong>Syntax</strong></p>
+<pre><code class="sql">minus(a, b), a - b operator 
+</code></pre>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><code>a</code> – The number.</li>
+<li><code>b</code> – The number.</li>
+</ul>
+<p><strong>Returned value</strong></p>
+<ul>
+<li>The difference between <code>a</code> and <code>b</code>.</li>
+</ul>
+<p><strong>Example</strong></p>
+<pre><code class="sql">SELECT minus(10, 3);
+</code></pre>
+<p>Result:</p>
+<pre><code class="plain%20text">┌─minus(10, 3)─┐
+│ 7            │
+└──────────────┘
+</code></pre>
+<h2 id="modulo"><a href="#modulo" class="headerlink" title="modulo"></a>modulo</h2><p>Calculates the remainder after division.</p>
+<p>If arguments are floating-point numbers, they are pre-converted to integers by dropping the decimal portion.</p>
+<p>The remainder is taken in the same sense as in C++. Truncated division is used for negative numbers.</p>
+<p>An exception is thrown when dividing by zero or when dividing a minimal negative number by minus one.</p>
+<p><strong>Syntax</strong></p>
+<pre><code class="sql">modulo(a, b), a % b operator
+</code></pre>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><code>a</code> – The number.</li>
+<li><code>b</code> – The number.</li>
+</ul>
+<p><strong>Returned value</strong></p>
+<ul>
+<li>The remainder from a divide by b.</li>
+</ul>
+<p><strong>Example</strong></p>
+<pre><code class="sql">SELECT modulo(10, 3);
+</code></pre>
+<p>Result:</p>
+<pre><code class="plain%20text">┌─modulo(10, 3)─┐
+│ 1             │
+└───────────────┘
+</code></pre>
+<h2 id="multiply"><a href="#multiply" class="headerlink" title="multiply"></a>multiply</h2><p>Calculates the product of the numbers.</p>
+<p><strong>Syntax</strong></p>
+<pre><code class="sql">multiply(a, b) # a * b operator 
+</code></pre>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><code>a</code> – The number. </li>
+<li><code>b</code> – The number.</li>
+</ul>
+<p><strong>Returned value</strong></p>
+<ul>
+<li>Product value of the numbers.</li>
+</ul>
+<p><strong>Example</strong></p>
+<pre><code class="sql">SELECT multiply(3,12);
+</code></pre>
+<p>Result:</p>
+<pre><code class="plain%20text">┌─multiply(3, 12)─┐
+│ 36              │
+└─────────────────┘
+</code></pre>
+<h2 id="negate"><a href="#negate" class="headerlink" title="negate"></a>negate</h2><p>Calculates a number with the reverse sign. The result is always signed.</p>
+<p><strong>Syntax</strong></p>
+<pre><code class="sql">negate(a) # -a operator
+</code></pre>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><code>a</code> – The number.</li>
+</ul>
+<p><strong>Returned value</strong></p>
+<ul>
+<li>The number with the reverse sign.</li>
+</ul>
+<p><strong>Example</strong></p>
+<pre><code class="sql">SELECT negate(20);
+</code></pre>
+<p>Result:</p>
+<pre><code class="plain%20text">┌─negate(20)─┐
+│ -20        │
+└────────────┘
+</code></pre>
+<h2 id="plus"><a href="#plus" class="headerlink" title="plus"></a>plus</h2><p>Calculates the sum of the numbers.</p>
+<p>You can also add integer numbers with a date or date and time. In the case of a date, adding an integer means adding the corresponding number of days. For a date with time, it means adding the corresponding number of seconds.</p>
+<p><strong>Syntax</strong></p>
+<pre><code class="sql">select plus(a, b) # a + b operator
+</code></pre>
+<p><strong>Arguments</strong></p>
+<ul>
+<li><code>a</code> – The number.</li>
+<li><code>b</code> – The number.</li>
+</ul>
+<p><strong>Returned value</strong></p>
+<ul>
+<li>The sum of the numbers.</li>
+</ul>
+<p><strong>Example</strong></p>
+<pre><code class="sql">select plus(1,2);
+</code></pre>
+<p>Result:</p>
+<pre><code class="plain%20text">┌─plus(1, 2)─┐
+│ 3          │
+└────────────┘
+</code></pre>
