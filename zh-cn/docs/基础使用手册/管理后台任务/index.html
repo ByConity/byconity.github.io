@@ -351,7 +351,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>Publish Date:&nbsp;&nbsp;
-                    2023-01-09
+                    2023-01-18
                 </div>
                 
 
@@ -402,9 +402,9 @@
 <p><strong>GC****后台任务：</strong>把多个 Part 合并成一个新的 Part，意味着原有的 Part 将不再被使用，及时删除这些被淘汰的 Part 有助于节省存储空间。为此我们为每个表运行一个专门的 GC（垃圾回收 Garbage Collection）后台任务，负责该表的过期 Part 的发现和删除。</p>
 <p><strong>CONSUMER 后台任务：</strong>基于 ByConity 的云原生新架构，在实时导入消费（aka CnchKafka）上做了新的设计与实现：</p>
 <ul>
-<li>基于每张 Kafka 消费表在 server 段常驻执行一个 CONSUEMR 后台任务（ConsumeManager）；</li>
+<li>基于每张 Kafka 消费表在 server 段常驻执行一个 CONSUMER 后台任务（ConsumeManager）；</li>
 <li>CONSUMER 后台任务负责读取 Kafka 元信息，并将 partition 分配给各个 consumer task，然后将 task 任务分发到 worker 节点执行；</li>
-<li>同时，CONSUEMR 任务需要维持与 task 的心跳，保证每个 consumer task 处于正常的工作状态。</li>
+<li>同时，CONSUMER 任务需要维持与 task 的心跳，保证每个 consumer task 处于正常的工作状态。</li>
 </ul>
 <p>在设计上，Merge 和 GC 是两个独立的过程。我们在一个 Merge 任务完成之后，不会立即将旧 Part 删除，而是对应的为每个旧 Part 生成一个淘汰标记，等待后续 GC 任务统一处理。这样的设计能：</p>
 <ul>
@@ -445,7 +445,7 @@
 </ol>
 <h3 id="GC-Task"><a href="#GC-Task" class="headerlink" title="GC Task"></a>GC Task</h3><p>理解<u>Merge</u>的作用和流程以及 Part 可见性规则之后，就能更好的理解 GC 工作机制。</p>
 <p>如图 X-1，每个表的 GC 后台任务独立运行，它主要负责发现和删除 Merge 任务产生的淘汰 Part。</p>
-<p>Server 对一个被淘汰的 Part 进行标记时，并不改变该 Part 的任何状态，而是生成一个新的与之对应的标记 Part，标记 Part 不占用实际的存储空间。这样做能保证所有 Part 在整个生命周期的<strong>不变性（immutablity）。</strong></p>
+<p>Server 对一个被淘汰的 Part 进行标记时，并不改变该 Part 的任何状态，而是生成一个新的与之对应的标记 Part，标记 Part 不占用实际的存储空间。这样做能保证所有 Part 在整个生命周期的<strong>不变性（immutability）。</strong></p>
 <p>基于图 X-2，在 Merge 完成将变成如下图 X-3 的状态：</p>
 <p><img src="/static/boxcnuwPQMcD1U9cypYG0DdP1th.png"></p>
 <p>GC 后台任务运行时，和 Merge 后台任务类似，</p>
@@ -500,12 +500,12 @@
 <p>注意：START&#x2F;STOP 命令会将对应状态持久化到 Catalog，因此在执行 STOP 命令后，如果不执行 START，即使服务重启，消费任务也不会恢复。</p>
 <h2 id="控制后台任务"><a href="#控制后台任务" class="headerlink" title="控制后台任务"></a>控制后台任务</h2><p>提供 system 命令控制后台任务的开启与关闭，与社区不同的是，通过 system 命令控制是持久化操作，已经停止的后台任务不会在 server 重启后重新调度。</p>
 <p>提供系统表 system.bg_threads 查看后台任务的状态，包括线程状态，调度次数，调度异常信息等。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">SYSTEM STOP/START/RESTART MERGES/GC/CONSUMER db.table;</span><br><span class="line">SELECT * FROM system.bg_threads WHERE database = &#x27;db&#x27; AND table = &#x27;table&#x27;;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">SYSTEM STOP/START/RESTART CONSUMER db.table;</span><br><span class="line">SYSTEM STOP/START MERGES/GC db.table;</span><br><span class="line">SELECT * FROM system.bg_threads WHERE database = &#x27;db&#x27; AND table = &#x27;table&#x27;;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
 <h2 id="常见报错"><a href="#常见报错" class="headerlink" title="常见报错"></a>常见报错</h2><ol>
 <li>Connection Refused from DaemonManager</li>
 </ol>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Code: 5038. DB::Exception: Received from 127.0.0.1:9000. DB::Exception: 112:[E111]Fail to connect Socket&#123;id=1155 addr=[fdbd:dc03:8:116::203]:10090&#125; (0x0x7f2f9674f6c0): Connection refused [R1][E112]Not connected to [fdbd:dc03:8:116::203]:10090 yet, server_id=1155 [R2][E112]Not connected to [fdbd:dc03:8:116::203]:10090 yet, server_id=1155 [R3][E112]Not connected to [fdbd:dc03:8:116::203]:10090 yet, server_id=1155.</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Code: 5038. DB::Exception: Received from 127.0.0.1:9000. DB::Exception: 112:[E111]Fail to connect Socket&#123;id=1155 addr=127.0.0.1:10090&#125; (0x0x7f2f9674f6c0): Connection refused [R1][E112]Not connected to 127.0.0.1:10090 yet, server_id=1155 [R2][E112]Not connected to 127.0.0.1:10090 yet, server_id=1155 [R3][E112]Not connected to 127.0.0.1:10090 yet, server_id=1155.</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
 <p>具体报错信息如上，其中 10090 为 DaemonManger 的 rpc 端口，则说明 DaemonManager 组件连接失败，需检查 DaemonManager 的状态。</p>
 

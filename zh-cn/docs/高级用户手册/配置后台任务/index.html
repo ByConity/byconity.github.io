@@ -351,7 +351,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>Publish Date:&nbsp;&nbsp;
-                    2023-01-09
+                    2023-01-18
                 </div>
                 
 
@@ -394,7 +394,7 @@
 <h3 id="手动触发-merge"><a href="#手动触发-merge" class="headerlink" title="手动触发 merge"></a>手动触发 merge</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">-- 触发一次merge 调度（和上面自动流程相同）</span><br><span class="line">optimize table xxx.yyy;</span><br><span class="line"></span><br><span class="line">-- 触发一次指定partition下的merge调度</span><br><span class="line">optimize table xxx.yyy partition id &#x27;zzz&#x27;;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
 <p>此外，还可以有 dry run 模式，方便查看接下来 merge 能选出哪些 part（或者排查为什么选不出 part）</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">-- 打开trcelog，执行try optimize的时候</span><br><span class="line">-- 会打印整个merge select过程的相关日志，</span><br><span class="line">-- 比如选了哪些partition，哪些part，merge任务发给了哪个worker等。</span><br><span class="line">set send_logs_level = &#x27;trace&#x27;;</span><br><span class="line"></span><br><span class="line">try optimize table xxx.yyy;</span><br><span class="line">try optimize table xxx.yyy partition id &#x27;zzz&#x27;;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">-- 打开trace log，执行try optimize的时候</span><br><span class="line">-- 会打印整个merge select过程的相关日志，</span><br><span class="line">-- 比如选了哪些partition，哪些part，merge任务发给了哪个worker等。</span><br><span class="line">set send_logs_level = &#x27;trace&#x27;;</span><br><span class="line"></span><br><span class="line">try optimize table xxx.yyy;</span><br><span class="line">try optimize table xxx.yyy partition id &#x27;zzz&#x27;;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
 <h3 id="修改-merge-参数"><a href="#修改-merge-参数" class="headerlink" title="修改 merge 参数"></a>修改 merge 参数</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">alter table xxx.yyy modify setting cnch_merge_zzz = www;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
@@ -474,7 +474,7 @@
 <h1 id="使用说明"><a href="#使用说明" class="headerlink" title="使用说明"></a>使用说明</h1><ul>
 <li>如果表规模不大（百万量级），但是当前 parts 比较多，想加快 merge 频率，通常 enable_addition_bg_task &#x3D; 1 max_partition_for_multi_select 会有效果。这时候对应的 max_addition_bg_task_num 是 merge 并发量的上限。</li>
 <li>如果表规模很大了（千万, 上亿），（每次从 catalog 获取 parts 耗时就会很长），这时候可能不仅要 enable_addition_bg_task， 还需要使用 cnch_merge_enable_batch_select &#x3D; 1 来增加每次 merge select 的结果。</li>
-<li>关于 cnch_merge_only_realtime_partition 和 max_partition_for_multi_select。 通常 kafka 实时表会使用 cnch_merge_only_realtime_partition，它表示每次选 partition 的时候只选 minblock 最新的，partition 数量由 max_partition_for_multi_select 控制。注意：如果是一个离线表且每天产生大量的新 partition，此时打开 cnch_merge_only_realtime_partition 并且 max_partition_for_multi_select 设置得很小的话，那会出现当天有 partition 无法参与 merge 的情况。</li>
+<li>关于 cnch_merge_only_realtime_partition 和 max_partition_for_multi_select。 通常 kafka 实时表会使用 cnch_merge_only_realtime_partition，它表示每次选 partition 的时候只选 min_block 最新的，partition 数量由 max_partition_for_multi_select 控制。注意：如果是一个离线表且每天产生大量的新 partition，此时打开 cnch_merge_only_realtime_partition 并且 max_partition_for_multi_select 设置得很小的话，那会出现当天有 partition 无法参与 merge 的情况。</li>
 </ul>
 
                 
