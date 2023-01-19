@@ -42,7 +42,7 @@ ALTER TABLE [tableIdentifier] ADD COLUMN [IF NOT EXISTS] [tableColumnDfnt] [AFTE
 # Step 1: create a table 
 CREATE TABLE db_name.table_name
 (
-    `order_by_column ` String
+    `order_by_column` String
 )
 ENGINE = `CnchMergeTree`
 ORDER BY (`order_by_column `)
