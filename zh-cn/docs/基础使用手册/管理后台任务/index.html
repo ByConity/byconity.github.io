@@ -500,7 +500,7 @@
 <p>注意：START&#x2F;STOP 命令会将对应状态持久化到 Catalog，因此在执行 STOP 命令后，如果不执行 START，即使服务重启，消费任务也不会恢复。</p>
 <h2 id="控制后台任务"><a href="#控制后台任务" class="headerlink" title="控制后台任务"></a>控制后台任务</h2><p>提供 system 命令控制后台任务的开启与关闭，与社区不同的是，通过 system 命令控制是持久化操作，已经停止的后台任务不会在 server 重启后重新调度。</p>
 <p>提供系统表 system.bg_threads 查看后台任务的状态，包括线程状态，调度次数，调度异常信息等。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">SYSTEM STOP/START/RESTART CONSUMER db.table;</span><br><span class="line">SYSTEM STOP/START MERGES/GC db.table;</span><br><span class="line">SELECT * FROM system.bg_threads WHERE database = &#x27;db&#x27; AND table = &#x27;table&#x27;;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">SYSTEM STOP/START/RESTART CONSUME db.table;</span><br><span class="line">SYSTEM STOP/START MERGES/GC db.table;</span><br><span class="line">SELECT * FROM system.bg_threads WHERE database = &#x27;db&#x27; AND table = &#x27;table&#x27;;</span><br></pre></td></tr></table></figure>
 
 <h2 id="常见报错"><a href="#常见报错" class="headerlink" title="常见报错"></a>常见报错</h2><ol>
 <li>Connection Refused from DaemonManager</li>
