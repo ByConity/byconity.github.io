@@ -393,7 +393,7 @@
 <p>文档格式：教程目的，前置准备，分步骤讲解原理 &amp; 示例，相关文档推荐；</p>
 <p>内容提要：</p>
 <ol>
-<li>byconity 是如何组织数据库和数据表的</li>
+<li>ByConity 是如何组织数据库和数据表的</li>
 <li>数据库表的规格，比如单数据库支持放多少数据表，单表支持多少列</li>
 <li>设计数据表时，应该理解哪些配置（primary key 等）</li>
 <li>典型场景下，设计数据表的最佳实践是什么</li>
@@ -408,7 +408,7 @@
 <li>一些其他特定的功能和配置</li>
 </ul>
 <p>ByConity 最常用的表引擎是 CnchMergeTree。其他特殊类型的表引擎包括 Hive 外表、Kafka 表等 。下面重点讲下 MergeTree 表引擎的原理。</p>
-<h4 id="CNCHMergeTree-表原理"><a href="#CNCHMergeTree-表原理" class="headerlink" title="CNCHMergeTree 表原理"></a>CNCHMergeTree 表原理</h4><p>CNCHMergeTree 表是最常用的表引擎，核心思想和 LSM-Tree 类似，数据按分区键(partition by)进行分区，然后排序键(order by)进行有序存储。主要特点：</p>
+<h4 id="CnchMergeTree-表原理"><a href="#CnchMergeTree-表原理" class="headerlink" title="CnchMergeTree 表原理"></a>CnchMergeTree 表原理</h4><p>CnchMergeTree 表是最常用的表引擎，核心思想和 LSM-Tree 类似，数据按分区键(partition by)进行分区，然后排序键(order by)进行有序存储。主要特点：</p>
 <ul>
 <li>如果指定了分区键的话，数据会按分区键划分成了不同的逻辑数据集（逻辑分区，Partition)</li>
 </ul>
@@ -420,20 +420,20 @@
 <ul>
 <li>数据颗粒（Granule）</li>
 </ul>
-<p>每个数据片段被逻辑的分割成颗粒（granule ），默认的 Granule 为 8192 行（由表的 index_granularity 配置决定）。颗粒是 byconity 中进行数据查询时的最小不可分割数据集。每个颗粒的第一行通过该行的主键值进行标记， byconity 会为每个数据片段创建一个索引文件来存储这些标记。对于每列，无论它是否包含在主键当中，byconity 都会存储类似标记。这些标记让您可以在列文件中直接找到数据。Granule 作为 byconity 稀疏索引的索引目标，也是在内存中进行数据扫描的单位。</p>
+<p>每个数据片段被逻辑的分割成颗粒（granule ），默认的 Granule 为 8192 行（由表的 index_granularity 配置决定）。颗粒是 ByConity 中进行数据查询时的最小不可分割数据集。每个颗粒的第一行通过该行的主键值进行标记， ByConity 会为每个数据片段创建一个索引文件来存储这些标记。对于每列，无论它是否包含在主键当中，ByConity 都会存储类似标记。这些标记让您可以在列文件中直接找到数据。Granule 作为 ByConity 稀疏索引的索引目标，也是在内存中进行数据扫描的单位。</p>
 <ul>
 <li>后台 Merge</li>
 </ul>
 <p>后台任务会定时对同一个分区的 DataPart 进行合并，并保持按排序键有序。后台的合并减少了 Part 的数目，以便更高效存储，并提升了查询性能。</p>
-<h2 id="CnchMergeTree-建表语句和相关配置"><a href="#CnchMergeTree-建表语句和相关配置" class="headerlink" title="CnchMergeTree 建表语句和相关配置"></a>CnchMergeTree 建表语句和相关配置</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">CREATE TABLE [IF NOT EXISTS] [db.]table_name</span><br><span class="line">(</span><br><span class="line">    name1 [type1] [NULL|NOT NULL] [DEFAULT|ALIAS expr1] [compression_codec] [TTL expr1],</span><br><span class="line">    name2 [type2] [NULL|NOT NULL] [DEFAULT|ALIAS expr2] [compression_codec] [TTL expr2],</span><br><span class="line">    ...</span><br><span class="line">    INDEX index_name1 expr1 TYPE type1(...) GRANULARITY value1,</span><br><span class="line">    INDEX index_name2 expr2 TYPE type2(...) GRANULARITY value2，</span><br><span class="line">) ENGINE = MergeTree()</span><br><span class="line">ORDER BY expr</span><br><span class="line">[PARTITION BY expr]</span><br><span class="line">[CLUSTER BY (column, expression, ...) INTO value1 BUCKETS SPLIT_NUMBER value2 WITH_RANGE]</span><br><span class="line">[PRIMARY KEY expr]</span><br><span class="line">[UNIQUE KEY expr]</span><br><span class="line">[SAMPLE BY expr]</span><br><span class="line">[TTL expr]</span><br><span class="line">[SETTINGS name=value, ...]</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h2 id="CnchMergeTree-建表语句和相关配置"><a href="#CnchMergeTree-建表语句和相关配置" class="headerlink" title="CnchMergeTree 建表语句和相关配置"></a>CnchMergeTree 建表语句和相关配置</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">CREATE TABLE [IF NOT EXISTS] [db.]table_name</span><br><span class="line">(</span><br><span class="line">    name1 [type1] [NULL|NOT NULL] [DEFAULT|ALIAS expr1] [compression_codec] [TTL expr1],</span><br><span class="line">    name2 [type2] [NULL|NOT NULL] [DEFAULT|ALIAS expr2] [compression_codec] [TTL expr2],</span><br><span class="line">    ...</span><br><span class="line">    INDEX index_name1 expr1 TYPE type1(...) GRANULARITY value1,</span><br><span class="line">    INDEX index_name2 expr2 TYPE type2(...) GRANULARITY value2，</span><br><span class="line">) ENGINE = CnchMergeTree()</span><br><span class="line">ORDER BY expr</span><br><span class="line">[PARTITION BY expr]</span><br><span class="line">[CLUSTER BY (column, expression, ...) INTO value1 BUCKETS SPLIT_NUMBER value2 WITH_RANGE]</span><br><span class="line">[PRIMARY KEY expr]</span><br><span class="line">[UNIQUE KEY expr]</span><br><span class="line">[SAMPLE BY expr]</span><br><span class="line">[TTL expr]</span><br><span class="line">[SETTINGS name=value, ...]</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
-<h3 id="设计分区键（PARTITION-BY"><a href="#设计分区键（PARTITION-BY" class="headerlink" title="设计分区键（PARTITION BY)"></a>设计分区键（PARTITION BY)</h3><p>分区键定义分区，分区是在一个表中通过指定的规则划分而成的逻辑数据集。可以按任意标准进行分区，如按日期。为了减少需要操作的数据，每个分区都是分开存储的。查询时，byconity 尽量使用这些分区的最小子集。建表时候通过 <code>PARTITION BY expr</code> 子句指定。分区键可以是表中列的任意表达式。例如，指定按月分区，表达式为 <code>toYYYYMM(date)</code>；或者按表达元组，如 <code>(toMonday(date), EventType)</code> 等。</p>
+<h3 id="设计分区键（PARTITION-BY"><a href="#设计分区键（PARTITION-BY" class="headerlink" title="设计分区键（PARTITION BY)"></a>设计分区键（PARTITION BY)</h3><p>分区键定义分区，分区是在一个表中通过指定的规则划分而成的逻辑数据集。可以按任意标准进行分区，如按日期。为了减少需要操作的数据，每个分区都是分开存储的。查询时，ByConity 尽量使用这些分区的最小子集。建表时候通过 <code>PARTITION BY expr</code> 子句指定。分区键可以是表中列的任意表达式。例如，指定按月分区，表达式为 <code>toYYYYMM(date)</code>；或者按表达元组，如 <code>(toMonday(date), EventType)</code> 等。</p>
 <p>需要注意，表中分区表达式计算出的取值范围不能太大（推荐不超过一万），太多分区会占用比较大的内存以及带来比较多的 IO 和计算开销。</p>
 <p>合理的设计分区键可以极大减少查询时需要扫描的数据量，一般考虑将查询中最常用的条件同时取值范围不超过一万的列设计为分区键（如日期等）。</p>
 <h3 id="设计排序键（ORDER-BY）"><a href="#设计排序键（ORDER-BY）" class="headerlink" title="设计排序键（ORDER BY）"></a>设计排序键（ORDER BY）</h3><p>可以是一组列的元组或任意的表达式。 例如: <code>ORDER BY (OrderID, Date)</code> 。</p>
 <p>如果不需要排序，可以使用 <code>ORDER BY tuple()</code>。DataPart 里的数据将按照排序键进行排序。</p>
-<h3 id="设计主键-PRIMARY-KEY"><a href="#设计主键-PRIMARY-KEY" class="headerlink" title="设计主键(PRIMARY KEY)"></a>设计主键(PRIMARY KEY)</h3><p>默认情况不需要显式指定，byconity 将使用排序键作为主键。当有特殊场景主键和排序键不一致时，主键必须为排序键的最左前缀。如排序键为(OrderID, Date)，主键必须为 OrderID，不能为 Date。在一些特殊的表引擎，如 CnchAggregatingMergeTree、CnchSumMergeTree 中，主键会与排序键不同。</p>
-<p>byconity 会在主键上建立以 Granule 为单位的稀疏索引，（与之对比，所谓稠密索引则是每一行都会建立索引信息）。</p>
+<h3 id="设计主键-PRIMARY-KEY"><a href="#设计主键-PRIMARY-KEY" class="headerlink" title="设计主键(PRIMARY KEY)"></a>设计主键(PRIMARY KEY)</h3><p>默认情况不需要显式指定，ByConity 将使用排序键作为主键。当有特殊场景主键和排序键不一致时，主键必须为排序键的最左前缀。如排序键为(OrderID, Date)，主键必须为 OrderID，不能为 Date。在一些特殊的表引擎，如 CnchAggregatingMergeTree、CnchSumMergeTree 中，主键会与排序键不同。</p>
+<p>ByConity 会在主键上建立以 Granule 为单位的稀疏索引，（与之对比，所谓稠密索引则是每一行都会建立索引信息）。</p>
 <p>如果查询条件能匹配主键索引的最左前缀，通过主键索引可以快速过滤出可能需要读取的数据颗粒，相比扫描整个 DataPart，通常要高效很多。</p>
 <p>另外需要注意，PRIMARY KEY 不能保证唯一性，所以可以插入主键重复的数据行。</p>
 <p>分区（PARTITION BY）和主键(PRIMARY KEY)是两种不同的加速数据查询的方式，定义的时候应当尽量错开使用不同的列来定义两者，来覆盖更多的查询场景。例如 order by 的第一个列一定不要重复放到 partition by 里。下面是如何选择主键的一些考虑：</p>
@@ -444,7 +444,7 @@
 <li>假如现在的主键是（a，b)，如果在大多数情况下给定（a，b）对应的数据范围很大（包含多个 Granule），可以考虑把一个新的查询常用列附加到主键中，这样可以过滤更多的数据。</li>
 <li>过长的主键会对插入性能和内存消耗有负面影响，但对查询性能没有影响。</li>
 </ul>
-<h3 id="唯一键索引-UNIQUE-KEY"><a href="#唯一键索引-UNIQUE-KEY" class="headerlink" title="唯一键索引(UNIQUE KEY)"></a>唯一键索引(UNIQUE KEY)</h3><p>主键（PRIMARY KEY）不能保证去重，如果有唯一键去重的需求，需要在建表 shi 设置唯一键索引。设置唯一键之后，byconity 提供 upsert 更新写语义，可以根据唯一键高效更新数据行。查询自动返回每个唯一键的最新值。</p>
+<h3 id="唯一键索引-UNIQUE-KEY"><a href="#唯一键索引-UNIQUE-KEY" class="headerlink" title="唯一键索引(UNIQUE KEY)"></a>唯一键索引(UNIQUE KEY)</h3><p>主键（PRIMARY KEY）不能保证去重，如果有唯一键去重的需求，需要在建表时设置唯一键索引。设置唯一键之后，ByConity 提供 upsert 更新写语义，可以根据唯一键高效更新数据行。查询自动返回每个唯一键的最新值。</p>
 <p>唯一键可以是一组列的元组或任意的表达式，如 <code>UNIQUE KEY (product_id, sipHash64(city))</code>。</p>
 <p>唯一建索引可以通过配置 <code>partition_level_unique_keys</code> 控制是分区级别唯一还是全表唯一，目前推荐实践为：分区唯一索引，单分区数据量不超过千万级别<strong>。</strong>若为全表唯一，则全表数据量建议不超过千万级别。</p>
 <p>通过唯一键查询时会用上唯一键索引过滤数据加速查询，所以通常主键可以设置和唯一键不一样列，覆盖更多的查询条件。不过如果要使用部分列更新功能的话，是需要唯一键为排序键的最左前缀。</p>
