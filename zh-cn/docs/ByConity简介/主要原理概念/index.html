@@ -389,7 +389,7 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h1 id="主要原理概念"><a href="#主要原理概念" class="headerlink" title="主要原理概念"></a>主要原理概念</h1><h1 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h1><p>ByConity 的查询执行流程如下图所示，首先通过原数据服务获取查询所需要的元数据信息，然后根据用户 sql 通过优化器生成高效的查询计划，并调度到相应的计算组上去读取数据并执行，最终进行结果集的汇总并发送回客户端。为了用户更好的了解 ByConity 查询的工作原理，此章会介绍 ByConity 的主要原理。</p>
+                <h1 id="主要原理概念"><a href="#主要原理概念" class="headerlink" title="主要原理概念"></a>主要原理概念</h1><h1 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h1><p>ByConity 的查询执行流程如下图所示，首先通过元数据服务获取查询所需要的元数据信息，然后根据用户 sql 通过优化器生成高效的查询计划，并调度到相应的计算组上去读取数据并执行，最终进行结果集的汇总并发送回客户端。为了用户更好的了解 ByConity 查询的工作原理，此章会介绍 ByConity 的主要原理。</p>
 <p><img src="/static/boxcnCarlKKAt0hSPtXFOpfmo7c.png"></p>
 <h2 id="元数据管理-Catalog-Service"><a href="#元数据管理-Catalog-Service" class="headerlink" title="元数据管理(Catalog Service)"></a>元数据管理(Catalog Service)</h2><p>元数据管理（Catalog Service）的功能主要是对读写请求的元数据进行读写操作。元数据服务是一个非常关键的服务，其决定了查询的可用性和正确性。在 ByConity 里，我们不仅提供了高可用，可扩展的元数据管理服务，还在其之上实现了完备的事务语义保证（ACID）。除此之外，ByConity 还借助缓存，对查询涉及到的原数据提供低延迟读取，保证查询性能高效稳定。</p>
 <h2 id="查询优化器-Query-Optimizer"><a href="#查询优化器-Query-Optimizer" class="headerlink" title="查询优化器(Query Optimizer)"></a>查询优化器(Query Optimizer)</h2><p>优化器（Query Optimizer) 是数据库系统的核心之一，优秀的优化器能极大提高查询性能，特别是在复杂查询场景下优化器能带来数倍至数百倍的性能提升。</p>
