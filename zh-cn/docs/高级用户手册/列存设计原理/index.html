@@ -390,7 +390,7 @@
         <div class="card-content article-card-content">
             <div id="articleContent">
                 <h1 id="列存设计原理"><a href="#列存设计原理" class="headerlink" title="列存设计原理"></a>列存设计原理</h1><p>通常事务型数据库采用行存便于支持事务和高并发读写，分析型数据库采用列存减少 IO 和便于压缩。ByConity 采用列存的方式，保证读写性能、支持事务一致性，又适用大规模的数据计算。</p>
-<h3 id="Data-Layout"><a href="#Data-Layout" class="headerlink" title="Data Layout"></a>Data Layout</h3><p>表数据物理上按 Partition Key 切分为多个 Parts 存储在统一的云存储的逻辑存储路径下，每个 Part 的大小有数据量和行数限制，计算组根据服务节点分配的策略（预先分配和实时分配）获得其对应的部分 parts。</p>
+<h3 id="Data-Layout"><a href="#Data-Layout" class="headerlink" title="Data Layout"></a>Data Layout</h3><p>表数据物理上按 Partition Key 切分为多个 Parts 存储在统一的分布式文件系统和云存储的逻辑存储路径下，每个 Part 的大小有数据量和行数限制，计算组根据服务节点分配的策略（预先分配和实时分配）获得其对应的部分 parts。</p>
 <h3 id="Part-Delta"><a href="#Part-Delta" class="headerlink" title="Part Delta"></a>Part Delta</h3><p>Part 数据最初构建之后是一个行列混合存储的 Part 数据文件，随着 DML&#x2F;数据字典&#x2F;Bitmap index 等构建工作的进行 Part 存在增量数据，这部分数据可以有以下两种存储方式：</p>
 <ol>
 <li>每次构建都会 Rewrite Part 数据</li>
