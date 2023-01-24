@@ -445,7 +445,7 @@
 <p>Example:</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&lt;!-- For foundationDB metastore--&gt;</span><br><span class="line">&lt;catalog_service&gt;</span><br><span class="line">    &lt;!--TODO: move name_space into catalog_service tag --&gt;</span><br><span class="line">    &lt;!--Metastore storage type, support `bytekv` and `fdb`--&gt;</span><br><span class="line">    &lt;type&gt;fdb&lt;/type&gt;</span><br><span class="line">    &lt;fdb&gt;</span><br><span class="line">        &lt;cluster_file&gt;/path/to/fdb/cluster_config&lt;/cluster_file&gt;</span><br><span class="line">    &lt;/fdb&gt;</span><br><span class="line">&lt;/catalog_service&gt;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
-<h3 id=""><a href="#" class="headerlink" title=""></a></h3><h2 id="HDFS-配置参数"><a href="#HDFS-配置参数" class="headerlink" title="HDFS  配置参数"></a>HDFS  配置参数</h2><p>启动服务时，会按照 cfs_addr&gt;hdfs_addr&gt;hdfs_ha_nameservice&gt;hdfs_nnproxy 的顺序来检测配置项，一但其中某个配置项配置则使用对应的配置项来访问 HDFS</p>
+<h3 id=""><a href="#" class="headerlink" title=""></a></h3><h2 id="HDFS-配置参数"><a href="#HDFS-配置参数" class="headerlink" title="HDFS  配置参数"></a>HDFS  配置参数</h2><p>启动服务时，会按照 cfs_addr&gt;hdfs_addr&gt;hdfs_ha_nameservice&gt;hdfs_nnproxy 的顺序来检测配置项，一但命中某个配置项配置则使用对应的配置项来访问 HDFS</p>
 <h3 id="hdfs-user"><a href="#hdfs-user" class="headerlink" title="hdfs_user"></a>hdfs_user</h3><p>访问 HDFS 时默认使用的用户的名称，默认 clickhouse</p>
 <p>Example:</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;hdfs_user&gt;clickhouse&lt;/hdfs_user&gt;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
@@ -515,7 +515,7 @@
 <li>lru_max_size，DiskCache 最大的大小，默认 2T</li>
 <li>random_drop_threshold，Cache 队列有长度限制，当队列长度到达一定比例后会按一定几率开始丢弃 Cache 请求来避免大表 Scan 导致 Cache 队列被占满，默认 50%</li>
 <li><strong>simple</strong>，Cache 策略相关配置</li>
-<li>segment_size，DiskCache 的粒度，默认 8192，及将一个 ColumnStream 的最多 8192 个 GranuleCache 成一个 DiskCacheSegment</li>
+<li>segment_size，DiskCache 的粒度，默认 8192，即将一个 ColumnStream 的最多 8192 个 GranuleCache 组成一个 DiskCacheSegment</li>
 <li>hits_to_cache，数据开始 Cache 的阈值，默认为 2</li>
 </ul>
 <p>Example:</p>
