@@ -391,12 +391,12 @@
             <div id="articleContent">
                 <h1 id="背景和技术架构"><a href="#背景和技术架构" class="headerlink" title="背景和技术架构"></a>背景和技术架构</h1><h1 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h1><p>ByConity 是面向现代 IT 架构变化而设计的一款数仓系统，它采用云原生架构设计，在满足数仓用户对资源弹性扩缩容，读写分离，资源隔离，数据强一致性等多种需求的同时，并提供优异的查询，写入性能。</p>
 <p>ByConity 在使用大量成熟 OLAP 技术，例如列存引擎，MPP 执行，智能查询优化，向量化执行，Codegen, indexing，数据压缩；也针对云场景和存算分离架构的特殊性做了技术创新，并向社区开源。</p>
-<h1 id="整体架构"><a href="#整体架构" class="headerlink" title="整体架构"></a>整体架构</h1><p>ByConity 大体上可以分为 3 层：服务接入层，计算层和 存储层。服务接入层响应用户的查询，计算层负责对计算数据，存储层存放用户数据。</p>
+<h1 id="整体架构"><a href="#整体架构" class="headerlink" title="整体架构"></a>整体架构</h1><p>ByConity 大体上可以分为 3 层：服务接入层，计算层和 存储层。服务接入层响应用户的查询，计算层负责计算数据，存储层存放用户数据。</p>
 <p><img src="/static/boxcnb2OyIV70Plb6Nrx6Fyc1Sc.png"></p>
 <h2 id="服务接入层"><a href="#服务接入层" class="headerlink" title="服务接入层"></a>服务接入层</h2><p>ByConity 的服务接入层接受用户的查询，首先对查询进行解析，并结合 catalog api 获取元数据信息生成高效的执行计划，然后通过资源管理器（Resource manager）获取可用的计算资源，最后把查询计划调度到适合（e.g.，拥有缓存）的计算节点进行执行。服务接入层由一个或者多个 server 构成，并支持水平扩张，充当的是响应用户服务和协调调度的角色。除了用户作业之外，在 ByConity 里还有后台任务，例如 compaction&#x2F;gc 等等，这些后台任务由 Daemon manager 管理，调度到相应的 server 进行执行。</p>
 <p>查询优化器是 ByConity 系统的核心之一，优秀的优化器能极大提高查询性能，特别是在复杂查询场景下优化器能带来数倍至数百倍的性能提升。ByConity 自研优化器基于四个大的优化方向（基于规则，基于 cost，基于数据依赖，基于反馈）提供极致优化能力。</p>
 <h2 id="计算层"><a href="#计算层" class="headerlink" title="计算层"></a>计算层</h2><p>ByConity 的计算层由一个或者多个计算组构成，不同的租户可以使用不同的计算组实现物理资源隔离。资源管理器（Resource Manager）负责对计算资源进行统一的管理和调度，能够收集各个计算组的性能数据，资源使用量，为查询、写入和后台任务动态分配资源并进行动态扩缩容，提高资源使用率。</p>
-<p>一个计算组由多个 worker 构成每个节点收到 PlanSegment 之后，开始驱动 PlanSegment 执行，包含数据源的 PlanSegment 开始读取数据，将数据按照一定的 shuffle 规则分发到下游的各个节点上，包含 exchange 输入的 PlanSegment 等待上游的数据，如果需要继续做 shuffle 则会继续将数据下发给各个节点，多轮 stage 完成之后，结果会返回到服务端。</p>
+<p>一个计算组由多个 worker 构成，每个节点收到 PlanSegment 之后，开始驱动 PlanSegment 执行，包含数据源的 PlanSegment 开始读取数据，将数据按照一定的 shuffle 规则分发到下游的各个节点上，包含 exchange 输入的 PlanSegment 等待上游的数据，如果需要继续做 shuffle 则会继续将数据下发给各个节点，多轮 stage 完成之后，结果会返回到服务端。</p>
 <h2 id="数据存储层"><a href="#数据存储层" class="headerlink" title="数据存储层"></a>数据存储层</h2><p>ByConity 的元数据和数据都实现了存储计算分离，元数据存储在分布式 key-value store 里，数据存储在分布式文件系统或者对象存储里。</p>
 <ul>
 <li>元数据存储</li>
