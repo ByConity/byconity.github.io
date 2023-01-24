@@ -6,7 +6,7 @@
   <link href="https://byconity.github.io/atom.xml" rel="self"/>
   
   <link href="https://byconity.github.io/"/>
-  <updated>2023-01-24T08:19:54.814Z</updated>
+  <updated>2023-01-24T08:20:48.953Z</updated>
   <id>https://byconity.github.io/</id>
   
   <author>
@@ -17,11 +17,178 @@
   <generator uri="https://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>Linux 搭建 ByConity 开发环境</title>
+    <link href="https://byconity.github.io/zh-cn/docs/%E5%8F%82%E4%B8%8E%E7%A4%BE%E5%8C%BA/Linux%20%E6%90%AD%E5%BB%BA%20ByConity%20%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83/"/>
+    <id>https://byconity.github.io/zh-cn/docs/%E5%8F%82%E4%B8%8E%E7%A4%BE%E5%8C%BA/Linux%20%E6%90%AD%E5%BB%BA%20ByConity%20%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83/</id>
+    <published>2023-01-24T08:20:48.953Z</published>
+    <updated>2023-01-24T08:20:48.953Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h1 id=&quot;Linux-搭建-ByConity-开发环境&quot;&gt;&lt;a href=&quot;#Linux-搭建-ByConity-开发环境&quot; class=&quot;headerlink&quot; title=&quot;Linux 搭建 ByConity 开发环境&quot;&gt;&lt;/a&gt;Linux 搭建 ByConity</summary>
+        
+      
+    
+    
+    
+    <category term="Docs" scheme="https://byconity.github.io/categories/Docs/"/>
+    
+    <category term="Community" scheme="https://byconity.github.io/categories/Docs/Community/"/>
+    
+    
+    <category term="Docs" scheme="https://byconity.github.io/tags/Docs/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>社区行为准则</title>
+    <link href="https://byconity.github.io/zh-cn/docs/%E5%8F%82%E4%B8%8E%E7%A4%BE%E5%8C%BA/%E7%A4%BE%E5%8C%BA%E8%A1%8C%E4%B8%BA%E5%87%86%E5%88%99%20Community%20Code%20of%20Conduct/"/>
+    <id>https://byconity.github.io/zh-cn/docs/%E5%8F%82%E4%B8%8E%E7%A4%BE%E5%8C%BA/%E7%A4%BE%E5%8C%BA%E8%A1%8C%E4%B8%BA%E5%87%86%E5%88%99%20Community%20Code%20of%20Conduct/</id>
+    <published>2023-01-24T08:20:48.953Z</published>
+    <updated>2023-01-24T08:20:48.953Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h1 id=&quot;社区行为准则-Community-Code-of-Conduct&quot;&gt;&lt;a href=&quot;#社区行为准则-Community-Code-of-Conduct&quot; class=&quot;headerlink&quot; title=&quot;社区行为准则 Community Code of</summary>
+        
+      
+    
+    
+    
+    <category term="Docs" scheme="https://byconity.github.io/categories/Docs/"/>
+    
+    <category term="Community" scheme="https://byconity.github.io/categories/Docs/Community/"/>
+    
+    
+    <category term="Docs" scheme="https://byconity.github.io/tags/Docs/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>导入数据</title>
+    <link href="https://byconity.github.io/zh-cn/docs/%E5%9F%BA%E7%A1%80%E4%BD%BF%E7%94%A8%E6%89%8B%E5%86%8C/%E5%AF%BC%E5%85%A5%E6%95%B0%E6%8D%AE/"/>
+    <id>https://byconity.github.io/zh-cn/docs/%E5%9F%BA%E7%A1%80%E4%BD%BF%E7%94%A8%E6%89%8B%E5%86%8C/%E5%AF%BC%E5%85%A5%E6%95%B0%E6%8D%AE/</id>
+    <published>2023-01-24T08:20:48.953Z</published>
+    <updated>2023-01-24T08:20:48.953Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h1 id=&quot;导入数据&quot;&gt;&lt;a href=&quot;#导入数据&quot; class=&quot;headerlink&quot; title=&quot;导入数据&quot;&gt;&lt;/a&gt;导入数据&lt;/h1&gt;&lt;p&gt;文档类型：教程型&lt;/p&gt;
+&lt;p&gt;文档结构：教程目的，前置准备，分步骤讲解原理 &amp;amp;</summary>
+        
+      
+    
+    
+    
+    <category term="Docs" scheme="https://byconity.github.io/categories/Docs/"/>
+    
+    <category term="Getting_Started" scheme="https://byconity.github.io/categories/Docs/Getting-Started/"/>
+    
+    
+    <category term="Docs" scheme="https://byconity.github.io/tags/Docs/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>导出数据</title>
+    <link href="https://byconity.github.io/zh-cn/docs/%E5%9F%BA%E7%A1%80%E4%BD%BF%E7%94%A8%E6%89%8B%E5%86%8C/%E5%AF%BC%E5%87%BA%E6%95%B0%E6%8D%AE/"/>
+    <id>https://byconity.github.io/zh-cn/docs/%E5%9F%BA%E7%A1%80%E4%BD%BF%E7%94%A8%E6%89%8B%E5%86%8C/%E5%AF%BC%E5%87%BA%E6%95%B0%E6%8D%AE/</id>
+    <published>2023-01-24T08:20:48.953Z</published>
+    <updated>2023-01-24T08:20:48.953Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h1 id=&quot;导出数据&quot;&gt;&lt;a href=&quot;#导出数据&quot; class=&quot;headerlink&quot; title=&quot;导出数据&quot;&gt;&lt;/a&gt;导出数据&lt;/h1&gt;&lt;p&gt;文档类型：教程型&lt;/p&gt;
+&lt;p&gt;文档格式：教程目的，前置准备，分步骤讲解原理 &amp;amp;</summary>
+        
+      
+    
+    
+    
+    <category term="Docs" scheme="https://byconity.github.io/categories/Docs/"/>
+    
+    <category term="Getting_Started" scheme="https://byconity.github.io/categories/Docs/Getting-Started/"/>
+    
+    
+    <category term="Docs" scheme="https://byconity.github.io/tags/Docs/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>数据可视化</title>
+    <link href="https://byconity.github.io/zh-cn/docs/%E5%9F%BA%E7%A1%80%E4%BD%BF%E7%94%A8%E6%89%8B%E5%86%8C/%E6%95%B0%E6%8D%AE%E5%8F%AF%E8%A7%86%E5%8C%96/"/>
+    <id>https://byconity.github.io/zh-cn/docs/%E5%9F%BA%E7%A1%80%E4%BD%BF%E7%94%A8%E6%89%8B%E5%86%8C/%E6%95%B0%E6%8D%AE%E5%8F%AF%E8%A7%86%E5%8C%96/</id>
+    <published>2023-01-24T08:20:48.953Z</published>
+    <updated>2023-01-24T08:20:48.953Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h1 id=&quot;数据可视化&quot;&gt;&lt;a href=&quot;#数据可视化&quot; class=&quot;headerlink&quot; title=&quot;数据可视化&quot;&gt;&lt;/a&gt;数据可视化&lt;/h1&gt;&lt;h2 id=&quot;教程目标：&quot;&gt;&lt;a href=&quot;#教程目标：&quot; class=&quot;headerlink&quot;</summary>
+        
+      
+    
+    
+    
+    <category term="Docs" scheme="https://byconity.github.io/categories/Docs/"/>
+    
+    <category term="Getting_Started" scheme="https://byconity.github.io/categories/Docs/Getting-Started/"/>
+    
+    
+    <category term="Docs" scheme="https://byconity.github.io/tags/Docs/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>数据类型</title>
+    <link href="https://byconity.github.io/zh-cn/docs/%E5%9F%BA%E7%A1%80%E4%BD%BF%E7%94%A8%E6%89%8B%E5%86%8C/%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B/"/>
+    <id>https://byconity.github.io/zh-cn/docs/%E5%9F%BA%E7%A1%80%E4%BD%BF%E7%94%A8%E6%89%8B%E5%86%8C/%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B/</id>
+    <published>2023-01-24T08:20:48.953Z</published>
+    <updated>2023-01-24T08:20:48.953Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h1 id=&quot;数据类型&quot;&gt;&lt;a href=&quot;#数据类型&quot; class=&quot;headerlink&quot; title=&quot;数据类型&quot;&gt;&lt;/a&gt;数据类型&lt;/h1&gt;&lt;p&gt;文档类型：说明型&lt;/p&gt;
+&lt;p&gt;内容提要：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;byconity</summary>
+        
+      
+    
+    
+    
+    <category term="Docs" scheme="https://byconity.github.io/categories/Docs/"/>
+    
+    <category term="Getting_Started" scheme="https://byconity.github.io/categories/Docs/Getting-Started/"/>
+    
+    
+    <category term="Docs" scheme="https://byconity.github.io/tags/Docs/"/>
+    
+  </entry>
+  
+  <entry>
     <title>监控集群</title>
     <link href="https://byconity.github.io/zh-cn/docs/%E5%9F%BA%E7%A1%80%E4%BD%BF%E7%94%A8%E6%89%8B%E5%86%8C/%E7%9B%91%E6%8E%A7%E9%9B%86%E7%BE%A4/"/>
     <id>https://byconity.github.io/zh-cn/docs/%E5%9F%BA%E7%A1%80%E4%BD%BF%E7%94%A8%E6%89%8B%E5%86%8C/%E7%9B%91%E6%8E%A7%E9%9B%86%E7%BE%A4/</id>
-    <published>2023-01-24T08:19:54.814Z</published>
-    <updated>2023-01-24T08:19:54.814Z</updated>
+    <published>2023-01-24T08:20:48.953Z</published>
+    <updated>2023-01-24T08:20:48.953Z</updated>
     
     
       
@@ -47,8 +214,8 @@
     <title>管理后台任务</title>
     <link href="https://byconity.github.io/zh-cn/docs/%E5%9F%BA%E7%A1%80%E4%BD%BF%E7%94%A8%E6%89%8B%E5%86%8C/%E7%AE%A1%E7%90%86%E5%90%8E%E5%8F%B0%E4%BB%BB%E5%8A%A1/"/>
     <id>https://byconity.github.io/zh-cn/docs/%E5%9F%BA%E7%A1%80%E4%BD%BF%E7%94%A8%E6%89%8B%E5%86%8C/%E7%AE%A1%E7%90%86%E5%90%8E%E5%8F%B0%E4%BB%BB%E5%8A%A1/</id>
-    <published>2023-01-24T08:19:54.814Z</published>
-    <updated>2023-01-24T08:19:54.814Z</updated>
+    <published>2023-01-24T08:20:48.953Z</published>
+    <updated>2023-01-24T08:20:48.953Z</updated>
     
     
       
@@ -75,8 +242,8 @@
     <title>设计库表</title>
     <link href="https://byconity.github.io/zh-cn/docs/%E5%9F%BA%E7%A1%80%E4%BD%BF%E7%94%A8%E6%89%8B%E5%86%8C/%E8%AE%BE%E8%AE%A1%E5%BA%93%E8%A1%A8/"/>
     <id>https://byconity.github.io/zh-cn/docs/%E5%9F%BA%E7%A1%80%E4%BD%BF%E7%94%A8%E6%89%8B%E5%86%8C/%E8%AE%BE%E8%AE%A1%E5%BA%93%E8%A1%A8/</id>
-    <published>2023-01-24T08:19:54.814Z</published>
-    <updated>2023-01-24T08:19:54.814Z</updated>
+    <published>2023-01-24T08:20:48.953Z</published>
+    <updated>2023-01-24T08:20:48.953Z</updated>
     
     
       
@@ -103,8 +270,8 @@
     <title>连接客户端</title>
     <link href="https://byconity.github.io/zh-cn/docs/%E5%9F%BA%E7%A1%80%E4%BD%BF%E7%94%A8%E6%89%8B%E5%86%8C/%E8%BF%9E%E6%8E%A5%E5%AE%A2%E6%88%B7%E7%AB%AF/"/>
     <id>https://byconity.github.io/zh-cn/docs/%E5%9F%BA%E7%A1%80%E4%BD%BF%E7%94%A8%E6%89%8B%E5%86%8C/%E8%BF%9E%E6%8E%A5%E5%AE%A2%E6%88%B7%E7%AB%AF/</id>
-    <published>2023-01-24T08:19:54.814Z</published>
-    <updated>2023-01-24T08:19:54.814Z</updated>
+    <published>2023-01-24T08:20:48.953Z</published>
+    <updated>2023-01-24T08:20:48.953Z</updated>
     
     
       
@@ -131,8 +298,8 @@
     <title>部署要求</title>
     <link href="https://byconity.github.io/zh-cn/docs/%E5%9F%BA%E7%A1%80%E4%BD%BF%E7%94%A8%E6%89%8B%E5%86%8C/%E9%83%A8%E7%BD%B2%E8%A6%81%E6%B1%82/"/>
     <id>https://byconity.github.io/zh-cn/docs/%E5%9F%BA%E7%A1%80%E4%BD%BF%E7%94%A8%E6%89%8B%E5%86%8C/%E9%83%A8%E7%BD%B2%E8%A6%81%E6%B1%82/</id>
-    <published>2023-01-24T08:19:54.814Z</published>
-    <updated>2023-01-24T08:19:54.814Z</updated>
+    <published>2023-01-24T08:20:48.953Z</published>
+    <updated>2023-01-24T08:20:48.953Z</updated>
     
     
       
@@ -158,8 +325,8 @@
     <title>配置计算组</title>
     <link href="https://byconity.github.io/zh-cn/docs/%E5%9F%BA%E7%A1%80%E4%BD%BF%E7%94%A8%E6%89%8B%E5%86%8C/%E9%85%8D%E7%BD%AE%E8%AE%A1%E7%AE%97%E7%BB%84/"/>
     <id>https://byconity.github.io/zh-cn/docs/%E5%9F%BA%E7%A1%80%E4%BD%BF%E7%94%A8%E6%89%8B%E5%86%8C/%E9%85%8D%E7%BD%AE%E8%AE%A1%E7%AE%97%E7%BB%84/</id>
-    <published>2023-01-24T08:19:54.814Z</published>
-    <updated>2023-01-24T08:19:54.814Z</updated>
+    <published>2023-01-24T08:20:48.953Z</published>
+    <updated>2023-01-24T08:20:48.953Z</updated>
     
     
       
@@ -186,8 +353,8 @@
     <title>集群配置参数</title>
     <link href="https://byconity.github.io/zh-cn/docs/%E5%9F%BA%E7%A1%80%E4%BD%BF%E7%94%A8%E6%89%8B%E5%86%8C/%E9%9B%86%E7%BE%A4%E9%85%8D%E7%BD%AE%E5%8F%82%E6%95%B0/"/>
     <id>https://byconity.github.io/zh-cn/docs/%E5%9F%BA%E7%A1%80%E4%BD%BF%E7%94%A8%E6%89%8B%E5%86%8C/%E9%9B%86%E7%BE%A4%E9%85%8D%E7%BD%AE%E5%8F%82%E6%95%B0/</id>
-    <published>2023-01-24T08:19:54.814Z</published>
-    <updated>2023-01-24T08:19:54.814Z</updated>
+    <published>2023-01-24T08:20:48.953Z</published>
+    <updated>2023-01-24T08:20:48.953Z</updated>
     
     
       
@@ -213,8 +380,8 @@
     <title>事物和并发控制</title>
     <link href="https://byconity.github.io/zh-cn/docs/%E9%AB%98%E7%BA%A7%E7%94%A8%E6%88%B7%E6%89%8B%E5%86%8C/%E4%BA%8B%E7%89%A9%E5%92%8C%E5%B9%B6%E5%8F%91%E6%8E%A7%E5%88%B6/"/>
     <id>https://byconity.github.io/zh-cn/docs/%E9%AB%98%E7%BA%A7%E7%94%A8%E6%88%B7%E6%89%8B%E5%86%8C/%E4%BA%8B%E7%89%A9%E5%92%8C%E5%B9%B6%E5%8F%91%E6%8E%A7%E5%88%B6/</id>
-    <published>2023-01-24T08:19:54.814Z</published>
-    <updated>2023-01-24T08:19:54.814Z</updated>
+    <published>2023-01-24T08:20:48.953Z</published>
+    <updated>2023-01-24T08:20:48.953Z</updated>
     
     
       
@@ -240,8 +407,8 @@
     <title>列存设计原理</title>
     <link href="https://byconity.github.io/zh-cn/docs/%E9%AB%98%E7%BA%A7%E7%94%A8%E6%88%B7%E6%89%8B%E5%86%8C/%E5%88%97%E5%AD%98%E8%AE%BE%E8%AE%A1%E5%8E%9F%E7%90%86/"/>
     <id>https://byconity.github.io/zh-cn/docs/%E9%AB%98%E7%BA%A7%E7%94%A8%E6%88%B7%E6%89%8B%E5%86%8C/%E5%88%97%E5%AD%98%E8%AE%BE%E8%AE%A1%E5%8E%9F%E7%90%86/</id>
-    <published>2023-01-24T08:19:54.814Z</published>
-    <updated>2023-01-24T08:19:54.814Z</updated>
+    <published>2023-01-24T08:20:48.953Z</published>
+    <updated>2023-01-24T08:20:48.953Z</updated>
     
     
       
@@ -267,8 +434,8 @@
     <title>复杂查询模型和执行调优</title>
     <link href="https://byconity.github.io/zh-cn/docs/%E9%AB%98%E7%BA%A7%E7%94%A8%E6%88%B7%E6%89%8B%E5%86%8C/%E5%A4%8D%E6%9D%82%E6%9F%A5%E8%AF%A2%E6%A8%A1%E5%9E%8B%E5%92%8C%E6%89%A7%E8%A1%8C%E8%B0%83%E4%BC%98/"/>
     <id>https://byconity.github.io/zh-cn/docs/%E9%AB%98%E7%BA%A7%E7%94%A8%E6%88%B7%E6%89%8B%E5%86%8C/%E5%A4%8D%E6%9D%82%E6%9F%A5%E8%AF%A2%E6%A8%A1%E5%9E%8B%E5%92%8C%E6%89%A7%E8%A1%8C%E8%B0%83%E4%BC%98/</id>
-    <published>2023-01-24T08:19:54.814Z</published>
-    <updated>2023-01-24T08:19:54.814Z</updated>
+    <published>2023-01-24T08:20:48.953Z</published>
+    <updated>2023-01-24T08:20:48.953Z</updated>
     
     
       
@@ -294,8 +461,8 @@
     <title>导入调优</title>
     <link href="https://byconity.github.io/zh-cn/docs/%E9%AB%98%E7%BA%A7%E7%94%A8%E6%88%B7%E6%89%8B%E5%86%8C/%E5%AF%BC%E5%85%A5%E8%B0%83%E4%BC%98/"/>
     <id>https://byconity.github.io/zh-cn/docs/%E9%AB%98%E7%BA%A7%E7%94%A8%E6%88%B7%E6%89%8B%E5%86%8C/%E5%AF%BC%E5%85%A5%E8%B0%83%E4%BC%98/</id>
-    <published>2023-01-24T08:19:54.814Z</published>
-    <updated>2023-01-24T08:19:54.814Z</updated>
+    <published>2023-01-24T08:20:48.953Z</published>
+    <updated>2023-01-24T08:20:48.953Z</updated>
     
     
       
@@ -321,8 +488,8 @@
     <title>查询优化器</title>
     <link href="https://byconity.github.io/zh-cn/docs/%E9%AB%98%E7%BA%A7%E7%94%A8%E6%88%B7%E6%89%8B%E5%86%8C/%E6%9F%A5%E8%AF%A2%E4%BC%98%E5%8C%96%E5%99%A8/"/>
     <id>https://byconity.github.io/zh-cn/docs/%E9%AB%98%E7%BA%A7%E7%94%A8%E6%88%B7%E6%89%8B%E5%86%8C/%E6%9F%A5%E8%AF%A2%E4%BC%98%E5%8C%96%E5%99%A8/</id>
-    <published>2023-01-24T08:19:54.814Z</published>
-    <updated>2023-01-24T08:19:54.814Z</updated>
+    <published>2023-01-24T08:20:48.953Z</published>
+    <updated>2023-01-24T08:20:48.953Z</updated>
     
     
       
@@ -348,8 +515,8 @@
     <title>资源管理器</title>
     <link href="https://byconity.github.io/zh-cn/docs/%E9%AB%98%E7%BA%A7%E7%94%A8%E6%88%B7%E6%89%8B%E5%86%8C/%E8%B5%84%E6%BA%90%E7%AE%A1%E7%90%86%E5%99%A8/"/>
     <id>https://byconity.github.io/zh-cn/docs/%E9%AB%98%E7%BA%A7%E7%94%A8%E6%88%B7%E6%89%8B%E5%86%8C/%E8%B5%84%E6%BA%90%E7%AE%A1%E7%90%86%E5%99%A8/</id>
-    <published>2023-01-24T08:19:54.814Z</published>
-    <updated>2023-01-24T08:19:54.814Z</updated>
+    <published>2023-01-24T08:20:48.953Z</published>
+    <updated>2023-01-24T08:20:48.953Z</updated>
     
     
       
@@ -375,8 +542,8 @@
     <title>配置后台任务</title>
     <link href="https://byconity.github.io/zh-cn/docs/%E9%AB%98%E7%BA%A7%E7%94%A8%E6%88%B7%E6%89%8B%E5%86%8C/%E9%85%8D%E7%BD%AE%E5%90%8E%E5%8F%B0%E4%BB%BB%E5%8A%A1/"/>
     <id>https://byconity.github.io/zh-cn/docs/%E9%AB%98%E7%BA%A7%E7%94%A8%E6%88%B7%E6%89%8B%E5%86%8C/%E9%85%8D%E7%BD%AE%E5%90%8E%E5%8F%B0%E4%BB%BB%E5%8A%A1/</id>
-    <published>2023-01-24T08:19:54.814Z</published>
-    <updated>2023-01-24T08:19:54.814Z</updated>
+    <published>2023-01-24T08:20:48.953Z</published>
+    <updated>2023-01-24T08:20:48.953Z</updated>
     
     
       
@@ -392,169 +559,6 @@
     <category term="Docs" scheme="https://byconity.github.io/categories/Docs/"/>
     
     <category term="Advanced" scheme="https://byconity.github.io/categories/Docs/Advanced/"/>
-    
-    
-    <category term="Docs" scheme="https://byconity.github.io/tags/Docs/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>主要原理概念</title>
-    <link href="https://byconity.github.io/zh-cn/docs/ByConity%E7%AE%80%E4%BB%8B/%E4%B8%BB%E8%A6%81%E5%8E%9F%E7%90%86%E6%A6%82%E5%BF%B5/"/>
-    <id>https://byconity.github.io/zh-cn/docs/ByConity%E7%AE%80%E4%BB%8B/%E4%B8%BB%E8%A6%81%E5%8E%9F%E7%90%86%E6%A6%82%E5%BF%B5/</id>
-    <published>2023-01-24T08:19:54.810Z</published>
-    <updated>2023-01-24T08:19:54.810Z</updated>
-    
-    
-      
-      
-        
-        
-    <summary type="html">&lt;h1 id=&quot;主要原理概念&quot;&gt;&lt;a href=&quot;#主要原理概念&quot; class=&quot;headerlink&quot; title=&quot;主要原理概念&quot;&gt;&lt;/a&gt;主要原理概念&lt;/h1&gt;&lt;h1 id=&quot;简介&quot;&gt;&lt;a href=&quot;#简介&quot; class=&quot;headerlink&quot;</summary>
-        
-      
-    
-    
-    
-    <category term="Docs" scheme="https://byconity.github.io/categories/Docs/"/>
-    
-    <category term="Introduction" scheme="https://byconity.github.io/categories/Docs/Introduction/"/>
-    
-    
-    <category term="Docs" scheme="https://byconity.github.io/tags/Docs/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>快速上手</title>
-    <link href="https://byconity.github.io/zh-cn/docs/ByConity%E7%AE%80%E4%BB%8B/%E5%BF%AB%E9%80%9F%E4%B8%8A%E6%89%8B/"/>
-    <id>https://byconity.github.io/zh-cn/docs/ByConity%E7%AE%80%E4%BB%8B/%E5%BF%AB%E9%80%9F%E4%B8%8A%E6%89%8B/</id>
-    <published>2023-01-24T08:19:54.810Z</published>
-    <updated>2023-01-24T08:19:54.810Z</updated>
-    
-    
-      
-      
-        
-        
-    <summary type="html">&lt;h1 id=&quot;快速上手&quot;&gt;&lt;a href=&quot;#快速上手&quot; class=&quot;headerlink&quot; title=&quot;快速上手&quot;&gt;&lt;/a&gt;快速上手&lt;/h1&gt;&lt;p&gt;集群搭建和启动之后，让我们快速的试用一下：）&lt;/p&gt;
-&lt;h1 id=&quot;入门教程&quot;&gt;&lt;a href=&quot;#入门教程&quot;</summary>
-        
-      
-    
-    
-    
-    <category term="Docs" scheme="https://byconity.github.io/categories/Docs/"/>
-    
-    <category term="Introduction" scheme="https://byconity.github.io/categories/Docs/Introduction/"/>
-    
-    
-    <category term="Docs" scheme="https://byconity.github.io/tags/Docs/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>推荐场景案例</title>
-    <link href="https://byconity.github.io/zh-cn/docs/ByConity%E7%AE%80%E4%BB%8B/%E6%8E%A8%E8%8D%90%E5%9C%BA%E6%99%AF%E6%A1%88%E4%BE%8B/"/>
-    <id>https://byconity.github.io/zh-cn/docs/ByConity%E7%AE%80%E4%BB%8B/%E6%8E%A8%E8%8D%90%E5%9C%BA%E6%99%AF%E6%A1%88%E4%BE%8B/</id>
-    <published>2023-01-24T08:19:54.810Z</published>
-    <updated>2023-01-24T08:19:54.810Z</updated>
-    
-    
-      
-      
-        
-        
-    <summary type="html">&lt;h1 id=&quot;推荐场景案例&quot;&gt;&lt;a href=&quot;#推荐场景案例&quot; class=&quot;headerlink&quot; title=&quot;推荐场景案例&quot;&gt;&lt;/a&gt;推荐场景案例&lt;/h1&gt;&lt;h1 id=&quot;通用场景&quot;&gt;&lt;a href=&quot;#通用场景&quot; class=&quot;headerlink&quot;</summary>
-        
-      
-    
-    
-    
-    <category term="Docs" scheme="https://byconity.github.io/categories/Docs/"/>
-    
-    <category term="Introduction" scheme="https://byconity.github.io/categories/Docs/Introduction/"/>
-    
-    
-    <category term="Docs" scheme="https://byconity.github.io/tags/Docs/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>背景和技术架构</title>
-    <link href="https://byconity.github.io/zh-cn/docs/ByConity%E7%AE%80%E4%BB%8B/%E8%83%8C%E6%99%AF%E5%92%8C%E6%8A%80%E6%9C%AF%E6%9E%B6%E6%9E%84/"/>
-    <id>https://byconity.github.io/zh-cn/docs/ByConity%E7%AE%80%E4%BB%8B/%E8%83%8C%E6%99%AF%E5%92%8C%E6%8A%80%E6%9C%AF%E6%9E%B6%E6%9E%84/</id>
-    <published>2023-01-24T08:19:54.810Z</published>
-    <updated>2023-01-24T08:19:54.810Z</updated>
-    
-    
-      
-      
-        
-        
-    <summary type="html">&lt;h1 id=&quot;背景和技术架构&quot;&gt;&lt;a href=&quot;#背景和技术架构&quot; class=&quot;headerlink&quot; title=&quot;背景和技术架构&quot;&gt;&lt;/a&gt;背景和技术架构&lt;/h1&gt;&lt;h1 id=&quot;背景&quot;&gt;&lt;a href=&quot;#背景&quot; class=&quot;headerlink&quot;</summary>
-        
-      
-    
-    
-    
-    <category term="Docs" scheme="https://byconity.github.io/categories/Docs/"/>
-    
-    <category term="Introduction" scheme="https://byconity.github.io/categories/Docs/Introduction/"/>
-    
-    
-    <category term="Docs" scheme="https://byconity.github.io/tags/Docs/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>ANSI Compatibility</title>
-    <link href="https://byconity.github.io/zh-cn/docs/SQL%E8%AF%AD%E6%B3%95%E8%AF%B4%E6%98%8E/ansi-compatibility/"/>
-    <id>https://byconity.github.io/zh-cn/docs/SQL%E8%AF%AD%E6%B3%95%E8%AF%B4%E6%98%8E/ansi-compatibility/</id>
-    <published>2023-01-24T08:19:54.810Z</published>
-    <updated>2023-01-24T08:19:54.810Z</updated>
-    
-    
-      
-      
-        
-        
-    <summary type="html">&lt;p&gt;ByteHouse provides a rich set of SQL syntax through ANSI SQL dialect. When using this dialect, SQL statements will be parsed and</summary>
-        
-      
-    
-    
-    
-    <category term="Docs" scheme="https://byconity.github.io/categories/Docs/"/>
-    
-    <category term="SQL_Syntax" scheme="https://byconity.github.io/categories/Docs/SQL-Syntax/"/>
-    
-    
-    <category term="Docs" scheme="https://byconity.github.io/tags/Docs/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Data Types</title>
-    <link href="https://byconity.github.io/zh-cn/docs/SQL%E8%AF%AD%E6%B3%95%E8%AF%B4%E6%98%8E/data-types/"/>
-    <id>https://byconity.github.io/zh-cn/docs/SQL%E8%AF%AD%E6%B3%95%E8%AF%B4%E6%98%8E/data-types/</id>
-    <published>2023-01-24T08:19:54.810Z</published>
-    <updated>2023-01-24T08:19:54.810Z</updated>
-    
-    
-      
-      
-        
-        
-    <summary type="html">&lt;p&gt;The data types provided in ByteHouse are adapted from ClickHouse. Visit this &lt;a</summary>
-        
-      
-    
-    
-    
-    <category term="Docs" scheme="https://byconity.github.io/categories/Docs/"/>
-    
-    <category term="SQL_Syntax" scheme="https://byconity.github.io/categories/Docs/SQL-Syntax/"/>
     
     
     <category term="Docs" scheme="https://byconity.github.io/tags/Docs/"/>
