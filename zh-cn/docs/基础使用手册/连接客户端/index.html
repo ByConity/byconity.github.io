@@ -393,7 +393,7 @@
 <p>文档结构：教程目的，前置准备，分步骤讲解原理 &amp; 示例，相关文档推荐；</p>
 <p>内容提要：</p>
 <ol>
-<li>Byconity 提供哪些客户端或者驱动方式进行与其他系统的交互</li>
+<li>ByConity 提供哪些客户端或者驱动方式进行与其他系统的交互</li>
 <li>如何在部署好集群后，下载、启动这些客户端</li>
 </ol>
 <h2 id="命令行客户端（CLI）"><a href="#命令行客户端（CLI）" class="headerlink" title="命令行客户端（CLI）"></a>命令行客户端（CLI）</h2><h3 id="Docker-Client"><a href="#Docker-Client" class="headerlink" title="Docker Client"></a><a target="_blank" rel="noopener" href="https://hub.docker.com/r/yandex/clickhouse-server/">Docker Client</a></h3><p>如果你已经安装了 Docker，那么只需下面命令就可以直接建立 Byconity 连接：</p>
@@ -461,7 +461,7 @@
 </ul>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">String url = &quot;jdbc:ch://localhost:8123&quot;; </span><br><span class="line">Properties properties = new Properties();</span><br><span class="line">properties.setProperty(&quot;max_execution_time&quot;, &quot;120&quot;);</span><br><span class="line">ClickHouseDataSource dataSource = new ClickHouseDataSource(url, properties);</span><br><span class="line">try (Connection conn = dataSource.getConnection(&quot;default&quot;, &quot;password&quot;);</span><br><span class="line">    Statement stmt = conn.createStatement()) &#123;</span><br><span class="line">    ResultSet rs = stmt.executeQuery(&quot;SHOW DATABASES;&quot;);</span><br><span class="line">    while(rs.next()) &#123;</span><br><span class="line">        // ...</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
-<h2 id="HTTP"><a href="#HTTP" class="headerlink" title="HTTP"></a>HTTP</h2><p>Byconity 也提供 HTTP 连接方式，可以用 curl 或 postman 方式执行 SQL。curl 示例：</p>
+<h2 id="HTTP"><a href="#HTTP" class="headerlink" title="HTTP"></a>HTTP</h2><p>ByConity 也提供 HTTP 连接方式，可以用 curl 或 postman 方式执行 SQL。curl 示例：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">curl --location --request POST &#x27;127.0.0.1:8123/?max_execution_time=60&amp;default_format=Native&#x27; \</span><br><span class="line">--header &#x27;Authorization: Basic xxx&#x27; \</span><br><span class="line">--header &#x27;Content-Type: text/plain&#x27; \</span><br><span class="line">--data-raw &#x27;SHOW DATABASES;&#x27;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
 <ul>
