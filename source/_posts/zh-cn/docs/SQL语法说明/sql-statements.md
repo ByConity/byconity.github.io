@@ -489,7 +489,7 @@ ENGINE = `CnchMergeTree`
 ORDER BY (`a`) 
 
 # step 2: insert 2 rows in value format into the table
-INSERT INTO example_table FORMAT VALUES (1, 'a', '2021-07-27'), (2, 'b', '2021-07-27');
+INSERT INTO example_table VALUES (1, 'a', '2021-07-27'), (2, 'b', '2021-07-27');
 ```
 ### INSERT SELECT
 
