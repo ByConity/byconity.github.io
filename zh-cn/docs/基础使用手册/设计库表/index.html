@@ -470,7 +470,7 @@
 <ul>
 <li><code>index_granularity_bytes</code> — 索引粒度，以字节为单位，默认值: 10Mb。如果想要仅按数据行数限制索引粒度, 请设置为 0(不建议)。</li>
 <li><code>min_index_granularity_bytes</code> - 允许的最小数据粒度，默认值：1024b。该选项用于防止误操作，添加了一个非常低索引粒度的表。</li>
-<li><code>enable_mixed_granularity_parts</code> — 是否启用通过 <code>index_granularity_bytes</code> 控制索引粒度的大小。在老版本只有 <code>index_granularity</code> 配置能够用于限制索引粒度的大小。当从具有很大的行（几十上百兆字节）的表中查询数据时候，<code>index_granularity_bytes</code> 配置能够提升 ClickHouse 的性能。如果您的表里有很大的行，可以开启这项配置来提升 <code>SELECT</code> 查询的性能。</li>
+<li><code>enable_mixed_granularity_parts</code> — 是否启用通过 <code>index_granularity_bytes</code> 控制索引粒度的大小。在老版本只有 <code>index_granularity</code> 配置能够用于限制索引粒度的大小。当从具有很大的行（几十上百兆字节）的表中查询数据时候，<code>index_granularity_bytes</code> 配置能够提升 ByConity 的性能。如果您的表里有很大的行，可以开启这项配置来提升 <code>SELECT</code> 查询的性能。</li>
 </ul>
 <h4 id="计算组配置"><a href="#计算组配置" class="headerlink" title="计算组配置"></a>计算组配置</h4><p>参考 【教程型】配置计算组</p>
 <h4 id="merge-相关配置"><a href="#merge-相关配置" class="headerlink" title="merge 相关配置"></a>merge 相关配置</h4><p>参考后台任务章节</p>
