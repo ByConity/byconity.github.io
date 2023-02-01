@@ -390,11 +390,11 @@
         <div class="card-content article-card-content">
             <div id="articleContent">
                 <blockquote>
-<p>Notice:<br>Some of the examples below are referenced from <a target="_blank" rel="noopener" href="https://clickhouse.com/docs/en/sql-reference/functions/">ClickHouse Documentation</a> but have been adapted and modified to work in ByteHouse.</p>
+<p>Notice:<br>Some of the examples below are referenced from <a target="_blank" rel="noopener" href="https://clickhouse.com/docs/en/sql-reference/functions/">ClickHouse Documentation</a> but have been adapted and modified to work in ByConity.</p>
 </blockquote>
 <h2 id="any"><a href="#any" class="headerlink" title="any"></a>any</h2><p>Selects the first encountered value.<br>The query can be executed in any order and even in a different order each time, so the result of this function is indeterminate.<br>To get a determinate result, you can use the ‘min’ or ‘max’ function instead of ‘any’.</p>
 <p>In some cases, you can rely on the order of execution. This applies to cases when SELECT comes from a subquery that uses ORDER BY.</p>
-<p>When a <code>SELECT</code> query has the <code>GROUP BY</code> clause or at least one aggregate function, ByteHouse (in contrast to MySQL) requires that all expressions in the <code>SELECT</code> , <code>HAVING</code> , and <code>ORDER BY</code> clauses be calculated from keys or from aggregate functions. In other words, each column selected from the table must be used either in keys or inside aggregate functions. To get behavior like in MySQL, you can put the other columns in the <code>any</code> aggregate function.</p>
+<p>When a <code>SELECT</code> query has the <code>GROUP BY</code> clause or at least one aggregate function, ByConity (in contrast to MySQL) requires that all expressions in the <code>SELECT</code> , <code>HAVING</code> , and <code>ORDER BY</code> clauses be calculated from keys or from aggregate functions. In other words, each column selected from the table must be used either in keys or inside aggregate functions. To get behavior like in MySQL, you can put the other columns in the <code>any</code> aggregate function.</p>
 <p><strong>Syntax</strong></p>
 <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">any</span>(<span class="keyword">column</span>)</span><br></pre></td></tr></table></figure>
 
