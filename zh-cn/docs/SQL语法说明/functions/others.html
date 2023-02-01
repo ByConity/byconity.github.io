@@ -132,7 +132,7 @@ ORDER BY h ASC
 <pre><code class="sql">
 blockSize()
 </code></pre>
-<p>In ClickHouse, queries are always run on blocks (sets of column parts). This function allows getting the size of the block that you called it for.</p>
+<p>In ByConity, queries are always run on blocks (sets of column parts). This function allows getting the size of the block that you called it for.</p>
 <h2 id="currentDatabase"><a href="#currentDatabase" class="headerlink" title="currentDatabase"></a>currentDatabase</h2><p><strong>Syntax</strong></p>
 <pre><code class="sql">
 currentDatabase()
@@ -458,7 +458,7 @@ SELECT identity(42)
 
 └──────────────┘
 </code></pre>
-<h2 id="if"><a href="#if" class="headerlink" title="if"></a>if</h2><p>Controls conditional branching. Unlike most systems, ClickHouse always evaluate both expressions <code>then</code> and <code>else</code> .</p>
+<h2 id="if"><a href="#if" class="headerlink" title="if"></a>if</h2><p>Controls conditional branching. Unlike most systems, ByConity always evaluate both expressions <code>then</code> and <code>else</code> .</p>
 <p><strong>Syntax</strong></p>
 <pre><code class="sql">
 SELECT if(cond, then, else)
@@ -560,7 +560,7 @@ ignore(…)
 <p>Accepts any arguments, including <code>NULL</code> . Always returns 0.</p>
 <p>However, the argument is still evaluated. This can be used for benchmarks.</p>
 <h2 id="indexHint"><a href="#indexHint" class="headerlink" title="indexHint"></a>indexHint</h2><p>The function is intended for debugging and introspection purposes. The function ignores it’s argument and always returns 1. Arguments are not even evaluated.</p>
-<p>But for the purpose of index analysis, the argument of this function is analyzed as if it was present directly without being wrapped inside <code>indexHint</code> function. This allows to select data in index ranges by the corresponding condition but without further filtering by this condition. The index in ClickHouse is sparse and using <code>indexHint</code> will yield more data than specifying the same condition directly.</p>
+<p>But for the purpose of index analysis, the argument of this function is analyzed as if it was present directly without being wrapped inside <code>indexHint</code> function. This allows to select data in index ranges by the corresponding condition but without further filtering by this condition. The index in ByConity is sparse and using <code>indexHint</code> will yield more data than specifying the same condition directly.</p>
 <p><strong>Syntax</strong></p>
 <pre><code class="sql">
 SELECT * FROM table WHERE indexHint(&lt;expression&gt;)
@@ -588,7 +588,7 @@ SELECT count() FROM ontime
 <pre><code class="sql">
 SELECT FlightDate AS k, count() FROM ontime GROUP BY k ORDER BY k
 </code></pre>
-<p>ClickHouse processed the entire table ( <code>Processed 4.28 million rows</code> ).</p>
+<p>ByConity processed the entire table ( <code>Processed 4.28 million rows</code> ).</p>
 <p>Result:</p>
 <pre><code class="plain%20text">
 ┌──────────k─┬─count()─┐
@@ -612,7 +612,7 @@ SELECT FlightDate AS k, count() FROM ontime GROUP BY k ORDER BY k
 <pre><code class="sql">
 SELECT FlightDate AS k, count() FROM ontime WHERE k = &#39;2017-09-15&#39; GROUP BY k ORDER BY k
 </code></pre>
-<p>By using the index, ClickHouse processed a significantly smaller number of rows ( <code>Processed 32.74 thousand rows</code> ).</p>
+<p>By using the index, ByConity processed a significantly smaller number of rows ( <code>Processed 32.74 thousand rows</code> ).</p>
 <p>Result:</p>
 <pre><code class="plain%20text">
 ┌──────────k─┬─count()─┐
@@ -638,7 +638,7 @@ GROUP BY k
 
 ORDER BY k ASC
 </code></pre>
-<p>ClickHouse used the index in the same way as the previous time ( <code>Processed 32.74 thousand rows</code> ).</p>
+<p>ByConity used the index in the same way as the previous time ( <code>Processed 32.74 thousand rows</code> ).</p>
 <p>The expression <code>k = &#39;2017-09-15&#39;</code> was not used when generating the result.</p>
 <p>In examle the <code>indexHint</code> function allows to see adjacent dates.</p>
 <p>Result:</p>
@@ -737,7 +737,7 @@ SELECT joinGet(db_test.id_val,&#39;val&#39;,toUInt32(number)) from numbers(4) SE
 <p>Accepts a numeric argument and returns a Float64 number close to the natural logarithm of the argument.</p>
 <h2 id="materialize"><a href="#materialize" class="headerlink" title="materialize"></a>materialize</h2><p>materialize(x)</p>
 <p>Turns a constant into a full column containing just one value.</p>
-<p>In ClickHouse, full columns and constants are represented differently in memory. Functions work differently for constant arguments and normal arguments (different code is executed), although the result is almost always the same. This function is for debugging this behavior.</p>
+<p>In ByConity, full columns and constants are represented differently in memory. Functions work differently for constant arguments and normal arguments (different code is executed), although the result is almost always the same. This function is for debugging this behavior.</p>
 <h2 id="modelEvaluate"><a href="#modelEvaluate" class="headerlink" title="modelEvaluate"></a>modelEvaluate</h2><p>Evaluate external model.</p>
 <p><strong>Syntax</strong></p>
 <pre><code class="sql">
@@ -882,7 +882,7 @@ SELECT replicate(x, arr);
 </code></pre>
 <p><strong>Arguments:</strong></p>
 <ul>
-<li><p><code>arr</code> — Original array. ClickHouse creates a new array of the same length as the original and fills it with the value <code>x</code> . </p>
+<li><p><code>arr</code> — Original array. ByConity creates a new array of the same length as the original and fills it with the value <code>x</code> . </p>
 </li>
 <li><p><code>x</code> — The value that the resulting array will be filled with.</p>
 </li>
@@ -1195,7 +1195,7 @@ SELECT toColumnTypeName(CAST(&#39;2018-01-01 01:02:03&#39; AS DateTime))
 <p>The example shows that the <code>DateTime</code> data type is stored in memory as <code>Const(UInt32)</code> .</p>
 <h2 id="toTypeName"><a href="#toTypeName" class="headerlink" title="toTypeName"></a>toTypeName</h2><p>toTypeName(x)</p>
 <p>Returns a string containing the type name of the passed argument.</p>
-<p>If <code>NULL</code> is passed to the function as input, then it returns the <code>Nullable(Nothing)</code> type, which corresponds to an internal <code>NULL</code> representation in ClickHouse.</p>
+<p>If <code>NULL</code> is passed to the function as input, then it returns the <code>Nullable(Nothing)</code> type, which corresponds to an internal <code>NULL</code> representation in ByConity.</p>
 <h2 id="transform"><a href="#transform" class="headerlink" title="transform"></a>transform</h2><p><strong>Syntax</strong></p>
 <pre><code class="sql">
 transform(x, array_from, array_to) 
