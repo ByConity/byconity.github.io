@@ -582,8 +582,8 @@
 </ul>
 <p><strong>Returned value</strong><br>A value in the <code>Nullable(Decimal(P,S))</code> data type. The value contains:</p>
 <ul>
-<li>Number with <code>S</code> decimal places, if ClickHouse interprets the input string as a number. </li>
-<li>0 with <code>S</code> decimal places, if ClickHouse can’t interpret the input string as a number or if the input number contains more than <code>S</code> decimal places.</li>
+<li>Number with <code>S</code> decimal places, if ByConity interprets the input string as a number. </li>
+<li>0 with <code>S</code> decimal places, if ByConity can’t interpret the input string as a number or if the input number contains more than <code>S</code> decimal places.</li>
 </ul>
 <p><strong>Example</strong></p>
 <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> toDecimal32OrZero(toString(<span class="number">-1.111</span>), <span class="number">5</span>) <span class="keyword">AS</span> val, toTypeName(val);</span><br></pre></td></tr></table></figure>
@@ -804,6 +804,7 @@
 <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> toUnixTimestamp(toDateTime(<span class="string">&#x27;2017-11-05 08:07:47&#x27;</span>, <span class="string">&#x27;Asia/Tokyo&#x27;</span>)) <span class="keyword">AS</span> unix_timestamp</span><br></pre></td></tr></table></figure>
 
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">┌─unix_timestamp─┐</span><br><span class="line">│ 1509836867     │</span><br><span class="line">└────────────────┘</span><br></pre></td></tr></table></figure>
+
                 
             </div>
             <hr/>

@@ -235,8 +235,8 @@ toDecimal64OrZero( expr, S)
 </ul>
 <p><strong>Returned value</strong><br>A value in the <code>Nullable(Decimal(P,S))</code> data type. The value contains:</p>
 <ul>
-<li>Number with <code>S</code> decimal places, if ClickHouse interprets the input string as a number. </li>
-<li>0 with <code>S</code> decimal places, if ClickHouse can’t interpret the input string as a number or if the input number contains more than <code>S</code> decimal places.</li>
+<li>Number with <code>S</code> decimal places, if ByConity interprets the input string as a number. </li>
+<li>0 with <code>S</code> decimal places, if ByConity can’t interpret the input string as a number or if the input number contains more than <code>S</code> decimal places.</li>
 </ul>
 <p><strong>Example</strong></p>
 <pre><code class="sql">SELECT toDecimal32OrZero(toString(-1.111), 5) AS val, toTypeName(val);
