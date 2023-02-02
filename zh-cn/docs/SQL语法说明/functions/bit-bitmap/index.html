@@ -351,7 +351,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>Publish Date:&nbsp;&nbsp;
-                    2023-02-01
+                    2023-02-02
                 </div>
                 
 
@@ -390,7 +390,7 @@
         <div class="card-content article-card-content">
             <div id="articleContent">
                 <blockquote>
-<p>Notice:<br>Some of the examples below are referenced from <a target="_blank" rel="noopener" href="https://clickhouse.com/docs/en/sql-reference/functions/">ClickHouse Documentation</a> but have been adapted and modified to work in ByteHouse.</p>
+<p>Notice:<br>Some of the examples below are referenced from <a target="_blank" rel="noopener" href="https://clickhouse.com/docs/en/sql-reference/functions/">ClickHouse Documentation</a> but have been adapted and modified to work in ByConity.</p>
 </blockquote>
 <h2 id="bitTest"><a href="#bitTest" class="headerlink" title="bitTest"></a>bitTest</h2><p>Takes any integer and converts it into [binary form].</p>
 <p><strong>Syntax</strong></p>
@@ -828,6 +828,7 @@
 <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> bitmapXorCardinality(bitmapBuild([<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>]),bitmapBuild([<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>])) <span class="keyword">AS</span> res;</span><br></pre></td></tr></table></figure>
 <p>Result:</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">┌─res─┐</span><br><span class="line">│ 4   │</span><br><span class="line">└─────┘</span><br></pre></td></tr></table></figure>
+
                 
             </div>
             <hr/>
