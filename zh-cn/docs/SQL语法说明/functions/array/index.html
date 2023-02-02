@@ -390,7 +390,7 @@
         <div class="card-content article-card-content">
             <div id="articleContent">
                 <blockquote>
-<p>Notice:<br>Some of the examples below are referenced from <a target="_blank" rel="noopener" href="https://clickhouse.com/docs/en/sql-reference/functions/">ClickHouse Documentation</a> but have been adapted and modified to work in ByteHouse.</p>
+<p>Notice:<br>Some of the examples below are referenced from <a target="_blank" rel="noopener" href="https://clickhouse.com/docs/en/sql-reference/functions/">ClickHouse Documentation</a> but have been adapted and modified to work in ByConity.</p>
 </blockquote>
 <h2 id="array"><a href="#array" class="headerlink" title="array"></a>array</h2><p>Creates an array from the function arguments.</p>
 <p>The arguments must be constants and have types that have the smallest common type. At least one argument must be passed, because otherwise it isn’t clear which type of array to create. That is, you can’t use this function to create an empty array (to do that, use the ‘emptyArray*’ function described above).</p>
@@ -817,7 +817,7 @@
 <p><strong>Arguments</strong></p>
 <ul>
 <li><code>array</code> – Array. </li>
-<li><code>single_value</code> – A single value. Only numbers can be added to an array with numbers, and only strings can be added to an array of strings. When adding numbers, ByteHouse automatically sets the <code>single_value</code> type for the data type of the array. Can be <code>NULL</code> . The function adds a <code>NULL</code> element to an array, and the type of array elements converts to <code>Nullable</code> .</li>
+<li><code>single_value</code> – A single value. Only numbers can be added to an array with numbers, and only strings can be added to an array of strings. When adding numbers, ByConity automatically sets the <code>single_value</code> type for the data type of the array. Can be <code>NULL</code> . The function adds a <code>NULL</code> element to an array, and the type of array elements converts to <code>Nullable</code> .</li>
 </ul>
 <p><strong>Returned values</strong></p>
 <ul>
@@ -839,7 +839,7 @@
 <p><strong>Arguments</strong></p>
 <ul>
 <li><code>array</code> – Array. </li>
-<li><code>single_value</code> – A single value. Only numbers can be added to an array with numbers, and only strings can be added to an array of strings. When adding numbers, ByteHouse automatically sets the <code>single_value</code> type for the data type of the array. Can be <code>NULL</code> . The function adds a <code>NULL</code> element to an array, and the type of array elements converts to <code>Nullable</code> .</li>
+<li><code>single_value</code> – A single value. Only numbers can be added to an array with numbers, and only strings can be added to an array of strings. When adding numbers, ByConity automatically sets the <code>single_value</code> type for the data type of the array. Can be <code>NULL</code> . The function adds a <code>NULL</code> element to an array, and the type of array elements converts to <code>Nullable</code> .</li>
 </ul>
 <p><strong>Returned values</strong></p>
 <ul>
@@ -1325,6 +1325,7 @@
 <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="keyword">range</span>(<span class="number">5</span>);</span><br></pre></td></tr></table></figure>
 
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">┌─range(5)────────┐</span><br><span class="line">│ [0, 1, 2, 3, 4] │</span><br><span class="line">└─────────────────┘</span><br></pre></td></tr></table></figure>
+
                 
             </div>
             <hr/>
