@@ -390,7 +390,7 @@
         <div class="card-content article-card-content">
             <div id="articleContent">
                 <blockquote>
-<p>Notice:<br>Some of the examples below are referenced from <a target="_blank" rel="noopener" href="https://clickhouse.com/docs/en/sql-reference/functions/">ClickHouse Documentation</a> but have been adapted and modified to work in ByteHouse.</p>
+<p>Notice:<br>Some of the examples below are referenced from <a target="_blank" rel="noopener" href="https://clickhouse.com/docs/en/sql-reference/functions/">ClickHouse Documentation</a> but have been adapted and modified to work in ByConity.</p>
 </blockquote>
 <h2 id="assumeNotNull"><a href="#assumeNotNull" class="headerlink" title="assumeNotNull"></a>assumeNotNull</h2><p>Results in an equivalent non- <code>Nullable</code> value for a Nullable type. In case the original value is <code>NULL</code> the result is undetermined. See also <code>ifNull</code> and <code>coalesce</code> functions.</p>
 <p><strong>Syntax</strong></p>
@@ -511,7 +511,7 @@
 
 <p><strong>Arguments</strong></p>
 <ul>
-<li><code>x</code> , <code>y</code> — Values for comparison. They must be compatible types, or Bytehouse will generate an exception.</li>
+<li><code>x</code> , <code>y</code> — Values for comparison. They must be compatible types, or ByConity will generate an exception.</li>
 </ul>
 <p><strong>Returned values</strong></p>
 <ul>
@@ -547,6 +547,7 @@
 <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> toTypeName(toNullable(<span class="number">10</span>));</span><br></pre></td></tr></table></figure>
 
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">┌─toTypeName(toNullable(10))─┐</span><br><span class="line">│ Nullable(UInt8)            │</span><br><span class="line">└────────────────────────────┘</span><br></pre></td></tr></table></figure>
+
                 
             </div>
             <hr/>
