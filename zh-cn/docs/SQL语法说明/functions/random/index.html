@@ -390,7 +390,7 @@
         <div class="card-content article-card-content">
             <div id="articleContent">
                 <blockquote>
-<p>Notice:<br>Some of the examples below are referenced from <a target="_blank" rel="noopener" href="https://clickhouse.com/docs/en/sql-reference/functions/">ClickHouse Documentation</a> but have been adapted and modified to work in ByteHouse.</p>
+<p>Notice:<br>Some of the examples below are referenced from <a target="_blank" rel="noopener" href="https://clickhouse.com/docs/en/sql-reference/functions/">ClickHouse Documentation</a> but have been adapted and modified to work in ByConity.</p>
 </blockquote>
 <h2 id="rand"><a href="#rand" class="headerlink" title="rand"></a>rand</h2><p>Returns a pseudo-random UInt32 number, evenly distributed among all UInt32-type numbers.<br>Uses a linear congruential generator.</p>
 <p><strong>Syntax</strong></p>
@@ -442,6 +442,7 @@
 <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> rand(), rand(<span class="number">1</span>), rand(number), randConstant(), randConstant(<span class="number">1</span>), randConstant(number)</span><br><span class="line"><span class="keyword">FROM</span> numbers(<span class="number">3</span>)</span><br></pre></td></tr></table></figure>
 
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">┌─rand()─────┬─rand(1)────┬─rand(number)─┬─randConstant()─┬─randConstant(1)─┬─randConstant(number)─┐</span><br><span class="line">│ 1617218167 │ 3030783952 │ 3660442590   │ 3335999329     │ 1508515848      │ 1880875990           │</span><br><span class="line">│ 432450540  │ 2987789840 │ 653572307    │ 3335999329     │ 1508515848      │ 1880875990           │</span><br><span class="line">│ 3698169875 │ 79826010   │ 458167070    │ 3335999329     │ 1508515848      │ 1880875990           │</span><br><span class="line">└────────────┴────────────┴──────────────┴────────────────┴─────────────────┴──────────────────────┘</span><br></pre></td></tr></table></figure>
+
                 
             </div>
             <hr/>
