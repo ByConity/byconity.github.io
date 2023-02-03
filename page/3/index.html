@@ -240,23 +240,20 @@
             
             <div class="article col s12 m6 l4" data-aos="zoom-in">
                 <div class="card">
-                    <a href="/zh-cn/docs/%E9%AB%98%E7%BA%A7%E7%94%A8%E6%88%B7%E6%89%8B%E5%86%8C/%E8%B5%84%E6%BA%90%E7%AE%A1%E7%90%86%E5%99%A8/">
+                    <a href="/zh-cn/docs/%E9%AB%98%E7%BA%A7%E7%94%A8%E6%88%B7%E6%89%8B%E5%86%8C/%E4%BA%8B%E7%89%A9%E5%92%8C%E5%B9%B6%E5%8F%91%E6%8E%A7%E5%88%B6/">
                         <div class="card-image">
                             
                             
-                            <img src="/medias/banner/0.jpg" class="responsive-img" alt="资源管理器">
+                            <img src="/medias/banner/0.jpg" class="responsive-img" alt="事物和并发控制">
                             
-                            <span class="card-title">资源管理器</span>
+                            <span class="card-title">事物和并发控制</span>
                         </div>
                     </a>
 
                     <div class="card-content article-content">
                         <div class="summary block-with-text">
                             
-                                资源管理器资源管理器（Resource Manager，简称 RM）组件用于对 ByConity 计算资源进行统一管理和调度，是实现资源弹性和提高资源利用率的核心组件。
-目标ByConity 资源管理器的核心设计目标如下：
-
-能够管理、调度
+                                事物和并发控制事务概览在 ByConity (曾用内部代号 CNCH) 里，为了保证数据质量，我们提供了事务语义的支持。每条 SQL 语句都会转换为一个事务去执行，事务提供了原子性、一致性、隔离性和持久性 (ACID) 属性的保证，旨在在并
                             
                         </div>
                         <div class="publish-info">
@@ -294,22 +291,21 @@
             
             <div class="article col s12 m6 l4" data-aos="zoom-in">
                 <div class="card">
-                    <a href="/zh-cn/docs/%E9%AB%98%E7%BA%A7%E7%94%A8%E6%88%B7%E6%89%8B%E5%86%8C/%E9%85%8D%E7%BD%AE%E5%90%8E%E5%8F%B0%E4%BB%BB%E5%8A%A1/">
+                    <a href="/zh-cn/docs/%E9%AB%98%E7%BA%A7%E7%94%A8%E6%88%B7%E6%89%8B%E5%86%8C/%E5%88%97%E5%AD%98%E8%AE%BE%E8%AE%A1%E5%8E%9F%E7%90%86/">
                         <div class="card-image">
                             
                             
-                            <img src="/medias/banner/0.jpg" class="responsive-img" alt="配置后台任务">
+                            <img src="/medias/banner/0.jpg" class="responsive-img" alt="列存设计原理">
                             
-                            <span class="card-title">配置后台任务</span>
+                            <span class="card-title">列存设计原理</span>
                         </div>
                     </a>
 
                     <div class="card-content article-content">
                         <div class="summary block-with-text">
                             
-                                配置后台任务常用命令启动&#x2F;停止表的 Merge123456-- 启动 mergesystem start merges xxx.yyy;-- 停止 mergesystem stop merges xxx.yyy;
-
-手动触发 me
+                                列存设计原理通常事务型数据库采用行存便于支持事务和高并发读写，分析型数据库采用列存减少 IO 和便于压缩。ByConity 采用列存的方式，保证读写性能、支持事务一致性，又适用大规模的数据计算。
+Data Layout表数据物理上按 Par
                             
                         </div>
                         <div class="publish-info">
@@ -326,6 +322,266 @@
                                 
                                 <a href="/categories/Docs/Advanced/" class="post-category">
                                     Advanced
+                                </a>
+                                
+                                
+                            </span>
+                        </div>
+                    </div>
+
+                    
+                    <div class="card-action article-tags">
+                        
+                        <a href="/tags/Docs/">
+                            <span class="chip bg-color">Docs</span>
+                        </a>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+            
+            <div class="article col s12 m6 l4" data-aos="zoom-in">
+                <div class="card">
+                    <a href="/zh-cn/docs/SQL%E8%AF%AD%E6%B3%95%E8%AF%B4%E6%98%8E/functions/encoding/">
+                        <div class="card-image">
+                            
+                            
+                            <img src="/medias/banner/0.jpg" class="responsive-img" alt="Encoding">
+                            
+                            <span class="card-title">Encoding</span>
+                        </div>
+                    </a>
+
+                    <div class="card-content article-content">
+                        <div class="summary block-with-text">
+                            
+                                
+Notice:Some of the examples below are referenced from ClickHouse Documentation but have been adapted and modified to wo
+                            
+                        </div>
+                        <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2023-02-03
+                            </span>
+                            <span class="publish-author">
+                                
+                                <i class="fas fa-bookmark fa-fw icon-category"></i>
+                                
+                                <a href="/categories/Docs/" class="post-category">
+                                    Docs
+                                </a>
+                                
+                                <a href="/categories/Docs/SQL-Syntax/" class="post-category">
+                                    SQL_Syntax
+                                </a>
+                                
+                                
+                            </span>
+                        </div>
+                    </div>
+
+                    
+                    <div class="card-action article-tags">
+                        
+                        <a href="/tags/Docs/">
+                            <span class="chip bg-color">Docs</span>
+                        </a>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+            
+            <div class="article col s12 m6 l4" data-aos="zoom-in">
+                <div class="card">
+                    <a href="/zh-cn/docs/SQL%E8%AF%AD%E6%B3%95%E8%AF%B4%E6%98%8E/functions/encryption/">
+                        <div class="card-image">
+                            
+                            
+                            <img src="/medias/banner/0.jpg" class="responsive-img" alt="Encryption">
+                            
+                            <span class="card-title">Encryption</span>
+                        </div>
+                    </a>
+
+                    <div class="card-content article-content">
+                        <div class="summary block-with-text">
+                            
+                                
+Notice:Some of the examples below are referenced from ClickHouse Documentation but have been adapted and modified to wo
+                            
+                        </div>
+                        <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2023-02-03
+                            </span>
+                            <span class="publish-author">
+                                
+                                <i class="fas fa-bookmark fa-fw icon-category"></i>
+                                
+                                <a href="/categories/Docs/" class="post-category">
+                                    Docs
+                                </a>
+                                
+                                <a href="/categories/Docs/SQL-Syntax/" class="post-category">
+                                    SQL_Syntax
+                                </a>
+                                
+                                
+                            </span>
+                        </div>
+                    </div>
+
+                    
+                    <div class="card-action article-tags">
+                        
+                        <a href="/tags/Docs/">
+                            <span class="chip bg-color">Docs</span>
+                        </a>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+            
+            <div class="article col s12 m6 l4" data-aos="zoom-in">
+                <div class="card">
+                    <a href="/zh-cn/docs/SQL%E8%AF%AD%E6%B3%95%E8%AF%B4%E6%98%8E/functions/geo/">
+                        <div class="card-image">
+                            
+                            
+                            <img src="/medias/banner/0.jpg" class="responsive-img" alt="Geo">
+                            
+                            <span class="card-title">Geo</span>
+                        </div>
+                    </a>
+
+                    <div class="card-content article-content">
+                        <div class="summary block-with-text">
+                            
+                                
+Notice:Some of the examples below are referenced from ClickHouse Documentation but have been adapted and modified to wo
+                            
+                        </div>
+                        <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2023-02-03
+                            </span>
+                            <span class="publish-author">
+                                
+                                <i class="fas fa-bookmark fa-fw icon-category"></i>
+                                
+                                <a href="/categories/Docs/" class="post-category">
+                                    Docs
+                                </a>
+                                
+                                <a href="/categories/Docs/SQL-Syntax/" class="post-category">
+                                    SQL_Syntax
+                                </a>
+                                
+                                
+                            </span>
+                        </div>
+                    </div>
+
+                    
+                    <div class="card-action article-tags">
+                        
+                        <a href="/tags/Docs/">
+                            <span class="chip bg-color">Docs</span>
+                        </a>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+            
+            <div class="article col s12 m6 l4" data-aos="zoom-in">
+                <div class="card">
+                    <a href="/zh-cn/docs/SQL%E8%AF%AD%E6%B3%95%E8%AF%B4%E6%98%8E/functions/hash/">
+                        <div class="card-image">
+                            
+                            
+                            <img src="/medias/banner/0.jpg" class="responsive-img" alt="Hash">
+                            
+                            <span class="card-title">Hash</span>
+                        </div>
+                    </a>
+
+                    <div class="card-content article-content">
+                        <div class="summary block-with-text">
+                            
+                                
+Notice:Some of the examples below are referenced from ClickHouse Documentation but have been adapted and modified to wo
+                            
+                        </div>
+                        <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2023-02-03
+                            </span>
+                            <span class="publish-author">
+                                
+                                <i class="fas fa-bookmark fa-fw icon-category"></i>
+                                
+                                <a href="/categories/Docs/" class="post-category">
+                                    Docs
+                                </a>
+                                
+                                <a href="/categories/Docs/SQL-Syntax/" class="post-category">
+                                    SQL_Syntax
+                                </a>
+                                
+                                
+                            </span>
+                        </div>
+                    </div>
+
+                    
+                    <div class="card-action article-tags">
+                        
+                        <a href="/tags/Docs/">
+                            <span class="chip bg-color">Docs</span>
+                        </a>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+            
+            <div class="article col s12 m6 l4" data-aos="zoom-in">
+                <div class="card">
+                    <a href="/zh-cn/docs/SQL%E8%AF%AD%E6%B3%95%E8%AF%B4%E6%98%8E/functions/ip-address/">
+                        <div class="card-image">
+                            
+                            
+                            <img src="/medias/banner/0.jpg" class="responsive-img" alt="IP Address">
+                            
+                            <span class="card-title">IP Address</span>
+                        </div>
+                    </a>
+
+                    <div class="card-content article-content">
+                        <div class="summary block-with-text">
+                            
+                                
+Notice:Some of the examples below are referenced from ClickHouse Documentation but have been adapted and modified to wo
+                            
+                        </div>
+                        <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2023-02-03
+                            </span>
+                            <span class="publish-author">
+                                
+                                <i class="fas fa-bookmark fa-fw icon-category"></i>
+                                
+                                <a href="/categories/Docs/" class="post-category">
+                                    Docs
+                                </a>
+                                
+                                <a href="/categories/Docs/SQL-Syntax/" class="post-category">
+                                    SQL_Syntax
                                 </a>
                                 
                                 
@@ -591,270 +847,6 @@ Notice:Some of the examples below are referenced from ClickHouse Documentation b
                                 
                                 <a href="/categories/Docs/SQL-Syntax/" class="post-category">
                                     SQL_Syntax
-                                </a>
-                                
-                                
-                            </span>
-                        </div>
-                    </div>
-
-                    
-                    <div class="card-action article-tags">
-                        
-                        <a href="/tags/Docs/">
-                            <span class="chip bg-color">Docs</span>
-                        </a>
-                        
-                    </div>
-                    
-                </div>
-            </div>
-            
-            <div class="article col s12 m6 l4" data-aos="zoom-in">
-                <div class="card">
-                    <a href="/zh-cn/docs/SQL%E8%AF%AD%E6%B3%95%E8%AF%B4%E6%98%8E/functions/type-conversion/">
-                        <div class="card-image">
-                            
-                            
-                            <img src="/medias/banner/0.jpg" class="responsive-img" alt="Type Conversion">
-                            
-                            <span class="card-title">Type Conversion</span>
-                        </div>
-                    </a>
-
-                    <div class="card-content article-content">
-                        <div class="summary block-with-text">
-                            
-                                
-Notice:Some of the examples below are referenced from ClickHouse Documentation but have been adapted and modified to wo
-                            
-                        </div>
-                        <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2023-02-03
-                            </span>
-                            <span class="publish-author">
-                                
-                                <i class="fas fa-bookmark fa-fw icon-category"></i>
-                                
-                                <a href="/categories/Docs/" class="post-category">
-                                    Docs
-                                </a>
-                                
-                                <a href="/categories/Docs/SQL-Syntax/" class="post-category">
-                                    SQL_Syntax
-                                </a>
-                                
-                                
-                            </span>
-                        </div>
-                    </div>
-
-                    
-                    <div class="card-action article-tags">
-                        
-                        <a href="/tags/Docs/">
-                            <span class="chip bg-color">Docs</span>
-                        </a>
-                        
-                    </div>
-                    
-                </div>
-            </div>
-            
-            <div class="article col s12 m6 l4" data-aos="zoom-in">
-                <div class="card">
-                    <a href="/zh-cn/docs/SQL%E8%AF%AD%E6%B3%95%E8%AF%B4%E6%98%8E/functions/uuid/">
-                        <div class="card-image">
-                            
-                            
-                            <img src="/medias/banner/0.jpg" class="responsive-img" alt="UUID">
-                            
-                            <span class="card-title">UUID</span>
-                        </div>
-                    </a>
-
-                    <div class="card-content article-content">
-                        <div class="summary block-with-text">
-                            
-                                
-Notice:Some of the examples below are referenced from ClickHouse Documentation but have been adapted and modified to wo
-                            
-                        </div>
-                        <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2023-02-03
-                            </span>
-                            <span class="publish-author">
-                                
-                                <i class="fas fa-bookmark fa-fw icon-category"></i>
-                                
-                                <a href="/categories/Docs/" class="post-category">
-                                    Docs
-                                </a>
-                                
-                                <a href="/categories/Docs/SQL-Syntax/" class="post-category">
-                                    SQL_Syntax
-                                </a>
-                                
-                                
-                            </span>
-                        </div>
-                    </div>
-
-                    
-                    <div class="card-action article-tags">
-                        
-                        <a href="/tags/Docs/">
-                            <span class="chip bg-color">Docs</span>
-                        </a>
-                        
-                    </div>
-                    
-                </div>
-            </div>
-            
-            <div class="article col s12 m6 l4" data-aos="zoom-in">
-                <div class="card">
-                    <a href="/zh-cn/docs/SQL%E8%AF%AD%E6%B3%95%E8%AF%B4%E6%98%8E/functions/window/">
-                        <div class="card-image">
-                            
-                            
-                            <img src="/medias/banner/0.jpg" class="responsive-img" alt="Window">
-                            
-                            <span class="card-title">Window</span>
-                        </div>
-                    </a>
-
-                    <div class="card-content article-content">
-                        <div class="summary block-with-text">
-                            
-                                ByConity supports the standard syntax of window functions. A list of window related features are explained below.
-
-
-
-Fea
-                            
-                        </div>
-                        <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2023-02-03
-                            </span>
-                            <span class="publish-author">
-                                
-                                <i class="fas fa-bookmark fa-fw icon-category"></i>
-                                
-                                <a href="/categories/Docs/" class="post-category">
-                                    Docs
-                                </a>
-                                
-                                <a href="/categories/Docs/SQL-Syntax/" class="post-category">
-                                    SQL_Syntax
-                                </a>
-                                
-                                
-                            </span>
-                        </div>
-                    </div>
-
-                    
-                    <div class="card-action article-tags">
-                        
-                        <a href="/tags/Docs/">
-                            <span class="chip bg-color">Docs</span>
-                        </a>
-                        
-                    </div>
-                    
-                </div>
-            </div>
-            
-            <div class="article col s12 m6 l4" data-aos="zoom-in">
-                <div class="card">
-                    <a href="/zh-cn/docs/ByConity%E7%AE%80%E4%BB%8B/%E4%B8%BB%E8%A6%81%E5%8E%9F%E7%90%86%E6%A6%82%E5%BF%B5/">
-                        <div class="card-image">
-                            
-                            
-                            <img src="/medias/banner/0.jpg" class="responsive-img" alt="主要原理概念">
-                            
-                            <span class="card-title">主要原理概念</span>
-                        </div>
-                    </a>
-
-                    <div class="card-content article-content">
-                        <div class="summary block-with-text">
-                            
-                                主要原理概念简介ByConity 的查询执行流程如下图所示，首先通过元数据服务获取查询所需要的元数据信息，然后根据用户 sql 通过优化器生成高效的查询计划，并调度到相应的计算组上去读取数据并执行，最终进行结果集的汇总并发送回客户端。为了用
-                            
-                        </div>
-                        <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2023-02-03
-                            </span>
-                            <span class="publish-author">
-                                
-                                <i class="fas fa-bookmark fa-fw icon-category"></i>
-                                
-                                <a href="/categories/Docs/" class="post-category">
-                                    Docs
-                                </a>
-                                
-                                <a href="/categories/Docs/Introduction/" class="post-category">
-                                    Introduction
-                                </a>
-                                
-                                
-                            </span>
-                        </div>
-                    </div>
-
-                    
-                    <div class="card-action article-tags">
-                        
-                        <a href="/tags/Docs/">
-                            <span class="chip bg-color">Docs</span>
-                        </a>
-                        
-                    </div>
-                    
-                </div>
-            </div>
-            
-            <div class="article col s12 m6 l4" data-aos="zoom-in">
-                <div class="card">
-                    <a href="/zh-cn/docs/ByConity%E7%AE%80%E4%BB%8B/%E5%BF%AB%E9%80%9F%E4%B8%8A%E6%89%8B/">
-                        <div class="card-image">
-                            
-                            
-                            <img src="/medias/banner/0.jpg" class="responsive-img" alt="快速上手">
-                            
-                            <span class="card-title">快速上手</span>
-                        </div>
-                    </a>
-
-                    <div class="card-content article-content">
-                        <div class="summary block-with-text">
-                            
-                                快速上手集群搭建和启动之后，让我们快速的试用一下：）
-入门教程连接数据库12./clickhouse-client -m -h HOST --port PORT
-
-创建库表123456789101112CREATE DATABASE IF 
-                            
-                        </div>
-                        <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2023-02-03
-                            </span>
-                            <span class="publish-author">
-                                
-                                <i class="fas fa-bookmark fa-fw icon-category"></i>
-                                
-                                <a href="/categories/Docs/" class="post-category">
-                                    Docs
-                                </a>
-                                
-                                <a href="/categories/Docs/Introduction/" class="post-category">
-                                    Introduction
                                 </a>
                                 
                                 
