@@ -390,7 +390,7 @@
         <div class="card-content article-card-content">
             <div id="articleContent">
                 <blockquote>
-<p>Notice:<br>Some of the examples below are referenced from <a target="_blank" rel="noopener" href="https://clickhouse.com/docs/en/sql-reference/functions/">ClickHouse Documentation</a> but have been adapted and modified to work in ByteHouse.</p>
+<p>Notice:<br>Some of the examples below are referenced from <a target="_blank" rel="noopener" href="https://clickhouse.com/docs/en/sql-reference/functions/">ClickHouse Documentation</a> but have been adapted and modified to work in ByConity.</p>
 </blockquote>
 <h2 id="URLHierarchy"><a href="#URLHierarchy" class="headerlink" title="URLHierarchy"></a>URLHierarchy</h2><p>Returns an array containing the URL, truncated at the end by the symbols &#x2F;,? in the path and query-string. Consecutive separator characters are counted as one. The cut is made in the position after all the consecutive separator characters.</p>
 <p><strong>Syntax</strong></p>
@@ -563,8 +563,8 @@
 
 <p><strong>Returned values</strong></p>
 <ul>
-<li>Host name. If ByteHouse can parse the input string as a URL. </li>
-<li>Empty string. If ByteHouse can’t parse the input string as a URL.<br>Type: <code>String</code> .</li>
+<li>Host name. If ByConity can parse the input string as a URL. </li>
+<li>Empty string. If ByConity can’t parse the input string as a URL.<br>Type: <code>String</code> .</li>
 </ul>
 <p><strong>Example</strong></p>
 <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> domain(<span class="string">&#x27;svn+ssh://some.svn-hosting.com:80/repo/trunk&#x27;</span>);</span><br></pre></td></tr></table></figure>
@@ -581,8 +581,8 @@
 </ul>
 <p><strong>Returned values</strong></p>
 <ul>
-<li>Host name. If ByteHouse can parse the input string as a URL. </li>
-<li>Empty string. If ByteHouse can’t parse the input string as a URL.<br>Type: <code>String</code> .</li>
+<li>Host name. If ByConity can parse the input string as a URL. </li>
+<li>Empty string. If ByConity can’t parse the input string as a URL.<br>Type: <code>String</code> .</li>
 </ul>
 <p><strong>Example</strong></p>
 <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> domainWithoutWWW(<span class="string">&#x27;http://www.example.com#fragment&#x27;</span>);</span><br></pre></td></tr></table></figure>
@@ -755,13 +755,14 @@
 
 <p><strong>Returned values</strong></p>
 <ul>
-<li>Domain name. If ByteHouse can parse the input string as a URL. </li>
-<li>Empty string. If ByteHouse cannot parse the input string as a URL.<br>Type: <code>String</code> .</li>
+<li>Domain name. If ByConity can parse the input string as a URL. </li>
+<li>Empty string. If ByConity cannot parse the input string as a URL.<br>Type: <code>String</code> .</li>
 </ul>
 <p><strong>Example</strong></p>
 <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> topLevelDomain(<span class="string">&#x27;svn+ssh://www.some.svn-hosting.com:80/repo/trunk&#x27;</span>);</span><br></pre></td></tr></table></figure>
 
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">┌─topLevelDomain(&#x27;svn+ssh://www.some.svn-hosting.com:80/repo/trunk&#x27;)─┐</span><br><span class="line">│ com                                                                │</span><br><span class="line">└────────────────────────────────────────────────────────────────────┘</span><br></pre></td></tr></table></figure>
+
                 
             </div>
             <hr/>
