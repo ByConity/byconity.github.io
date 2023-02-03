@@ -403,61 +403,111 @@
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">kubctl apply -f cnch-metrics.yaml # 配置对应rule</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
 <h2 id="监控服务节点（Server）"><a href="#监控服务节点（Server）" class="headerlink" title="监控服务节点（Server）"></a>监控服务节点（Server）</h2><h3 id="重要指标"><a href="#重要指标" class="headerlink" title="重要指标"></a>重要指标</h3><p>下面摘录比较重要的指标，进行说明</p>
-<p>指标名（其中带双引号的是经过 VM 聚合的）</p>
-<p>说明</p>
-<p>cnch:latency:queries_cluster:pct95</p>
-<p>cnch:latency:queries_cluster:pct99</p>
-<p>查询延迟 pct99 和 pct55</p>
-<p>cnch:latency:queries_cluster:slow_ratio</p>
-<p>大于 10s 的慢查询占比</p>
-<p>cnch:profile_events:labelled_query_vw:total_rate5m</p>
-<p>所有 VW 的总 QPS。</p>
-<p>cnch:profile_events:labelled_query_vw:error_rate5m</p>
-<p>所有 VW 失败的 QPS。</p>
-<p>cnch_current_metrics_query</p>
-<p>其中的 label 名 query_type 值为 insert 是写入的 query</p>
+<table>
+<thead>
+<tr>
+<th>指标名（其中带双引号的是经过 VM 聚合的）</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>cnch:latency:queries_cluster:pct95 cnch:latency:queries_cluster:pct99</td>
+<td>查询延迟 pct99 和 pct55</td>
+</tr>
+<tr>
+<td>cnch:latency:queries_cluster:slow_ratio</td>
+<td>大于 10s 的慢查询占比</td>
+</tr>
+<tr>
+<td>cnch:profile_events:labelled_query_vw:total_rate5m</td>
+<td>所有 VW 的总 QPS。</td>
+</tr>
+<tr>
+<td>cnch:profile_events:labelled_query_vw:error_rate5m</td>
+<td>所有 VW 失败的 QPS。</td>
+</tr>
+<tr>
+<td>cnch_current_metrics_query</td>
+<td>其中的 label 名 query_type 值为 insert 是写入的 query</td>
+</tr>
+</tbody></table>
 <h3 id="给服务节点（Server）-配置-Grafana-看板"><a href="#给服务节点（Server）-配置-Grafana-看板" class="headerlink" title="给服务节点（Server） 配置 Grafana 看板"></a>给服务节点（Server） 配置 Grafana 看板</h3><p>看板的内容看截图</p>
 <p><img src="/static/boxcnvwueXWFISCRgsRJ66J2vKb.jpeg"></p>
 <p>摘录其中比较重要的看板进行说明：</p>
-<p>看板名</p>
-<p>说明</p>
-<p>Queries Ducations</p>
-<p>cnch:latency:queries_cluster:pct95{namespace&#x3D;”$namespace”, cluster&#x3D;”$cluster”}</p>
-<p>cnch:latency:queries_cluster:pct99{namespace&#x3D;”$namespace”, cluster&#x3D;”$cluster”}</p>
-<p>查询延迟的 P99 和 P95 值。</p>
-<p>Slow Queries &gt; 10s</p>
-<p>cnch:latency:queries_cluster:slow_ratio{namespace&#x3D;”$namespace”, cluster&#x3D;”$cluster”}</p>
-<p>大于 10s 的慢查询占比</p>
-<p>Queries Per Second</p>
-<p>sum(cnch:profile_events:labelled_query_vw:total_rate5m{namespace&#x3D;”$namespace”, cluster&#x3D;”$cluster”, workload&#x3D;~”$workload”})</p>
-<p>所有 VW 的总 QPS。</p>
-<p>VW Queries Success</p>
-<p>1 - (sum by (pod) (cnch:profile_events:labelled_query_vw:error_rate5m{cluster&#x3D;”$cluster”, namespace&#x3D;”$namespace”, workload&#x3D;<del>“$workload”, pod&#x3D;</del>“$pod”})</p>
-<p>sum by (pod) (cnch:profile_events:labelled_query_vw:total_rate5m{cluster&#x3D;”$cluster”, namespace&#x3D;”$namespace”, workload&#x3D;<del>“$workload”, pod&#x3D;</del>“$pod”}))</p>
-<p>使用 error_rate5m 和 total_rate5m 相减和除后，得到成功率</p>
+<table>
+<thead>
+<tr>
+<th>看板名</th>
+<th>表达式</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Queries Ducations</td>
+<td><code>cnch:latency:queries_cluster:pct95&#123;namespace=&quot;$namespace&quot;, cluster=&quot;$cluster&quot;&#125;和cnch:latency:queries_cluster:pct99&#123;namespace=&quot;$namespace&quot;, cluster=&quot;$cluster&quot;&#125;</code></td>
+<td>查询延迟的 P99 和 P95 值。</td>
+</tr>
+<tr>
+<td>Slow Queries &gt; 10s</td>
+<td><code>cnch:latency:queries_cluster:slow_ratio&#123;namespace=&quot;$namespace&quot;, cluster=&quot;$cluster&quot;&#125;</code></td>
+<td>大于 10s 的慢查询占比</td>
+</tr>
+<tr>
+<td>Queries Per Second</td>
+<td><code>sum(cnch:profile_events:labelled_query_vw:total_rate5m&#123;namespace=&quot;$namespace&quot;, cluster=&quot;$cluster&quot;, workload=~&quot;$workload&quot;&#125;)</code></td>
+<td>所有 VW 的总 QPS。</td>
+</tr>
+<tr>
+<td>VW Queries Success</td>
+<td><code>1 - (sum by (pod) (cnch:profile_events:labelled_query_vw:error_rate5m&#123;cluster=&quot;$cluster&quot;, namespace=&quot;$namespace&quot;, workload=~&quot;$workload&quot;, pod=~&quot;$pod&quot;&#125;) sum by (pod) (cnch:profile_events:labelled_query_vw:total_rate5m&#123;cluster=&quot;$cluster&quot;, namespace=&quot;$namespace&quot;, workload=~&quot;$workload&quot;, pod=~&quot;$pod&quot;&#125;))</code></td>
+<td>使用 error_rate5m 和 total_rate5m 相减和除后，得到成功率</td>
+</tr>
+</tbody></table>
 <p>Server 的完整 Grafana 配置文件如下，可在 Grafana 的 UI 导入：<a href="/static/cnch-server.json">cnch-server.json</a></p>
 <h2 id="监控-TSO"><a href="#监控-TSO" class="headerlink" title="监控 TSO"></a>监控 TSO</h2><h3 id="重要指标-1"><a href="#重要指标-1" class="headerlink" title="重要指标"></a>重要指标</h3><p>下面摘录对 TSO 比较重要的指标，进行说明：</p>
-<p>指标名</p>
-<p>说明</p>
-<p>cnch:tso:requests:error_rate5m</p>
-<p>TSO 组件的失败 QPS</p>
-<p>cnch:tso:requests:total_rate5m</p>
-<p>TSO 组件的总 QPS</p>
+<table>
+<thead>
+<tr>
+<th>指标名</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>cnch:tso:requests:error_rate5m</td>
+<td>TSO 组件的失败 QPS</td>
+</tr>
+<tr>
+<td>cnch:tso:requests:total_rate5m</td>
+<td>TSO 组件的总 QPS</td>
+</tr>
+</tbody></table>
 <h3 id="给-TSO-配置-Grafana-看板"><a href="#给-TSO-配置-Grafana-看板" class="headerlink" title="给 TSO 配置 Grafana 看板"></a>给 TSO 配置 Grafana 看板</h3><p>看板截图如下：</p>
 <p><img src="/static/boxcn3CLoRUlpCEDJnEy8f6dxPe.jpeg"></p>
 <p>其中重要的指标说明：</p>
-<p>看板名</p>
-<p>说明</p>
-<p>TSO Server Requests Per Sec</p>
-<p>cnch:tso:requests:total_rate5m{namespace&#x3D;”$namespace”, cluster&#x3D;”$cluster”, workload&#x3D;~”.<em>server.</em>“}</p>
-<p>Server 组件对 TSO 查询的的 QPS</p>
-<p>TSO Worker Requests Per Sec</p>
-<p>cnch:tso:requests:total_rate5m{namespace&#x3D;”$namespace”, cluster&#x3D;”$cluster”, workload!~”.<em>(server|<strong>kafka</strong>).</em>“}</p>
-<p>去除 server 和 kafka，只看各 worker 对 TSO 的请求 QPS</p>
-<p>TSO Servers Requests Server Rate</p>
-<p>cnch:tso:requests:error_rate5m{namespace&#x3D;”$namespace”, cluster&#x3D;”$cluster”, workload&#x3D;~”.<em>server.</em>“}</p>
-<p>cnch:tso:requests:total_rate5m{namespace&#x3D;”$namespace”, cluster&#x3D;”$cluster”, workload&#x3D;~”.<em>server.</em>“}</p>
-<p>用 error_rate 和 total_rate 相除，过滤出 TSO 查询的失败率</p>
+<table>
+<thead>
+<tr>
+<th>看板名</th>
+<th>表达式</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>TSO Server Requests Per Sec</td>
+<td><code>cnch:tso:requests:total_rate5m&#123;namespace=&quot;$namespace&quot;, cluster=&quot;$cluster&quot;, workload=~&quot;.*server.*&quot;&#125;</code></td>
+<td>Server 组件对 TSO 查询的的 QPS</td>
+</tr>
+<tr>
+<td>TSO Worker Requests Per Sec</td>
+<td><code>cnch:tso:requests:total_rate5m&#123;namespace=&quot;$namespace&quot;, cluster=&quot;$cluster&quot;, workload!~&quot;.*(server|**kafka**).*&quot;&#125;</code></td>
+<td>去除 server 和 kafka，只看各 worker 对 TSO 的请求 QPS</td>
+</tr>
+<tr>
+<td>TSO Servers Requests Server Rate</td>
+<td><code>cnch:tso:requests:error_rate5m&#123;namespace=&quot;$namespace&quot;, cluster=&quot;$cluster&quot;, workload=~&quot;.*server.*&quot;&#125; cnch:tso:requests:total_rate5m&#123;namespace=&quot;$namespace&quot;, cluster=&quot;$cluster&quot;, workload=~&quot;.*server.*&quot;&#125;</code></td>
+<td>用 error_rate 和 total_rate 相除，过滤出 TSO 查询的失败率</td>
+</tr>
+</tbody></table>
 <p>TSO 完整的配置文件如下：<a href="/static/cnch-tso.json">cnch-tso.json</a></p>
 <h2 id="其他可以监控的信息"><a href="#其他可以监控的信息" class="headerlink" title="其他可以监控的信息"></a>其他可以监控的信息</h2><p>其他常用的监控看板配置此处列出，不再一一截图</p>
 <p>Cluster Overview: 整个集群概览 <a href="/static/cnch-cluster.json">cnch-cluster.json</a></p>
