@@ -390,7 +390,7 @@
         <div class="card-content article-card-content">
             <div id="articleContent">
                 <blockquote>
-<p>Notice:<br>Some of the examples below are referenced from <a target="_blank" rel="noopener" href="https://clickhouse.com/docs/en/sql-reference/functions/">ClickHouse Documentation</a> but have been adapted and modified to work in ByteHouse.</p>
+<p>Notice:<br>Some of the examples below are referenced from <a target="_blank" rel="noopener" href="https://clickhouse.com/docs/en/sql-reference/functions/">ClickHouse Documentation</a> but have been adapted and modified to work in ByConity.</p>
 </blockquote>
 <h2 id="geohashDecode"><a href="#geohashDecode" class="headerlink" title="geohashDecode"></a>geohashDecode</h2><p>Decodes any geohash-encoded string into longitude and latitude.</p>
 <p><strong>Syntax</strong></p>
@@ -485,6 +485,7 @@
 <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> pointInPolygon((<span class="number">3.</span>, <span class="number">3.</span>), [(<span class="number">6</span>, <span class="number">0</span>), (<span class="number">8</span>, <span class="number">4</span>), (<span class="number">5</span>, <span class="number">8</span>), (<span class="number">0</span>, <span class="number">2</span>)]) <span class="keyword">AS</span> res</span><br></pre></td></tr></table></figure>
 
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">┌─res─┐</span><br><span class="line">│ 1   │</span><br><span class="line">└─────┘</span><br></pre></td></tr></table></figure>
+
                 
             </div>
             <hr/>
