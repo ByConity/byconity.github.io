@@ -131,7 +131,7 @@ CREATE TABLE db_name.table_name
     `old_column_name` Int64
 )
 ENGINE = `CnchMergeTree`
-ORDER BY (`old_column_name`)
+ORDER BY (`order_by_column`)
 
 # Step 2: rename column
 ALTER TABLE db_name.table_name RENAME COLUMN old_column_name TO new_column_name
@@ -469,7 +469,7 @@ INSERT INTO example_table VALUES (1, 'a', '2021-07-27'), (2, 'b', '2021-07-27')
 ```
 ### INSERT FORMAT
 
-Data can be passed to the INSERT in aformatsupported by ByConity.
+Data can be passed to the INSERT in a format supported by ByConity.
 ** Syntax**
 
 ```sql
@@ -489,7 +489,9 @@ ENGINE = `CnchMergeTree`
 ORDER BY (`a`) 
 
 # step 2: insert 2 rows in value format into the table
-INSERT INTO example_table FORMAT VALUES (1, 'a', '2021-07-27'), (2, 'b', '2021-07-27');
+INSERT INTO example_table FORMAT TabSeparated
+1 a 2021-07-27
+2 b 2021-07-27
 ```
 ### INSERT SELECT
 
