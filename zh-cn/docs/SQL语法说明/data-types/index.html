@@ -389,7 +389,7 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <p>The data types provided in ByteHouse are adapted from ClickHouse. Visit this <a target="_blank" rel="noopener" href="https://clickhouse.tech/docs/en/sql-reference/data-types/">page</a> for more information on ClickHouse data types.</p>
+                <p>The data types provided in ByConity are adapted from ClickHouse. Visit this <a target="_blank" rel="noopener" href="https://clickhouse.tech/docs/en/sql-reference/data-types/">page</a> for more information on ClickHouse data types.</p>
 <h2 id="Summary-of-Data-Types"><a href="#Summary-of-Data-Types" class="headerlink" title="Summary of Data Types"></a>Summary of Data Types</h2><ul>
 <li>Numeric Data Types<ul>
 <li>Int8, TINYINT Int16, SMALLINT Int32, INT, INTEGER Int64, BIGINT UInt8 UInt16 UInt32 UInt64</li>
@@ -423,7 +423,7 @@
 </li>
 </ul>
 <h2 id="Numeric-Data-Types"><a href="#Numeric-Data-Types" class="headerlink" title="Numeric Data Types"></a>Numeric Data Types</h2><h3 id="UInt8-UInt16-UInt32-UInt64-UInt256-Int8-Int16-Int32-Int64-Int128-Int256"><a href="#UInt8-UInt16-UInt32-UInt64-UInt256-Int8-Int16-Int32-Int64-Int128-Int256" class="headerlink" title="UInt8, UInt16, UInt32, UInt64, UInt256, Int8, Int16, Int32, Int64, Int128, Int256"></a>UInt8, UInt16, UInt32, UInt64, UInt256, Int8, Int16, Int32, Int64, Int128, Int256</h3><p>Fixed-length integers, with or without a sign.</p>
-<p>When creating tables, numeric parameters for integer numbers can be set (e.g. <code>TINYINT(8)</code>, <code>SMALLINT(16)</code>, <code>INT(32)</code>, <code>BIGINT(64)</code>), but ByteHouse ignores them.</p>
+<p>When creating tables, numeric parameters for integer numbers can be set (e.g. <code>TINYINT(8)</code>, <code>SMALLINT(16)</code>, <code>INT(32)</code>, <code>BIGINT(64)</code>), but ByConity ignores them.</p>
 <p><strong>Aliases</strong></p>
 <ul>
 <li><p><code>Int8</code> — <code>TINYINT</code></p>
@@ -465,7 +465,7 @@
 <li><p><code>Float64</code> — <code>DOUBLE</code>.</p>
 </li>
 </ul>
-<p>When creating tables, numeric parameters for floating point numbers can be set (e.g. <code>FLOAT(12)</code>, <code>FLOAT(15, 22)</code>, <code>DOUBLE(12)</code>, <code>DOUBLE(4, 18)</code>), but ByteHouse ignores them.</p>
+<p>When creating tables, numeric parameters for floating point numbers can be set (e.g. <code>FLOAT(12)</code>, <code>FLOAT(15, 22)</code>, <code>DOUBLE(12)</code>, <code>DOUBLE(4, 18)</code>), but ByConity ignores them.</p>
 <h3 id="Decimal-P-S-Decimal32-S-Decimal64-S-Decimal128-S"><a href="#Decimal-P-S-Decimal32-S-Decimal64-S-Decimal128-S" class="headerlink" title="Decimal(P, S), Decimal32(S), Decimal64(S), Decimal128(S)"></a>Decimal(P, S), Decimal32(S), Decimal64(S), Decimal128(S)</h3><p>Signed fixed-point numbers that keep precision during add, subtract and multiply operations. For division least significant digits are discarded (not rounded).</p>
 <p><strong>Aliases</strong></p>
 <ul>
@@ -496,9 +496,9 @@
 <p>For example, Decimal32(4) can contain numbers from -99999.9999 to 99999.9999 with 0.0001 step.</p>
 <h2 id="String-amp-Binary-Data-Types"><a href="#String-amp-Binary-Data-Types" class="headerlink" title="String &amp; Binary Data Types"></a>String &amp; Binary Data Types</h2><h3 id="String"><a href="#String" class="headerlink" title="String"></a>String</h3><p>Strings of an arbitrary length. The length is not limited. The value can contain an arbitrary set of bytes, including null bytes.</p>
 <p>The String type replaces the types VARCHAR, BLOB, CLOB, and others from other DBMSs.</p>
-<p>When creating tables, numeric parameters for string fields can be set (e.g. <code>VARCHAR(255)</code>), but ByteHouse ignores them.</p>
+<p>When creating tables, numeric parameters for string fields can be set (e.g. <code>VARCHAR(255)</code>), but ByConity ignores them.</p>
 <p><strong>Encodings</strong></p>
-<p>ByteHouse doesn’t have the concept of encodings. Strings can contain an arbitrary set of bytes, which are stored and output as-is.</p>
+<p>ByConity doesn’t have the concept of encodings. Strings can contain an arbitrary set of bytes, which are stored and output as-is.</p>
 <p>If you need to store texts, we recommend using UTF-8 encoding. At the very least, if your terminal uses UTF-8 (as recommended), you can read and write your values without making conversions.</p>
 <p>Similarly, certain functions for working with strings have separate variations that work under the assumption that the string contains a set of bytes representing a UTF-8 encoded text.</p>
 <p>For example, the ‘length’ function calculates the string length in bytes, while the ‘lengthUTF8’ function calculates the string length in Unicode code points, assuming that the value is UTF-8 encoded.</p>
@@ -520,14 +520,14 @@
 </li>
 </ul>
 <p>To store UUID values, use the UUID data type.</p>
-<p>When inserting the data, ByteHouse:</p>
+<p>When inserting the data, ByConity:</p>
 <ul>
 <li><p>Complements a string with null bytes if the string contains fewer than <code>N</code> bytes.</p>
 </li>
 <li><p>Throws the <code>Too large value for FixedString(N)</code> exception if the string contains more than <code>N</code> bytes.</p>
 </li>
 </ul>
-<p>When selecting the data, ByteHouse does not remove the null bytes at the end of the string. If you use the <code>WHERE</code> clause, you should add null bytes manually to match the <code>FixedString</code> value. The following example illustrates how to use the <code>WHERE</code> clause with <code>FixedString</code>.</p>
+<p>When selecting the data, ByConity does not remove the null bytes at the end of the string. If you use the <code>WHERE</code> clause, you should add null bytes manually to match the <code>FixedString</code> value. The following example illustrates how to use the <code>WHERE</code> clause with <code>FixedString</code>.</p>
 <p>This behaviour differs from MySQL for the <code>CHAR</code> type (where strings are padded with spaces, and the spaces are removed for output).</p>
 <p>Note that the length of the <code>FixedString(N)</code> value is constant. The <a target="_blank" rel="noopener" href="https://clickhouse.tech/docs/en/sql-reference/functions/array-functions/#array_functions-length">length</a> function returns <code>N</code> even if the <code>FixedString(N)</code> value is filled only with null bytes, but the <a target="_blank" rel="noopener" href="https://clickhouse.tech/docs/en/sql-reference/functions/string-functions/#empty">empty</a> function returns <code>1</code> in this case.</p>
 <h3 id="Date-amp-Time-Data-Types"><a href="#Date-amp-Time-Data-Types" class="headerlink" title="Date &amp; Time Data Types"></a>Date &amp; Time Data Types</h3><h3 id="Date"><a href="#Date" class="headerlink" title="Date"></a>Date</h3><p>A date. Stored in two bytes as the number of days since 1970-01-01 (unsigned). Allows storing values from just after the beginning of the Unix Epoch to the upper threshold defined by a constant at the compilation stage (currently, this is until the year 2149, but the final fully-supported year is 2148).</p>
@@ -574,8 +574,8 @@
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SELECT tuple(1,&#x27;a&#x27;) AS x, toTypeName(x)</span><br></pre></td></tr></table></figure>
 
 <h3 id="Enum8-Enum-16"><a href="#Enum8-Enum-16" class="headerlink" title="Enum8, Enum 16"></a>Enum8, Enum 16</h3><p>Enumerated type consisting of named values.</p>
-<p>Named values must be declared as <code>&#39;string&#39; = integer</code> pairs. ByteHouse stores only numbers, but supports operations with the values through their names.</p>
-<p>ByteHouse supports:</p>
+<p>Named values must be declared as <code>&#39;string&#39; = integer</code> pairs. ByConity stores only numbers, but supports operations with the values through their names.</p>
+<p>ByConity supports:</p>
 <ul>
 <li><p><code>Enum8</code>: 8-bit Enum. It can contain up to 256 values enumerated in the <code>[-128, 127]</code> range.</p>
 </li>
@@ -585,8 +585,8 @@
 <p><strong>Example</strong></p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">CREATE TABLE t_enum(x Enum8(&#x27;hello&#x27; = 1, &#x27;world&#x27; = 2)) ENGINE = Memory;</span><br><span class="line"></span><br><span class="line">INSERT INTO t_enum VALUES (&#x27;hello&#x27;), (&#x27;world&#x27;), (&#x27;hello&#x27;);</span><br></pre></td></tr></table></figure>
 
-<p>Column <code>x</code> can only store values that are listed in the type definition: <code>&#39;hello&#39;</code> or <code>&#39;world&#39;</code>. If you try to save any other value, ByteHouse will raise an exception. </p>
-<p>When you query data from the table, ByteHouse outputs the string values from <code>Enum</code>.</p>
+<p>Column <code>x</code> can only store values that are listed in the type definition: <code>&#39;hello&#39;</code> or <code>&#39;world&#39;</code>. If you try to save any other value, ByConity will raise an exception. </p>
+<p>When you query data from the table, ByConity outputs the string values from <code>Enum</code>.</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SELECT * FROM t_enum</span><br></pre></td></tr></table></figure>
 
 <h3 id="Nested-n1-T1-n2-T2-…"><a href="#Nested-n1-T1-n2-T2-…" class="headerlink" title="Nested(n1 T1, n2 T2, …)"></a>Nested(n1 T1, n2 T2, …)</h3><p>A nested data structure is like a table inside a cell. The parameters of a nested data structure – the column names and types – are specified the same way as in a CREATE TABLE query. Each table row can correspond to any number of rows in a nested data structure.</p>
@@ -627,9 +627,10 @@
 <h3 id="Nullable-T"><a href="#Nullable-T" class="headerlink" title="Nullable(T)"></a>Nullable(T)</h3><p>Allows storing special marker (NULL) that denotes “missing value” alongside normal values allowed by <code>TypeName</code>. For example, a <code>Nullable(Int8)</code> type column can store <code>Int8</code> type values, and the rows that don’t have a value will store <code>NULL</code>.</p>
 <p>For a <code>TypeName</code>, you can’t use composite data types <a target="_blank" rel="noopener" href="https://clickhouse.tech/docs/en/sql-reference/data-types/array/">Array</a> and <a target="_blank" rel="noopener" href="https://clickhouse.tech/docs/en/sql-reference/data-types/tuple/">Tuple</a>. Composite data types can contain <code>Nullable</code> type values, such as <code>Array(Nullable(Int8))</code>.</p>
 <p>A <code>Nullable</code> type field can’t be included in table indexes.</p>
-<p><code>NULL</code> is the default value for any <code>Nullable</code> type, unless specified otherwise in the ByteHouse server configuration.</p>
+<p><code>NULL</code> is the default value for any <code>Nullable</code> type, unless specified otherwise in the ByConity server configuration.</p>
 <p><strong>Example</strong></p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">CREATE TABLE t_null(x Int8, y Nullable(Int8)) ENGINE = Memory;</span><br><span class="line"></span><br><span class="line">INSERT INTO t_null VALUES (1, NULL), (2, 3);</span><br><span class="line"></span><br><span class="line">SELECT x + y FROM t_null;</span><br></pre></td></tr></table></figure>
+
                 
             </div>
             <hr/>
