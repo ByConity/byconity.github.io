@@ -390,7 +390,7 @@
         <div class="card-content article-card-content">
             <div id="articleContent">
                 <blockquote>
-<p>Notice:<br>Some of the examples below are referenced from <a target="_blank" rel="noopener" href="https://clickhouse.com/docs/en/sql-reference/functions/">ClickHouse Documentation</a> but have been adapted and modified to work in ByteHouse.</p>
+<p>Notice:<br>Some of the examples below are referenced from <a target="_blank" rel="noopener" href="https://clickhouse.com/docs/en/sql-reference/functions/">ClickHouse Documentation</a> but have been adapted and modified to work in ByConity.</p>
 </blockquote>
 <h2 id="CAST"><a href="#CAST" class="headerlink" title="CAST"></a>CAST</h2><p>Converts an input value to the specified data type. Unlike the reinterpret function, <code>CAST</code> tries to present the same value using the new data type. If the conversion can not be done then an exception is raised.</p>
 <p><strong>Syntax</strong></p>
@@ -551,13 +551,13 @@
 
 <p><strong>Arguments</strong></p>
 <ul>
-<li><code>expr</code> — Expression, returns a value in the String data type. ByteHouse expects the textual representation of the decimal number. For example, <code>&#39;1.111&#39;</code> . </li>
+<li><code>expr</code> — Expression, returns a value in the String data type. ByConity expects the textual representation of the decimal number. For example, <code>&#39;1.111&#39;</code> . </li>
 <li><code>S</code> — Scale, the number of decimal places in the resulting value.</li>
 </ul>
 <p><strong>Returned value</strong><br>A value in the <code>Nullable(Decimal(P,S))</code> data type. The value contains:</p>
 <ul>
-<li>Number with <code>S</code> decimal places, if ByteHouse interprets the input string as a number. </li>
-<li><code>NULL</code> , if ByteHouse can’t interpret the input string as a number or if the input number contains more than <code>S</code> decimal places.</li>
+<li>Number with <code>S</code> decimal places, if ByConity interprets the input string as a number. </li>
+<li><code>NULL</code> , if ByConity can’t interpret the input string as a number or if the input number contains more than <code>S</code> decimal places.</li>
 </ul>
 <p><strong>Examples</strong></p>
 <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> toDecimal32OrNull(toString(<span class="number">-1.111</span>), <span class="number">5</span>) <span class="keyword">AS</span> val, toTypeName(val);</span><br></pre></td></tr></table></figure>
@@ -577,7 +577,7 @@
 
 <p><strong>Arguments</strong></p>
 <ul>
-<li><code>expr</code> — Expression data type. ByteHouse expects the textual representation of the decimal number. For example, <code>&#39;1.111&#39;</code> . </li>
+<li><code>expr</code> — Expression data type. ByConity expects the textual representation of the decimal number. For example, <code>&#39;1.111&#39;</code> . </li>
 <li><code>S</code> — Scale, the number of decimal places in the resulting value.</li>
 </ul>
 <p><strong>Returned value</strong><br>A value in the <code>Nullable(Decimal(P,S))</code> data type. The value contains:</p>
@@ -628,7 +628,7 @@
 <p>Functions use <a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Rounding#Rounding_towards_zero">rounding towards zero</a> , meaning they truncate fractional digits of numbers.</p>
 <p>The behavior of functions for the NaN and Inf arguments is undefined. </p>
 <p>When you convert a value from one to another data type, you should remember that in common case, it is an unsafe operation that can lead to a data loss. A data loss can occur if you try to fit value from a larger data type to a smaller data type, or if you convert values between different data types.</p>
-<p>ByteHouse has the <a target="_blank" rel="noopener" href="https://en.cppreference.com/w/cpp/language/implicit_conversion">same behavior as C++ programs</a>.</p>
+<p>ByConity has the <a target="_blank" rel="noopener" href="https://en.cppreference.com/w/cpp/language/implicit_conversion">same behavior as C++ programs</a>.</p>
 <p><strong>Example</strong></p>
 <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> toInt64(nan), toInt32(<span class="number">32</span>), toInt16(<span class="string">&#x27;16&#x27;</span>), toInt8(<span class="number">8.8</span>);</span><br></pre></td></tr></table></figure>
 
@@ -649,7 +649,7 @@
 <p>Functions use <a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Rounding#Rounding_towards_zero">rounding towards zero</a> , meaning they truncate fractional digits of numbers.</p>
 <p>The behavior of functions for the NaN and Inf arguments is undefined. </p>
 <p>When you convert a value from one to another data type, you should remember that in common case, it is an unsafe operation that can lead to a data loss. A data loss can occur if you try to fit value from a larger data type to a smaller data type, or if you convert values between different data types.</p>
-<p>ByteHouse has the <a target="_blank" rel="noopener" href="https://en.cppreference.com/w/cpp/language/implicit_conversion">same behavior as C++ programs</a>.</p>
+<p>ByConity has the <a target="_blank" rel="noopener" href="https://en.cppreference.com/w/cpp/language/implicit_conversion">same behavior as C++ programs</a>.</p>
 <p><strong>Example</strong></p>
 <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> toInt64OrNull(<span class="string">&#x27;123123&#x27;</span>), toInt8OrNull(<span class="string">&#x27;123qwe123&#x27;</span>);</span><br></pre></td></tr></table></figure>
 
@@ -670,7 +670,7 @@
 <p>Functions use <a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Rounding#Rounding_towards_zero">rounding towards zero</a> , meaning they truncate fractional digits of numbers.</p>
 <p>The behavior of functions for the NaN and Inf arguments is undefined. </p>
 <p>When you convert a value from one to another data type, you should remember that in common case, it is an unsafe operation that can lead to a data loss. A data loss can occur if you try to fit value from a larger data type to a smaller data type, or if you convert values between different data types.</p>
-<p>ByteHouse has the <a target="_blank" rel="noopener" href="https://en.cppreference.com/w/cpp/language/implicit_conversion">same behavior as C++ programs</a>.</p>
+<p>ByConity has the <a target="_blank" rel="noopener" href="https://en.cppreference.com/w/cpp/language/implicit_conversion">same behavior as C++ programs</a>.</p>
 <p><strong>Example</strong></p>
 <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> toInt64OrZero(<span class="string">&#x27;123123&#x27;</span>), toInt8OrZero(<span class="string">&#x27;123qwe123&#x27;</span>);</span><br></pre></td></tr></table></figure>
 
@@ -773,9 +773,9 @@
 <li>Integer value in the <code>UInt8</code> , <code>UInt16</code> , <code>UInt32</code> , <code>UInt64</code> data type.</li>
 </ul>
 <p>Functions use <a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Rounding#Rounding_towards_zero">rounding towards zero</a> , meaning they truncate fractional digits of numbers.</p>
-<p>The behavior of functions for negative agruments and for the NaN and Inf arguments is undefined. If you pass a string with a negative number, for example <code>&#39;-32&#39;</code> , ByteHouse raises an exception.</p>
+<p>The behavior of functions for negative agruments and for the NaN and Inf arguments is undefined. If you pass a string with a negative number, for example <code>&#39;-32&#39;</code> , ByConity raises an exception.</p>
 <p>When you convert a value from one to another data type, you should remember that in common case, it is an unsafe operation that can lead to a data loss. A data loss can occur if you try to fit value from a larger data type to a smaller data type, or if you convert values between different data types.</p>
-<p>ByteHouse has the <a target="_blank" rel="noopener" href="https://en.cppreference.com/w/cpp/language/implicit_conversion">same behavior as C++ programs</a>.</p>
+<p>ByConity has the <a target="_blank" rel="noopener" href="https://en.cppreference.com/w/cpp/language/implicit_conversion">same behavior as C++ programs</a>.</p>
 <p><strong>Example</strong></p>
 <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> toUInt64(nan), toUInt32(<span class="number">-32</span>), toUInt16(<span class="string">&#x27;16&#x27;</span>), toUInt8(<span class="number">8.8</span>);</span><br></pre></td></tr></table></figure>
 

@@ -1,6 +1,6 @@
 <hr>
 <h2 id="title-“Type-Conversion”slug-“type-conversion”hidden-falsecreatedAt-“2021-07-29T12-31-12-666Z”updatedAt-“2021-09-23T06-40-38-243Z”categories-Docs-SQL-Syntaxtags-Docs"><a href="#title-“Type-Conversion”slug-“type-conversion”hidden-falsecreatedAt-“2021-07-29T12-31-12-666Z”updatedAt-“2021-09-23T06-40-38-243Z”categories-Docs-SQL-Syntaxtags-Docs" class="headerlink" title="title: “Type Conversion”slug: “type-conversion”hidden: falsecreatedAt: “2021-07-29T12:31:12.666Z”updatedAt: “2021-09-23T06:40:38.243Z”categories:- Docs- SQL_Syntaxtags:- Docs"></a>title: “Type Conversion”<br>slug: “type-conversion”<br>hidden: false<br>createdAt: “2021-07-29T12:31:12.666Z”<br>updatedAt: “2021-09-23T06:40:38.243Z”<br>categories:<br>- Docs<br>- SQL_Syntax<br>tags:<br>- Docs</h2><blockquote>
-<p>Notice:<br>Some of the examples below are referenced from <a href="https://clickhouse.com/docs/en/sql-reference/functions/">ClickHouse Documentation</a> but have been adapted and modified to work in ByteHouse.</p>
+<p>Notice:<br>Some of the examples below are referenced from <a href="https://clickhouse.com/docs/en/sql-reference/functions/">ClickHouse Documentation</a> but have been adapted and modified to work in ByConity.</p>
 </blockquote>
 <h2 id="CAST"><a href="#CAST" class="headerlink" title="CAST"></a>CAST</h2><p>Converts an input value to the specified data type. Unlike the reinterpret function, <code>CAST</code> tries to present the same value using the new data type. If the conversion can not be done then an exception is raised.</p>
 <p><strong>Syntax</strong></p>
@@ -199,13 +199,13 @@ toDecimal64OrNull(expr, S)
 
 <p><strong>Arguments</strong></p>
 <ul>
-<li><code>expr</code> — Expression, returns a value in the String data type. ByteHouse expects the textual representation of the decimal number. For example, <code>&#39;1.111&#39;</code> . </li>
+<li><code>expr</code> — Expression, returns a value in the String data type. ByConity expects the textual representation of the decimal number. For example, <code>&#39;1.111&#39;</code> . </li>
 <li><code>S</code> — Scale, the number of decimal places in the resulting value.</li>
 </ul>
 <p><strong>Returned value</strong><br>A value in the <code>Nullable(Decimal(P,S))</code> data type. The value contains:</p>
 <ul>
-<li>Number with <code>S</code> decimal places, if ByteHouse interprets the input string as a number. </li>
-<li><code>NULL</code> , if ByteHouse can’t interpret the input string as a number or if the input number contains more than <code>S</code> decimal places.</li>
+<li>Number with <code>S</code> decimal places, if ByConity interprets the input string as a number. </li>
+<li><code>NULL</code> , if ByConity can’t interpret the input string as a number or if the input number contains more than <code>S</code> decimal places.</li>
 </ul>
 <p><strong>Examples</strong></p>
 <pre><code class="sql">SELECT toDecimal32OrNull(toString(-1.111), 5) AS val, toTypeName(val);
@@ -230,7 +230,7 @@ toDecimal64OrZero( expr, S)
 
 <p><strong>Arguments</strong></p>
 <ul>
-<li><code>expr</code> — Expression data type. ByteHouse expects the textual representation of the decimal number. For example, <code>&#39;1.111&#39;</code> . </li>
+<li><code>expr</code> — Expression data type. ByConity expects the textual representation of the decimal number. For example, <code>&#39;1.111&#39;</code> . </li>
 <li><code>S</code> — Scale, the number of decimal places in the resulting value.</li>
 </ul>
 <p><strong>Returned value</strong><br>A value in the <code>Nullable(Decimal(P,S))</code> data type. The value contains:</p>
@@ -290,7 +290,7 @@ toInt64(expr)
 <p>Functions use <a href="https://en.wikipedia.org/wiki/Rounding#Rounding_towards_zero">rounding towards zero</a> , meaning they truncate fractional digits of numbers.</p>
 <p>The behavior of functions for the NaN and Inf arguments is undefined. </p>
 <p>When you convert a value from one to another data type, you should remember that in common case, it is an unsafe operation that can lead to a data loss. A data loss can occur if you try to fit value from a larger data type to a smaller data type, or if you convert values between different data types.</p>
-<p>ByteHouse has the <a href="https://en.cppreference.com/w/cpp/language/implicit_conversion">same behavior as C++ programs</a>.</p>
+<p>ByConity has the <a href="https://en.cppreference.com/w/cpp/language/implicit_conversion">same behavior as C++ programs</a>.</p>
 <p><strong>Example</strong></p>
 <pre><code class="sql">SELECT toInt64(nan), toInt32(32), toInt16(&#39;16&#39;), toInt8(8.8);
 </code></pre>
@@ -316,7 +316,7 @@ toInt64OrNull(expr)
 <p>Functions use <a href="https://en.wikipedia.org/wiki/Rounding#Rounding_towards_zero">rounding towards zero</a> , meaning they truncate fractional digits of numbers.</p>
 <p>The behavior of functions for the NaN and Inf arguments is undefined. </p>
 <p>When you convert a value from one to another data type, you should remember that in common case, it is an unsafe operation that can lead to a data loss. A data loss can occur if you try to fit value from a larger data type to a smaller data type, or if you convert values between different data types.</p>
-<p>ByteHouse has the <a href="https://en.cppreference.com/w/cpp/language/implicit_conversion">same behavior as C++ programs</a>.</p>
+<p>ByConity has the <a href="https://en.cppreference.com/w/cpp/language/implicit_conversion">same behavior as C++ programs</a>.</p>
 <p><strong>Example</strong></p>
 <pre><code class="sql">SELECT toInt64OrNull(&#39;123123&#39;), toInt8OrNull(&#39;123qwe123&#39;);
 </code></pre>
@@ -342,7 +342,7 @@ toInt64OrZero(expr)
 <p>Functions use <a href="https://en.wikipedia.org/wiki/Rounding#Rounding_towards_zero">rounding towards zero</a> , meaning they truncate fractional digits of numbers.</p>
 <p>The behavior of functions for the NaN and Inf arguments is undefined. </p>
 <p>When you convert a value from one to another data type, you should remember that in common case, it is an unsafe operation that can lead to a data loss. A data loss can occur if you try to fit value from a larger data type to a smaller data type, or if you convert values between different data types.</p>
-<p>ByteHouse has the <a href="https://en.cppreference.com/w/cpp/language/implicit_conversion">same behavior as C++ programs</a>.</p>
+<p>ByConity has the <a href="https://en.cppreference.com/w/cpp/language/implicit_conversion">same behavior as C++ programs</a>.</p>
 <p><strong>Example</strong></p>
 <pre><code class="sql">SELECT toInt64OrZero(&#39;123123&#39;), toInt8OrZero(&#39;123qwe123&#39;);
 </code></pre>
@@ -478,9 +478,9 @@ toUInt64(expr)
 <li>Integer value in the <code>UInt8</code> , <code>UInt16</code> , <code>UInt32</code> , <code>UInt64</code> data type.</li>
 </ul>
 <p>Functions use <a href="https://en.wikipedia.org/wiki/Rounding#Rounding_towards_zero">rounding towards zero</a> , meaning they truncate fractional digits of numbers.</p>
-<p>The behavior of functions for negative agruments and for the NaN and Inf arguments is undefined. If you pass a string with a negative number, for example <code>&#39;-32&#39;</code> , ByteHouse raises an exception.</p>
+<p>The behavior of functions for negative agruments and for the NaN and Inf arguments is undefined. If you pass a string with a negative number, for example <code>&#39;-32&#39;</code> , ByConity raises an exception.</p>
 <p>When you convert a value from one to another data type, you should remember that in common case, it is an unsafe operation that can lead to a data loss. A data loss can occur if you try to fit value from a larger data type to a smaller data type, or if you convert values between different data types.</p>
-<p>ByteHouse has the <a href="https://en.cppreference.com/w/cpp/language/implicit_conversion">same behavior as C++ programs</a>.</p>
+<p>ByConity has the <a href="https://en.cppreference.com/w/cpp/language/implicit_conversion">same behavior as C++ programs</a>.</p>
 <p><strong>Example</strong></p>
 <pre><code class="sql">SELECT toUInt64(nan), toUInt32(-32), toUInt16(&#39;16&#39;), toUInt8(8.8);
 </code></pre>
