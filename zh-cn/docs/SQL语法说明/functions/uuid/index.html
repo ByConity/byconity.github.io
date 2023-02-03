@@ -390,7 +390,7 @@
         <div class="card-content article-card-content">
             <div id="articleContent">
                 <blockquote>
-<p>Notice:<br>Some of the examples below are referenced from <a target="_blank" rel="noopener" href="https://clickhouse.com/docs/en/sql-reference/functions/">ClickHouse Documentation</a> but have been adapted and modified to work in ByteHouse.</p>
+<p>Notice:<br>Some of the examples below are referenced from <a target="_blank" rel="noopener" href="https://clickhouse.com/docs/en/sql-reference/functions/">ClickHouse Documentation</a> but have been adapted and modified to work in ByConity.</p>
 </blockquote>
 <h2 id="generateUUIDv4"><a href="#generateUUIDv4" class="headerlink" title="generateUUIDv4"></a>generateUUIDv4</h2><p>Generates the UUID of <a target="_blank" rel="noopener" href="https://tools.ietf.org/html/rfc4122#section-4.4">version 4</a> .</p>
 <p><strong>Syntax</strong></p>
@@ -503,6 +503,7 @@
 <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">SELECT</span> toUUIDOrZero(<span class="string">&#x27;61f0c404-5cb3-11e7-907b-a6006ad3dba0T&#x27;</span>) <span class="keyword">AS</span> uuid</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">┌─────────────────────────────────uuid─┐</span><br><span class="line"></span><br><span class="line">│ 00000000-0000-0000-0000-000000000000 │</span><br><span class="line"></span><br><span class="line">└──────────────────────────────────────┘</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
                 
             </div>
             <hr/>
