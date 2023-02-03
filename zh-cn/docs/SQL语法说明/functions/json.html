@@ -1,8 +1,8 @@
 <hr>
 <h2 id="title-“JSON”slug-“json”hidden-falsecreatedAt-“2021-07-29T12-12-52-763Z”updatedAt-“2021-09-23T04-06-29-273Z”categories-Docs-SQL-Syntaxtags-Docs"><a href="#title-“JSON”slug-“json”hidden-falsecreatedAt-“2021-07-29T12-12-52-763Z”updatedAt-“2021-09-23T04-06-29-273Z”categories-Docs-SQL-Syntaxtags-Docs" class="headerlink" title="title: “JSON”slug: “json”hidden: falsecreatedAt: “2021-07-29T12:12:52.763Z”updatedAt: “2021-09-23T04:06:29.273Z”categories:- Docs- SQL_Syntaxtags:- Docs"></a>title: “JSON”<br>slug: “json”<br>hidden: false<br>createdAt: “2021-07-29T12:12:52.763Z”<br>updatedAt: “2021-09-23T04:06:29.273Z”<br>categories:<br>- Docs<br>- SQL_Syntax<br>tags:<br>- Docs</h2><blockquote>
-<p>Notice:<br>Some of the examples below are referenced from <a href="https://clickhouse.com/docs/en/sql-reference/functions/">ClickHouse Documentation</a> but have been adapted and modified to work in ByteHouse.</p>
+<p>Notice:<br>Some of the examples below are referenced from <a href="https://clickhouse.com/docs/en/sql-reference/functions/">ClickHouse Documentation</a> but have been adapted and modified to work in ByConity.</p>
 </blockquote>
-<h2 id="JSONExtract"><a href="#JSONExtract" class="headerlink" title="JSONExtract"></a>JSONExtract</h2><p>Parses a JSON and extract a value of the given ByteHouse data type.<br>This is a generalization of the previous <code>JSONExtract&lt;type&gt;</code> functions.<br>This means<br><code>JSONExtract(..., &#39;String&#39;)</code> returns exactly the same as <code>JSONExtractString()</code> ,<br><code>JSONExtract(..., &#39;Float64&#39;)</code> returns exactly the same as <code>JSONExtractFloat()</code> .</p>
+<h2 id="JSONExtract"><a href="#JSONExtract" class="headerlink" title="JSONExtract"></a>JSONExtract</h2><p>Parses a JSON and extract a value of the given ByConity data type.<br>This is a generalization of the previous <code>JSONExtract&lt;type&gt;</code> functions.<br>This means<br><code>JSONExtract(..., &#39;String&#39;)</code> returns exactly the same as <code>JSONExtractString()</code> ,<br><code>JSONExtract(..., &#39;Float64&#39;)</code> returns exactly the same as <code>JSONExtractFloat()</code> .</p>
 <p><strong>Syntax</strong></p>
 <pre><code class="sql">JSONExtract(json[, indices_or_keys…], Return_type)
 </code></pre>
@@ -17,11 +17,11 @@
 <li>You may use integers to access both JSON arrays and JSON objects.</li>
 </ul>
 </li>
-<li><code>Return_type</code> – ByteHouse data type.</li>
+<li><code>Return_type</code> – ByConity data type.</li>
 </ul>
 <p><strong>Returned value</strong></p>
 <ul>
-<li>Extracted value of the given ByteHouse data type.</li>
+<li>Extracted value of the given ByConity data type.</li>
 </ul>
 <p><strong>Example</strong></p>
 <pre><code class="sql">SELECT JSONExtract(&#39;{&quot;a&quot;: &quot;hello&quot;, &quot;b&quot;: [-100, 200.0, 300]}&#39;, &#39;Tuple(String, Array(Float64))&#39;)
@@ -156,7 +156,7 @@ SELECT JSONExtract('{"a": "hello", "b": [-100, 200.0, 300]}', 'Tuple(b Array(Flo
 │ -100                                                              │
 └───────────────────────────────────────────────────────────────────┘
 </code></pre>
-<h2 id="JSONExtractKeysAndValues"><a href="#JSONExtractKeysAndValues" class="headerlink" title="JSONExtractKeysAndValues"></a>JSONExtractKeysAndValues</h2><p>Parses key-value pairs from a JSON where the values are of the given ByteHouse data type.</p>
+<h2 id="JSONExtractKeysAndValues"><a href="#JSONExtractKeysAndValues" class="headerlink" title="JSONExtractKeysAndValues"></a>JSONExtractKeysAndValues</h2><p>Parses key-value pairs from a JSON where the values are of the given ByConity data type.</p>
 <p><strong>Syntax</strong></p>
 <pre><code class="sql">JSONExtractKeysAndValues(json[, indices_or_keys…], Value_type)
 </code></pre>
@@ -369,7 +369,7 @@ SELECT JSONExtract('{"a": "hello", "b": [-100, 200.0, 300]}', 'Tuple(b Array(Flo
 </ul>
 <p><strong>Returned value</strong></p>
 <ul>
-<li>ByteHouse data type.</li>
+<li>ByConity data type.</li>
 </ul>
 <p><strong>Example</strong></p>
 <pre><code class="sql">SELECT JSONType(&#39;{&quot;a&quot;: &quot;hello&quot;, &quot;b&quot;: [-100, 200.0, 300]}&#39;)
