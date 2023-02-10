@@ -5,15 +5,17 @@ hidden: false
 createdAt: "2021-07-29T02:30:51.384Z"
 updatedAt: "2021-09-23T03:46:42.532Z"
 categories:
-- Docs
-- SQL_Syntax
+  - Docs
+  - SQL_Syntax
 tags:
-- Docs
+  - Docs
 ---
+
 > Notice:
-Some of the examples below are referenced from [ClickHouse Documentation](https://clickhouse.com/docs/en/sql-reference/functions/) but have been adapted and modified to work in ByConity.
+> Some of the examples below are referenced from [ClickHouse Documentation](https://clickhouse.com/docs/en/sql-reference/functions/) but have been adapted and modified to work in ByConity.
 
 ## greatest
+
 Returns the largest value of a and b.
 
 **Syntax**
@@ -23,9 +25,11 @@ greatest(a, b)
 ```
 
 **Arguments**
+
 - `a,b` – two values to compare
 
 **Returned value**
+
 - the larger value of a,b.
 
 **Example**
@@ -51,7 +55,8 @@ SELECT greatest(toDate('2019-01-01'), toDate('2019-01-02'))
 ```
 
 ## notEquals
-notEquals, a != b and a <> b operator
+
+notEquals, a != b and a &lt;&gt; b operator
 
 **Syntax**
 
@@ -62,9 +67,11 @@ a<>b
 ```
 
 **Arguments**
+
 - `a,b` – two values to compare
 
 **Returned value**
+
 - UInt8
 
 **Example**
@@ -88,12 +95,14 @@ SELECT notEquals(1, 2), 1!=2, 1<>2
 │ 1               │ 1               │ 1               │
 └─────────────────┴─────────────────┴─────────────────┘
 ```
+
 [block:api-header]
 {
-  "title": "notEquals"
+"title": "notEquals"
 }
 [/block]
-notEquals, a != b and a <> b operator
+
+notEquals, a != b and a &lt;&gt; b operator
 
 **Syntax**
 
@@ -104,9 +113,11 @@ a<>b
 ```
 
 **Arguments**
+
 - `a,b` – two values to compare
 
 **Returned value**
+
 - UInt8
 
 **Example**

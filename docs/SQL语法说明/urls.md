@@ -5,16 +5,17 @@ hidden: false
 createdAt: "2021-07-29T12:32:13.195Z"
 updatedAt: "2021-09-23T06:42:00.233Z"
 categories:
-- Docs
-- SQL_Syntax
+  - Docs
+  - SQL_Syntax
 tags:
-- Docs
+  - Docs
 ---
 
 > Notice:
-Some of the examples below are referenced from [ClickHouse Documentation](https://clickhouse.com/docs/en/sql-reference/functions/) but have been adapted and modified to work in ByConity.
+> Some of the examples below are referenced from [ClickHouse Documentation](https://clickhouse.com/docs/en/sql-reference/functions/) but have been adapted and modified to work in ByConity.
 
 ## URLHierarchy
+
 Returns an array containing the URL, truncated at the end by the symbols /,? in the path and query-string. Consecutive separator characters are counted as one. The cut is made in the position after all the consecutive separator characters.
 
 **Syntax**
@@ -24,9 +25,11 @@ URLHierarchy(URL)
 ```
 
 **Arguments**
+
 - `URL` — URL. Type: String.
 
 **Returned values**
+
 - an array containing the URL
 
 **Example**
@@ -41,8 +44,8 @@ SELECT URLHierarchy('https://example.com/browse/CONV-6788');
 └─────────────────────────────────────────────────────────────────────────────────────────────────┘
 ```
 
-
 ## URLPathHierarchy
+
 The same as above, but without the protocol and host in the result. The / element (root) is not included.
 
 **Syntax**
@@ -52,9 +55,11 @@ URLPathHierarchy(URL)
 ```
 
 **Arguments**
+
 - `URL` — URL. Type: String.
 
 **Returned values**
+
 - an array containing the URL
 
 **Example**
@@ -70,6 +75,7 @@ SELECT URLPathHierarchy('https://example.com/browse/CONV-6788');
 ```
 
 ## cutFragment
+
 Removes the fragment identifier. The number sign is also removed.
 
 **Syntax**
@@ -79,9 +85,11 @@ cutFragment(URL)
 ```
 
 **Arguments**
+
 - `URL` – url string
 
 **Returned value**
+
 - url without fragment
 
 **Example**
@@ -97,6 +105,7 @@ SELECT cutFragment('http://example.com#fragment')
 ```
 
 ## cutQueryString
+
 Removes query string. The question mark is also removed.
 
 **Syntax**
@@ -106,9 +115,11 @@ cutQueryString(URL)
 ```
 
 **Arguments**
+
 - `URL` – url string
 
 **Returned value**
+
 - url without query
 
 **Example**
@@ -124,6 +135,7 @@ SELECT cutQueryString('http://example.com/?page=1&lr=213')
 ```
 
 ## cutQueryStringAndFragment
+
 Removes the query string and fragment identifier. The question mark and number sign are also removed.
 
 **Syntax**
@@ -133,9 +145,11 @@ cutQueryStringAndFragment(URL)
 ```
 
 **Arguments**
+
 - `URL` – url string
 
 **Returned value**
+
 - url string without query string and fragment
 
 **Example**
@@ -149,7 +163,9 @@ SELECT cutQueryStringAndFragment('http://example.com/?page=1&lr=213#fragment')
 │ http://example.com/                                                     │
 └─────────────────────────────────────────────────────────────────────────┘
 ```
+
 ## cutToFirstSignificantSubdomain
+
 Returns the part of the domain that includes top-level subdomains up to the “first significant subdomain”.
 
 **Syntax**
@@ -159,9 +175,11 @@ cutToFirstSignificantSubdomain(URL)
 ```
 
 **Arguments**
+
 - `URL` – url string
 
 **Returned value**
+
 - subdomains string
 
 **Example**
@@ -175,7 +193,9 @@ SELECT cutToFirstSignificantSubdomain('https://www.example.com.cn/')
 │ example.com.cn                                                │
 └───────────────────────────────────────────────────────────────┘
 ```
-<!-- TODO: GATEWAY-CLIENT not work as expected
+
+:::danger
+GATEWAY-CLIENT not work as expected
 
 ```sql
 SELECT cutToFirstSignificantSubdomain('www.tr')
@@ -185,7 +205,12 @@ SELECT cutToFirstSignificantSubdomain('www.tr')
 ┌─cutToFirstSignificantSubdomain('www.tr')─┐
 │ tr                                       │
 └──────────────────────────────────────────┘
-``` -->## cutURLParameter
+```
+
+:::
+
+## cutURLParameter
+
 Removes the ‘name’ URL parameter, if present. This function works under the assumption that the parameter name is encoded in the URL exactly the same way as in the passed argument.
 
 **Syntax**
@@ -195,10 +220,12 @@ cutURLParameter(URL, name)
 ```
 
 **Arguments**
+
 - `URL` – url string
 - `name` - parameter name
 
 **Returned value**
+
 - url string
 
 **Example**
@@ -214,6 +241,7 @@ SELECT cutURLParameter('http://example.com/?page=1&lr=213','page')
 ```
 
 ## cutWWW
+
 Removes no more than one ‘www.’ from the beginning of the URL’s domain, if present.
 
 **Syntax**
@@ -223,10 +251,12 @@ cutWWW(URL)
 ```
 
 **Arguments**
+
 - `URL` – url string
 - `name` - parameter name
 
 **Returned value**
+
 - url string
 
 **Example**
@@ -242,20 +272,22 @@ SELECT cutWWW('http://www.example.com/?page=1&lr=213')
 ```
 
 ## decodeURLComponent
+
 Returns the decoded URL.
 
 **Syntax**
 
 ```sql
-decodeURLComponent(URL) 
+decodeURLComponent(URL)
 ```
 
 **Arguments**
+
 - `URL` – url string
 
 **Returned value**
-- decoded url string
 
+- decoded url string
 
 **Example**
 
@@ -270,6 +302,7 @@ SELECT decodeURLComponent('http://127.0.0.1:8123/?query=SELECT%201%3B') AS Decod
 ```
 
 ## domain
+
 Extracts the hostname from a URL.
 
 **Syntax**
@@ -279,9 +312,9 @@ domain(url)
 ```
 
 **Arguments**
-- `url` — URL. Type: String. 
-The URL can be specified with or without a scheme. Examples:
 
+- `url` — URL. Type: String.
+  The URL can be specified with or without a scheme. Examples:
 
 ```plain%20text
 svn+ssh://some.svn-hosting.com:80/repo/trunk
@@ -291,7 +324,6 @@ https://yandex.com/time/
 
 For these examples, the `domain` function returns the following results:
 
-
 ```plain%20text
 some.svn-hosting.com
 some.svn-hosting.com
@@ -299,9 +331,10 @@ yandex.com
 ```
 
 **Returned values**
-- Host name. If ByConity can parse the input string as a URL. 
-- Empty string. If ByConity can’t parse the input string as a URL. 
-Type: `String` .
+
+- Host name. If ByConity can parse the input string as a URL.
+- Empty string. If ByConity can’t parse the input string as a URL.
+  Type: `String` .
 
 **Example**
 
@@ -316,6 +349,7 @@ SELECT domain('svn+ssh://some.svn-hosting.com:80/repo/trunk');
 ```
 
 ## domainWithoutWWW
+
 Returns the domain and removes no more than one ‘www.’ from the beginning of it, if present.
 
 **Syntax**
@@ -325,12 +359,14 @@ domainWithoutWWW(url)
 ```
 
 **Arguments**
-- `url` — URL. Type: String. 
+
+- `url` — URL. Type: String.
 
 **Returned values**
-- Host name. If ByConity can parse the input string as a URL. 
-- Empty string. If ByConity can’t parse the input string as a URL. 
-Type: `String` .
+
+- Host name. If ByConity can parse the input string as a URL.
+- Empty string. If ByConity can’t parse the input string as a URL.
+  Type: `String` .
 
 **Example**
 
@@ -343,7 +379,9 @@ SELECT domainWithoutWWW('http://www.example.com#fragment');
 │ example.com                                         │
 └─────────────────────────────────────────────────────┘
 ```
+
 ## extractURLParameter
+
 Returns the value of the ‘name’ parameter in the URL, if present. Otherwise, an empty string. If there are many parameters with this name, it returns the first occurrence. This function works under the assumption that the parameter name is encoded in the URL exactly the same way as in the passed argument.
 
 **Syntax**
@@ -353,10 +391,12 @@ extractURLParameter(URL, name)
 ```
 
 **Arguments**
+
 - `URL` – url string
 - `name` - parameter name
 
 **Returned value**
+
 - parameter value
 
 **Example**
@@ -372,8 +412,8 @@ SELECT extractURLParameter('http://example.com/?page=1&lr=213','page')
 ```
 
 ## extractURLParameterNames
-Returns an array of name strings corresponding to the names of URL parameters. The values are not decoded in any way.
 
+Returns an array of name strings corresponding to the names of URL parameters. The values are not decoded in any way.
 
 **Syntax**
 
@@ -382,9 +422,11 @@ extractURLParameterNames(URL)
 ```
 
 **Arguments**
+
 - `URL` – url string
 
 **Returned value**
+
 - a list of parameter names
 
 **Example**
@@ -400,6 +442,7 @@ SELECT extractURLParameterNames('http://example.com/?page=1&lr=213')
 ```
 
 ## extractURLParameters
+
 Returns an array of name=value strings corresponding to the URL parameters. The values are not decoded in any way.
 
 **Syntax**
@@ -409,9 +452,11 @@ extractURLParameters(URL)
 ```
 
 **Arguments**
+
 - `URL` – url string
 
 **Returned value**
+
 - a list of parameters
 
 **Example**
@@ -427,6 +472,7 @@ SELECT extractURLParameters('http://example.com/?page=1&lr=213')
 ```
 
 ## firstSignificantSubdomain
+
 Returns the “first significant subdomain”. This is a non-standard concept specific to Yandex.Metrica. The first significant subdomain is a second-level domain if it is ‘com’, ‘net’, ‘org’, or ‘co’. Otherwise, it is a third-level domain.
 
 **Syntax**
@@ -436,9 +482,11 @@ firstSignificantSubdomain(URL)
 ```
 
 **Arguments**
+
 - `URL` – url string
 
 **Returned value**
+
 - first significant subdomain
 
 **Example**
@@ -452,29 +500,37 @@ SELECT firstSignificantSubdomain('https://www.example.com.cn/')
 │ example                                                  │
 └──────────────────────────────────────────────────────────┘
 ```
-<!-- TODO: GATEWAY-CLIENT not work as expected
+
+:::danger
+GATEWAY-CLIENT not work as expected
 
 ```sql
 SELECT firstSignificantSubdomain('www.tr')
 ```
 
-```plain%20text
+````plain%20text
 ┌─firstSignificantSubdomain('www.tr')─┐
 │ tr                                  │
 └─────────────────────────────────────┘
-``` -->## fragment
+```
+:::
+
+## fragment
+
 Returns the fragment identifier. fragment does not include the initial hash symbol.
 
 **Syntax**
 
 ```sql
 fragment(URL)
-```
+````
 
 **Arguments**
+
 - `URL` – url string
 
 **Returned value**
+
 - fragment string
 
 **Example**
@@ -490,6 +546,7 @@ SELECT fragment('http://example.com#fragment')
 ```
 
 ## path
+
 Returns the path. Example: `/top/news.html` The path does not include the query string.
 
 **Syntax**
@@ -499,9 +556,11 @@ path(URL)
 ```
 
 **Arguments**
+
 - `URL` – url string
 
 **Returned value**
+
 - path string
 
 **Example**
@@ -517,6 +576,7 @@ SELECT path('http://example.com/top/news.html')
 ```
 
 ## protocol
+
 Extracts the protocol from a URL.
 Examples of typical returned values: http, https, ftp, mailto, tel, magnet…
 
@@ -527,9 +587,11 @@ protocol(URL)
 ```
 
 **Arguments**
+
 - `URL` – url string
 
 **Returned value**
+
 - protocol string
 
 **Example**
@@ -545,6 +607,7 @@ SELECT protocol('http://example.com')
 ```
 
 ## queryString
+
 Returns the query string. Example: page=1&lr=213. query-string does not include the initial question mark, as well as # and everything after #.
 
 **Syntax**
@@ -554,9 +617,11 @@ queryString(URL)
 ```
 
 **Arguments**
+
 - `URL` – url string
 
 **Returned value**
+
 - query string
 
 **Example**
@@ -572,6 +637,7 @@ SELECT queryString('http://example.com/?page=1&lr=213')
 ```
 
 ## queryStringAndFragment
+
 Returns the query string and fragment identifier. Example: page=1#29390.
 
 **Syntax**
@@ -581,9 +647,11 @@ queryStringAndFragment(URL)
 ```
 
 **Arguments**
+
 - `URL` – url string
 
 **Returned value**
+
 - query and fragment string
 
 **Example**
@@ -599,6 +667,7 @@ SELECT queryStringAndFragment('http://example.com/?page=1&lr=213#fragment')
 ```
 
 ## topLevelDomain
+
 Extracts the the top-level domain from a URL.
 
 **Syntax**
@@ -608,9 +677,9 @@ topLevelDomain(url)
 ```
 
 **Arguments**
-- `url` — URL. Type: String. 
-The URL can be specified with or without a scheme. Examples:
 
+- `url` — URL. Type: String.
+  The URL can be specified with or without a scheme. Examples:
 
 ```plain%20text
 svn+ssh://some.svn-hosting.com:80/repo/trunk
@@ -619,9 +688,10 @@ https://yandex.com/time/
 ```
 
 **Returned values**
-- Domain name. If ByConity can parse the input string as a URL. 
-- Empty string. If ByConity cannot parse the input string as a URL. 
-Type: `String` .
+
+- Domain name. If ByConity can parse the input string as a URL.
+- Empty string. If ByConity cannot parse the input string as a URL.
+  Type: `String` .
 
 **Example**
 
