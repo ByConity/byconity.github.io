@@ -4,9 +4,6 @@ slug: "date-times"
 hidden: false
 createdAt: "2021-07-29T12:02:04.877Z"
 updatedAt: "2021-09-23T03:55:04.783Z"
-categories:
-  - Docs
-  - SQL_Syntax
 tags:
   - Docs
 ---

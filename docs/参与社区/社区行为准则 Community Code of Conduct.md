@@ -1,10 +1,7 @@
 ---
 title: 社区行为准则
-categories:
-- Docs
-- Community
 tags:
-- Docs
+  - Docs
 ---
 
 # 社区行为准则 Community Code of Conduct

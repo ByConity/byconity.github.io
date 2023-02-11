@@ -4,9 +4,6 @@ slug: "urls"
 hidden: false
 createdAt: "2021-07-29T12:32:13.195Z"
 updatedAt: "2021-09-23T06:42:00.233Z"
-categories:
-  - Docs
-  - SQL_Syntax
 tags:
   - Docs
 ---

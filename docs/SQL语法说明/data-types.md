@@ -2,40 +2,39 @@
 title: "Data Types"
 slug: "data-types"
 hidden: false
-metadata: 
+metadata:
   title: "Supported Data Types in ByConity"
   description: "ByConity can support various data types, such as Numeric Data Types, String & Binary Data Types, Date & Time Data Types, Semi-structured Data Types, etc."
 createdAt: "2021-06-17T15:27:33.972Z"
 updatedAt: "2022-02-28T02:26:27.494Z"
-categories:
-- Docs
-- SQL_Syntax
 tags:
-- Docs
+  - Docs
 ---
+
 The data types provided in ByConity are adapted from ClickHouse. Visit this [page](https://clickhouse.tech/docs/en/sql-reference/data-types/) for more information on ClickHouse data types.
 
 ## Summary of Data Types
-* Numeric Data Types
-  * Int8, TINYINT Int16, SMALLINT Int32, INT, INTEGER Int64, BIGINT UInt8 UInt16 UInt32 UInt64
-  * Float32, FLOAT Float64, DOUBLE  
-  * Decimal, DEC Decimal32 Decimal64 Decimal128  
-* String & Binary Data Types
-  * String, TEXT, TINYTEXT, MEDIUMTEXT, LONGTEXT, BLOB, TINYBLOB, MEDIUMBLOB , LONGBLOB, CHAR, VARCHAR  
-  * FixedString, BINARY  
-* Date & Time Data Types
-  * Date
-  * DateTime, TIMESTAMP  
-* Semi-structured Data Types
-  * Array
-  * Map
-  * Tuple
-  * Enum8 Enum16  
-  * Nested
-* Other Special Data Types
-  * IPv4 IPv6  
-  * Nullable
-  * UUID
+
+- Numeric Data Types
+  - Int8, TINYINT Int16, SMALLINT Int32, INT, INTEGER Int64, BIGINT UInt8 UInt16 UInt32 UInt64
+  - Float32, FLOAT Float64, DOUBLE
+  - Decimal, DEC Decimal32 Decimal64 Decimal128
+- String & Binary Data Types
+  - String, TEXT, TINYTEXT, MEDIUMTEXT, LONGTEXT, BLOB, TINYBLOB, MEDIUMBLOB , LONGBLOB, CHAR, VARCHAR
+  - FixedString, BINARY
+- Date & Time Data Types
+  - Date
+  - DateTime, TIMESTAMP
+- Semi-structured Data Types
+  - Array
+  - Map
+  - Tuple
+  - Enum8 Enum16
+  - Nested
+- Other Special Data Types
+  - IPv4 IPv6
+  - Nullable
+  - UUID
 
 ## Numeric Data Types
 
@@ -109,11 +108,11 @@ Depending on P parameter value Decimal(P, S) is a synonym for:
 
 **Decimal Value Ranges**
 
-- Decimal32(S) - ( -1 * 10^(9 - S), 1 * 10^(9 - S) )
+- Decimal32(S) - ( -1 _ 10^(9 - S), 1 _ 10^(9 - S) )
 
-- Decimal64(S) - ( -1 * 10^(18 - S), 1 * 10^(18 - S) )
+- Decimal64(S) - ( -1 _ 10^(18 - S), 1 _ 10^(18 - S) )
 
-- Decimal128(S) - ( -1 * 10^(38 - S), 1 * 10^(38 - S) )
+- Decimal128(S) - ( -1 _ 10^(38 - S), 1 _ 10^(38 - S) )
 
 For example, Decimal32(4) can contain numbers from -99999.9999 to 99999.9999 with 0.0001 step.
 
@@ -175,7 +174,6 @@ This behaviour differs from MySQL for the `CHAR` type (where strings are padded 
 
 Note that the length of the `FixedString(N)` value is constant. The [length](https://clickhouse.tech/docs/en/sql-reference/functions/array-functions/#array_functions-length) function returns `N` even if the `FixedString(N)` value is filled only with null bytes, but the [empty](https://clickhouse.tech/docs/en/sql-reference/functions/string-functions/#empty) function returns `1` in this case.
 
-
 ### Date & Time Data Types
 
 ### Date
@@ -232,7 +230,7 @@ You can also use square brackets.
 
 \- `value` — The value part of the pair. [String](https://clickhouse.tech/docs/en/sql-reference/data-types/string/), [Integer](https://clickhouse.tech/docs/en/sql-reference/data-types/int-uint/) or [Array](https://clickhouse.tech/docs/en/sql-reference/data-types/array/).
 
-To get the value from an `a Map('key', 'value')` column, use `a{'key'}` syntax. 
+To get the value from an `a Map('key', 'value')` column, use `a{'key'}` syntax.
 
 **Example**
 
@@ -302,7 +300,7 @@ CREATE TABLE t_enum(x Enum8('hello' = 1, 'world' = 2)) ENGINE = Memory;
 INSERT INTO t_enum VALUES ('hello'), ('world'), ('hello');
 ```
 
-Column `x` can only store values that are listed in the type definition: `'hello'` or `'world'`. If you try to save any other value, ByConity will raise an exception. 
+Column `x` can only store values that are listed in the type definition: `'hello'` or `'world'`. If you try to save any other value, ByConity will raise an exception.
 
 When you query data from the table, ByConity outputs the string values from `Enum`.
 
@@ -324,14 +322,13 @@ INSERT INTO visits values ([1],[1]);
 
 This example declares the `Goals` nested data structure, which contains data about conversions (goals reached). Each row in the ‘visits’ table can correspond to zero or any number of conversions.
 
-Only a single nesting level is supported. 
+Only a single nesting level is supported.
 
 In most cases, when working with a nested data structure, its columns are specified with column names separated by a dot. These columns make up an array of matching types. All the column arrays of a single nested data structure have the same length.
 
 ```
 SELECT Goals.ID, Goals.Price FROM visits WHERE length(Goals.ID) < 5 LIMIT 10;
 ```
-
 
 ## Other Special Data Types
 

@@ -7,9 +7,6 @@ metadata:
   description: "Find out various aggregation functions supported in ByConity such as anyHeavy, anyLast, argMax, argMin, avg, corr, covarPop, covarSamp, groupBitAnd, etc."
 createdAt: "2021-07-29T11:49:53.230Z"
 updatedAt: "2021-09-23T03:25:11.849Z"
-categories:
-- Docs
-- SQL_Syntax
 tags:
 - Docs
 ---

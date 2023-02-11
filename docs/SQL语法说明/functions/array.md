@@ -4,20 +4,18 @@ slug: "array"
 hidden: false
 createdAt: "2021-07-29T02:30:43.353Z"
 updatedAt: "2021-09-23T08:08:05.696Z"
-categories:
-- Docs
-- SQL_Syntax
 tags:
-- Docs
+  - Docs
 ---
-> Notice:
-Some of the examples below are referenced from [ClickHouse Documentation](https://clickhouse.com/docs/en/sql-reference/functions/) but have been adapted and modified to work in ByConity.
 
-## array 
+> Notice:
+> Some of the examples below are referenced from [ClickHouse Documentation](https://clickhouse.com/docs/en/sql-reference/functions/) but have been adapted and modified to work in ByConity.
+
+## array
 
 Creates an array from the function arguments.
 
-The arguments must be constants and have types that have the smallest common type. At least one argument must be passed, because otherwise it isn’t clear which type of array to create. That is, you can’t use this function to create an empty array (to do that, use the ‘emptyArray*’ function described above).
+The arguments must be constants and have types that have the smallest common type. At least one argument must be passed, because otherwise it isn’t clear which type of array to create. That is, you can’t use this function to create an empty array (to do that, use the ‘emptyArray\*’ function described above).
 
 **Syntax**
 
@@ -46,10 +44,12 @@ SELECT array(1,2,3);
 ```
 
 ## arrayAll
+
 Returns 1 if `func` returns something other than 0 for all the elements in `arr` . Otherwise, it returns 0.
 Note that the `arrayAll` is a higher-order function. You can pass a lambda function to it as the first argument.
 
 **Syntax**
+
 ```sql
 arrayAll([func,] arr1, …)
 ```
@@ -86,16 +86,18 @@ SELECT arrayAll((x,y)->x==y,[1,2,3],[1,2,3]);
 ```
 
 ## arrayConcat
+
 Combines arrays passed as arguments.
 
 **Syntax**
+
 ```sql
 arrayConcat(arrays)
 ```
 
 **Arguments**
 
-- `arrays` – Arbitrary number of arguments of Array type. 
+- `arrays` – Arbitrary number of arguments of Array type.
 
 **Returned value**
 
@@ -112,12 +114,15 @@ SELECT arrayConcat([1, 2], [3, 4], [5, 6]) AS res
 │ [1,2,3,4,5,6] │
 └───────────────┘
 ```
+
 ## arrayCount
+
 Returns the number of elements in the arr array for which func returns something other than 0. If ‘func’ is not specified, it returns the number of non-zero elements in the array.
 
 Note that the `arrayCount` is a higher-order function. You can pass a lambda function to it as the first argument.
 
 **Syntax**
+
 ```sql
 arrayCount([func,] arr1, …)
 ```
@@ -144,11 +149,13 @@ SELECT arrayCount((x,y)->x==y,[1,2,3],[1,5,3]);
 ```
 
 ## arrayCumSum
+
 Returns an array of partial sums of elements in the source array (a running sum). If the `func` function is specified, then the values of the array elements are converted by this function before summing.
 
 Note that the `arrayCumSum` is a higher-order function. You can pass a lambda function to it as the first argument.
 
 **Syntax**
+
 ```sql
 arrayCumSum([func,] arr1, …)
 ```
@@ -185,11 +192,13 @@ SELECT arrayCumSum(x->x+1,[1, 1, 1, 1]) AS res
 ```
 
 ## arrayCumSumNonNegative
+
 Same as `arrayCumSum` , returns an array of partial sums of elements in the source array (a running sum). Different `arrayCumSum` , when returned value contains a value less than zero, the value is replace with zero and the subsequent calculation is performed with zero parameters. For example:
 
 Note that the `arraySumNonNegative` is a higher-order function. You can pass a lambda function to it as the first argument.
 
 **Syntax**
+
 ```sql
 arrayCumSumNonNegative([func,] arr1, …)
 ```
@@ -226,20 +235,22 @@ SELECT arrayCumSumNonNegative(x->x-2,[1, 1, -4, 3]) AS res
 ```
 
 ## arrayDifference
+
 Calculates the difference between adjacent array elements. Returns an array where the first element will be 0, the second is the difference between `a[1] - a[0]` , etc. The type of elements in the resulting array is determined by the type inference rules for subtraction (e.g. `UInt8` - `UInt8` = `Int16` ).
 
 **Syntax**
+
 ```sql
 arrayDifference(array)
 ```
 
 **Arguments**
 
-- `array` – an Array. 
+- `array` – an Array.
 
 **Returned values**
 Returns an array of differences between adjacent elements.
-Type: UInt*, Int*, Float*.
+Type: UInt*, Int*, Float\*.
 
 **Example**
 
@@ -277,7 +288,7 @@ arrayDistinct(array)
 
 **Arguments**
 
-- `array` – an Array. 
+- `array` – an Array.
 
 **Returned values**
 
@@ -312,12 +323,12 @@ arrayElement(array, n)
 
 **Arguments**
 
-- `array` – an Array. 
+- `array` – an Array.
 - `n` - an Index in the array.
 
 **Returned values**
 
-- Get the element with the index `n` from the array `arr` 
+- Get the element with the index `n` from the array `arr`
 
 **Example**
 
@@ -330,8 +341,6 @@ SELECT arrayElement([1, 2, 2, 3, 1],3);
 │ 2                                │
 └──────────────────────────────────┘
 ```
-
-
 
 ## arrayEnumerate
 
@@ -347,7 +356,7 @@ arrayEnumerate(arr)
 
 **Arguments**
 
-- `arr` – an Array. 
+- `arr` – an Array.
 
 **Returned values**
 
@@ -391,7 +400,7 @@ arrayEnumerateDense(arr)
 
 **Arguments**
 
-- `arr` – an Array. 
+- `arr` – an Array.
 
 **Returned values**
 
@@ -425,7 +434,7 @@ arrayEnumerateUniq(arr, …)
 
 **Arguments**
 
-- `arr` – an Array. 
+- `arr` – an Array.
 
 **Returned values**
 
@@ -542,11 +551,9 @@ SELECT arrayFilter((i, x) -> x LIKE '%World%', arrayEnumerate(arr), ['Hello', 'a
 └─────┘
 ```
 
-
-
 [block:api-header]
 {
-  "title": "arrayFirst"
+"title": "arrayFirst"
 }
 [/block]
 Returns the first element in the `arr1` array for which `func` returns something other than 0.
@@ -557,7 +564,6 @@ Note that the `arrayFirst` is a higher-order function. You must pass a lambda fu
 ```sql
 arrayFirst(func, arr1, …)
 ```
-
 
 **Arguments**
 
@@ -580,16 +586,16 @@ SELECT arrayFirst(x -> x LIKE '%World%', ['Hello World', 'abc World']) AS res
 └─────────────┘
 ```
 
-
 ## arrayFirstIndex
+
 Returns the index of the first element in the `arr1` array for which `func` returns something other than 0.
 
 Note that the `arrayFirstIndex` is a higher-order function. You must pass a lambda function to it as the first argument, and it can’t be omitted.
 
-
 **Syntax**
+
 ```sql
-arrayFirstIndex(func, arr1, …) 
+arrayFirstIndex(func, arr1, …)
 ```
 
 **Arguments**
@@ -614,9 +620,11 @@ SELECT arrayFirstIndex(x -> x LIKE '%World%', ['Hello World', 'abc World']) AS r
 ```
 
 ## arrayIntersect
+
 Takes multiple arrays, returns an array with elements that are present in all source arrays. Elements order in the resulting array is the same as in the first array.
 
 **Syntax**
+
 ```sql
 arrayIntersect(arr)
 ```
@@ -687,11 +695,13 @@ SELECT arrayJoin([1, 2, 3] AS src) AS dst, 'Hello', src
 ```
 
 ## arrayMap
+
 Returns an array obtained from the original application of the `func` function to each element in the `arr` array.
 
 Note that the `arrayMap` is a higher-order function. You must pass a lambda function to it as the first argument, and it can’t be omitted.
 
 **Syntax**
+
 ```sql
 arrayMap(func, arr1, …)
 ```
@@ -741,12 +751,11 @@ arrayPopBack(array)
 
 **Arguments**
 
-- `array` – Array. 
+- `array` – Array.
 
 **Returned values**
 
 - `array` – An Array removes the last item from the original array.
-
 
 **Example**
 
@@ -766,7 +775,7 @@ Removes the first item from the array.
 
 **Arguments**
 
-- `array` – Array. 
+- `array` – Array.
 
 **Returned values**
 
@@ -796,8 +805,8 @@ arrayPushBack(array, single_value)
 
 **Arguments**
 
-- `array` – Array. 
-- `single_value` – A single value. Only numbers can be added to an array with numbers, and only strings can be added to an array of strings. When adding numbers, ByConity automatically sets the `single_value` type for the data type of the array. Can be `NULL` . The function adds a `NULL` element to an array, and the type of array elements converts to `Nullable` . 
+- `array` – Array.
+- `single_value` – A single value. Only numbers can be added to an array with numbers, and only strings can be added to an array of strings. When adding numbers, ByConity automatically sets the `single_value` type for the data type of the array. Can be `NULL` . The function adds a `NULL` element to an array, and the type of array elements converts to `Nullable` .
 
 **Returned values**
 
@@ -824,17 +833,19 @@ SELECT arrayPushBack(['a'], NULL) AS res, toTypeName(arrayPushBack(['a'], NULL))
 ```
 
 ## arrayPushFront
+
 Adds one element to the beginning of the array.
 
 **Syntax**
+
 ```sql
 arrayPushFront(array, single_value)
 ```
 
 **Arguments**
 
-- `array` – Array. 
-- `single_value` – A single value. Only numbers can be added to an array with numbers, and only strings can be added to an array of strings. When adding numbers, ByConity automatically sets the `single_value` type for the data type of the array. Can be `NULL` . The function adds a `NULL` element to an array, and the type of array elements converts to `Nullable` . 
+- `array` – Array.
+- `single_value` – A single value. Only numbers can be added to an array with numbers, and only strings can be added to an array of strings. When adding numbers, ByConity automatically sets the `single_value` type for the data type of the array. Can be `NULL` . The function adds a `NULL` element to an array, and the type of array elements converts to `Nullable` .
 
 **Returned values**
 
@@ -863,22 +874,23 @@ SELECT arrayPushFront(['b'], NULL) AS res, toTypeName(arrayPushFront(['b'], NULL
 ```
 
 ## arrayReduce
+
 Applies an aggregate function to array elements and returns its result. The name of the aggregation function is passed as a string in single quotes `'max'` , `'sum'` . When using parametric aggregate functions, the parameter is indicated after the function name in parentheses `'uniqUpTo(6)'` .
 
 **Syntax**
+
 ```sql
 arrayReduce(agg_func, arr1, arr2, ..., arrN)
 ```
 
 **Arguments**
 
-- `agg_func` — The name of an aggregate function which should be a constant string. 
-- `arr` — Any number of array type columns as the parameters of the aggregation function. 
+- `agg_func` — The name of an aggregate function which should be a constant string.
+- `arr` — Any number of array type columns as the parameters of the aggregation function.
 
 **Returned value**
 
 - Result of aggregate function to array elements.
-
 
 **Example**
 
@@ -922,11 +934,11 @@ arrayResize(array, size[, extender])
 
 **Arguments**
 
-- `array` — Array. 
-- `size` — Required length of the array. 
-  - If `size` is less than the original size of the array, the array is truncated from the right. 
-  - If `size` is larger than the initial size of the array, the array is extended to the right with `extender` values or default values for the data type of the array items. 
-- `extender` — Value for extending an array. Can be `NULL` . 
+- `array` — Array.
+- `size` — Required length of the array.
+  - If `size` is less than the original size of the array, the array is truncated from the right.
+  - If `size` is larger than the initial size of the array, the array is extended to the right with `extender` values or default values for the data type of the array items.
+- `extender` — Value for extending an array. Can be `NULL` .
 
 **Returned value**
 
@@ -966,7 +978,7 @@ arrayReverse(array)
 
 **Arguments**
 
-- `array` — Array. 
+- `array` — Array.
 
 **Returned value**
 
@@ -985,11 +997,13 @@ SELECT arrayReverse([1, 2, 3])
 ```
 
 ## arrayReverseSort
+
 Sorts the elements of the `arr` array in descending order. If the `func` function is specified, `arr` is sorted according to the result of the `func` function applied to the elements of the array, and then the sorted array is reversed. If `func` accepts multiple arguments, the `arrayReverseSort` function is passed several arrays that the arguments of `func` will correspond to. Detailed examples are shown at the end of `arrayReverseSort` description.
 
 Note that the `arrayReverseSort` is a higher-order function. You can pass a lambda function to it as the first argument. Example is shown below.
 
 **Syntax**
+
 ```sql
 arrayReverseSort([func,] arr, …)
 ```
@@ -997,7 +1011,7 @@ arrayReverseSort([func,] arr, …)
 **Arguments**
 
 - `func` - sort function.
-- `array` — Array. 
+- `array` — Array.
 
 **Returned value**
 
@@ -1040,10 +1054,10 @@ SELECT arrayReverseSort([1, nan, 2, NULL, 3, nan, -4, NULL, inf, -inf]) as res;
 └─────────────────────────────────────────────────────────────────┘
 ```
 
-- `Inf` values are first in the array. 
-- `NULL` values are last in the array. 
-- `NaN` values are right before `NULL` . 
-- `-Inf` values are right before `NaN` . 
+- `Inf` values are first in the array.
+- `NULL` values are last in the array.
+- `NaN` values are right before `NULL` .
+- `-Inf` values are right before `NaN` .
 
 ```sql
 SELECT arrayReverseSort((x) -> -x, [1, 2, 3]) as res;
@@ -1057,8 +1071,8 @@ SELECT arrayReverseSort((x) -> -x, [1, 2, 3]) as res;
 
 The array is sorted in the following way:
 
-1. At first, the source array ([1, 2, 3]) is sorted according to the result of the lambda function applied to the elements of the array. The result is an array [3, 2, 1]. 
-2. Array that is obtained on the previous step, is reversed. So, the final result is [1, 2, 3]. 
+1. At first, the source array ([1, 2, 3]) is sorted according to the result of the lambda function applied to the elements of the array. The result is an array [3, 2, 1].
+2. Array that is obtained on the previous step, is reversed. So, the final result is [1, 2, 3].
 
 The lambda function can accept multiple arguments. In this case, you need to pass the `arrayReverseSort` function several arrays of identical length that the arguments of lambda function will correspond to. The resulting array will consist of elements from the first input array; elements from the next input array(s) specify the sorting keys. For example:
 
@@ -1074,9 +1088,8 @@ SELECT arrayReverseSort((x, y) -> y, ['hello', 'world'], [2, 1]) as res;
 
 In this example, the array is sorted in the following way:
 
-1. At first, the source array ([‘hello’, ‘world’]) is sorted according to the result of the lambda function applied to the elements of the arrays. The elements that are passed in the second array ([2, 1]), define the sorting keys for corresponding elements from the source array. The result is an array [‘world’, ‘hello’]. 
-2. Array that was sorted on the previous step, is reversed. So, the final result is [‘hello’, ‘world’]. 
-
+1. At first, the source array ([‘hello’, ‘world’]) is sorted according to the result of the lambda function applied to the elements of the arrays. The elements that are passed in the second array ([2, 1]), define the sorting keys for corresponding elements from the source array. The result is an array [‘world’, ‘hello’].
+2. Array that was sorted on the previous step, is reversed. So, the final result is [‘hello’, ‘world’].
 
 Other examples are shown below.
 
@@ -1112,9 +1125,9 @@ arraySlice(array, offset[, length])
 
 **Arguments**
 
-- `array` – Array of data. 
-- `offset` – Indent from the edge of the array. A positive value indicates an offset on the left, and a negative value is an indent on the right. Numbering of the array items begins with 1. 
-- `length` – The length of the required slice. If you specify a negative value, the function returns an open slice `[offset, array_length - length)` . If you omit the value, the function returns the slice `[offset, the_end_of_array]` . 
+- `array` – Array of data.
+- `offset` – Indent from the edge of the array. A positive value indicates an offset on the left, and a negative value is an indent on the right. Numbering of the array items begins with 1.
+- `length` – The length of the required slice. If you specify a negative value, the function returns an open slice `[offset, array_length - length)` . If you omit the value, the function returns the slice `[offset, the_end_of_array]` .
 
 **Returned value**
 
@@ -1150,7 +1163,7 @@ arraySort([func,] arr, …)
 **Arguments**
 
 - `func` - sort function.
-- `array` — Array. 
+- `array` — Array.
 
 **Returned value**
 
@@ -1190,10 +1203,10 @@ SELECT arraySort([1, nan, 2, NULL, 3, nan, -4, NULL, inf, -inf]);
 ┌─arraySort([1, nan, 2, NULL, 3, nan, -4, NULL, inf, -inf])───────┐│ [-Inf, -4e+00, 1e+00, 2e+00, 3e+00, +Inf, NaN, NaN, ᴺᵁᴸᴸ, ᴺᵁᴸᴸ] │└─────────────────────────────────────────────────────────────────┘
 ```
 
-- `-Inf` values are first in the array. 
-- `NULL` values are last in the array. 
-- `NaN` values are right before `NULL` . 
-- `Inf` values are right before `NaN` . 
+- `-Inf` values are first in the array.
+- `NULL` values are last in the array.
+- `NaN` values are right before `NULL` .
+- `Inf` values are right before `NaN` .
 
 ```sql
 SELECT arraySort((x) -> -x, [1, 2, 3]) as res;
@@ -1242,6 +1255,7 @@ SELECT arraySort((x, y) -> -y, [0, 1, 2], [1, 2, 3]) as res;
 ```
 
 ## arraySum
+
 Returns the sum of elements in the source array.
 
 If the `func` function is specified, returns the sum of elements converted by this function.
@@ -1249,22 +1263,23 @@ If the `func` function is specified, returns the sum of elements converted by th
 Note that the `arraySum` is a higher-order function. You can pass a lambda function to it as the first argument.
 
 **Syntax**
+
 ```sql
 arraySum([func,] arr)
 ```
 
 **Arguments**
 
-- `func` — higher-order function. 
-- `arr` — Array. 
+- `func` — higher-order function.
+- `arr` — Array.
 
 **Returned value**
 
-- The sum of the function values (or the array sum). 
-  Type: 
-    - for decimal numbers in source array (or for converted values, if `func` is specified) Decimal128 Float64
-    - for numeric unsigned UInt64
-    - and for numeric signed Int64
+- The sum of the function values (or the array sum).
+  Type:
+  - for decimal numbers in source array (or for converted values, if `func` is specified) Decimal128 Float64
+  - for numeric unsigned UInt64
+  - and for numeric signed Int64
 
 **Examples**
 
@@ -1289,6 +1304,7 @@ SELECT arraySum(x -> x*x, [2, 3]) AS res;
 ```
 
 ## arrayUniq
+
 If one argument is passed, it counts the number of different elements in the array.
 
 If multiple arguments are passed, it counts the number of different tuples of elements at corresponding positions in multiple arrays.
@@ -1296,13 +1312,14 @@ If multiple arguments are passed, it counts the number of different tuples of el
 If you want to get a list of unique items in an array, you can use `arrayReduce(‘groupUniqArray’, arr)` .
 
 **Syntax**
+
 ```sql
 arrayUniq(arr, …)
 ```
 
 **Arguments**
 
-- `arr` — Array. 
+- `arr` — Array.
 
 **Examples**
 
@@ -1342,7 +1359,7 @@ countEqual(arr, x)
 
 **Arguments**
 
-- `arr` — Array. 
+- `arr` — Array.
 - `x` - pivot element
 
 **Returned value**
@@ -1366,6 +1383,7 @@ SELECT countEqual([1, 2, NULL, NULL], NULL)
 Converts an array of arrays to a flat array.Function:- Applies to any depth of nested arrays. - Does not change arrays that are already flat. The flattened array contains all the elements from all source arrays.
 
 **Syntax**
+
 ```sql
 flatten(array_of_arrays)
 ```
@@ -1374,7 +1392,7 @@ Alias: `flatten` .
 
 **Arguments**
 
-- `array_of_arrays` — Array of arrays. For example, `[[1,2,3], [4,5]]` . 
+- `array_of_arrays` — Array of arrays. For example, `[[1,2,3], [4,5]]` .
 
 **Returned value**
 
@@ -1398,51 +1416,51 @@ Inserts a value into the array at the specified position.
 
 **Syntax**
 
-``` sql
+```sql
 groupArrayInsertAt(default_x, size)(x, pos)
 ```
 
 If in one query several values are inserted into the same position, the function behaves in the following ways:
 
--   If a query is executed in a single thread, the first one of the inserted values is used.
--   If a query is executed in multiple threads, the resulting value is an undetermined one of the inserted values.
+- If a query is executed in a single thread, the first one of the inserted values is used.
+- If a query is executed in multiple threads, the resulting value is an undetermined one of the inserted values.
 
 **Arguments**
 
--   `x` — Value to be inserted. Expression resulting in one of the supported data types.
--   `pos` — Position at which the specified element `x` is to be inserted. Index numbering in the array starts from zero. UInt32.
--   `default_x` — Default value for substituting in empty positions. Optional parameter. Expression resulting in the data type configured for the `x` parameter. If `default_x` is not defined, the default values are used.
--   `size` — Length of the resulting array. Optional parameter. When using this parameter, the default value `default_x` must be specified. UInt32.
+- `x` — Value to be inserted. Expression resulting in one of the supported data types.
+- `pos` — Position at which the specified element `x` is to be inserted. Index numbering in the array starts from zero. UInt32.
+- `default_x` — Default value for substituting in empty positions. Optional parameter. Expression resulting in the data type configured for the `x` parameter. If `default_x` is not defined, the default values are used.
+- `size` — Length of the resulting array. Optional parameter. When using this parameter, the default value `default_x` must be specified. UInt32.
 
 **Returned value**
 
--   Array with inserted values.
+- Array with inserted values.
 
 **Example**
 
-``` sql
+```sql
 SELECT groupArrayInsertAt(toString(number), number * 2) FROM numbers(5);
 ```
 
-``` text
+```text
 ┌─groupArrayInsertAt(toString(number), multiply(number, 2))─┐│ ['0','','1','','2','','3','','4']                         │└───────────────────────────────────────────────────────────┘
 ```
 
-``` sql
+```sql
 SELECT groupArrayInsertAt('-')(toString(number), number * 2) FROM numbers(5);
 ```
 
-``` text
+```text
 ┌─groupArrayInsertAt('-')(toString(number), multiply(number, 2))─┐
 │ ['0','-','1','-','2','-','3','-','4']                          │
 └────────────────────────────────────────────────────────────────┘
 ```
 
-``` sql
+```sql
 SELECT groupArrayInsertAt('-', 5)(toString(number), number * 2) FROM numbers(5);
 ```
 
-``` text
+```text
 ┌─groupArrayInsertAt('-', 5)(toString(number), multiply(number, 2))─┐
 │ ['0','-','1','-','2']                                             │
 └───────────────────────────────────────────────────────────────────┘
@@ -1462,87 +1480,90 @@ As a result of this query you get random integer in the `[0,9]` range. For examp
 │ [7]                           │
 └───────────────────────────────┘
 ``` -->
+
 ## hasAll
+
 Checks whether one array is a subset of another.
 
 **Syntax**
+
 ```sql
 hasAll(set, subset)
 ```
 
 **Arguments**
 
-- `set` – Array of any type with a set of elements. 
-- `subset` – Array of any type with elements that should be tested to be a subset of `set` . 
+- `set` – Array of any type with a set of elements.
+- `subset` – Array of any type with elements that should be tested to be a subset of `set` .
 
 **Return values**
 
-- `1` , if `set` contains all of the elements from `subset` . 
-- `0` , otherwise. 
+- `1` , if `set` contains all of the elements from `subset` .
+- `0` , otherwise.
 
 **Peculiar properties**
 
-- An empty array is a subset of any array. 
-- `Null` processed as a value. 
-- Order of values in both of arrays does not matter. 
+- An empty array is a subset of any array.
+- `Null` processed as a value.
+- Order of values in both of arrays does not matter.
 
 **Examples**
 
-``` sql
+```sql
 SELECT hasAll([], []);
 ```
 
-``` text
+```text
 ┌─hasAll(array(), array())─┐
 │ 1                        │
 └──────────────────────────┘
 ```
 
-``` sql
+```sql
 SELECT hasAll([1, Null], [Null]);
 ```
 
-``` text
+```text
 ┌─hasAll([1, NULL], [NULL])─┐
 │ 1                         │
 └───────────────────────────┘
 ```
 
-``` sql
+```sql
 SELECT hasAll([1.0, 2, 3, 4], [1, 3]);
 ```
 
-``` text
+```text
 ┌─hasAll([1., 2, 3, 4], [1, 3])─┐
 │ 1                             │
 └───────────────────────────────┘
 ```
 
-``` sql
+```sql
 SELECT hasAll(['a', 'b'], ['a']);
 ```
 
-``` text
+```text
 ┌─hasAll(['a', 'b'], ['a'])─┐
 │ 1                         │
 └───────────────────────────┘
 ```
 
-``` sql
+```sql
 SELECT hasAll([1], ['a']);
 ```
 
-``` text
+```text
 ┌─hasAll([1], ['a'])─┐
 │ 0                  │
 └────────────────────┘
 ```
 
-``` sql
+```sql
 SELECT hasAll([[1, 2], [3, 4]], [[1, 2], [3, 5]]);
 ```
 
-``` text
+```text
 ┌─hasAll(array([1, 2], [3, 4]), array([1, 2], [3, 5]))─┐
 │ 0                                                    │
 └──────────────────────────────────────────────────────┘
@@ -1560,83 +1581,85 @@ hasAny(array1, array2)
 
 **Arguments**
 
-- `array1` – Array of any type with a set of elements. 
-- `array2` – Array of any type with a set of elements. 
+- `array1` – Array of any type with a set of elements.
+- `array2` – Array of any type with a set of elements.
 
 **Return values**
 
-- `1` , if `array1` and `array2` have one similar element at least. 
-- `0` , otherwise. 
+- `1` , if `array1` and `array2` have one similar element at least.
+- `0` , otherwise.
 
 **Peculiar properties**
 
-- `Null` processed as a value. 
-- Order of values in both of arrays does not matter. 
+- `Null` processed as a value.
+- Order of values in both of arrays does not matter.
 
 **Examples**
 
-``` sql
+```sql
 SELECT hasAny([1], []);
 ```
 
-``` text
+```text
 ┌─hasAny([1], array())─┐
 │ 0                    │
 └──────────────────────┘
 ```
 
-``` sql
+```sql
 SELECT hasAny([Null], [Null, 1]);
 ```
 
-``` text
+```text
 ┌─hasAny([NULL], [NULL, 1])─┐
 │ 1                         │
 └───────────────────────────┘
 ```
 
-``` sql
+```sql
 SELECT hasAny([-128, 1., 512], [1]);
 ```
 
-``` text
+```text
 ┌─hasAny([-128, 1., 512], [1])─┐
 │ 1                            │
 └──────────────────────────────┘
 ```
 
-``` sql
+```sql
 SELECT hasAny([[1, 2], [3, 4]], ['a', 'c']);
 ```
 
-``` text
+```text
 ┌─hasAny(array([1, 2], [3, 4]), ['a', 'c'])─┐
 │ 0                                         │
 └───────────────────────────────────────────┘
 ```
 
-``` sql
+```sql
 SELECT hasAll([[1, 2], [3, 4]], [[1, 2], [1, 2]]);
 ```
 
-``` text
+```text
 ┌─hasAll(array([1, 2], [3, 4]), array([1, 2], [1, 2]))─┐
 │ 1                                                    │
 └──────────────────────────────────────────────────────┘
 ```
 
 ## indexOf
+
 Returns the index of the first ‘x’ element (starting from 1) if it is in the array, or 0 if it is not.
 
 **Syntax**
+
 ```sql
-indexOf(arr, x) 
+indexOf(arr, x)
 ```
 
 **Arguments**
 
-- `arr` – Array of any type with a set of elements. 
-- `x` – an Element. 
+- `arr` – Array of any type with a set of elements.
+- `x` – an Element.
 
 **Return values**
 
@@ -1656,7 +1679,7 @@ SELECT indexOf([1, 3, NULL, NULL], NULL);
 
 Elements set to `NULL` are handled as normal values.
 
-## length 
+## length
 
 Returns the length of a arrays.
 
@@ -1668,7 +1691,7 @@ length(array)
 
 **Arguments**
 
-- `array` – Array of any type with a set of elements. 
+- `array` – Array of any type with a set of elements.
 
 **Return values**
 
@@ -1676,11 +1699,11 @@ length(array)
 
 **Examples**
 
-``` sql
+```sql
 SELECT length([1,2,3]);
 ```
 
-``` text
+````text
 ┌─length([1, 2, 3])─┐
 │ 3                 │
 └───────────────────┘
@@ -1690,7 +1713,7 @@ SELECT length([1,2,3]);
 <!-- Different with community -->
 ```sql
 range(end)
-```
+````
 
 **Arguments**
 
@@ -1698,12 +1721,12 @@ range(end)
 
 **Returned value**
 
-- Array of `UInt` numbers from 0 to `end - 1` by 1 . 
+- Array of `UInt` numbers from 0 to `end - 1` by 1 .
 
 **Implementation details**
 
 - All arguments must be positive values.
-- An exception is thrown if the query results in arrays with a total length of more than 100,000,000 elements. 
+- An exception is thrown if the query results in arrays with a total length of more than 100,000,000 elements.
 
 **Examples**
 

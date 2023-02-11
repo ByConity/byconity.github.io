@@ -4,16 +4,15 @@ slug: "type-conversion"
 hidden: false
 createdAt: "2021-07-29T12:31:12.666Z"
 updatedAt: "2021-09-23T06:40:38.243Z"
-categories:
-- Docs
-- SQL_Syntax
 tags:
-- Docs
+  - Docs
 ---
+
 > Notice:
-Some of the examples below are referenced from [ClickHouse Documentation](https://clickhouse.com/docs/en/sql-reference/functions/) but have been adapted and modified to work in ByConity.
+> Some of the examples below are referenced from [ClickHouse Documentation](https://clickhouse.com/docs/en/sql-reference/functions/) but have been adapted and modified to work in ByConity.
 
 ## CAST
+
 Converts an input value to the specified data type. Unlike the reinterpret function, `CAST` tries to present the same value using the new data type. If the conversion can not be done then an exception is raised.
 
 **Syntax**
@@ -22,17 +21,20 @@ Converts an input value to the specified data type. Unlike the reinterpret funct
 CAST(x, T)
 CAST(x AS t)
 ```
+
 <!-- TODO: CNCH not support this syntax:  x::t -->
 
 **Arguments**
-- `x` — A value to convert. May be of any type. 
-- `T` — The name of the target data type. String. 
-- `t` — The target data type. 
+
+- `x` — A value to convert. May be of any type.
+- `T` — The name of the target data type. String.
+- `t` — The target data type.
 
 **Returned value**
-- Converted value. 
-!!! note "Note"
-If the input value does not fit the bounds of the target type, the result overflows. For example, `CAST(-1, 'UInt8')` returns `255` .
+
+- Converted value.
+  !!! note "Note"
+  If the input value does not fit the bounds of the target type, the result overflows. For example, `CAST(-1, 'UInt8')` returns `255` .
 
 **Examples**
 
@@ -45,7 +47,6 @@ SELECT CAST(toInt8(-1), 'UInt8') AS cast_int_to_uint, CAST(1.5 AS Decimal(3,2)) 
 │ 255              │ 1.50                  │
 └──────────────────┴───────────────────────┘
 ```
-
 
 ```sql
 SELECT
@@ -65,7 +66,6 @@ SELECT
 Conversion to FixedString(N) only works for arguments of type String or FixedString.
 
 Type conversion to Nullable and back is supported.
-
 
 ```sql
 SELECT toTypeName(number) FROM numbers(2);
@@ -90,6 +90,7 @@ SELECT toTypeName(CAST(number, 'Nullable(UInt64)')) FROM numbers(2);
 ```
 
 ## reinterpretAsDate
+
 These functions accept a string and interpret the bytes placed at the beginning of the string as a number in host order (little endian). If the string isn’t long enough, the functions work as if the string is padded with the necessary number of null bytes. If the string is longer than needed, the extra bytes are ignored. A date is interpreted as the number of days since the beginning of the Unix Epoch.
 
 **Syntax**
@@ -99,9 +100,11 @@ reinterpretAsDate(fixed_string)
 ```
 
 **Arguments**
+
 - `fixed_string` — String with bytes representation.
 
 **Returned value**
+
 - DateTime.
 
 **Examples**
@@ -117,6 +120,7 @@ SELECT reinterpretAsDate(reinterpretAsString(toDate('2019-01-01')));
 ```
 
 ## reinterpretAsDateTime
+
 These functions accept a string and interpret the bytes placed at the beginning of the string as a number in host order (little endian). If the string isn’t long enough, the functions work as if the string is padded with the necessary number of null bytes. If the string is longer than needed, the extra bytes are ignored. A date is interpreted as the number of days since the beginning of the Unix Epoch, and a date with time is interpreted as the number of seconds since the beginning of the Unix Epoch.
 
 **Syntax**
@@ -126,9 +130,11 @@ reinterpretAsDateTime(fixed_string)
 ```
 
 **Arguments**
+
 - `fixed_string` — String with bytes representation.
 
 **Returned value**
+
 - DateTime.
 
 **Examples**
@@ -144,6 +150,7 @@ SELECT reinterpretAsDateTime(reinterpretAsString(toDateTime('2019-01-01 00:00:00
 ```
 
 ## reinterpretAsFixedString
+
 This function accepts a number or date or date with time, and returns a FixedString containing bytes representing the corresponding value in host order (little endian). Null bytes are dropped from the end. For example, a UInt32 type value of 255 is a FixedString that is one byte long.
 
 **Syntax**
@@ -153,9 +160,11 @@ reinterpretAsFixedString(x)
 ```
 
 **Arguments**
+
 - `x` — a number or date or date with time.
 
 **Returned value**
+
 - FixedString.
 
 **Examples**
@@ -171,6 +180,7 @@ SELECT reinterpretAsFixedString(toDate('2019-01-01'));
 ```
 
 ## reinterpretAsString
+
 This function accepts a number or date or date with time, and returns a string containing bytes representing the corresponding value in host order (little endian). Null bytes are dropped from the end. For example, a UInt32 type value of 255 is a string that is one byte long.
 
 **Syntax**
@@ -180,9 +190,11 @@ reinterpretAsString(value)
 ```
 
 **Arguments**
+
 - `value` — a number or date or date with time
 
 **Returned value**
+
 - String with bytes representation.
 
 **Examples**
@@ -198,7 +210,8 @@ SELECT reinterpretAsString(toDate('2019-01-01'));
 ```
 
 ## toDate
-converts a String, Date, DateTime, UInt* number to Date type.
+
+converts a String, Date, DateTime, UInt\* number to Date type.
 toDate
 
 **Syntax**
@@ -208,9 +221,11 @@ toDate(time)
 ```
 
 **Arguments**
-- `time` — a String, Date, DateTime, UInt* number.
+
+- `time` — a String, Date, DateTime, UInt\* number.
 
 **Returned value**
+
 - Date
 
 **Examples**
@@ -246,6 +261,7 @@ SELECT toDate(toDateTime('2019-01-01 00:00:00'));
 ```
 
 ## toDecimal(32|64)
+
 Converts `value` to the Decimal data type with precision of `S` . The `value` can be a number or a string. The `S` (scale) parameter specifies the number of decimal places.
 
 **Syntax**
@@ -254,13 +270,16 @@ Converts `value` to the Decimal data type with precision of `S` . The `value` ca
 toDecimal32(value, S)
 toDecimal64(value, S)
 ```
+
 <!-- TODO: Gateway client does not support toDecimal128(value, S) -->
 
 **Arguments**
+
 - `value` - can be a number or a string
--  `S` (scale) parameter specifies the number of decimal places.
+- `S` (scale) parameter specifies the number of decimal places.
 
 **Returned value**
+
 - Decimal
 
 **Examples**
@@ -286,6 +305,7 @@ SELECT toDecimal32('1', 2)
 ```
 
 ## toDecimal(32|64)OrNull
+
 Converts an input string to a Nullable(Decimal(P,S)) data type value.
 
 These functions should be used instead of `toDecimal*()` functions, if you prefer to get a `NULL` value instead of an exception in the event of an input value parsing error.
@@ -296,16 +316,19 @@ These functions should be used instead of `toDecimal*()` functions, if you prefe
 toDecimal32OrNull(expr, S)
 toDecimal64OrNull(expr, S)
 ```
+
 <!-- TODO: Gateway client does not support toDecimal128OrNull(expr, S) -->
 
 **Arguments**
-- `expr` — Expression, returns a value in the String data type. ByConity expects the textual representation of the decimal number. For example, `'1.111'` . 
-- `S` — Scale, the number of decimal places in the resulting value. 
+
+- `expr` — Expression, returns a value in the String data type. ByConity expects the textual representation of the decimal number. For example, `'1.111'` .
+- `S` — Scale, the number of decimal places in the resulting value.
 
 **Returned value**
 A value in the `Nullable(Decimal(P,S))` data type. The value contains:
-- Number with `S` decimal places, if ByConity interprets the input string as a number. 
-- `NULL` , if ByConity can’t interpret the input string as a number or if the input number contains more than `S` decimal places. 
+
+- Number with `S` decimal places, if ByConity interprets the input string as a number.
+- `NULL` , if ByConity can’t interpret the input string as a number or if the input number contains more than `S` decimal places.
 
 **Examples**
 
@@ -319,7 +342,6 @@ SELECT toDecimal32OrNull(toString(-1.111), 5) AS val, toTypeName(val);
 └──────────┴────────────────────────────────────────────────────┘
 ```
 
-
 ```sql
 SELECT toDecimal32OrNull(toString(-1.111), 2) AS val, toTypeName(val);
 ```
@@ -331,6 +353,7 @@ SELECT toDecimal32OrNull(toString(-1.111), 2) AS val, toTypeName(val);
 ```
 
 ## toDecimal(32|64)OrZero
+
 Converts an input value to the Decimal(P,S) data type.
 
 These functions should be used instead of `toDecimal*()` functions, if you prefer to get a `0` value instead of an exception in the event of an input value parsing error.
@@ -341,16 +364,19 @@ These functions should be used instead of `toDecimal*()` functions, if you prefe
 toDecimal32OrZero( expr, S)
 toDecimal64OrZero( expr, S)
 ```
+
 <!-- TODO: Gateway client does not support toDecimal128OrZero( expr, S) -->
 
 **Arguments**
-- `expr` — Expression data type. ByConity expects the textual representation of the decimal number. For example, `'1.111'` . 
-- `S` — Scale, the number of decimal places in the resulting value. 
+
+- `expr` — Expression data type. ByConity expects the textual representation of the decimal number. For example, `'1.111'` .
+- `S` — Scale, the number of decimal places in the resulting value.
 
 **Returned value**
 A value in the `Nullable(Decimal(P,S))` data type. The value contains:
-- Number with `S` decimal places, if ByConity interprets the input string as a number. 
-- 0 with `S` decimal places, if ByConity can’t interpret the input string as a number or if the input number contains more than `S` decimal places. 
+
+- Number with `S` decimal places, if ByConity interprets the input string as a number.
+- 0 with `S` decimal places, if ByConity can’t interpret the input string as a number or if the input number contains more than `S` decimal places.
 
 **Example**
 
@@ -375,6 +401,7 @@ SELECT toDecimal32OrZero(toString(-1.111), 2) AS val, toTypeName(val);
 ```
 
 ## toFixedString
+
 Converts a String type argument to a FixedString(N) type (a string with fixed length N). N must be a constant.
 
 If the string has fewer bytes than N, it is padded with null bytes to the right. If the string has more bytes than N, an exception is thrown.
@@ -386,10 +413,12 @@ toFixedString(s, N)
 ```
 
 **Arguments**
-- `s` — String. 
-- `N` — a constant. 
+
+- `s` — String.
+- `N` — a constant.
 
 **Returned value**
+
 - FixedString
 
 **Example**
@@ -405,6 +434,7 @@ SELECT toFixedString('1234', 5)
 ```
 
 ## toInt(8|16|32|64)
+
 Converts an input value to the Int data type.
 
 **Syntax**
@@ -417,14 +447,16 @@ toInt64(expr)
 ```
 
 **Arguments**
-- `expr` — Expression returning a number or a string with the decimal representation of a number. Binary, octal, and hexadecimal representations of numbers are not supported. Leading zeroes are stripped. 
+
+- `expr` — Expression returning a number or a string with the decimal representation of a number. Binary, octal, and hexadecimal representations of numbers are not supported. Leading zeroes are stripped.
 
 **Returned value**
+
 - Integer value in the `Int8` , `Int16` , `Int32` , `Int64` data type.
 
 Functions use [rounding towards zero](https://en.wikipedia.org/wiki/Rounding#Rounding_towards_zero) , meaning they truncate fractional digits of numbers.
 
-The behavior of functions for the NaN and Inf arguments is undefined. 
+The behavior of functions for the NaN and Inf arguments is undefined.
 
 When you convert a value from one to another data type, you should remember that in common case, it is an unsafe operation that can lead to a data loss. A data loss can occur if you try to fit value from a larger data type to a smaller data type, or if you convert values between different data types.
 
@@ -443,6 +475,7 @@ SELECT toInt64(nan), toInt32(32), toInt16('16'), toInt8(8.8);
 ```
 
 ## toInt(8|16|32|64)OrNull
+
 It takes an argument of type String and tries to parse it into Int (8 | 16 | 32 | 64). If failed, returns NULL.
 
 **Syntax**
@@ -455,14 +488,16 @@ toInt64OrNull(expr)
 ```
 
 **Arguments**
-- `expr` — Expression returning a number or a string with the decimal representation of a number. Binary, octal, and hexadecimal representations of numbers are not supported. Leading zeroes are stripped. 
+
+- `expr` — Expression returning a number or a string with the decimal representation of a number. Binary, octal, and hexadecimal representations of numbers are not supported. Leading zeroes are stripped.
 
 **Returned value**
+
 - Integer value in the `Int8` , `Int16` , `Int32` , `Int64` data type.
 
 Functions use [rounding towards zero](https://en.wikipedia.org/wiki/Rounding#Rounding_towards_zero) , meaning they truncate fractional digits of numbers.
 
-The behavior of functions for the NaN and Inf arguments is undefined. 
+The behavior of functions for the NaN and Inf arguments is undefined.
 
 When you convert a value from one to another data type, you should remember that in common case, it is an unsafe operation that can lead to a data loss. A data loss can occur if you try to fit value from a larger data type to a smaller data type, or if you convert values between different data types.
 
@@ -481,6 +516,7 @@ SELECT toInt64OrNull('123123'), toInt8OrNull('123qwe123');
 ```
 
 ## toInt(8|16|32|64)OrZero
+
 It takes an argument of type String and tries to parse it into Int (8 | 16 | 32 | 64 ). If failed, returns 0.
 
 **Syntax**
@@ -493,14 +529,16 @@ toInt64OrZero(expr)
 ```
 
 **Arguments**
-- `expr` — Expression returning a number or a string with the decimal representation of a number. Binary, octal, and hexadecimal representations of numbers are not supported. Leading zeroes are stripped. 
+
+- `expr` — Expression returning a number or a string with the decimal representation of a number. Binary, octal, and hexadecimal representations of numbers are not supported. Leading zeroes are stripped.
 
 **Returned value**
+
 - Integer value in the `Int8` , `Int16` , `Int32` , `Int64` data type.
 
 Functions use [rounding towards zero](https://en.wikipedia.org/wiki/Rounding#Rounding_towards_zero) , meaning they truncate fractional digits of numbers.
 
-The behavior of functions for the NaN and Inf arguments is undefined. 
+The behavior of functions for the NaN and Inf arguments is undefined.
 
 When you convert a value from one to another data type, you should remember that in common case, it is an unsafe operation that can lead to a data loss. A data loss can occur if you try to fit value from a larger data type to a smaller data type, or if you convert values between different data types.
 
@@ -519,6 +557,7 @@ SELECT toInt64OrZero('123123'), toInt8OrZero('123qwe123');
 ```
 
 ## toInterval(Year|Quarter|Month|Week|Day|Hour|Minute|Second)
+
 Converts a Number type argument to an Interval data type.
 
 **Syntax**
@@ -535,10 +574,12 @@ toIntervalYear(number)
 ```
 
 **Arguments**
-- `number` — Duration of interval. Positive integer number. 
+
+- `number` — Duration of interval. Positive integer number.
 
 **Returned values**
-- The value in `Interval` data type. 
+
+- The value in `Interval` data type.
 
 **Example**
 
@@ -559,6 +600,7 @@ SELECT
 ```
 
 ## toLowCardinality
+
 Converts input parameter to the LowCardianlity version of same data type.
 
 To convert data from the `LowCardinality` data type use the CAST function. For example, `CAST(x as String)` .
@@ -570,9 +612,11 @@ toLowCardinality(expr)
 ```
 
 **Arguments**
-- `expr` — Expression resulting in one of the supported data types. 
+
+- `expr` — Expression resulting in one of the supported data types.
 
 **Returned values**
+
 - Result of `expr` . Type: `LowCardinality(expr_result_type)`
 
 **Example**
@@ -588,6 +632,7 @@ SELECT toLowCardinality('1');
 ```
 
 ## toString
+
 Functions for converting between numbers, strings (but not fixed strings), dates, and dates with times.
 
 All these functions accept one argument.
@@ -599,7 +644,6 @@ When converting dates to numbers or vice versa, the date corresponds to the numb
 When converting dates with times to numbers or vice versa, the date with time corresponds to the number of seconds since the beginning of the Unix epoch.
 
 The date and date-with-time formats for the toDate/toDateTime functions are defined as follows:
-
 
 ```plain%20text
 
@@ -624,9 +668,11 @@ toString(value)
 ```
 
 **Arguments**
+
 - `value` — numbers, strings, dates, and datetime
 
 **Returned values**
+
 - String
 
 **Example**
@@ -644,6 +690,7 @@ SELECT
 ```
 
 ## toStringCutToZero
+
 Accepts a String or FixedString argument. Returns the String with the content truncated at the first zero byte found.
 
 **Syntax**
@@ -653,9 +700,11 @@ toStringCutToZero(s)
 ```
 
 **Arguments**
-- `s` — String or FixedString. 
+
+- `s` — String or FixedString.
 
 **Returned values**
+
 - truncated string
 
 **Example**
@@ -681,7 +730,8 @@ SELECT toFixedString('foo\0bar', 8) AS s, toStringCutToZero(s) AS s_cut;
 ```
 
 ## toUInt(8|16|32|64)
-Converts an input value to the UInt data type. This function family includes: 
+
+Converts an input value to the UInt data type. This function family includes:
 
 **Syntax**
 
@@ -693,9 +743,11 @@ toUInt64(expr)
 ```
 
 **Arguments**
-- `expr` — Expression returning a number or a string with the decimal representation of a number. Binary, octal, and hexadecimal representations of numbers are not supported. Leading zeroes are stripped. 
+
+- `expr` — Expression returning a number or a string with the decimal representation of a number. Binary, octal, and hexadecimal representations of numbers are not supported. Leading zeroes are stripped.
 
 **Returned value**
+
 - Integer value in the `UInt8` , `UInt16` , `UInt32` , `UInt64` data type.
 
 Functions use [rounding towards zero](https://en.wikipedia.org/wiki/Rounding#Rounding_towards_zero) , meaning they truncate fractional digits of numbers.
@@ -719,6 +771,7 @@ SELECT toUInt64(nan), toUInt32(-32), toUInt16('16'), toUInt8(8.8);
 ```
 
 ## toUnixTimestamp
+
 For DateTime argument: converts value to the number with type UInt32 -- Unix Timestamp ( [https://en.wikipedia.org/wiki/Unix_time](https://en.wikipedia.org/wiki/Unix_time) ).
 
 For String argument: converts the input string to the datetime according to the timezone (optional second argument, server timezone is used by default) and returns the corresponding unix timestamp.
@@ -731,11 +784,13 @@ toUnixTimestamp(str, [timezone])
 ```
 
 **Arguments**
-- `datetime` — DateTime 
+
+- `datetime` — DateTime
 - `str` - datetime string
 - `timezone`(optional) - timezone
 
 **Returned value**
+
 - Returns the unix timestamp. Type: `UInt32` .
 
 **Example**

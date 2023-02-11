@@ -4,9 +4,6 @@ slug: "json"
 hidden: false
 createdAt: "2021-07-29T12:12:52.763Z"
 updatedAt: "2021-09-23T04:06:29.273Z"
-categories:
-- Docs
-- SQL_Syntax
 tags:
 - Docs
 ---

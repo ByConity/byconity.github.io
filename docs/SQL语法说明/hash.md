@@ -4,11 +4,8 @@ slug: "hash"
 hidden: false
 createdAt: "2021-07-29T12:05:52.839Z"
 updatedAt: "2021-09-23T04:02:59.496Z"
-categories:
-- Docs
-- SQL_Syntax
 tags:
-- Docs
+  - Docs
 ---
 
 # hash

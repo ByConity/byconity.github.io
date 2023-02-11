@@ -4,9 +4,6 @@ slug: "comparison"
 hidden: false
 createdAt: "2021-07-29T02:30:51.384Z"
 updatedAt: "2021-09-23T03:46:42.532Z"
-categories:
-  - Docs
-  - SQL_Syntax
 tags:
   - Docs
 ---

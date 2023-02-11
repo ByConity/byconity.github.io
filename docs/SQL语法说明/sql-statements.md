@@ -7,9 +7,6 @@ metadata:
   description: "The supported statements in ByConity are similar to ClickHouse, but it's still recommended to follow the manual to ensure proper use. See some examples."
 createdAt: "2021-06-17T15:31:57.358Z"
 updatedAt: "2022-02-28T02:27:53.768Z"
-categories:
-- Docs
-- SQL_Syntax
 tags:
 - Docs
 ---

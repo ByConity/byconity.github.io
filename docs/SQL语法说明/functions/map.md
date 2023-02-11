@@ -4,18 +4,15 @@ slug: "map"
 hidden: true
 createdAt: "2021-07-29T12:29:27.367Z"
 updatedAt: "2021-07-29T12:29:27.367Z"
-categories:
-- Docs
-- SQL_Syntax
 tags:
-- Docs
+  - Docs
 ---
-## map
 
+## map
 
 Arranges `key:value` pairs into [Map(key, value)](https://bytedance.feishu.cn/sql-reference/data-types/map.md) data type.
 
-**Syntax** 
+**Syntax**
 
 ```sql
 
@@ -23,21 +20,15 @@ map(key1, value1[, key2, value2, ...])
 
 ```
 
-**Arguments** 
+**Arguments**
 
-- `key` — The key part of the pair. [String](https://bytedance.feishu.cn/sql-reference/data-types/string.md) or [Integer](https://bytedance.feishu.cn/sql-reference/data-types/int-uint.md) . 
+- `key` — The key part of the pair. [String](https://bytedance.feishu.cn/sql-reference/data-types/string.md) or [Integer](https://bytedance.feishu.cn/sql-reference/data-types/int-uint.md) .
 
-
-
-- `value` — The value part of the pair. [String](https://bytedance.feishu.cn/sql-reference/data-types/string.md) , [Integer](https://bytedance.feishu.cn/sql-reference/data-types/int-uint.md) or [Array](https://bytedance.feishu.cn/sql-reference/data-types/array.md) . 
-
-
+- `value` — The value part of the pair. [String](https://bytedance.feishu.cn/sql-reference/data-types/string.md) , [Integer](https://bytedance.feishu.cn/sql-reference/data-types/int-uint.md) or [Array](https://bytedance.feishu.cn/sql-reference/data-types/array.md) .
 
 **Returned value**
 
-- Data structure as `key:value` pairs. 
-
-
+- Data structure as `key:value` pairs.
 
 Type: [Map(key, value)](https://bytedance.feishu.cn/sql-reference/data-types/map.md) .
 
@@ -95,14 +86,11 @@ Result:
 
 ```
 
-**See Also** 
+**See Also**
 
-- [Map(key, value)](https://bytedance.feishu.cn/sql-reference/data-types/map.md) data type 
+- [Map(key, value)](https://bytedance.feishu.cn/sql-reference/data-types/map.md) data type
 
-
-
-## tuple 
-
+## tuple
 
 A function that allows grouping multiple columns.
 
@@ -121,7 +109,6 @@ tuple(x, y, …)
 ```
 
 ## tupleElement
-
 
 A function that allows getting a column from a tuple.
 

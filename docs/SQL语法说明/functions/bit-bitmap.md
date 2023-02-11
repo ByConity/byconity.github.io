@@ -4,16 +4,15 @@ slug: "bit-bitmap"
 hidden: false
 createdAt: "2021-07-29T11:55:49.053Z"
 updatedAt: "2021-09-23T03:43:39.051Z"
-categories:
-- Docs
-- SQL_Syntax
 tags:
-- Docs
+  - Docs
 ---
+
 > Notice:
-Some of the examples below are referenced from [ClickHouse Documentation](https://clickhouse.com/docs/en/sql-reference/functions/) but have been adapted and modified to work in ByConity.
+> Some of the examples below are referenced from [ClickHouse Documentation](https://clickhouse.com/docs/en/sql-reference/functions/) but have been adapted and modified to work in ByConity.
 
 ## bitTest
+
 Takes any integer and converts it into [binary form].
 
 **Syntax**
@@ -24,9 +23,9 @@ SELECT bitTest(number, index)
 
 **Arguments**
 
-- `number` – Integer number. 
+- `number` – Integer number.
 
-- `index` – Position of bit. 
+- `index` – Position of bit.
 
 **Returned values**
 
@@ -69,6 +68,7 @@ Result:
 ```
 
 ## bitTestAll
+
 Returns result of [logical conjuction] (AND operator) of all bits at given positions. The countdown starts from 0 from the right to the left.
 
 The conjuction for bitwise operations:
@@ -89,9 +89,9 @@ SELECT bitTestAll(number, index1, index2, index3, index4, ...)
 
 **Arguments**
 
-- `number` – Integer number. 
+- `number` – Integer number.
 
-- `index1` , `index2` , `index3` , `index4` – Positions of bit. For example, for set of positions ( `index1` , `index2` , `index3` , `index4` ) is true if and only if all of its positions are true ( `index1` ⋀ `index2` , ⋀ `index3` ⋀ `index4` ). 
+- `index1` , `index2` , `index3` , `index4` – Positions of bit. For example, for set of positions ( `index1` , `index2` , `index3` , `index4` ) is true if and only if all of its positions are true ( `index1` ⋀ `index2` , ⋀ `index3` ⋀ `index4` ).
 
 **Returned values**
 
@@ -134,6 +134,7 @@ Result:
 ```
 
 ## bitTestAny
+
 Returns result of [logical disjunction](OR operator) of all bits at given positions. The countdown starts from 0 from the right to the left.
 
 The disjunction for bitwise operations:
@@ -156,9 +157,9 @@ SELECT bitTestAny(number, index1, index2, index3, index4, ...)
 
 **Arguments**
 
-- `number` – Integer number. 
+- `number` – Integer number.
 
-- `index1` , `index2` , `index3` , `index4` – Positions of bit. 
+- `index1` , `index2` , `index3` , `index4` – Positions of bit.
 
 **Returned values**
 
@@ -201,6 +202,7 @@ Result:
 ```
 
 ## bitmapAnd
+
 Two bitmap and calculation, the result is a new bitmap.
 
 **Syntax**
@@ -211,17 +213,18 @@ bitmapAnd(bitmap,bitmap)
 
 **Arguments**
 
-- `bitmap` – Bitmap object. 
+- `bitmap` – Bitmap object.
 
 **Returned value**
 
-- The Bitmap object 
+- The Bitmap object
 
 **Example**
 
 ```sql
 SELECT bitmapToArray(bitmapAnd(bitmapBuild([1,2,3]),bitmapBuild([3,4,5]))) AS res;
 ```
+
 Result:
 
 ```plain%20text
@@ -231,6 +234,7 @@ Result:
 ```
 
 ## bitmapAndCardinality
+
 Two bitmap and calculation, return cardinality of type UInt64.
 
 **Syntax**
@@ -241,7 +245,7 @@ bitmapAndCardinality(bitmap,bitmap)
 
 **Arguments**
 
-- `bitmap` – Bitmap object. 
+- `bitmap` – Bitmap object.
 
 **Returned value**
 
@@ -254,6 +258,7 @@ Type:`Uint64`
 ```sql
 SELECT bitmapAndCardinality(bitmapBuild([1,2,3]),bitmapBuild([3,4,5])) AS res;
 ```
+
 Result:
 
 ```plain%20text
@@ -263,6 +268,7 @@ Result:
 ```
 
 ## bitmapAndnot
+
 Two bitmap andnot calculation, the result is a new bitmap.
 
 **Syntax**
@@ -273,11 +279,11 @@ bitmapAndnot(bitmap,bitmap)
 
 **Arguments**
 
-- `bitmap` – Bitmap object. 
+- `bitmap` – Bitmap object.
 
 **Returned value**
 
-- The Bitmap object 
+- The Bitmap object
 
 Type: `Bitmap object`.
 
@@ -286,6 +292,7 @@ Type: `Bitmap object`.
 ```sql
 SELECT bitmapToArray(bitmapAndnot(bitmapBuild([1,2,3]),bitmapBuild([3,4,5]))) AS res;
 ```
+
 Result:
 
 ```plain%20text
@@ -295,6 +302,7 @@ Result:
 ```
 
 ## bitmapAndnotCardinality
+
 Two bitmap andnot calculation, return cardinality of type UInt64.
 
 **Syntax**
@@ -305,11 +313,11 @@ bitmapAndnotCardinality(bitmap,bitmap)
 
 **Arguments**
 
-- `bitmap` – Bitmap object. 
+- `bitmap` – Bitmap object.
 
 **Returned value**
 
-- The cardinality in `UInt64`. 
+- The cardinality in `UInt64`.
 
 Type: `UInt64`
 
@@ -318,6 +326,7 @@ Type: `UInt64`
 ```sql
 SELECT bitmapAndnotCardinality(bitmapBuild([1,2,3]),bitmapBuild([3,4,5])) AS res;
 ```
+
 Result:
 
 ```plain%20text
@@ -327,6 +336,7 @@ Result:
 ```
 
 ## bitmapBuild
+
 Build a bitmap from unsigned integer array.
 
 **Syntax**
@@ -337,11 +347,11 @@ bitmapBuild(array)
 
 **Arguments**
 
-- `array` – Unsigned integer array. 
+- `array` – Unsigned integer array.
 
 **Returned value**
 
-- The bitmap object 
+- The bitmap object
 
 Type: `Bitmap object`.
 
@@ -350,6 +360,7 @@ Type: `Bitmap object`.
 ```sql
 SELECT toTypeName(bitmapBuild([1, 2, 3, 4, 5]));
 ```
+
 Result:
 
 ```plain%20text
@@ -359,15 +370,18 @@ Result:
 ```
 
 ## bitmapCardinality
+
 Return bitmap cardinality of type UInt64.
 
 **Syntax**
+
 ```sql
 bitmapCardinality(bitmap)
 ```
 
 **Arguments**
-- `bitmap` – Bitmap object. 
+
+- `bitmap` – Bitmap object.
 
 **Returned value**
 
@@ -376,9 +390,11 @@ bitmapCardinality(bitmap)
 Type: `UInt64` .
 
 **Example**
+
 ```sql
 SELECT bitmapCardinality(bitmapBuild([1, 2, 3, 4, 5])) AS res;
 ```
+
 Result:
 
 ```plain%20text
@@ -388,20 +404,24 @@ Result:
 ```
 
 ## bitmapContains
+
 Checks whether the bitmap contains an element.
 
 **Syntax**
+
 ```sql
 bitmapContains(haystack, needle)
 ```
+
 **Arguments**
 
 - `haystack` – [Bitmap object], where the function searches.
-- `needle` – Value that the function searches. Type: [UInt32] . 
+- `needle` – Value that the function searches. Type: [UInt32] .
 
 **Returned values**
+
 - 0 — If `haystack` does not contain `needle` .
-- 1 — If `haystack` contains `needle` . 
+- 1 — If `haystack` contains `needle` .
 
 Type: `UInt8` .
 
@@ -410,6 +430,7 @@ Type: `UInt8` .
 ```sql
 SELECT bitmapContains(bitmapBuild([1,5,7,9]), toUInt32(9)) AS res;
 ```
+
 Result:
 
 ```plain%20text
@@ -419,6 +440,7 @@ Result:
 ```
 
 ## bitmapHasAll
+
 Analogous to `hasAll(array, array)` returns 1 if the first bitmap contains all the elements of the second one, 0 otherwise.
 
 If the second argument is an empty bitmap then returns 1.
@@ -431,12 +453,12 @@ bitmapHasAll(bitmap,bitmap)
 
 **Arguments**
 
-- `bitmap` – Bitmap object. 
+- `bitmap` – Bitmap object.
 
 **Returned value**
 
-- `1` , returns 1 if the first bitmap contains all the elements of the second one or If the second argument is an empty bitmap . 
-- `0` , otherwise. 
+- `1` , returns 1 if the first bitmap contains all the elements of the second one or If the second argument is an empty bitmap .
+- `0` , otherwise.
 
 Type: `UInt8`
 
@@ -445,6 +467,7 @@ Type: `UInt8`
 ```sql
 SELECT bitmapHasAll(bitmapBuild([1,2,3]),bitmapBuild([3,4,5])) AS res;
 ```
+
 Result:
 
 ```plain%20text
@@ -454,6 +477,7 @@ Result:
 ```
 
 ## bitmapHasAny
+
 Checks whether two bitmaps have intersection by some elements.
 
 **Syntax**
@@ -466,18 +490,19 @@ If you are sure that `bitmap2` contains strictly one element, consider using the
 
 **Arguments**
 
-- `bitmap*` – Bitmap object. 
+- `bitmap*` – Bitmap object.
 
 **Return values**
 
 - `1` , if `bitmap1` and `bitmap2` have one similar element at least.
-- `0` , otherwise. 
+- `0` , otherwise.
 
 **Example**
 
 ```sql
 SELECT bitmapHasAny(bitmapBuild([1,2,3]),bitmapBuild([3,4,5])) AS res;
 ```
+
 Result:
 
 ```plain%20text
@@ -487,6 +512,7 @@ Result:
 ```
 
 ## bitmapMax
+
 Return the greatest value of type UInt64 in the set, 0 if the set is empty.
 
 **Syntax**
@@ -497,7 +523,7 @@ bitmapMax(bitmap)
 
 **Arguments**
 
-- `bitmap` – Bitmap object. 
+- `bitmap` – Bitmap object.
 
 **Return values**
 
@@ -520,6 +546,7 @@ Result:
 ```
 
 ## bitmapMin
+
 Return the smallest value of type UInt64 in the set, UINT32_MAX if the set is empty.
 
 **Syntax**
@@ -530,7 +557,7 @@ bitmapMin(bitmap)
 
 **Arguments**
 
-- `bitmap` – Bitmap object. 
+- `bitmap` – Bitmap object.
 
 **Return values**
 
@@ -543,6 +570,7 @@ Type: `UInt64`
 ```sql
 SELECT bitmapMin(bitmapBuild([1, 2, 3, 4, 5])) AS res;
 ```
+
 Result:
 
 ```plain%20text
@@ -552,6 +580,7 @@ Result:
 ```
 
 ## bitmapOr
+
 Two bitmap or calculation, the result is a new bitmap.
 
 ```sql
@@ -560,11 +589,11 @@ bitmapOr(bitmap,bitmap)
 
 **Arguments**
 
-- `bitmap` – Bitmap object. 
+- `bitmap` – Bitmap object.
 
 **Returned value**
 
-- The Bitmap object 
+- The Bitmap object
 
 Type: `Bitmap object`.
 
@@ -573,6 +602,7 @@ Type: `Bitmap object`.
 ```sql
 SELECT bitmapToArray(bitmapOr(bitmapBuild([1,2,3]),bitmapBuild([3,4,5]))) AS res;
 ```
+
 Result:
 
 ```plain%20text
@@ -582,6 +612,7 @@ Result:
 ```
 
 ## bitmapOrCardinality
+
 Two bitmap or calculation, return cardinality of type UInt64.
 
 **Syntax**
@@ -592,7 +623,7 @@ bitmapOrCardinality(bitmap,bitmap)
 
 **Arguments**
 
-- `bitmap` – Bitmap object. 
+- `bitmap` – Bitmap object.
 
 **Return values**
 
@@ -605,6 +636,7 @@ Type:`UInt64`
 ```sql
 SELECT bitmapOrCardinality(bitmapBuild([1,2,3]),bitmapBuild([3,4,5])) AS res;
 ```
+
 Result:
 
 ```plain%20text
@@ -614,6 +646,7 @@ Result:
 ```
 
 ## bitmapSubsetInRange
+
 Return subset in specified range (not include the range_end).
 
 **Syntax**
@@ -626,9 +659,9 @@ bitmapSubsetInRange(bitmap, range_start, range_end)
 
 - `bitmap` – [Bitmap object].
 
-- `range_start` – Range start point. Type: [UInt32]. 
+- `range_start` – Range start point. Type: [UInt32].
 
-- `range_end` – Range end point (excluded). Type: [UInt32]. 
+- `range_end` – Range end point (excluded). Type: [UInt32].
 
 **Return values**
 
@@ -641,6 +674,7 @@ Type:`array`
 ```sql
 SELECT bitmapToArray(bitmapSubsetInRange(bitmapBuild([0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,100,200,500]), toUInt32(30), toUInt32(200))) AS res;
 ```
+
 Result:
 
 ```plain%20text
@@ -650,6 +684,7 @@ Result:
 ```
 
 ## bitmapSubsetLimit
+
 Creates a subset of bitmap with n elements taken between `range_start` and `cardinality_limit` .
 
 **Syntax**
@@ -660,11 +695,11 @@ bitmapSubsetLimit(bitmap, range_start, cardinality_limit)
 
 **Arguments**
 
-- `bitmap` – [Bitmap object]. 
+- `bitmap` – [Bitmap object].
 
-- `range_start` – The subset starting point. Type: [UInt32]. 
+- `range_start` – The subset starting point. Type: [UInt32].
 
-- `cardinality_limit` – The subset cardinality upper limit. Type: [UInt32]. 
+- `cardinality_limit` – The subset cardinality upper limit. Type: [UInt32].
 
 **Returned value**
 
@@ -689,6 +724,7 @@ Result:
 ```
 
 ## bitmapToArray
+
 Convert bitmap to integer array.
 
 **Syntax**
@@ -699,7 +735,7 @@ bitmapToArray(bitmap)
 
 **Arguments**
 
-- `bitmap` – Bitmap object. 
+- `bitmap` – Bitmap object.
 
 **Returned value**
 
@@ -707,12 +743,12 @@ bitmapToArray(bitmap)
 
 Type: `array` .
 
-
 **Example**
 
 ```sql
 SELECT bitmapToArray(bitmapBuild([1, 2, 3, 4, 5])) AS res;
 ```
+
 Result:
 
 ```plain%20text
@@ -722,6 +758,7 @@ Result:
 ```
 
 ## bitmapXor
+
 Two bitmap xor calculation, the result is a new bitmap.
 
 ```sql
@@ -730,11 +767,11 @@ bitmapXor(bitmap,bitmap)
 
 **Arguments**
 
-- `bitmap` – Bitmap object. 
+- `bitmap` – Bitmap object.
 
 **Returned value**
 
-- The Bitmap object 
+- The Bitmap object
 
 Type: `Bitmap object`.
 
@@ -753,6 +790,7 @@ Result:
 ```
 
 ## bitmapXorCardinality
+
 Two bitmap xor calculation, return cardinality of type UInt64.
 
 **Syntax**
@@ -763,11 +801,10 @@ bitmapXorCardinality(bitmap,bitmap)
 
 **Arguments**
 
-- `bitmap` – Bitmap object. 
-- 
-**Returned value**
+- `bitmap` – Bitmap object.
+- **Returned value**
 
-- The Bitmap object 
+- The Bitmap object
 
 Type: `Bitmap object`.
 
@@ -776,6 +813,7 @@ Type: `Bitmap object`.
 ```sql
 SELECT bitmapXorCardinality(bitmapBuild([1,2,3]),bitmapBuild([3,4,5])) AS res;
 ```
+
 Result:
 
 ```plain%20text

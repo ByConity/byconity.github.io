@@ -2,18 +2,16 @@
 title: "Functions"
 slug: "functions"
 hidden: false
-metadata: 
+metadata:
   title: "Functions in ByConity"
   description: "ByConity provides two SQL modes, ClickHouse and ANSI. For the ClickHouse mode, some are self-developed functions by ByConity."
 createdAt: "2021-07-29T02:29:18.073Z"
 updatedAt: "2022-02-28T02:39:28.268Z"
-categories:
-- Docs
-- SQL_Syntax
 tags:
-- Docs
+  - Docs
 ---
-ByConity provides two SQL dialects, (1) **ClickHouse** and (2) **ANSI**. 
+
+ByConity provides two SQL dialects, (1) **ClickHouse** and (2) **ANSI**.
 
 For the ClickHouse SQL, the SQL functions are mostly similar to what is provided in the community ClickHouse version, but it also includes additional functions that are only supported in ByConity. The following sections will use the content from [ClickHouse.tech documentation site](https://clickhouse.tech/docs/en/sql-reference/functions/) as the reference to describe how to use them in ByConity.
 

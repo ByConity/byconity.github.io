@@ -4,9 +4,6 @@ slug: "string"
 hidden: false
 createdAt: "2021-07-29T12:26:32.479Z"
 updatedAt: "2021-09-23T06:38:57.511Z"
-categories:
-- Docs
-- SQL_Syntax
 tags:
 - Docs
 ---

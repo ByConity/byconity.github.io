@@ -4,16 +4,15 @@ slug: "arithmetic"
 hidden: false
 createdAt: "2021-07-29T11:53:16.539Z"
 updatedAt: "2021-09-23T03:36:30.482Z"
-categories:
-- Docs
-- SQL_Syntax
 tags:
-- Docs
+  - Docs
 ---
+
 > Notice:
-Some of the examples below are referenced from [ClickHouse Documentation](https://clickhouse.com/docs/en/sql-reference/functions/) but have been adapted and modified to work in ByConity.
+> Some of the examples below are referenced from [ClickHouse Documentation](https://clickhouse.com/docs/en/sql-reference/functions/) but have been adapted and modified to work in ByConity.
 
 ## abs
+
 Calculates the absolute value of the number (a). That is, if a \< 0, it returns -a. For unsigned types it does not do anything. For signed integer types, it returns an unsigned number.
 
 **Syntax**
@@ -24,7 +23,7 @@ abs(x)
 
 **Arguments**
 
-- `x` – The number. 
+- `x` – The number.
 
 **Returned value**
 
@@ -45,12 +44,12 @@ Result:
 ```
 
 ## divide
+
 Calculates the quotient of the numbers. The result type is always a floating-point type.
 
 It is not integer division. For integer division, use the ‘intDiv’ function.
 
 When dividing by zero you get ‘inf’, ‘-inf’, or ‘nan’.
-
 
 **Syntax**
 
@@ -63,16 +62,18 @@ divide(a, b) # a / b operator
 **Arguments**
 
 - `a` – The number.
-- `b` – The number. 
+- `b` – The number.
 
 **Returned value**
 
 - Value in floating-point type
 
 **Example**
+
 ```sql
 SELECT divide(50, 2);
 ```
+
 Result:
 
 ```plain%20text
@@ -80,6 +81,7 @@ Result:
 │ 2.5e+01       │
 └───────────────┘
 ```
+
 ## gcd
 
 Returns the greatest common divisor of the numbers.
@@ -91,10 +93,11 @@ An exception is thrown when dividing by zero or when dividing a minimal negative
 ```sql
 gcd(a, b)
 ```
+
 **Arguments**
 
 - `a` – The number.
-- `b` – The number. 
+- `b` – The number.
 
 **Returned value**
 
@@ -105,6 +108,7 @@ gcd(a, b)
 ```sql
 SELECT gcd(27,18);
 ```
+
 Result:
 
 ```plain%20text
@@ -114,6 +118,7 @@ Result:
 ```
 
 ## intDiv
+
 Calculates the quotient of the numbers. Divides into integers, rounding down (by the absolute value).
 
 An exception is thrown when dividing by zero or when dividing a minimal negative number by minus one.
@@ -127,7 +132,7 @@ intDiv(a, b)
 **Arguments**
 
 - `a` – The number.
-- `b` – The number. 
+- `b` – The number.
 
 **Returned value**
 
@@ -148,6 +153,7 @@ Result:
 ```
 
 ## intDivOrZero
+
 Differs from ‘intDiv’ in that it returns zero when dividing by zero or when dividing a minimal negative number by minus one.
 
 **Syntax**
@@ -159,7 +165,7 @@ intDivOrZero(a, b)
 **Arguments**
 
 - `a` – The number.
-- `b` – The number. 
+- `b` – The number.
 
 **Returned value**
 
@@ -170,6 +176,7 @@ intDivOrZero(a, b)
 ```sql
 SELECT intDivOrZero(10, -2);
 ```
+
 Result:
 
 ```plain%20text
@@ -179,6 +186,7 @@ Result:
 ```
 
 ## lcm
+
 Returns the least common multiple of the numbers.
 
 An exception is thrown when dividing by zero or when dividing a minimal negative number by minus one.
@@ -192,7 +200,7 @@ lcm(a, b)
 **Arguments**
 
 - `a` – The number.
-- `b` – The number. 
+- `b` – The number.
 
 **Returned value**
 
@@ -203,6 +211,7 @@ lcm(a, b)
 ```sql
 SELECT lcm(27,18);
 ```
+
 Result:
 
 ```plain%20text
@@ -212,6 +221,7 @@ Result:
 ```
 
 ## min
+
 Aggregate function that calculates the minimum across a group of values.
 
 **Syntax**
@@ -222,7 +232,7 @@ min(column)
 
 **Arguments**
 
-- `column` – The column name. 
+- `column` – The column name.
 
 **Returned value**
 
@@ -235,6 +245,7 @@ CREATE TABLE test.test_min(id Int32) ENGINE = CnchMergeTree ORDER BY id;
 INSERT INTO test.test_min(id) VALUES(1),(2),(3),(4),(5); -- insert 1,2,3,4,5 to table
 SELECT min(id) FROM test.test_min;
 ```
+
 Result:
 
 ```plain%20text
@@ -244,6 +255,7 @@ Result:
 ```
 
 ## minus
+
 Calculates the difference. The result is always signed.
 
 You can also calculate integer numbers from a date or date with time. The idea is the same – see above for ‘plus’.
@@ -251,13 +263,13 @@ You can also calculate integer numbers from a date or date with time. The idea i
 **Syntax**
 
 ```sql
-minus(a, b), a - b operator 
+minus(a, b), a - b operator
 ```
 
 **Arguments**
 
 - `a` – The number.
-- `b` – The number. 
+- `b` – The number.
 
 **Returned value**
 
@@ -268,6 +280,7 @@ minus(a, b), a - b operator
 ```sql
 SELECT minus(10, 3);
 ```
+
 Result:
 
 ```plain%20text
@@ -277,6 +290,7 @@ Result:
 ```
 
 ## modulo
+
 Calculates the remainder after division.
 
 If arguments are floating-point numbers, they are pre-converted to integers by dropping the decimal portion.
@@ -294,7 +308,7 @@ modulo(a, b), a % b operator
 **Arguments**
 
 - `a` – The number.
-- `b` – The number. 
+- `b` – The number.
 
 **Returned value**
 
@@ -305,6 +319,7 @@ modulo(a, b), a % b operator
 ```sql
 SELECT modulo(10, 3);
 ```
+
 Result:
 
 ```plain%20text
@@ -314,28 +329,30 @@ Result:
 ```
 
 ## multiply
+
 Calculates the product of the numbers.
 
 **Syntax**
 
 ```sql
-multiply(a, b) # a * b operator 
+multiply(a, b) # a * b operator
 ```
 
 **Arguments**
 
-- `a` – The number. 
-- `b` – The number. 
+- `a` – The number.
+- `b` – The number.
 
 **Returned value**
 
-- Product value of the numbers. 
+- Product value of the numbers.
 
 **Example**
 
 ```sql
 SELECT multiply(3,12);
 ```
+
 Result:
 
 ```plain%20text
@@ -345,6 +362,7 @@ Result:
 ```
 
 ## negate
+
 Calculates a number with the reverse sign. The result is always signed.
 
 **Syntax**
@@ -355,17 +373,18 @@ negate(a) # -a operator
 
 **Arguments**
 
-- `a` – The number. 
+- `a` – The number.
 
 **Returned value**
 
-- The number with the reverse sign. 
+- The number with the reverse sign.
 
 **Example**
 
 ```sql
 SELECT negate(20);
 ```
+
 Result:
 
 ```plain%20text
@@ -375,6 +394,7 @@ Result:
 ```
 
 ## plus
+
 Calculates the sum of the numbers.
 
 You can also add integer numbers with a date or date and time. In the case of a date, adding an integer means adding the corresponding number of days. For a date with time, it means adding the corresponding number of seconds.
@@ -388,17 +408,18 @@ select plus(a, b) # a + b operator
 **Arguments**
 
 - `a` – The number.
-- `b` – The number. 
+- `b` – The number.
 
 **Returned value**
 
-- The sum of the numbers. 
+- The sum of the numbers.
 
 **Example**
 
 ```sql
 select plus(1,2);
 ```
+
 Result:
 
 ```plain%20text

@@ -4,16 +4,15 @@ slug: "ip-address"
 hidden: false
 createdAt: "2021-07-29T12:06:52.617Z"
 updatedAt: "2021-09-23T04:04:27.184Z"
-categories:
-- Docs
-- SQL_Syntax
 tags:
-- Docs
+  - Docs
 ---
-> Notice:
-Some of the examples below are referenced from [ClickHouse Documentation](https://clickhouse.com/docs/en/sql-reference/functions/) but have been adapted and modified to work in ByConity.
 
-## IPv4NumToString 
+> Notice:
+> Some of the examples below are referenced from [ClickHouse Documentation](https://clickhouse.com/docs/en/sql-reference/functions/) but have been adapted and modified to work in ByConity.
+
+## IPv4NumToString
+
 Takes a UInt32 number. Interprets it as an IPv4 address in big endian. Returns a string containing the corresponding IPv4 address in the format A.B.C.d (dot-separated numbers in decimal form).
 
 **Syntax**
@@ -23,9 +22,11 @@ IPv4NumToString(num)
 ```
 
 **Arguments**
+
 - `num` – a UInt32 number.
 
 **Returned value**
+
 - A string in ipv4 representation.
 
 **Examples**
@@ -41,6 +42,7 @@ SELECT toIPv4('116.106.34.242') as ipv4, toTypeName(ipv4), IPv4NumToString(ipv4)
 ```
 
 ## IPv4NumToStringClassC
+
 Similar to `IPv4NumToString`, but using xxx instead of the last octet.
 
 **Syntax**
@@ -50,9 +52,11 @@ IPv4NumToStringClassC(num)
 ```
 
 **Arguments**
+
 - `num` – a UInt32 number.
 
 **Returned value**
+
 - An string in ipv4 representation, but using xxx instead of the last octet.
 
 **Examples**
@@ -68,6 +72,7 @@ SELECT toIPv4('116.106.34.242') as ipv4, toTypeName(ipv4), IPv4NumToStringClassC
 ```
 
 ## IPv4StringToNum
+
 The reverse function of IPv4NumToString. If the IPv4 address has an invalid format, it returns 0.
 
 **Syntax**
@@ -77,9 +82,11 @@ IPv4StringToNum(s)
 ```
 
 **Arguments**
+
 - `s` – ipv4 in string representation.
 
 **Returned value**
+
 - UInt32.
 
 **Examples**
@@ -95,6 +102,7 @@ SELECT IPv4StringToNum('116.106.34.242') as ipv4, toTypeName(ipv4), IPv4NumToStr
 ```
 
 ## IPv4ToIPv6
+
 Takes a `UInt32` number. Interprets it as an IPv4 address in [big endian](https://en.wikipedia.org/wiki/Endianness) . Returns a `FixedString(16)` value containing the IPv6 address in binary format.
 
 **Syntax**
@@ -104,9 +112,11 @@ IPv4ToIPv6(x)
 ```
 
 **Arguments**
+
 - `x` – a `UInt32` number
 
 **Returned value**
+
 - IPv6 address in binary format.FixedString(16)
 
 **Examples**
@@ -122,6 +132,7 @@ SELECT IPv4StringToNum('192.168.0.1') as ipv4, IPv6NumToString(IPv4ToIPv6(ipv4))
 ```
 
 ## IPv6NumToString
+
 Accepts a FixedString(16) value containing the IPv6 address in binary format. Returns a string containing this address in text format.
 
 IPv6-mapped IPv4 addresses are output in the format ::ffff:111.222.33.44.
@@ -133,9 +144,11 @@ IPv6NumToString(x)
 ```
 
 **Arguments**
+
 - `x` – FixedString(16) value containing the IPv6 address in binary format
 
 **Returned value**
+
 - A string in ipv6 representation.
 
 **Examples**
@@ -151,6 +164,7 @@ SELECT IPv6NumToString(toFixedString(unhex('2A0206B8000000000000000000000011'), 
 ```
 
 ## IPv6StringToNum
+
 The reverse function of `IPv6NumToString`. If the IPv6 address has an invalid format, it returns a string of null bytes.
 If the input string contains a valid IPv4 address, returns its IPv6 equivalent.
 HEX can be uppercase or lowercase.
@@ -161,10 +175,12 @@ HEX can be uppercase or lowercase.
 IPv6StringToNum(string)
 ```
 
-**Argument** 
-- `string` — IP address. String. 
+**Argument**
+
+- `string` — IP address. String.
 
 **Returned value**
+
 - IPv6 address in binary format. Type: FixedString(16).
 
 **Example**
@@ -181,9 +197,8 @@ SELECT addr, cutIPv6(IPv6StringToNum(addr), 0, 0) FROM (SELECT ['notaddress', '1
 └────────────┴──────────────────────────────────────┘
 ```
 
-
-
 ## cutIPv6
+
 Accepts a FixedString(16) value containing the IPv6 address in binary format. Returns a string containing the address of the specified number of bytes removed in text format.
 
 **Syntax**
@@ -193,6 +208,7 @@ cutIPv6(x, bytesToCutForIPv6, bytesToCutForIPv4)
 ```
 
 **Arguments**
+
 - `x` – a FixedString(16) value containing the IPv6 address in binary format
 - `bytesToCutForIPv6` - number of bytes to cut for ipv6 represenration
 - `bytesToCutForIPv4` - number of bytes to cut for ipv4 represenration
@@ -220,6 +236,7 @@ SELECT
 ```
 
 ## toIPv4
+
 An alias to `IPv4StringToNum()` that takes a string form of IPv4 address and returns value of IPv4 type, which is binary equal to value returned by `IPv4StringToNum()` .
 
 **Syntax**
@@ -228,10 +245,12 @@ An alias to `IPv4StringToNum()` that takes a string form of IPv4 address and ret
 toIPv4(string)
 ```
 
-**Argument** 
+**Argument**
+
 - `string` — IP address. String.
 
 **Returned value**
+
 - IPv4 type
 
 **Example**
@@ -265,8 +284,10 @@ SELECT
 ```
 
 ## toIPv6
+
 Converts a string form of IPv6 address to IPv6 type. If the IPv6 address has an invalid format, returns an empty value.
 Similar to IPv6StringToNum function, which converts IPv6 address to binary format.
+
 <!-- TODO: CNCH does not support convert IPv4 to IPv6 so far
 If the input string contains a valid IPv4 address, then the IPv6 equivalent of the IPv4 address is returned. -->
 
@@ -277,9 +298,11 @@ toIPv6(string)
 ```
 
 **Argument**
+
 - `string` — IP address. String
 
 **Returned value**
+
 - IP address. Type: IPv6.
 
 **Examples**
@@ -296,6 +319,7 @@ SELECT
 │ 20010438FFFF000000000000407D1BC1  │ 20010438FFFF000000000000407D1BC1 │
 └───────────────────────────────────┴──────────────────────────────────┘
 ```
+
 <!-- TODO: ByConity not work as expected
 
 ```sql

@@ -4,16 +4,15 @@ slug: "nullable"
 hidden: false
 createdAt: "2021-07-29T12:24:54.251Z"
 updatedAt: "2021-09-23T06:35:02.401Z"
-categories:
-- Docs
-- SQL_Syntax
 tags:
-- Docs
+  - Docs
 ---
+
 > Notice:
-Some of the examples below are referenced from [ClickHouse Documentation](https://clickhouse.com/docs/en/sql-reference/functions/) but have been adapted and modified to work in ByConity.
+> Some of the examples below are referenced from [ClickHouse Documentation](https://clickhouse.com/docs/en/sql-reference/functions/) but have been adapted and modified to work in ByConity.
 
 ## assumeNotNull
+
 Results in an equivalent non- `Nullable` value for a Nullable type. In case the original value is `NULL` the result is undetermined. See also `ifNull` and `coalesce` functions.
 
 **Syntax**
@@ -23,11 +22,13 @@ assumeNotNull(x)
 ```
 
 **Arguments:**
-- `x` — The original value. 
+
+- `x` — The original value.
 
 **Returned values**
-- The original value from the non- `Nullable` type, if it is not `NULL` . 
-- Implementation specific result if the original value was `NULL` . 
+
+- The original value from the non- `Nullable` type, if it is not `NULL` .
+- Implementation specific result if the original value was `NULL` .
 
 **Example**
 
@@ -58,6 +59,7 @@ SELECT assumeNotNull(y),toTypeName(assumeNotNull(y))  FROM test.functionAssumeNo
 ```
 
 ## coalesce
+
 Checks from left to right whether `NULL` arguments were passed and returns the first non- `NULL` argument.
 
 **Syntax**
@@ -67,11 +69,13 @@ coalesce(x,...)
 ```
 
 **Arguments**
-- Any number of parameters of a non-compound type. All parameters must be compatible by data type. 
+
+- Any number of parameters of a non-compound type. All parameters must be compatible by data type.
 
 **Returned values**
+
 - The first non- `NULL` argument.
-- `NULL` , if all arguments are `NULL` . 
+- `NULL` , if all arguments are `NULL` .
 
 **Example**
 Consider a list of contacts that may specify multiple ways to contact a customer.
@@ -92,7 +96,6 @@ SELECT * FROM test.functionCoalesce;
 The `mail` and `phone` fields are of type String, but the `icq` field is `UInt32` , so it needs to be converted to `String` .
 Get the first available contact method for the customer from the contact list:
 
-
 ```sql
 SELECT name, coalesce(mail, phone, CAST(icq,'Nullable(String)')) FROM test.functionCoalesce;
 ```
@@ -105,6 +108,7 @@ SELECT name, coalesce(mail, phone, CAST(icq,'Nullable(String)')) FROM test.funct
 ```
 
 ## ifNull
+
 Returns an alternative value if the main argument is `NULL` .
 
 **Syntax**
@@ -114,12 +118,14 @@ ifNull(x,alt)
 ```
 
 **Arguments:**
-- `x` — The value to check for `NULL` . 
-- `alt` — The value that the function returns if `x` is `NULL` . 
+
+- `x` — The value to check for `NULL` .
+- `alt` — The value that the function returns if `x` is `NULL` .
 
 **Returned values**
-- The value `x` , if `x` is not `NULL` . 
-- The value `alt` , if `x` is `NULL` . 
+
+- The value `x` , if `x` is not `NULL` .
+- The value `alt` , if `x` is `NULL` .
 
 **Example**
 
@@ -144,6 +150,7 @@ SELECT ifNull(NULL, 'b');
 ```
 
 ## isNotNull
+
 Checks whether the argument is NULL.
 
 **Syntax**
@@ -153,11 +160,13 @@ isNotNull(x)
 ```
 
 **Arguments:**
-- `x` — A value with a non-compound data type. 
+
+- `x` — A value with a non-compound data type.
 
 **Returned value**
-- `0` if `x` is `NULL` . 
-- `1` if `x` is not `NULL` . 
+
+- `0` if `x` is `NULL` .
+- `1` if `x` is not `NULL` .
 
 **Example**
 Input table
@@ -186,6 +195,7 @@ SELECT x FROM test.functionIsNotNull WHERE isNotNull(y);
 ```
 
 ## isNull
+
 Checks whether the argument is NULL.
 
 **Syntax**
@@ -195,11 +205,13 @@ isNull(x)
 ```
 
 **Arguments**
-- `x` — A value with a non-compound data type. 
+
+- `x` — A value with a non-compound data type.
 
 **Returned value**
-- `1` if `x` is `NULL` . 
-- `0` if `x` is not `NULL` . 
+
+- `1` if `x` is `NULL` .
+- `0` if `x` is not `NULL` .
 
 **Example**
 Input table
@@ -228,6 +240,7 @@ SELECT x FROM test.functionIsNull WHERE isNull(y);
 ```
 
 ## nullIf
+
 Returns `NULL` if the arguments are equal.
 
 **Syntax**
@@ -237,11 +250,13 @@ nullIf(x, y)
 ```
 
 **Arguments**
+
 - `x` , `y` — Values for comparison. They must be compatible types, or ByConity will generate an exception.
 
 **Returned values**
-- `NULL` , if the arguments are equal. 
-- The `x` value, if the arguments are not equal. 
+
+- `NULL` , if the arguments are equal.
+- The `x` value, if the arguments are not equal.
 
 **Example**
 
@@ -266,6 +281,7 @@ SELECT nullIf(1, 2);
 ```
 
 ## toNullable
+
 Converts the argument type to `Nullable` .
 
 **Syntax**
@@ -275,10 +291,12 @@ toNullable(x)
 ```
 
 **Arguments**
-- `x` — The value of any non-compound type. 
+
+- `x` — The value of any non-compound type.
 
 **Returned value**
-- The input value with a `Nullable` type. 
+
+- The input value with a `Nullable` type.
 
 **Example**
 

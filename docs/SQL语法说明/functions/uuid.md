@@ -4,29 +4,31 @@ slug: "uuid"
 hidden: false
 createdAt: "2021-07-29T12:33:03.093Z"
 updatedAt: "2021-09-23T06:52:47.060Z"
-categories:
-- Docs
-- SQL_Syntax
 tags:
-- Docs
+  - Docs
 ---
+
 > Notice:
-Some of the examples below are referenced from [ClickHouse Documentation](https://clickhouse.com/docs/en/sql-reference/functions/) but have been adapted and modified to work in ByConity.
+> Some of the examples below are referenced from [ClickHouse Documentation](https://clickhouse.com/docs/en/sql-reference/functions/) but have been adapted and modified to work in ByConity.
 
 ## generateUUIDv4
+
 Generates the UUID of [version 4](https://tools.ietf.org/html/rfc4122#section-4.4) .
 
 **Syntax**
+
 ```sql
 
 generateUUIDv4()
 ```
 
 **Returned value**
+
 - The UUID type value.
 
 **Examples**
 This example demonstrates creating a table with the UUID type column and inserting a value into the table.
+
 ```sql
 
 CREATE TABLE test.functionGenerateUUIDv4 (x UUID) ENGINE=CnchMergeTree ORDER BY x;
@@ -41,21 +43,26 @@ SELECT * FROM test.functionGenerateUUIDv4;
 ```
 
 ## toUUID
+
 Converts String type value to UUID type. Exception will be raised if input string is invalid uuid format.
 
 **Syntax**
+
 ```sql
 
 toUUID(String)
 ```
 
-**Arguments** 
-- `String` — string in uuid format. 
+**Arguments**
+
+- `String` — string in uuid format.
 
 **Returned value**
+
 - The UUID type value.
 
 **Examples**
+
 ```sql
 
 SELECT toUUID('61f0c404-5cb3-11e7-907b-a6006ad3dba0') AS uuid, toTypeName(uuid) AS uuid_type;
@@ -68,20 +75,26 @@ SELECT toUUID('61f0c404-5cb3-11e7-907b-a6006ad3dba0') AS uuid, toTypeName(uuid) 
 ```
 
 ## toUUIDOrNull
+
 It takes an argument of type String and tries to parse it into UUID. If failed, returns NULL.
 
 **Syntax**
+
 ```sql
 
 toUUIDOrNull(String)
 ```
-**Arguments** 
-- `String` — string in uuid format. 
+
+**Arguments**
+
+- `String` — string in uuid format.
 
 **Returned value**
+
 - The Nullable(UUID) type value.
 
 **Examples**
+
 ```sql
 
 SELECT toUUIDOrNull('61f0c404-5cb3-11e7-907b-a6006ad3dba0T') AS uuid
@@ -94,21 +107,26 @@ SELECT toUUIDOrNull('61f0c404-5cb3-11e7-907b-a6006ad3dba0T') AS uuid
 ```
 
 ## toUUIDOrZero
+
 It takes an argument of type String and tries to parse it into UUID. If failed, returns zero UUID.
 
 **Syntax**
+
 ```sql
 
 toUUIDOrZero(String)
 ```
 
-**Arguments** 
-- `String` — string in uuid format. 
+**Arguments**
+
+- `String` — string in uuid format.
 
 **Returned value**
+
 - The UUID type value.
 
 **Examples**
+
 ```sql
 
 SELECT toUUIDOrZero('61f0c404-5cb3-11e7-907b-a6006ad3dba0T') AS uuid
@@ -120,10 +138,7 @@ SELECT toUUIDOrZero('61f0c404-5cb3-11e7-907b-a6006ad3dba0T') AS uuid
 └──────────────────────────────────────┘
 ```
 
-
-
 ## generateUUIDv4
-
 
 Generates the [UUID](https://bytedance.feishu.cn/sql-reference/data-types/uuid.md) of [version 4](https://tools.ietf.org/html/rfc4122#section-4.4) .
 
@@ -169,12 +184,11 @@ SELECT * FROM t_uuid
 
 ## toUUID
 
-
 **Syntax**
 
 ```sql
 
-toUUID (x) 
+toUUID (x)
 
 ```
 
@@ -210,7 +224,6 @@ SELECT toUUID('61f0c404-5cb3-11e7-907b-a6006ad3dba0') AS uuid
 
 ## toUUIDOrNull
 
-
 toUUIDOrNull (x)
 
 It takes an argument of type String and tries to parse it into UUID. If failed, returns NULL.
@@ -244,7 +257,6 @@ SELECT toUUIDOrNull('61f0c404-5cb3-11e7-907b-a6006ad3dba0T') AS uuid
 ```
 
 ## toUUIDOrZero
-
 
 toUUIDOrZero (x)
 

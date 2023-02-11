@@ -4,9 +4,6 @@ slug: "encryption"
 hidden: true
 createdAt: "2021-07-29T12:04:18.067Z"
 updatedAt: "2021-09-23T03:58:33.487Z"
-categories:
-  - Docs
-  - SQL_Syntax
 tags:
   - Docs
 ---

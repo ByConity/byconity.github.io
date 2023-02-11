@@ -4,9 +4,6 @@ slug: "others"
 hidden: true
 createdAt: "2021-07-29T12:25:27.577Z"
 updatedAt: "2021-07-29T12:25:27.577Z"
-categories:
-- Docs
-- SQL_Syntax
 tags:
 - Docs
 ---

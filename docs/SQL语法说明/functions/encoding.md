@@ -4,9 +4,6 @@ slug: "encoding"
 hidden: false
 createdAt: "2021-07-29T12:03:22.612Z"
 updatedAt: "2021-09-23T03:57:43.648Z"
-categories:
-  - Docs
-  - SQL_Syntax
 tags:
   - Docs
 ---

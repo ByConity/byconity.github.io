@@ -4,11 +4,8 @@ slug: "logical"
 hidden: false
 createdAt: "2021-07-29T12:13:37.269Z"
 updatedAt: "2021-09-23T06:31:50.019Z"
-categories:
-- Docs
-- SQL_Syntax
 tags:
-- Docs
+  - Docs
 ---
 
 # logical

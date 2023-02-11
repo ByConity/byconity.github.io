@@ -4,16 +4,15 @@ slug: "random"
 hidden: false
 createdAt: "2021-07-29T12:26:05.181Z"
 updatedAt: "2021-09-23T06:37:41.756Z"
-categories:
-- Docs
-- SQL_Syntax
 tags:
-- Docs
+  - Docs
 ---
+
 > Notice:
-Some of the examples below are referenced from [ClickHouse Documentation](https://clickhouse.com/docs/en/sql-reference/functions/) but have been adapted and modified to work in ByConity.
+> Some of the examples below are referenced from [ClickHouse Documentation](https://clickhouse.com/docs/en/sql-reference/functions/) but have been adapted and modified to work in ByConity.
 
 ## rand
+
 Returns a pseudo-random UInt32 number, evenly distributed among all UInt32-type numbers.
 Uses a linear congruential generator.
 
@@ -24,9 +23,11 @@ rand([x])
 ```
 
 **Arguments**
-- `x` — Expression resulting in any of the supported data types. The resulting value is discarded, but the expression itself if used for bypassing common subexpression elimination if the function is called multiple times in one query. Optional parameter. 
+
+- `x` — Expression resulting in any of the supported data types. The resulting value is discarded, but the expression itself if used for bypassing common subexpression elimination if the function is called multiple times in one query. Optional parameter.
 
 **Returned values**
+
 - a pseudo-random UInt32 number. Type: UInt32
 
 **Example**
@@ -43,6 +44,7 @@ SELECT rand(), rand(number) FROM numbers(2);
 ```
 
 ## rand64
+
 Returns a pseudo-random UInt64 number, evenly distributed among all UInt64-type numbers.
 Uses a linear congruential generator.
 
@@ -53,9 +55,11 @@ rand64([x])
 ```
 
 **Arguments**
-- `x` — Expression resulting in any of the supported data types. The resulting value is discarded, but the expression itself if used for bypassing common subexpression elimination if the function is called multiple times in one query. Optional parameter. 
+
+- `x` — Expression resulting in any of the supported data types. The resulting value is discarded, but the expression itself if used for bypassing common subexpression elimination if the function is called multiple times in one query. Optional parameter.
 
 **Returned values**
+
 - a pseudo-random UInt64 number. Type: UInt64
 
 **Example**
@@ -72,6 +76,7 @@ SELECT rand64(), rand64(number) FROM numbers(2);
 ```
 
 ## randConstant
+
 Produces a constant column with a random value.
 
 **Syntax**
@@ -81,9 +86,11 @@ randConstant([x])
 ```
 
 **Arguments**
-- `x` — Expression resulting in any of the supported data types. The resulting value is discarded, but the expression itself if used for bypassing common subexpression elimination if the function is called multiple times in one query. Optional parameter. 
+
+- `x` — Expression resulting in any of the supported data types. The resulting value is discarded, but the expression itself if used for bypassing common subexpression elimination if the function is called multiple times in one query. Optional parameter.
 
 **Returned value**
+
 - Pseudo-random number. Type: UInt32.
 
 **Example**
