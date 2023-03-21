@@ -1,7 +1,5 @@
 import React from "react";
 import Translate from "@docusaurus/Translate";
-import Section from "@site/src/components/Section";
-import { RxOpenInNewWindow } from "react-icons/rx";
 
 import BilibiliLogo from "./bilibili-logo.svg";
 import GithubLogo from "./github-logo.svg";
@@ -39,27 +37,29 @@ function LogoDisplay(props: LogoDisplayProps) {
 function CommunitySection() {
   return (
     <div className={styles.container}>
-      <h2 className={styles.header}>
-        <Translate id="homePage.communitySection.title" />
-      </h2>
-      <div className={styles.logoGrid}>
-        <LogoDisplay
-          image={<GithubLogo />}
-          externalLink="https://github.com/byconity"
-        />
+      <div className={styles.content}>
+        <h2 className={styles.header}>
+          <Translate id="homePage.communitySection.title" />
+        </h2>
+        <div className={styles.logoGrid}>
+          <LogoDisplay
+            image={<GithubLogo />}
+            externalLink="https://github.com/byconity"
+          />
 
-        <LogoDisplay image={<WechatLogo />} hoverImageSrc={wechatQrPath} />
+          <LogoDisplay image={<WechatLogo />} hoverImageSrc={wechatQrPath} />
 
-        <LogoDisplay
-          image={<BilibiliLogo />}
-          externalLink="https://space.bilibili.com/2065226922?spm_id_from=333.1007.0.0"
-        />
+          <LogoDisplay
+            image={<BilibiliLogo />}
+            externalLink="https://space.bilibili.com/2065226922?spm_id_from=333.1007.0.0"
+          />
 
-        <LogoDisplay image={<TwitterLogo />} />
+          <LogoDisplay image={<TwitterLogo />} />
 
-        <LogoDisplay image={<SlackLogo />} />
+          <LogoDisplay image={<SlackLogo />} />
 
-        <LogoDisplay image={<MeetupLogo />} />
+          <LogoDisplay image={<MeetupLogo />} />
+        </div>
       </div>
     </div>
   );

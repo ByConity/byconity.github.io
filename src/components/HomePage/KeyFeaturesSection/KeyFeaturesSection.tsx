@@ -30,31 +30,33 @@ function FeatureCard(props: FeatureCardProps) {
 function KeyFeaturesSection() {
   return (
     <div className={styles.container}>
-      <h2 className={styles.header}>
-        <Translate id="homePage.keyFeaturesSection.title" />
-      </h2>
+      <div className={styles.content}>
+        <h2 className={styles.header}>
+          <Translate id="homePage.keyFeaturesSection.title" />
+        </h2>
 
-      <FeatureCard
-        title={<Translate id="homePage.keyFeaturesSection.feature1.title" />}
-        icon={<EcoModeIcon />}
-        description={
-          <Translate id="homePage.keyFeaturesSection.feature1.description" />
-        }
-      />
-      <FeatureCard
-        title={<Translate id="homePage.keyFeaturesSection.feature2.title" />}
-        icon={<ExternalIcon />}
-        description={
-          <Translate id="homePage.keyFeaturesSection.feature2.description" />
-        }
-      />
-      <FeatureCard
-        title={<Translate id="homePage.keyFeaturesSection.feature3.title" />}
-        icon={<FaceIcon />}
-        description={
-          <Translate id="homePage.keyFeaturesSection.feature3.description" />
-        }
-      />
+        <FeatureCard
+          title={<Translate id="homePage.keyFeaturesSection.feature1.title" />}
+          icon={<EcoModeIcon />}
+          description={
+            <Translate id="homePage.keyFeaturesSection.feature1.description" />
+          }
+        />
+        <FeatureCard
+          title={<Translate id="homePage.keyFeaturesSection.feature2.title" />}
+          icon={<ExternalIcon />}
+          description={
+            <Translate id="homePage.keyFeaturesSection.feature2.description" />
+          }
+        />
+        <FeatureCard
+          title={<Translate id="homePage.keyFeaturesSection.feature3.title" />}
+          icon={<FaceIcon />}
+          description={
+            <Translate id="homePage.keyFeaturesSection.feature3.description" />
+          }
+        />
+      </div>
     </div>
   );
 }

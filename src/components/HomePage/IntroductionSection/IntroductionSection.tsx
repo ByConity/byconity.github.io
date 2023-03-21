@@ -1,20 +1,29 @@
 import React from "react";
 import Translate from "@docusaurus/Translate";
-import Section from "@site/src/components/Section";
 import architectureImagePath from "./architecture.png";
-import styles from "./IntroductionSection.module.css";
+import styles from "./IntroductionSection.module.scss";
 
 function IntroductionSection() {
   return (
-    <Section title={<Translate id="homePage.introductionSection.title" />}>
-      <div className={styles.container}>
-        <p className={styles.introductionText}>
-          <Translate id="homePage.introductionSection.description" />
-        </p>
+    <div className={styles.container}>
+      <div className={styles.content}>
+        <div className={styles.descriptionColumn}>
+          <h2 className={styles.header}>
+            <Translate id="homePage.introductionSection.title" />
+          </h2>
+          <p className={styles.introductionText}>
+            <Translate id="homePage.introductionSection.description" />
+          </p>
+        </div>
 
-        <img className={styles.architectureImage} src={architectureImagePath} />
+        <div className={styles.imageColumn}>
+          <img
+            className={styles.architectureImage}
+            src={architectureImagePath}
+          />
+        </div>
       </div>
-    </Section>
+    </div>
   );
 }
 
