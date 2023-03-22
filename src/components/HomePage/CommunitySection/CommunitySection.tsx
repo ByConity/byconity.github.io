@@ -62,6 +62,7 @@ function CommunitySection() {
 
           <LogoDisplay
             image={<WechatLogo />}
+            externalLink="https://weixin.qq.com/r/FxP-51HEvQzCrRWE90YF"
             hoverImageSrc={wechatQrPath}
             title={<Translate id="homePage.communitySection.wechat.title" />}
           />

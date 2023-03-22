@@ -33,3 +33,25 @@
     line-height: 48px;
   }
 }
+
+@media (max-width: 1280px) {
+  .card {
+    flex-direction: column;
+
+    .cardHeader {
+      text-align: center;
+    }
+  }
+}
+
+@media (max-width: 425px) {
+  .container {
+    padding: 80px 20px;
+    text-align: center;
+  }
+
+  .card {
+    margin-bottom: 80px;
+    gap: 20px;
+  }
+}

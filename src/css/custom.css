@@ -45,14 +45,6 @@
   font-size: 20px;
 }
 
-.navbar__items.navbar__items--right::before {
-  content: "";
-  border-right: 1px solid #d9d9d9;
-  height: 12px;
-  margin-left: 10px;
-  margin-right: 10px;
-}
-
 .footer--dark {
   --ifm-footer-background-color: #000;
   --ifm-footer-link-color: #adb0b7;
@@ -74,4 +66,24 @@
 .footer__copyright {
   font-size: 18px;
   margin-top: 40px;
+}
+
+@media (min-width: 997px) {
+  .navbar__items.navbar__items--right::before {
+    content: "";
+    border-right: 1px solid #d9d9d9;
+    height: 12px;
+    margin-left: 10px;
+    margin-right: 10px;
+  }
+}
+
+@media (max-width: 996px) {
+  .footer {
+    text-align: center;
+  }
+
+  .footer__logo {
+    margin-bottom: 32px;
+  }
 }

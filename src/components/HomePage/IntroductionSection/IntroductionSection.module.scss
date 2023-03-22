@@ -1,6 +1,5 @@
 .container {
-  padding-top: 80px;
-  padding-bottom: 80px;
+  padding: 80px;
 }
 
 .content {
@@ -28,4 +27,18 @@
 .introductionText {
   font-size: 32px;
   line-height: 56px;
+}
+
+@media (max-width: 1280px) {
+  .content {
+    flex-direction: column;
+  }
+}
+
+@media (max-width: 425px) {
+  .container {
+    padding: 80px 20px;
+    text-align: center;
+    min-height: 600px;
+  }
 }

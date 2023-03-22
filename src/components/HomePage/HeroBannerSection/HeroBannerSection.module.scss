@@ -42,3 +42,19 @@
     transform: none;
   }
 }
+
+@media (max-width: 1280px) {
+  .content {
+    // Following original design ratio
+    background-size: 91.4%;
+  }
+}
+
+@media (max-width: 425px) {
+  .content {
+    padding: 80px 20px;
+    text-align: center;
+    min-height: 660px;
+    background-size: 100%;
+  }
+}

@@ -1,6 +1,5 @@
 .container {
-  padding-top: 80px;
-  padding-bottom: 80px;
+  padding: 80px;
 }
 
 .content {
@@ -76,5 +75,12 @@
     width: 100px;
     background-color: #ffffffdd;
     transition: all 0.3s ease-in-out;
+  }
+}
+
+@media (max-width: 425px) {
+  .container {
+    padding: 80px 20px;
+    text-align: center;
   }
 }
