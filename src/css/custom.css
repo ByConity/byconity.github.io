@@ -20,13 +20,13 @@
 
 /* You can override the default Infima variables here. */
 :root {
-  --ifm-color-primary: #0041f5;
-  --ifm-color-primary-dark: #003bdd;
-  --ifm-color-primary-darker: #0037d0;
-  --ifm-color-primary-darkest: #002eab;
-  --ifm-color-primary-light: #0f4eff;
-  --ifm-color-primary-lighter: #1b57ff;
-  --ifm-color-primary-lightest: #4072ff;
+  --ifm-color-primary: #0041f0;
+  --ifm-color-primary-dark: #003ad8;
+  --ifm-color-primary-darker: #0037cc;
+  --ifm-color-primary-darkest: #002da8;
+  --ifm-color-primary-light: #094cff;
+  --ifm-color-primary-lighter: #1554ff;
+  --ifm-color-primary-lightest: #396fff;
 
   --ifm-color-content: #232f47;
   --ifm-font-family-base: "Sofia Pro", system-ui, -apple-system, Segoe UI,
