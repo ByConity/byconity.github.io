@@ -52,3 +52,26 @@
   margin-left: 10px;
   margin-right: 10px;
 }
+
+.footer--dark {
+  --ifm-footer-background-color: #000;
+  --ifm-footer-link-color: #adb0b7;
+  padding-top: 80px;
+}
+
+.footer__logo {
+  margin-top: unset;
+}
+
+.footer__title {
+  font-size: 24px;
+}
+
+.footer__item {
+  font-size: 20px;
+}
+
+.footer__copyright {
+  font-size: 18px;
+  margin-top: 40px;
+}

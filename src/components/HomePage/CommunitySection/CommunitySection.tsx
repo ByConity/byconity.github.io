@@ -10,6 +10,7 @@ import WechatLogo from "./wechat-logo.svg";
 import wechatQrPath from "./wechat-qr.jpeg";
 
 import styles from "./CommunitySection.module.scss";
+import clsx from "clsx";
 
 type LogoDisplayProps = {
   image: React.ReactNode;
@@ -22,7 +23,13 @@ function LogoDisplay(props: LogoDisplayProps) {
   const { image, externalLink, title, hoverImageSrc } = props;
 
   return (
-    <a href={externalLink} target="_blank" className={styles.logoDisplayLink}>
+    <a
+      href={externalLink}
+      target="_blank"
+      className={clsx(styles.logoDisplayLink, {
+        [styles.disabled]: !externalLink && !hoverImageSrc,
+      })}
+    >
       <div className={styles.logoDisplay}>
         <div className={styles.imageContainer}>{image}</div>
 
