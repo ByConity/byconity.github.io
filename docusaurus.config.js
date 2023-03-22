@@ -69,6 +69,7 @@ const config = {
       image: "img/docusaurus-social-card.jpg",
       navbar: {
         title: "ByConity",
+        hideOnScroll: true,
         logo: {
           alt: "ByConity Logo",
           src: "img/logo.png",

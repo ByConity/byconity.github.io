@@ -35,13 +35,13 @@
   min-width: 400px;
 
   &:hover {
-    color: var(--ifm-link-hover-color);
+    color: var(--ifm-font-color-base);
     text-decoration: none;
     background-color: #f6f9fb;
   }
 
   &:active {
-    color: var(--ifm-link-hover-color);
+    color: var(--ifm-font-color-base);
     background-color: #fff;
   }
 }
