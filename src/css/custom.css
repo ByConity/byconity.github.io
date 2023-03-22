@@ -4,6 +4,20 @@
  * work well for content-centric websites.
  */
 
+@font-face {
+  font-family: "Sofia Pro";
+  src: local("Sofia Pro"), url("./SofiaPro-Regular.otf") format("opentype");
+  font-weight: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Sofia Pro";
+  src: local("Sofia Pro"), url("./SofiaPro-Bold.otf") format("opentype");
+  font-weight: bold;
+  font-display: swap;
+}
+
 /* You can override the default Infima variables here. */
 :root {
   --ifm-color-primary: #0041f5;
@@ -15,6 +29,10 @@
   --ifm-color-primary-lightest: #4072ff;
 
   --ifm-color-content: #232f47;
+  --ifm-font-family-base: "Sofia Pro", system-ui, -apple-system, Segoe UI,
+    Roboto, Ubuntu, Cantarell, Noto Sans, sans-serif, BlinkMacSystemFont,
+    "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji",
+    "Segoe UI Emoji", "Segoe UI Symbol";
 }
 
 /* Overriding the defaults */
