@@ -6,11 +6,11 @@ This website is powered by [Docusarus](https://docusaurus.io/).
 You are encouraged to understand the basics of Docusaurus first.
 
 ```bash
-pnpm install # Install NPM dependencies
+npm install # Install NPM dependencies
 
-pnpm start # Start local server, OR
+npm start # Start local server, OR
 
-pnpm start -l zh-cn # Start the zh-cn server
+npm start -l zh-cn # Start the zh-cn server
 ```
 
 ## General Folder Structure
