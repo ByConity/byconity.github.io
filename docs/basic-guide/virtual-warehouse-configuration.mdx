@@ -105,9 +105,9 @@ When starting the resource manager component, we can fill in the Virtual Warehou
 
 ```
 
-We have configured a Virtual Warehouse named vw_default, the type is Default, and it is expected that there will be 1 worker in this vw (num_workers is only used as an instruction to create a vw, the actual number of workers can be <u>query related system tables</ u><u>(todo: link [view Virtual Warehouse information]</u><u>)</u> get). At the same time, we configured 1 replica for this Virtual Warehouse, named wg_default.
+We have configured a Virtual Warehouse named vw_default, the type is Default, and it is expected that there will be 1 worker in this vw (num_workers is only used as an instruction to create a vw, the actual number of workers can be <u>query related system tables</u><u>(todo: link [view Virtual Warehouse information]</u><u>)</u> get). At the same time, we configured 1 replica for this Virtual Warehouse, named wg_default.
 
-When starting the server component, we can directly configure the worker information corresponding to each vw in the service discovery part of the configuration file (refer to [cluster configuration parameters](./cluster configuration parameters) (todo: link) server part).
+When starting the server component, we can directly configure the worker information corresponding to each vw in the service discovery part of the configuration file (refer to [cluster configuration parameters](../cluster configuration parameters) (todo: link) server part).
 
 ```
 <service_discovery>
