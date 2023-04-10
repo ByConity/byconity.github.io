@@ -203,7 +203,7 @@ CnchKafka inherits the basic design of the community, that is, realizes the enti
 
 The basic data path is as follows:
 
-![](./assets/导入数据/boxcnbeMipMsWmYggoqbR4DT88c.png)
+![](./assets/data-import/boxcnbeMipMsWmYggoqbR4DT88c.png)
 
 The components in the figure are the components of the ByConity cloud-native architecture that involve CnchKafka. In order to avoid readers' ignorance, here is a brief description of each component; but due to space limitations and key points, please refer to the architecture document for more detailed architecture design details.
 
@@ -247,7 +247,7 @@ Each KafkaConsumer is implemented as a resident thread and executed on the Virtu
 
 Refer to the figure below for the execution process of a single consumption:
 
-![](./assets/导入数据/boxcnlEuwS4ogryA87WHPdDK1Md.png)
+![](./assets/data-import/boxcnlEuwS4ogryA87WHPdDK1Md.png)
 
 #### Exactly-Once
 
@@ -332,8 +332,8 @@ SELECT
     _partition,    -- UInt64
     _key,    -- String
     _offset,    -- UInt64
-    _content,  -- String: 完整的消息内容
-    *    -- 正常列可以通过*展开，虚拟列则不能
+    _content,  -- String: complete message content
+    *    -- Normal columns can be expanded by *, virtual columns cannot
 FROM kafka_test.cnch_kafka_consume
 
 ```
@@ -372,7 +372,7 @@ String
 
 required
 
-consumer group name，消费组
+consumer group name, consumer group
 
 kafka_format
 
