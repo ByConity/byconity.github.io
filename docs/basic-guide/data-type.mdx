@@ -70,7 +70,7 @@ If no value is specified for the UUID column when inserting a new record, the UU
 
 ## How to generate
 
-To generate UUID values, ByConity provides the [generateuidv4](https://clickhouse.com/docs/zh/sql-reference/functions/uuid-functions) function.
+To generate UUID values, ByConity provides the [generateuidv4](https://clickhouse.com/docs/en/sql-reference/functions/uuid-functions) function.
 
 ## Usage Example 
 
@@ -124,9 +124,9 @@ SELECT * FROM t_uuid
 
 ## Limits
 
-UUID data type only supports [string](https://clickhouse.com/docs/zh/sql-reference/data-types/string) data type also supports functions(for example, [min](https://clickhouse.com/docs/zh/sql-reference/aggregate-functions/reference/min#agg_function-min), [max](https://clickhouse.com/docs/zh/sql-reference/aggregate-functions/reference/max#agg_function-max), and [count](https://clickhouse.com/docs/zh/sql-reference/aggregate-functions/reference/count#agg_function-count)).
+UUID data type only supports [string](https://clickhouse.com/docs/en/sql-reference/data-types/string) data type also supports functions(for example, [min](https://clickhouse.com/docs/en/sql-reference/aggregate-functions/reference/min#agg_function-min), [max](https://clickhouse.com/docs/en/sql-reference/aggregate-functions/reference/max#agg_function-max), and [count](https://clickhouse.com/docs/en/sql-reference/aggregate-functions/reference/count#agg_function-count)).
 
-Arithmetic operations do not support UUID data types（for example, [abs](https://clickhouse.com/docs/zh/sql-reference/functions/arithmetic-functions#arithm_func-abs)）or aggregate functions such as [sum](https://clickhouse.com/docs/zh/sql-reference/aggregate-functions/reference/sum#agg_function-sum) and [avg](https://clickhouse.com/docs/zh/sql-reference/aggregate-functions/reference/avg#agg_function-avg).
+Arithmetic operations do not support UUID data types（for example, [abs](https://clickhouse.com/docs/en/sql-reference/functions/arithmetic-functions#arithm_func-abs)）or aggregate functions such as [sum](https://clickhouse.com/docs/en/sql-reference/aggregate-functions/reference/sum#agg_function-sum) and [avg](https://clickhouse.com/docs/en/sql-reference/aggregate-functions/reference/avg#agg_function-avg).
 
 # floating point type
 
@@ -202,7 +202,7 @@ SELECT 0 / 0
 
 ```
 
-You can see more rules about **NaN** sorting in [ORDER BY clause](https://clickhouse.com/docs/zh/sql-reference/data-types/float) 
+You can see more rules about **NaN** sorting in [ORDER BY clause](https://clickhouse.com/docs/en/sql-reference/data-types/float) 
 
 # Decimal
 
@@ -632,7 +632,7 @@ WHERE a = 'b\0'
 
 This method is different from MySQL's **CHAR** type (in MySQL, strings are padded with spaces and spaces are removed on output).
 
-Note that the length of **FixedString(N)** is a constant. A string consisting only of null characters, the return value of the function [length](https://clickhouse.com/docs/en/sql-reference/functions/array-functions#array_functions-length) is **N**, and The return value of the function [empty](https://clickhouse.com/docs/zh/sql-reference/functions/string-functions#empty) is **1**.
+Note that the length of **FixedString(N)** is a constant. A string consisting only of null characters, the return value of the function [length](https://clickhouse.com/docs/en/sql-reference/functions/array-functions#array_functions-length) is **N**, and The return value of the function [empty](https://clickhouse.com/docs/en/sql-reference/functions/string-functions#empty) is **1**.
 
 # Nested data structures
 
