@@ -759,11 +759,11 @@ LowCardinality(data_type)
 
 **Parameter**
 
-- **data_type** — String, FixedString, Date, DateTime, including numeric types, but excluding Decimal. For some data types, **LowCardinality** is not efficient, please refer to [allow_suspicious_low_cardinality_types](https://clickhouse.com/docs/zh/operations/settings/settings#allow_suspicious_low_cardinality_types) setting description.
+- **data_type** — String, FixedString, Date, DateTime, including numeric types, but excluding Decimal. For some data types, **LowCardinality** is not efficient, please refer to [allow_suspicious_low_cardinality_types](https://clickhouse.com/docs/en/operations/settings/settings#allow_suspicious_low_cardinality_types) setting description.
 
 ## describe
 
-**LowCardinality** is a concept that changes the way data is stored and processed. ByConity will perform [dictionary coding](https://en.wikipedia.org/wiki/Dictionary_coder) on the column where **LowCardinality** is located. For many applications, processing dictionary-encoded data can significantly increase [SELECT](https://clickhouse.com/docs/zh/sql-reference/statements/select/) query speed.
+**LowCardinality** is a concept that changes the way data is stored and processed. ByConity will perform [dictionary coding](https://en.wikipedia.org/wiki/Dictionary_coder) on the column where **LowCardinality** is located. For many applications, processing dictionary-encoded data can significantly increase [SELECT](https://clickhouse.com/docs/en/sql-reference/statements/select/) query speed.
 
 The efficiency of using the **LowCarditality** data type depends on the diversity of the data. If a dictionary contains less than 10000 distinct values, then ByConity allows for more efficient data storage and processing. On the contrary, if the dictionary is more than 10000, the efficiency will be worse.
 
