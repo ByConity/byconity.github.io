@@ -237,15 +237,15 @@ Example:
 1. The next configuration level corresponds to the storage_configuration configuration level in the configuration file
 
 - storage_configuration
-- cnch_default_policy, specifies the StoragePolicy used by ByConity to store actual data, an optional configuration item, the default is cnch_default_hdfs, and this StoragePolicy should only include HDFSDisk
-- When creating a table, for a ByConity table, if the storage_policy MergeTreeSettings is not specified, it will be changed to ${cnch_default_policy} by default
-- cnch_auxility_policy, specifies the StoragePolicy used by ByConity to store temporary data on the local disk, optional configuration item, the default is default
+- cnch_default_policy, specifies the StoragePolicy used by CNCH to store actual data, an optional configuration item, the default is cnch_default_hdfs, and this StoragePolicy should only include HDFSDisk
+- When creating a table, for a CNCH table, if the storage_policy MergeTreeSettings is not specified, it will be changed to ${cnch_default_policy} by default
+- cnch_auxility_policy, specifies the StoragePolicy used by CNCH to store temporary data on the local disk, optional configuration item, the default is default
 - disks
 - ${DISK_NAME}
 - type, the type of this disk, optional configuration item, the default is local
-- ByConity supports the selection of two disks, hdfs/bytehdfs, as remote storage. Currently, only a single Disk is supported in the StoragePolicy
+- CNCH supports the selection of two disks, hdfs/bytehdfs, as remote storage. Currently, only a single Disk is supported in the StoragePolicy
 - In order to be compatible with the internal configuration, hdfs/bytehdfs are resolved to the internal bytehdfs Disk, and the type of the community version HDFSDisk is renamed to communityhdfs
-- The configuration items of HDFSDisk specified by the StoragePolicy used by ByConity should be the same in all Server/Worker configuration files
+- The configuration items of HDFSDisk specified by the StoragePolicy used by CNCH should be the same in all Server/Worker configuration files
 - path
 - Which path of this Disk will the data be stored in, required configuration items
 - hdfs_params
@@ -341,7 +341,7 @@ Example:
 
 ### cnch_kafka_log
 
-After configuration, ByConity will open kafka_log, and the consumption log can be viewed through the system table
+After configuration, CNCH will open kafka_log, and the consumption log can be viewed through the system table
 
 Example:
 
@@ -359,7 +359,7 @@ Example:
 
 ### cnch_transaction_cleaner_max_threads
 
-The thread pool size of ByConity background cleaning transaction record, the default is 128
+The thread pool size of CNCH background cleaning transaction record, the default is 128
 
 Example:
 
@@ -370,7 +370,7 @@ Example:
 
 ### cnch_transaction_cleaner_queue_size
 
-The thread pool queue size of ByConity background cleaning transaction record, the default is 10000
+The thread pool queue size of CNCH background cleaning transaction record, the default is 10000
 
 Example:
 

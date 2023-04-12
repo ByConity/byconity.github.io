@@ -25,7 +25,7 @@ The service node, which we also call server, mainly undertakes the functions of 
 
 We provide a set of system tables to query the metadata related to the Virtual Warehouse. These system tables only provide observable capabilities, and the Virtual Warehouse information cannot be changed by modifying the table content. If you need to modify the configuration of the Virtual Warehouse, please refer to [Modify the configuration of the Virtual Warehouse] (todo: link).
 
-## system.virtual_warehouses
+## system. virtual_warehouses
 
 The system table shows the meta information, main fields and descriptions of all virtual warehouse (VW):
 
@@ -86,7 +86,7 @@ Cluster mode is the recommended way to use it in a production environment. At th
 
 ## local mode
 
-When starting the resource manager component, we can fill in the Virtual Warehouse related information in the configuration file (refer to [cluster configuration parameters](https://byconity.github.io/docs/basic-guide/cluster-configuration) resource manager section). The resource manager will directly create corresponding  Virtual Warehouse (and worker group) based on these information. Example:
+When starting the resource manager component, we can fill in the Virtual Warehouse related information in the configuration file (refer to [cluster configuration parameters](./cluster configuration parameters) (todo: link) resource manager section). The resource manager will directly create corresponding  Virtual Warehouse (and worker group) based on these information. Example:
 
 ```
 <vws>
