@@ -25,7 +25,7 @@ The service node, which we also call server, mainly undertakes the functions of 
 
 We provide a set of system tables to query the metadata related to the Virtual Warehouse. These system tables only provide observable capabilities, and the Virtual Warehouse information cannot be changed by modifying the table content. If you need to modify the configuration of the Virtual Warehouse, please refer to [Modify the configuration of the Virtual Warehouse] (todo: link).
 
-## system. virtual_warehouses
+## system.virtual_warehouses
 
 The system table shows the meta information, main fields and descriptions of all virtual warehouse (VW):
 
@@ -86,7 +86,7 @@ Cluster mode is the recommended way to use it in a production environment. At th
 
 ## local mode
 
-When starting the resource manager component, we can fill in the Virtual Warehouse related information in the configuration file (refer to [cluster configuration parameters](./cluster configuration parameters) (todo: link) resource manager section). The resource manager will directly create corresponding  Virtual Warehouse (and worker group) based on these information. Example:
+When starting the resource manager component, we can fill in the Virtual Warehouse related information in the configuration file (refer to [cluster-configuration](./cluster-configuration) resource manager section). The resource manager will directly create corresponding  Virtual Warehouse (and worker group) based on these information. Example:
 
 ```
 <vws>
@@ -107,7 +107,7 @@ When starting the resource manager component, we can fill in the Virtual Warehou
 
 We have configured a Virtual Warehouse named vw_default, the type is Default, and it is expected that there will be 1 worker in this vw (num_workers is only used as an instruction to create a vw, the actual number of workers can be <u>query related system tables</u><u>(todo: link [view Virtual Warehouse information]</u><u>)</u> get). At the same time, we configured 1 replica for this Virtual Warehouse, named wg_default.
 
-When starting the server component, we can directly configure the worker information corresponding to each vw in the service discovery part of the configuration file (refer to [cluster configuration parameters](../cluster configuration parameters) (todo: link) server part).
+When starting the server component, we can directly configure the worker information corresponding to each vw in the service discovery part of the configuration file (refer to [cluster configuration](./cluster-configuration) server part).
 
 ```
 <service_discovery>
@@ -153,7 +153,7 @@ SETTINGS num_workers = 1, type = 'Default',
 
 ```
 
-`CREATE WAREHOUSE IF NOT EXISTS `$VW_NAME` SETTINGS ...` 这个SQL用于创建计算组。$VW_NAME 为该计算组的唯一标识。创建计算组时，settings 中 num_workers 和 type 为必填项，其他配置可参考[查看计算组信息]小节。
+`CREATE WAREHOUSE IF NOT EXISTS `$VW_NAME` SETTINGS ...` This SQL is used to create computed groups. $VW_NAME is the unique identifier of the computing group. When creating a computing group, num_workers and type in the settings are required. For other configurations, please refer to the [View Virtual Warehouse Information] section.
 
 ### Creat Worker Group
 
