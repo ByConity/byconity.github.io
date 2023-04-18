@@ -70,7 +70,7 @@ If no value is specified for the UUID column when inserting a new record, the UU
 
 ## How to generate
 
-To generate UUID values, ByConity provides the [generateuidv4](https://clickhouse.com/docs/zh/sql-reference/functions/uuid-functions) function.
+To generate UUID values, ByConity provides the [generateuidv4](https://clickhouse.com/docs/en/sql-reference/functions/uuid-functions) function.
 
 ## Usage Example 
 
@@ -124,9 +124,10 @@ SELECT * FROM t_uuid
 
 ## Limits
 
-UUID data type only supports [string](https://clickhouse.com/docs/zh/sql-reference/data-types/string) data type also supports functions(for example, [min](https://clickhouse.com/docs/zh/sql-reference/aggregate-functions/reference/min#agg_function-min), [max](https://clickhouse.com/docs/zh/sql-reference/aggregate-functions/reference/max#agg_function-max), and [count](https://clickhouse.com/docs/zh/sql-reference/aggregate-functions/reference/count#agg_function-count)).
 
-Arithmetic operations do not support UUID data types（for example, [abs](https://clickhouse.com/docs/zh/sql-reference/functions/arithmetic-functions#arithm_func-abs)）or aggregate functions such as [sum](https://clickhouse.com/docs/zh/sql-reference/aggregate-functions/reference/sum#agg_function-sum) and [avg](https://clickhouse.com/docs/zh/sql-reference/aggregate-functions/reference/avg#agg_function-avg).
+UUID data type only supports [string](https://clickhouse.com/docs/en/sql-reference/data-types/string) data type also supports functions(for example, [min](https://clickhouse.com/docs/en/sql-reference/aggregate-functions/reference/min#agg_function-min), [max](https://clickhouse.com/docs/en/sql-reference/aggregate-functions/reference/max#agg_function-max), and [count](https://clickhouse.com/docs/en/sql-reference/aggregate-functions/reference/count#agg_function-count)).
+
+Arithmetic operations do not support UUID data types（for example, [abs](https://clickhouse.com/docs/en/sql-reference/functions/arithmetic-functions#arithm_func-abs)）or aggregate functions such as [sum](https://clickhouse.com/docs/en/sql-reference/aggregate-functions/reference/sum#agg_function-sum) and [avg](https://clickhouse.com/docs/en/sql-reference/aggregate-functions/reference/avg#agg_function-avg).
 
 # floating point type
 
@@ -202,7 +203,9 @@ SELECT 0 / 0
 
 ```
 
-You can see more rules about **NaN** sorting in [ORDER BY clause](https://clickhouse.com/docs/zh/sql-reference/data-types/float) 
+
+You can see more rules about **NaN** sorting in [ORDER BY clause](https://clickhouse.com/docs/en/sql-reference/data-types/float) 
+
 
 # Decimal
 
@@ -632,7 +635,8 @@ WHERE a = 'b\0'
 
 This method is different from MySQL's **CHAR** type (in MySQL, strings are padded with spaces and spaces are removed on output).
 
-Note that the length of **FixedString(N)** is a constant. A string consisting only of null characters, the return value of the function [length](https://clickhouse.com/docs/zh/sql-reference/functions/array-functions#array_functions-length) is **N**, and The return value of the function [empty](https://clickhouse.com/docs/zh/sql-reference/functions/string-functions#empty) is **1**.
+Note that the length of **FixedString(N)** is a constant. A string consisting only of null characters, the return value of the function [length](https://clickhouse.com/docs/en/sql-reference/functions/array-functions#array_functions-length) is **N**, and The return value of the function [empty](https://clickhouse.com/docs/en/sql-reference/functions/string-functions#empty) is **1**.
+
 
 # Nested data structures
 
@@ -759,11 +763,11 @@ LowCardinality(data_type)
 
 **Parameter**
 
-- **data_type** — String, FixedString, Date, DateTime, including numeric types, but excluding Decimal. For some data types, **LowCardinality** is not efficient, please refer to [allow_suspicious_low_cardinality_types](https://clickhouse.com/docs/zh/operations/settings/settings#allow_suspicious_low_cardinality_types) setting description.
+- **data_type** — String, FixedString, Date, DateTime, including numeric types, but excluding Decimal. For some data types, **LowCardinality** is not efficient, please refer to [allow_suspicious_low_cardinality_types](https://clickhouse.com/docs/en/operations/settings/settings#allow_suspicious_low_cardinality_types) setting description.
 
 ## describe
 
-**LowCardinality** is a concept that changes the way data is stored and processed. ByConity will perform [dictionary coding](https://en.wikipedia.org/wiki/Dictionary_coder) on the column where **LowCardinality** is located. For many applications, processing dictionary-encoded data can significantly increase [SELECT](https://clickhouse.com/docs/zh/sql-reference/statements/select/) query speed.
+**LowCardinality** is a concept that changes the way data is stored and processed. ByConity will perform [dictionary coding](https://en.wikipedia.org/wiki/Dictionary_coder) on the column where **LowCardinality** is located. For many applications, processing dictionary-encoded data can significantly increase [SELECT](https://clickhouse.com/docs/en/sql-reference/statements/select/) query speed.
 
 The efficiency of using the **LowCarditality** data type depends on the diversity of the data. If a dictionary contains less than 10000 distinct values, then ByConity allows for more efficient data storage and processing. On the contrary, if the dictionary is more than 10000, the efficiency will be worse.
 
