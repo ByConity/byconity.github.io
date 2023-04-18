@@ -27,26 +27,34 @@ In the terminal, navigate to the location of your fork and perform the following
 
 1.  Run the `git remote -v` command to list the current configured remote repository for your fork.
 The result is as follows:
+
     ```
     origin  https://github.com/{your-username}/{your-fork}.git (fetch)
     origin  https://github.com/{your-username}/{your-fork}.git (push)
     ```
+    
     See the example:
+    
     ```
     origin	https://github.com/YourName/ByConity.git (fetch)
     origin	https://github.com/YourName/ByConity.git (push)
     ```
 
 2. Specify a new remote upstream repository to synchronize with the fork:
+
     ```
     git remote add upstream https://github.com/{original-owner}/{original-repository}.git
     ```
+    
     See the example:
+    
     ```
     git remote add upstream https://github.com/ByConity/ByConity.git
     ```
+    
 3. Run the `git fetch upstream master` command to fetch all branches.
 4. Set up the local `master` branch to track the remote `master` branch from the upstream repository:
+    
     ```
     git branch -u upstream/master master
     ```
@@ -54,8 +62,9 @@ The result is as follows:
 Now, each time you rebase or check out the `master` branch, you refer to the `master` branch of the upstream repository. In other words, when you create a branch from local up-to-date `master` means creating a branch from latest upstream `master`.
 
 To verify that your local `master` branch points to the `upstream/master`, run the `git branch -vv` command. The result is similar to the following:
+
 ```
-* master           c2226e0 [upstream/master] Update the README.md document
+* master           dafc60d [upstream/master] Update the README.md document
 ```
 
 5. Commit changes. Always provide [clear commit messages](https://cbea.ms/git-commit/#imperative) to track commit changes easier.
