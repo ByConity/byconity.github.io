@@ -359,9 +359,9 @@ DateTime64(precision, [timezone])
 
 ```
 
-Internally, this type stores data as ticks since the Linux epoch (1970-01-01 00:00:00UTC) as an Int64 type. The resolution of the timescale is determined by the precision parameter. In addition, the **DateTime64** type can store time zone information like any other data column, and the time zone affects how values of the **DateTime64** type are displayed in text format, and how time data specified as a string ('2020 -01-01 05:00:01.000'). The time zone is not stored in the rows of the table (nor in the resultset), but in the metadata of the columns. For details, please refer to [DateTime](https://clickhouse.com/docs/zh/sql-reference/data-types/datetime) data type.
+Internally, this type stores data as ticks since the Linux epoch (1970-01-01 00:00:00UTC) as an Int64 type. The resolution of the timescale is determined by the precision parameter. In addition, the **DateTime64** type can store time zone information like any other data column, and the time zone affects how values of the **DateTime64** type are displayed in text format, and how time data specified as a string ('2020 -01-01 05:00:01.000'). The time zone is not stored in the rows of the table (nor in the resultset), but in the metadata of the columns. For details, please refer to [DateTime](https://clickhouse.com/docs/en/sql-reference/data-types/datetime) data type.
 
-Range of values: [1900-01-01 00:00:00, 2299-12-31 23:59:59.99999999] (注意: 最大值的精度是 8)。
+Range of values: [1900-01-01 00:00:00, 2299-12-31 23:59:59.99999999] (Note: the maximum value is 8).
 
 ### Example
 
@@ -600,7 +600,7 @@ Examples of values that can be efficiently stored in columns of type **FixedStri
 - currency code (USD, RUB … )
 - hash value in binary representation (MD5 uses **FixedString(16)**, SHA256 uses **FixedString(32)**)
 
-Please use the [UUID](https://clickhouse.com/docs/zh/sql-reference/data-types/uuid) data type to store UUID values.
+Please use the [UUID](https://clickhouse.com/docs/en/sql-reference/data-types/uuid) data type to store UUID values.
 
 When inserting data into ByConity,
 
@@ -699,7 +699,7 @@ ALTER queries have very limited operations on nested data structures.
 
 A tuple, where each element has a separate [type](https://clickhouse.com/docs/en/sql-reference/data-types/#data_types).
 
-Tuples cannot be stored in tables (except memtables). They can be used for temporary column grouping. In queries, IN expressions and lambda functions with specific parameters can be used to group temporary columns. For more information, see [IN operator](https://clickhouse.com/docs/en/sql-reference/data-types/tuple) and [Higher-order functions](https://clickhouse.com/docs /en/sql-reference/data-types/tuple).
+Tuples cannot be stored in tables (except memtables). They can be used for temporary column grouping. In queries, IN expressions and lambda functions with specific parameters can be used to group temporary columns. For more information, see [IN operator](https://clickhouse.com/docs/en/sql-reference/data-types/tuple) and [Higher-order functions](https://clickhouse.com/docs/en/sql-reference/data-types/tuple).
 
 A tuple can be the result of a query. In this case, values in parentheses are comma-separated for text formats other than JSON. In JSON format, tuples are output as arrays (in square brackets).
 
@@ -731,7 +731,7 @@ SELECT
 
 ## Data types in tuples
 
-When dynamically creating tuples, ByConity will automatically assign the smallest expressible type to each parameter of the tuple. If the parameter is [NULL](https://clickhouse.com/docs/zh/sql-reference/data-types/tuple#null-literal), then the corresponding element of this tuple is [nullable](https:/ /clickhouse.com/docs/en/sql-reference/data-types/nullable).
+When dynamically creating tuples, ByConity will automatically assign the smallest expressible type to each parameter of the tuple. If the parameter is [NULL](https://clickhouse.com/docs/en/sql-reference/data-types/tuple#null-literal), then the corresponding element of this tuple is [nullable](https://clickhouse.com/docs/en/sql-reference/data-types/nullable).
 
 Example of automatic data type detection:
 
@@ -997,8 +997,8 @@ SELECT toTypeName(i), CAST(from as FixedString(16)) as i FROM hits LIMIT 1;
 
 **parameter**
 
-- **key** — the key of the key-value pair, the type can be: [String](https://clickhouse.com/docs/zh/sql-reference/data-types/string), [Integer](https: //clickhouse.com/docs/zh/sql-reference/data-types/int-uint), [LowCardinality](https://clickhouse.com/docs/zh/sql-reference/data-types/lowcardinality), Or [FixedString](https://clickhouse.com/docs/zh/sql-reference/data-types/fixedstring).
-- **value** — the value of the key-value pair, the type can be: [String](https://clickhouse.com/docs/zh/sql-reference/data-types/string), [Integer](https: //clickhouse.com/docs/zh/sql-reference/data-types/int-uint), [Array](https://clickhouse.com/docs/zh/sql-reference/data-types/array), [LowCardinality](https://clickhouse.com/docs/zh/sql-reference/data-types/lowcardinality), or [FixedString](https://clickhouse.com/docs/zh/sql-reference/data- types/fixedstring).
+- **key** — the key of the key-value pair, the type can be: [String](https://clickhouse.com/docs/en/sql-reference/data-types/string), [Integer](https://clickhouse.com/docs/en/sql-reference/data-types/int-uint), [LowCardinality](https://clickhouse.com/docs/en/sql-reference/data-types/lowcardinality), Or [FixedString](https://clickhouse.com/docs/en/sql-reference/data-types/fixedstring).
+- **value** — the value of the key-value pair, the type can be: [String](https://clickhouse.com/docs/en/sql-reference/data-types/string), [Integer](https://clickhouse.com/docs/en/sql-reference/data-types/int-uint), [Array](https://clickhouse.com/docs/en/sql-reference/data-types/array), [LowCardinality](https://clickhouse.com/docs/en/sql-reference/data-types/lowcardinality), or [FixedString](https://clickhouse.com/docs/en/sql-reference/data- types/fixedstring).
 
 There is a lot of content, please refer to [Map function combing (WIP)](https://bytedance.feishu.cn/wiki/wikcnc08bHgaa8IuPODIOqeBQqc) CE version part.
 
@@ -1049,7 +1049,7 @@ SELECT [1, 2] AS x, toTypeName(x)
 
 ## Use data types
 
-ByConity will automatically detect the array elements, and calculate the smallest data type to store these elements according to the elements. If there is a [NULL](https://clickhouse.com/docs/zh/sql-reference/data-types/array#null-literal) or a [null-literal](https://clickhouse.com /docs/zh/sql-reference/data-types/nullable#data_type-nullable) type element, then the element type of the array will become [nullable](https://clickhouse.com/docs/zh/sql -reference/data-types/nullable).
+ByConity will automatically detect the array elements, and calculate the smallest data type to store these elements according to the elements. If there is a [NULL](https://clickhouse.com/docs/en/sql-reference/data-types/array#null-literal) or a [null-literal](https://clickhouse.com/docs/en/sql-reference/data-types/nullable#data_type-nullable) type element, then the element type of the array will become [nullable](https://clickhouse.com/docs/en/sql -reference/data-types/nullable).
 
 If ByConity cannot determine the data type, it will raise an exception. This happens when trying to create an array containing both strings and numbers (**SELECT array(1, 'a')**).
 
@@ -1083,7 +1083,7 @@ Code: 386. DB::Exception: Received from 0.0.0.0:30000. DB::Exception: There is n
 
 # Nullable(typename)
 
-Allow special markup ([NULL](https://clickhouse.com/docs/zh/sql-reference/data-types/nullable)) to indicate «missing value», which can be stored together with the normal value of **TypeName** . For example, a column of type **Nullable(Int8)** can store a value of type **Int8**, while a row with no value will store **NULL**.
+Allow special markup ([NULL](https://clickhouse.com/docs/en/sql-reference/data-types/nullable)) to indicate «missing value», which can be stored together with the normal value of **TypeName** . For example, a column of type **Nullable(Int8)** can store a value of type **Int8**, while a row with no value will store **NULL**.
 
 For **TypeName**, composite data type arrays and tuples cannot be used. Compound data types can contain **Nullable** type values, for example **Array(Nullable(Int8))**.
 
@@ -1128,7 +1128,7 @@ CREATE TABLE t
 
 ```
 
-[uniq](https://clickhouse.com/docs/zh/sql-reference/data-types/aggregatefunction#agg_function-uniq) in the above, anyIf ([any](https://clickhouse.com/docs/ en/sql-reference/data-types/aggregatefunction#agg_function-any) + [if](https://clickhouse.com/docs/en/sql-reference/data-types/aggregatefunction#agg-functions-combinator-if )) and [quantile](https://clickhouse.com/docs/zh/sql-reference/data-types/aggregatefunction) are aggregate functions supported in ByConity.
+[uniq](https://clickhouse.com/docs/en/sql-reference/data-types/aggregatefunction#agg_function-uniq) in the above, anyIf ([any](https://clickhouse.com/docs/en/sql-reference/data-types/aggregatefunction#agg_function-any) + [if](https://clickhouse.com/docs/en/sql-reference/data-types/aggregatefunction#agg-functions-combinator-if)) and [quantile](https://clickhouse.com/docs/en/sql-reference/data-types/aggregatefunction) are aggregate functions supported in ByConity.
 
 ## user's guidance
 
@@ -1216,7 +1216,7 @@ Values of special data types can neither be stored in tables nor output in resul
 
 ## Interval type
 
-A family of data types representing time and date intervals. [INTERVAL](https://clickhouse.com/docs/zh/sql-reference/operators/#operator-interval) The result type of the operation.
+A family of data types representing time and date intervals. [INTERVAL](https://clickhouse.com/docs/en/sql-reference/operators/#operator-interval) The result type of the operation.
 
 !!! warning "Warning" **Interval** data type values cannot be stored in the table.
 
@@ -1252,7 +1252,7 @@ SELECT toTypeName(INTERVAL 4 DAY)
 
 ### Instructions for use
 
-You can use [date](https://clickhouse.com/docs/zh/sql-reference/data-types/date) and [datetime](https://clickhouse.com/docs/zh/sql- reference/data-types/datetime) values of type **Interval** are used in arithmetic operations on values of type **Interval**. For example, you can add 4 days to the current time:
+You can use [date](https://clickhouse.com/docs/en/sql-reference/data-types/date) and [datetime](https://clickhouse.com/docs/en/sql-reference/data-types/datetime) values of type **Interval** are used in arithmetic operations on values of type **Interval**. For example, you can add 4 days to the current time:
 
 ```
 SELECT now() as current_date_time, current_date_time + INTERVAL 4 DAY
@@ -1307,7 +1307,7 @@ Can be used in the right half of an IN expression.
 
 The sole purpose of this data type is to represent situations where a value is not expected. So you cannot create a value of type **Nothing**.
 
-For example, the literal [NULL](https://clickhouse.com/docs/zh/sql-reference/syntax#null-literal) has type **Nullable(Nothing)**. See Nullable for details.
+For example, the literal [NULL](https://clickhouse.com/docs/en/sql-reference/syntax#null-literal) has type **Nullable(Nothing)**. See Nullable for details.
 
 The **Nothing** type can also be used to represent empty arrays:
 
