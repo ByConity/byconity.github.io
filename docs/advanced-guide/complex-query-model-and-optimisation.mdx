@@ -32,7 +32,7 @@ The execution flow of a complex query is as follows:
 - The PlanSegment containing the exchange input waits for upstream data, and if it needs to continue to shuffle, it will continue to send the data to each node
 - After multiple rounds of stages are completed, the results will be returned to the server
 
-## How to open
+## How to enable it
 
 Enabling the optimizer will automatically follow the complex query execution model. It can be enabled by configuring enable_optimizer=1, or dialect_type='ANSI'.
 
