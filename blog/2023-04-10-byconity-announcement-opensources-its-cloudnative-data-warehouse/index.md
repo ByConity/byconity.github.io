@@ -1,5 +1,5 @@
 ---
-slug: 2023-04-10-byconity-announcement-opensources-its-cloudnative-data-warehouse
+slug: byconity-announcement-opensources-its-cloudnative-data-warehouse
 date: 2023-05-24
 title: ByteDance Open Sources Its Cloud Native Data Warehouse ByConity
 authors: [vinijaiswal]
