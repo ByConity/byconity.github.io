@@ -1,0 +1,11 @@
+---
+title: Hive External Table
+tags:
+  - Docs
+---
+
+# External Catalog
+  Besides creating tables in CnchHive engine to access external hive tablesl, Byconity also supports visit the external tables using external catalog. 
+
+## Create External Catalog
+  Currently only IAM based authentication is supported,
