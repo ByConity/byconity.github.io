@@ -351,7 +351,7 @@ Example:
 
 ### disk_cache_strategies
 
-配置 disk cache 策略，包括策略 simple 和 lru 两种不同策略：
+配置 disk cache 策略，包括策略 simple 和 lru 两种不同策略. simple 策略类似lru-2策略, 在数据命中两次后缓存. lru 策略命中一次就缓存.
 
 - **lru**，LRUCache 淘汰策略相关配置
 - lru_max_size，DiskCache 最大的大小，默认 2T
