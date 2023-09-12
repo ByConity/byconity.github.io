@@ -1,0 +1,27 @@
+---
+title: Role-based Access Control (RBAC)
+tags:
+  - Docs
+---
+
+# Role-based Access Control (RBAC)
+
+The RBAC feature in Byconity is the same as the ClickHouse version of RBAC in most aspects other than minor syntax differences and the underlying implementationwhich will be explained further below. For more info on RBAC, you can find it in the [ClickHouse documentation](https://clickhouse.com/docs/en/operations/access-rights).
+
+## Enabling RBAC
+
+You can enable RBAC by setting `access_management = 1` and adding a password for the default user in the`users.xml` configuration file. More info can be found [here](https://clickhouse.com/docs/en/operations/access-rights/#enabling-access-control).
+![](./assets/rbac/enable-rbac.png)
+
+## Differences
+
+The main differences are as follows:
+
+1. The [underlying implementation](https://github.com/ByConity/ByConity/issues/660) uses the key value store by default in order to persist and perform operations on access entities instead of disk storage. This is to support the cloud native architecture of Byconity.
+2. The `CREATE/ALTER` User/Role does not support the `HOST` keyword as Byconity does not store entities on the server disk.
+
+# Settings
+
+| Configuration Name | Default Value, Meaning                                             | Description                                                                                                                                                           |
+| :----------------- | :----------------------------------------------------------------- | :-------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --- |
+| access_entity_ttl  | 3600(60 Mins), TTL for access entities stored in memory in seconds | It is recommended that this value be set at a reasonable interval for updating the entities in memory so as to not put too much read pressure on the key value store. |     |
