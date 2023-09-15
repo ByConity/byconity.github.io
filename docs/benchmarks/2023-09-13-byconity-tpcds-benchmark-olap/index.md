@@ -2,7 +2,7 @@
 slug: 2023-09-13-byconity-vs-other-olap-engines-tpc-ds-benchmarks
 date: 2023-09-13
 title: ByConity and mainstream OLAP engines (Clickhouse, Doris, Presto) performance comparison
-authors: [vinijaiswal] [tigerwangyb]
+authors: [vinijaiswal, tigerwangyb]
 tags: [tpc ds benchmarks, olap engines]
 keywords: ["ByteDance", "datawarehouse", "benchmarks", "olap", "open source"]
 ---
