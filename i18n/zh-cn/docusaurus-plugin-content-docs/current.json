@@ -31,6 +31,10 @@
     "message": "部署",
     "description": "The label for category Deployment in sidebar tutorialSidebar"
   },
+  "sidebar.tutorialSidebar.category.Benchmark": {
+    "message": "性能测试",
+    "description": "The label for category Benchmark in sidebar tutorialSidebar"
+  },
   "sidebar.tutorialSidebar.category.Community": {
     "message": "参与社区",
     "description": "The label for category Community in sidebar tutorialSidebar"
