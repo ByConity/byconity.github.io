@@ -82,7 +82,7 @@ ClickHouse presented unique challenges as it managed to execute only 50% of the 
 
 Figure 1 illustrates that ByConity's open-source query performance superseds the other engines, achieving approximately 3-4 times faster execution times. (Please note that all units on the vertical axis of the subsequent charts are expressed in seconds).
 
-![Figure 1: TPC-DS 99 query total time](./TPC-DS-query-performance-times.png)
+![Figure 1: TPC-DS 99 query total time](./tpc-ds-query-total-time.jpeg)
 
 For the 99 query statements in the TPC-DS benchmark, we will classify them according to different query scenarios, such as basic query, join query, aggregate query, subquery, window function query, etc. In the sections below, we will utilize these classification criteria to assess and compare the performance of the four OLAP engines: ClickHouse, Doris, Presto, and ByConity.
 
