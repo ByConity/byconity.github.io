@@ -13,15 +13,16 @@ There are **4 steps** in total.
 # Usage
 
 ## 1. Stop bycontiy cluster
+stop the cluster.
 ## 2. Migrate s3 data with provided tool
   
-### If you know where the clickhouse binary is(If you are running bycontiy with docker you can find it by login into server/worker pod and using ps command to find the clickhouse binary path)
+### If you know where the clickhouse binary is(If you are running byconity with docker you can find it by login into server/worker pod and using ps command to find the clickhouse binary path)
 ```shell
 ./clickhouse s3-rename --s3_ak_id ${S3_AK_ID} --s3_ak_secret ${S3_AK_SECRET} --from_bucket ${BYCONITY_S3_BUCKET} --s3_endpoint ${S3_ENDPOINT} --s3_region ${S3_REGION} --root_prefix ${BYCONTIY_DATA_PREFIX}
 ```
 ### Or if you are running byconity with docker wrapper
 ```shell
-docker run -it --rm --network host --name byconity-s3-sanitizer byconity/byconity-server:stable s3-rename --s3_ak_id ${S3_AK_ID} --s3_ak_secret ${S3_AK_SECRET} --from_bucket ${BYCONITY_S3_BUCKET} --s3_endpoint ${S3_ENDPOINT} --s3_region ${S3_REGION} --root_prefix ${BYCONTIY_DATA_PREFIX}
+docker run -it --rm --network host --name byconity-s3-sanitizer byconity/byconity:0.2.0 clickhouse s3-rename --s3_ak_id ${S3_AK_ID} --s3_ak_secret ${S3_AK_SECRET} --from_bucket ${BYCONITY_S3_BUCKET} --s3_endpoint ${S3_ENDPOINT} --s3_region ${S3_REGION} --root_prefix ${BYCONTIY_DATA_PREFIX}
 ```
 
 | tool arguments    |  explanation|
@@ -43,11 +44,12 @@ docker run -it --rm --network host --name byconity-s3-sanitizer byconity/byconit
 
 ### If you are running byconity with docker wrapper
 ```shell
-docker run -it --rm --network host --name byconity-s3-sanitizer byconity/byconity-server:stable s3-meta-sanitizer --config-file /root/app/config/cnch_config.xml
+docker run -it --rm --network host --name byconity-s3-sanitizer byconity/byconity:0.2.0 clickhouse s3-meta-sanitizer --config-file /root/app/config/cnch_config.xml
 ``` 
 
 | tool arguments    |  explanation|
 | -------- | ------- |  
 | C | specify config file from `cnch_config` configuration field in your bycontiy server configuration file|
 
-## 4. Start bycontiy cluster
+## 4. Start byconity cluster
+start the cluster.
