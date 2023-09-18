@@ -13,6 +13,7 @@ There are **4 steps** in total.
 # Usage
 
 ## 1. Stop bycontiy cluster
+stop the cluster.
 ## 2. Migrate s3 data with provided tool
   
 ### If you know where the clickhouse binary is(If you are running byconity with docker you can find it by login into server/worker pod and using ps command to find the clickhouse binary path)
@@ -42,8 +43,13 @@ docker run -it --rm --network host --name byconity-s3-sanitizer byconity/byconit
 ./clickhouse s3-meta-sanitizer -C cnch_config.xml
 
 ### If you are running byconity with docker wrapper
+```shell
 docker run -it --rm --network host --name byconity-s3-sanitizer byconity/byconity:0.2.0 clickhouse s3-meta-sanitizer --config-file /root/app/config/cnch_config.xml
+``` 
+
 | tool arguments    |  explanation|
 | -------- | ------- |  
-| C| specify config file from `cnch_config` configuration field in your byconity server configuration file|
+| C | specify config file from `cnch_config` configuration field in your bycontiy server configuration file|
+
 ## 4. Start byconity cluster
+start the cluster.
