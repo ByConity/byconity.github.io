@@ -12,13 +12,13 @@ There are some s3 object key and s3 metadata changes after s3's preview version(
 
 1. Stop bycontiy cluster
 2. Migrate s3 data with provided tool
-  ```text
-# If you know where the clickhouse binary is(If you are running bycontiy with docker you can find it by login into server/worker pod and using ps command to find the clickhouse binary path)
+  
+## If you know where the clickhouse binary is(If you are running bycontiy with docker you can find it by login into server/worker pod and using ps command to find the clickhouse binary path)
 ./clickhouse s3-rename --s3_ak_id ${S3_AK_ID} --s3_ak_secret ${S3_AK_SECRET} --from_bucket ${BYCONITY_S3_BUCKET} --s3_endpoint ${S3_ENDPOINT} --s3_region ${S3_REGION} --root_prefix ${BYCONTIY_DATA_PREFIX}
 
-# Or if you are running byconity with docker wrapper
+## Or if you are running byconity with docker wrapper
 docker run -it --rm --network host --name byconity-s3-sanitizer byconity/byconity-server:stable s3-rename --s3_ak_id ${S3_AK_ID} --s3_ak_secret ${S3_AK_SECRET} --from_bucket ${BYCONITY_S3_BUCKET} --s3_endpoint ${S3_ENDPOINT} --s3_region ${S3_REGION} --root_prefix ${BYCONTIY_DATA_PREFIX}
-  ```
+```text
   - tool arguments
     - s3_ak_id, s3 access key id which byconity is using
     - s3_ak_secret, s3 secret access key which byconity is using
@@ -31,6 +31,7 @@ docker run -it --rm --network host --name byconity-s3-sanitizer byconity/byconit
     - uuid_check, whether check uuid is valid or not, default true
     - enable_logging, whether enable logging output
     - logging_level, logging level, default is debug output
+```
 3. Migrate s3 metadata with provided tool
   ```text
 # If you know where the clickhouse binary is
