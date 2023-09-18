@@ -42,8 +42,12 @@ docker run -it --rm --network host --name byconity-s3-sanitizer byconity/byconit
 ./clickhouse s3-meta-sanitizer -C cnch_config.xml
 
 ### If you are running byconity with docker wrapper
+```shell
 docker run -it --rm --network host --name byconity-s3-sanitizer byconity/byconity-server:stable s3-meta-sanitizer --config-file /root/app/config/cnch_config.xml
+``` 
+
 | tool arguments    |  explanation|
 | -------- | ------- |  
-| C| specify config file from `cnch_config` configuration field in your bycontiy server configuration file|
+| C | specify config file from `cnch_config` configuration field in your bycontiy server configuration file|
+
 ## 4. Start bycontiy cluster
