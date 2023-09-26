@@ -357,7 +357,7 @@ Example:
 - lru_max_size，DiskCache 最大的大小，默认 2T
 - random_drop_threshold，Cache 队列有长度限制，当队列长度到达一定比例后会按一定几率开始丢弃 Cache 请求来避免大表 Scan 导致 Cache 队列被占满，默认 50%
 - **simple**，Cache 策略相关配置
-- segment_size，DiskCache 的粒度，默认 8192，即将一个 ColumnStream 的最多 8192 个 GranuleCache 组成一个 DiskCacheSegment
+- segment_size，DiskCache 的粒度，默认 8192，即将一个 ColumnStream 的最多 8192 个 Granule 组成一个 DiskCacheSegment进行Cache
 - hits_to_cache，数据开始 Cache 的阈值，默认为 2
 
 Example:
