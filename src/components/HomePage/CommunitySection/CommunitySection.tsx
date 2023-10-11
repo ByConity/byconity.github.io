@@ -92,6 +92,7 @@ function CommunitySection() {
 
           <LogoDisplay
             image={<MeetupLogo />}
+            externalLink="https://www.meetup.com/out-of-the-box-ospo-developers"
             title={<Translate id="homePage.communitySection.meetup.title" />}
           />
         </div>
