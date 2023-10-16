@@ -96,7 +96,7 @@ If sorting is not required, `ORDER BY tuple()` can be used. The data in the Data
 
 ### Design primary key (PRIMARY KEY)
 
-By default there is no need to specify explicitly, ByConity will use the sort key as the primary key. When there is a special scenario where the primary key is inconsistent with the sort key, the primary key must be the leftmost prefix of the sort key. If the sort key is (OrderID, Date), the primary key must be OrderID, not Date. In some special table engines, such as CnchAggregatingMergeTree, CnchSumMergeTree, the primary key will be different from the sort key.
+By default there is no need to specify explicitly, ByConity will use the sort key as the primary key. When there is a special scenario where the primary key is inconsistent with the sort key, the primary key must be the leftmost prefix of the sort key. If the sort key is (OrderID, Date), the primary key must be OrderID, not Date. In some special table engines, such as CnchAggregatingMergeTree, CnchSummingMergeTree, the primary key will be different from the sort key.
 
 ByConity will create a sparse index with Granule as the unit on the primary key (in contrast, the so-called dense index means that each row will create index information).
 
