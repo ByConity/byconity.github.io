@@ -1,5 +1,5 @@
 ---
-title: Hive External Table
+title: Hive External Catalog
 tags:
   - Docs
 ---
@@ -98,7 +98,7 @@ List databases from catalog
 ```sql
  show databases [from hive_catalog]
 ```
-List tables from dtabase
+List tables from database 
 ```sql
  show tables from [hive_catalog.][database]
 ```
@@ -126,3 +126,30 @@ To switch back, users could use
 ```
     switch catalog cnch;
 ```
+
+Users could also use 
+```
+    use hive_s3.tpcds
+```
+to set the default database to tpcds in Hive.
+To switch back, users could run
+```
+    use cnch.cnch_database-name
+```
+
+## Implementation Detail
+To support multi-catalog, we actually rewrite the query users send to Byconity Server.
+
+For example, if the user types query the following query
+
+```
+    select * from catalog_name.db.tbl
+```
+
+It will be rewritten into 
+```
+    select * from `catalog_name$$db`.tbl
+```
+before being executed.
+
+Hence, the users should not be surprised if such information appeared in logs.

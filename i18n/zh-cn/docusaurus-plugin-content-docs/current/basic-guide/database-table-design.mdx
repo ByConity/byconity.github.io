@@ -96,7 +96,7 @@ ORDER BY expr
 
 ### 设计主键(PRIMARY KEY)
 
-默认情况不需要显式指定，ByConity 将使用排序键作为主键。当有特殊场景主键和排序键不一致时，主键必须为排序键的最左前缀。如排序键为(OrderID, Date)，主键必须为 OrderID，不能为 Date。在一些特殊的表引擎，如 CnchAggregatingMergeTree、CnchSumMergeTree 中，主键会与排序键不同。
+默认情况不需要显式指定，ByConity 将使用排序键作为主键。当有特殊场景主键和排序键不一致时，主键必须为排序键的最左前缀。如排序键为(OrderID, Date)，主键必须为 OrderID，不能为 Date。在一些特殊的表引擎，如 CnchAggregatingMergeTree、CnchSummingMergeTree 中，主键会与排序键不同。
 
 ByConity 会在主键上建立以 Granule 为单位的稀疏索引，（与之对比，所谓稠密索引则是每一行都会建立索引信息）。
 
