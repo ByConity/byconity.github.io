@@ -62,6 +62,6 @@ make run
 
 ![CleanShot 2023-10-25 at 21.29.01@2x](./assets/CleanShot%202023-10-25%20at%2021.29.01@2x.jpg)
 
-![CleanShot 2023-10-25 at 20.45.49@2x](./assets/CleanShot%202023-10-25%20at%2020.45.49@2x.jpg)
+![CleanShot 2023-10-25 at 20.45.49@2x](assets/CleanShot%202023-10-25%20at%2020.45.49@2x.jpg)
 
-![CleanShot 2023-10-25 at 21.30.20@2x](./assets/CleanShot%202023-10-25%20at%2021.30.20@2x.jpg)
+![CleanShot 2023-10-25 at 21.30.20@2x](assets/CleanShot%202023-10-25%20at%2021.30.20@2x.jpg)
