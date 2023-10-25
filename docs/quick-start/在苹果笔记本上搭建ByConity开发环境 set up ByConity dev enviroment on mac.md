@@ -1,10 +1,10 @@
 
 
-# 结论： #
+# 结论： 
 
 目前最简单的搭建环境办法就是借助vscode的Dev Containers插件，在docker上开发。这样能解决环境依赖问题。想了解详细过程可[点击查看这个issue](https://github.com/ByConity/ByConity/issues/822)。
 
-# 1. 安装和配置docker #
+# 1. 安装和配置docker 
 
 ### [docker的简要介绍和安装](https://www.ruanyifeng.com/blog/2018/02/docker-tutorial.html)
 
@@ -37,7 +37,7 @@
 
 # 3. 运行dev-env镜像
 
-### 克隆仓库 ###
+### 克隆仓库 
 
 ```shell
 git clone https://github.com/ByConity/ByConity.git 
