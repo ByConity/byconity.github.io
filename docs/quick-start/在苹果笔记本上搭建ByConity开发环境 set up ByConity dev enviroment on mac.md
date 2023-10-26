@@ -43,7 +43,7 @@
 git clone https://github.com/ByConity/ByConity.git 
 ```
 
-### 启动容器 
+### 启动容器 （需要等待几分钟，才可以连接上）
 
 ```shell
 # 进入到开发目录下
@@ -60,8 +60,35 @@ make run
 
 # 4. 到vscode中开发
 
+
 ![CleanShot 2023-10-25 at 21.29.01@2x](./assets/CleanShot%202023-10-25%20at%2021.29.01@2x.jpg)
 
 ![CleanShot 2023-10-25 at 20.45.49@2x](assets/CleanShot%202023-10-25%20at%2020.45.49@2x.jpg)
 
 ![CleanShot 2023-10-25 at 21.30.20@2x](assets/CleanShot%202023-10-25%20at%2021.30.20@2x.jpg)
+
+### 第一次使用vscode开发代码时，会报很多头文件找不到的问题，如下
+
+![CleanShot 2023-10-25 at 23.35.04@2x](./assets/CleanShot%202023-10-25%20at%2023.35.04@2x.jpg)
+
+### 这个时候需要先到docker 的 container的~/ByConity目录中执行下面命令把子模块也下载到docker中。要下载的仓库比较大，需要耐心等待并确保网络正常。
+
+```shell
+# 用于初始化、更新并检出Git仓库中的子模块。
+git submodule update --init --recursive
+```
+
+### 下载模块完成之后，再次到~/ByConity中执行
+
+```shell
+# 配置项目
+cmake -S /root/ByConity -B build_dev
+# 编译，最后面的64代表使用多少线程来构建，需要根据自己电脑情况修改
+ninja -C build_dev clickhouse-server -j 64
+```
+
+![CleanShot 2023-10-26 at 13.59.08](./assets/CleanShot%202023-10-26%20at%2013.59.08.jpg)
+
+### 执行完成之后，上边的问题解决了
+
+![CleanShot 2023-10-26 at 12.33.01@2x](./assets/CleanShot%202023-10-26%20at%2012.33.01@2x.jpg)
