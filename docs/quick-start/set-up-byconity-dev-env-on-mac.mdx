@@ -8,7 +8,9 @@ For more information, see [docker quick start in Chinese](https://www.ruanyifeng
 
 In the Chinese docker quick start reference, the small difference is that you cannot use usermod or systemctl in MAC in step 5 and must replace them with the following two commands.
 
-## create docker group
+
+
+## create docker group ##
 
  ```shell 
 sudo dscl . -create /Groups/docker
@@ -16,11 +18,8 @@ sudo dscl . -create /Groups/docker
 
 ## add current user to Docker group
 
-```shell sudo dseditgroup -o edit -a $USER -t user docker
-```
-
 set up docker autostart in docker desktop:
-![CleanShot 2023-10-25 at 19.45.04@2x](https://cdn.jsdelivr.net/gh/YuanHanzhong/pictures/typoraCleanShot%202023-10-25%20at%2019.45.04@2x.jpg)
+![CleanShot 2023-10-25 at 19.45.04@2x](https://cdn.jsdelivr.net/gh/YuanHanzhong/pictures/typoratyporaCleanShot%202023-10-25%20at%2019.45.04@2x.jpg)
 
 ## run dev-env image
 
@@ -60,21 +59,21 @@ ninja -C build_dev clickhouse-server -j 64
 
 ## Install dev container
 
-![CleanShot 2023-11-01 at 12.28.29@2x](https://cdn.jsdelivr.net/gh/YuanHanzhong/pictures/typoraCleanShot%202023-11-01%20at%2012.28.29@2x.jpg)
+![CleanShot 2023-11-01 at 12.28.29@2x](https://cdn.jsdelivr.net/gh/YuanHanzhong/pictures/typoratyporaCleanShot%202023-11-01%20at%2012.28.29@2x.jpg)
 
 # Develop in vscode
 
 ## Open the development container in vscode
 
-![open develop container in vscode](https://cdn.jsdelivr.net/gh/YuanHanzhong/pictures/typoraCleanShot%202023-11-01%20at%2012.30.05@2x.jpg)
+![open develop container in vscode](https://cdn.jsdelivr.net/gh/YuanHanzhong/pictures/typoratyporaCleanShot%202023-11-01%20at%2012.30.05@2x.jpg)
 
 ## Connect to the Docker container
 
-![Docker container connection](https://cdn.jsdelivr.net/gh/YuanHanzhong/pictures/typoraCleanShot%202023-11-01%20at%2012.30.59@2x.jpg)
+![Docker container connection](https://cdn.jsdelivr.net/gh/YuanHanzhong/pictures/typoraCleanShot 2023-11-01 at 12.30.59@2x.jpg)
 
 - When you use vscode for the first time, it reports many problems with header files cannot be found, as follows
 
-![Header file cannot be found problems](https://cdn.jsdelivr.net/gh/YuanHanzhong/pictures/typoraCleanShot%202023-11-01%20at%2012.32.22@2x.jpg)
+![Header file cannot be found problems](https://cdn.jsdelivr.net/gh/YuanHanzhong/pictures/typoratyporaCleanShot%202023-11-01%20at%2012.32.22@2x.jpg)
 
 ## Header file cannot be found fix problem
 
@@ -87,13 +86,14 @@ ninja -C build_dev clickhouse-server -j 64
 
 git submodule update --init --recursive
 
+# cmake again
 cmake -S /root/ByConity -B build_dev
 
 # 64 means that 64 threads are used for building, you need change this depending on your computer 
 ninja -C build_dev clickhouse-server -j 64
 ```
 
-![the directory where cmake runs](https://cdn.jsdelivr.net/gh/YuanHanzhong/pictures/typoraCleanShot%202023-11-01%20at%2012.45.58@2x.jpg)
+![the directory where cmake runs](https://cdn.jsdelivr.net/gh/YuanHanzhong/pictures/typoratyporaCleanShot%202023-11-01%20at%2012.45.58@2x.jpg)
 
 - After the execution is finished, the problem that the header file cannot be found is solved
-- ![fixed problems with header files not being found](https://cdn.jsdelivr.net/gh/YuanHanzhong/pictures/typoraCleanShot%202023-11-01%20at%2012.45.17@2x.jpg)
+- ![fixed problems with header files not being found](https://cdn.jsdelivr.net/gh/YuanHanzhong/pictures/typoratyporaCleanShot%202023-11-01%20at%2012.45.17@2x.jpg)
