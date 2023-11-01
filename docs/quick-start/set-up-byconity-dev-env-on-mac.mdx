@@ -1,108 +1,99 @@
 # ByConity MAC development environment
 
-The easiest way to build a development environment on a MAC is to develop in a docker container in vscode with  the Dev Containers plugin. This way you don't have to spend a lot of time configuring your environment.For more details refer to [offical dev](https://github.com/ByConity/ByConity/blob/master/docker/debian/dev-env/README.md)。
+The easiest way to build a development environment on a MAC is to develop in a Docker container in vscode using the Dev Containers plugin. This way, you don't have to spend a lot of time configuring your environment.。 For more information, see [offical dev](https://github.com/ByConity/ByConity/blob/master/docker/debian/dev-env/README.md)。
 
 # Config docker
 
-You may refer [docker quick start in Chinese](https://www.ruanyifeng.com/blog/2018/02/docker-tutorial.html) and [docker quick start in English](https://docs.docker.com/get-started/) for more details.
+For more information, see [docker quick start in Chinese](https://www.ruanyifeng.com/blog/2018/02/docker-tutorial.html) and [docker quick start in English](https://docs.docker.com/get-started/).
 
-In above Chinese docker quick start reference, the slight difference is that in step 5, since you can't use usermod or systemctl in MAC, you have to replace them with the following two command.
+In the Chinese docker quick start reference, the small difference is that you cannot use usermod or systemctl in MAC in step 5 and must replace them with the following two commands.
 
 ## create docker group
 
-     ```shell
+ ```shell 
 sudo dscl . -create /Groups/docker
-     ```
+ ```
 
+## add current user to Docker group
 
-
-## add current user to docker group
-
-```shell
-sudo dseditgroup -o edit -a $USER -t user docker
+```shell sudo dseditgroup -o edit -a $USER -t user docker
 ```
 
-
-
-setup docker auto start in docker desktop:
+set up docker autostart in docker desktop:
 ![CleanShot 2023-10-25 at 19.45.04@2x](https://cdn.jsdelivr.net/gh/YuanHanzhong/pictures/typoraCleanShot%202023-10-25%20at%2019.45.04@2x.jpg)
-
 
 ## run dev-env image
 
 Start by pulling the image
 
-```shell
-git clone https://github.com/ByConity/ByConity.git 
+```shell 
+git clone https://github.com/ByConity/ByConity.git
 
 cd byconity/docker/debian/dev-env
 
-# get the latest image
+# get the latest image 
 make pull
 ```
 
-You can run the "byconity/dev-env" container with the following command:
+You can start the container "byconity/dev-env" with the following command:
 
 ```bash
-# run container
+# run container 
 make run
 ```
 
-
 Inside the container, you can compile the ByConity code using the following commands.
-The compiled binary will be found within your local filesystem at `${BYCONITY_SOURCE}/build_dev/program`
+The compiled binary is located in your local file system under `${BYCONITY_SOURCE}/build_dev/program`
 
 ```bash
-# get submodule, otherwise the IDE will report include head file error
+# get submodule, otherwise the IDE reports the error include head file error
+
 git submodule update --init --recursive
 
 cmake -S /root/ByConity -B build_dev
 
-# 64 means use 64 threads to build, you need change it based on your computer
+# 64 means that 64 threads are used for building, you have to change it depending on your computer 
 ninja -C build_dev clickhouse-server -j 64
 ```
-
-
 
 # Config vscode #
 
-## install Dev Containers
+## Install dev container
 
 ![CleanShot 2023-11-01 at 12.28.29@2x](https://cdn.jsdelivr.net/gh/YuanHanzhong/pictures/typoraCleanShot%202023-11-01%20at%2012.28.29@2x.jpg)
 
-# develop in vscode
+# Develop in vscode
 
-## open develop container in vscode
-
+## Open the development container in vscode
 
 ![open develop container in vscode](https://cdn.jsdelivr.net/gh/YuanHanzhong/pictures/typoraCleanShot%202023-11-01%20at%2012.30.05@2x.jpg)
 
-## connect to docker container
+## Connect to the Docker container
 
-![connect to docker container](https://cdn.jsdelivr.net/gh/YuanHanzhong/pictures/typoraCleanShot%202023-11-01%20at%2012.30.59@2x.jpg)
+![Docker container connection](https://cdn.jsdelivr.net/gh/YuanHanzhong/pictures/typoraCleanShot%202023-11-01%20at%2012.30.59@2x.jpg)
 
--   The first time you use vscode, it will report a lot of header file cannot be found problems, as follows
+- When you use vscode for the first time, it reports many problems with header files cannot be found, as follows
 
-![header file cannot be found problems](https://cdn.jsdelivr.net/gh/YuanHanzhong/pictures/typoraCleanShot%202023-11-01%20at%2012.32.22@2x.jpg)
+![Header file cannot be found problems](https://cdn.jsdelivr.net/gh/YuanHanzhong/pictures/typoraCleanShot%202023-11-01%20at%2012.32.22@2x.jpg)
 
-## fix header file cannot be found issue
+## Header file cannot be found fix problem
 
--   At this point, you need to go to the ~/ByConity directory of your docker's container and execute the following command to download the submodules into docker. The repository to be downloaded is quite large, so be patient and make sure your network is working fine.
+- Now you need to go to the ~/ByConity directory of your Docker container and run the following command to download the submodules in Docker. The repository to download is quite large, so be patient and make sure your network is working properly.
 
-- Once the download of the module is complete, go to ~/ByConity dir again and execute 
+- Once the module download is complete, switch to the ~/ByConity directory again and run
 
 ```shell
-# get submodule, otherwise the IDE will report include head file error
+# get submodule, otherwise the IDE will report an include head file error 
+
 git submodule update --init --recursive
 
 cmake -S /root/ByConity -B build_dev
 
-# 64 means use 64 threads to build, you need change it based on your computer
+# 64 means that 64 threads are used for building, you need change this depending on your computer 
 ninja -C build_dev clickhouse-server -j 64
 ```
 
-![the dir where cmake run](https://cdn.jsdelivr.net/gh/YuanHanzhong/pictures/typoraCleanShot%202023-11-01%20at%2012.45.58@2x.jpg)
+![the directory where cmake runs](https://cdn.jsdelivr.net/gh/YuanHanzhong/pictures/typoraCleanShot%202023-11-01%20at%2012.45.58@2x.jpg)
 
-- After the execution is complete, header file cannot be found problems,is solved
-- ![fixed header file cannot be found problems](https://cdn.jsdelivr.net/gh/YuanHanzhong/pictures/typoraCleanShot%202023-11-01%20at%2012.45.17@2x.jpg)
-
+- After the execution is finished, the problem that the header file cannot be found is solved
+- ![fixed problems with header files not being found](https://cdn.jsdelivr.net/gh/YuanHanzhong/pictures/typoraCleanShot%202023-11-01%20at%2012.45.17@2x.jpg)
