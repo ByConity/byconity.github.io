@@ -1,30 +1,38 @@
-
-
 # ByConity MAC development environment
 
 The easiest way to build a development environment on a MAC is to develop in a docker container in vscode with  the Dev Containers plugin. This way you don't have to spend a lot of time configuring your environment.For more details refer to [offical dev](https://github.com/ByConity/ByConity/blob/master/docker/debian/dev-env/README.md)。
 
-# Config docker 
+# Config docker
 
 You may refer [docker quick start in Chinese](https://www.ruanyifeng.com/blog/2018/02/docker-tutorial.html) and [docker quick start in English](https://docs.docker.com/get-started/) for more details.
 
 In above Chinese docker quick start reference, the slight difference is that in step 5, since you can't use usermod or systemctl in MAC, you have to replace them with the following two command.
 
-     # create docker group
-     sudo dscl . -create /Groups/docker
-     
-     # add current user to docker group
-     sudo dseditgroup -o edit -a $USER -t user docker
-     
+## create docker group
 
-setup docker auto start with MAC
-![Alt text](<CleanShot 2023-10-25 at 19.45.04@2x.jpg>)
+     ```shell
+sudo dscl . -create /Groups/docker
+     ```
+
+
+
+## add current user to docker group
+
+```shell
+sudo dseditgroup -o edit -a $USER -t user docker
+```
+
+
+
+setup docker auto start in docker desktop:
+![CleanShot 2023-10-25 at 19.45.04@2x](https://cdn.jsdelivr.net/gh/YuanHanzhong/pictures/typoraCleanShot%202023-10-25%20at%2019.45.04@2x.jpg)
 
 
 ## run dev-env image
 
 Start by pulling the image
-```
+
+```shell
 git clone https://github.com/ByConity/ByConity.git 
 
 cd byconity/docker/debian/dev-env
@@ -34,6 +42,7 @@ make pull
 ```
 
 You can run the "byconity/dev-env" container with the following command:
+
 ```bash
 # run container
 make run
@@ -42,6 +51,7 @@ make run
 
 Inside the container, you can compile the ByConity code using the following commands.
 The compiled binary will be found within your local filesystem at `${BYCONITY_SOURCE}/build_dev/program`
+
 ```bash
 # get submodule, otherwise the IDE will report include head file error
 git submodule update --init --recursive
@@ -54,29 +64,32 @@ ninja -C build_dev clickhouse-server -j 64
 
 
 
-# Config vscode
+# Config vscode #
 
 ## install Dev Containers
 
-![install Dev Containers](https://pictures-for-typora.oss-cn-beijing.aliyuncs.com/CleanShot%202023-10-25%20at%2019.51.48@2x.jpg)
-
+![CleanShot 2023-11-01 at 12.28.29@2x](https://cdn.jsdelivr.net/gh/YuanHanzhong/pictures/typoraCleanShot%202023-11-01%20at%2012.28.29@2x.jpg)
 
 # develop in vscode
 
+## open develop container in vscode
 
-![CleanShot 2023-10-25 at 21.29.01@2x](https://pictures-for-typora.oss-cn-beijing.aliyuncs.com/CleanShot%202023-10-25%20at%2021.29.01@2x.jpg)
 
-![CleanShot 2023-10-25 at 20.45.49@2x](https://pictures-for-typora.oss-cn-beijing.aliyuncs.com/CleanShot%202023-10-25%20at%2020.45.49@2x.jpg)
+![open develop container in vscode](https://cdn.jsdelivr.net/gh/YuanHanzhong/pictures/typoraCleanShot%202023-11-01%20at%2012.30.05@2x.jpg)
 
-![CleanShot 2023-10-25 at 21.30.20@2x](https://pictures-for-typora.oss-cn-beijing.aliyuncs.com/CleanShot%202023-10-25%20at%2021.30.20@2x.jpg)
+## connect to docker container
 
-### The first time you use vscode, it will report a lot of header file cannot be found problems, as follows
+![connect to docker container](https://cdn.jsdelivr.net/gh/YuanHanzhong/pictures/typoraCleanShot%202023-11-01%20at%2012.30.59@2x.jpg)
 
-![CleanShot 2023-10-25 at 23.35.04@2x](https://pictures-for-typora.oss-cn-beijing.aliyuncs.com/CleanShot%202023-10-25%20at%2023.35.04@2x.jpg)
+-   The first time you use vscode, it will report a lot of header file cannot be found problems, as follows
 
-### At this point, you need to go to the ~/ByConity directory of your docker's container and execute the following command to download the submodules into docker. The repository to be downloaded is quite large, so be patient and make sure your network is working fine.
+![header file cannot be found problems](https://cdn.jsdelivr.net/gh/YuanHanzhong/pictures/typoraCleanShot%202023-11-01%20at%2012.32.22@2x.jpg)
 
-### Once the download of the module is complete, go to ~/ByConity dir again and execute 
+## fix header file cannot be found issue
+
+-   At this point, you need to go to the ~/ByConity directory of your docker's container and execute the following command to download the submodules into docker. The repository to be downloaded is quite large, so be patient and make sure your network is working fine.
+
+- Once the download of the module is complete, go to ~/ByConity dir again and execute 
 
 ```shell
 # get submodule, otherwise the IDE will report include head file error
@@ -88,8 +101,8 @@ cmake -S /root/ByConity -B build_dev
 ninja -C build_dev clickhouse-server -j 64
 ```
 
-![execute cmake](https://pictures-for-typora.oss-cn-beijing.aliyuncs.com/CleanShot%202023-10-26%20at%2013.59.08.jpg)
+![the dir where cmake run](https://cdn.jsdelivr.net/gh/YuanHanzhong/pictures/typoraCleanShot%202023-11-01%20at%2012.45.58@2x.jpg)
 
-### After the execution is complete, the above problem is solved
+- After the execution is complete, header file cannot be found problems,is solved
+- ![fixed header file cannot be found problems](https://cdn.jsdelivr.net/gh/YuanHanzhong/pictures/typoraCleanShot%202023-11-01%20at%2012.45.17@2x.jpg)
 
-![CleanShot 2023-10-26 at 12.33.01@2x](https://pictures-for-typora.oss-cn-beijing.aliyuncs.com/CleanShot%202023-10-26%20at%2012.33.01@2x.jpg)
