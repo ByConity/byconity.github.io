@@ -71,54 +71,56 @@ CnchHive 允许通过指定配置文件的值来设置表，如下：
 * AUTO - 当磁盘缓存可用时使用。
 * SKIP_DISK_CACHE - 不使用磁盘缓存。
 
-If cache misses, hive files will be cached in the backrgound.
+如果缓存未命中，Hive 文件将在后台被缓存。
 
-default: AUTO
+默认值：AUTO
 
-### use_hive_metastore_filter
-If enabled, CnchHive checks whether the query has partition key conditions
-which can be passed to hive metastore for restricting partitions. Hive metastore will return
-a trimmed list of partitions based on the conditions. Hive metastore can only recognise simple
-conditions.
+### 使用 hive_metastore_filter
 
-**Example**
+如果启用，CnchHive 将检查查询是否包含可传递给 Hive metastore以限制分区的分区键条件。Hive metastore将根据条件返回过滤后的分区列表。Hive metastore只能识别简单条件。
+
+
+**示例**
 ```sql
-# Column d is the hive partition key, and hive has partition
+# d列是hive的分区键
 # d=1/, d=2/, d=3/
 
 SELECT * FROM hive_ext WHERE d = 1
-# Hive metastore will only return the path of d=1/ partition
+# Hive metastore 只返回 d=1/ 的分区
 ```
 
-default: true
+默认值: true
 
-### use_hive_partition_filter
-If enabled, CnchHive further does partition pruning on the list of partitions returned from hive metastore.
+### 使用 hive_partition_filter
+如果启用，CnchHive 将进一步对 Hive 元数据存储返回的分区列表进行分区过滤。
 
-**Example**
+**示例**
 ```sql
-# Column d is the hive partition key, and hive has partition
+# d列是 Hive 分区键，Hive 有分区
 # d=20220203/, d=20220204/, d=20220205/
 
 SELECT * FROM hive_ext WHERE toDate(d) = '2022-02-03'
-# Hive metastore will return all three partitions, and CnchHive will do partition pruning. Only partition d=20220203/ will later be read.
+
+# Hive metastore将返回所有三个分区，CnchHive 将进行分区过滤。最后只有分区 d=20220203/ 将被读取。
 ```
 
-default: true
+默认值: true
 
-### use_hive_split_level_filter
+### 使用 hive_split_level_filter
 Parquet and ORC files have index data for each row group/stripe. If enabled, CnchHive will filter row groups/stripes.
 
-default: false
+Parquet 和 ORC 文件对每个row group/stripe都有索引数据。如果启用，CnchHive 将过滤 row group/stripe。
 
-## Table Functions
+默认值: false
+
+## 表功能
 
 ```sql
 SELECT count() FROM hive('thrift://127.0.0.1', 'hive_db', 'hive_table)
 ```
-Query the hive table without explicitly creating a table.
+无需显式创建表即可查询 Hive 表。
 
 ```sql
 SELECT * FROM hiveMetadata('thrift://127.0.0.1', 'hive_db', 'hive_table')
 ```
-Return the hive table storage description from the hive metastore.
+从 Hive 元数据存储返回 Hive 表的存储描述。
