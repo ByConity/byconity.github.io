@@ -13,7 +13,6 @@ ByConity 自研优化器基于四个大的优化方向提供极致优化能力�
 - RBO：基于规则的优化能力。支持：列裁剪、分区裁剪、表达式简化、子查询解关联、谓词下推、冗余算子消除、Outer-JOIN 转 INNER-JOIN、算子下推存储、分布式算子拆分等常见的启发式优化能力。
 - CBO：基于代价的优化能力。支持：Join Reorder、Outer-Join Reorder、Join/Agg Reorder、CTE、物化视图、Dynamic Filter 下推、Magic Set 等基于代价的优化能力。并且面向分布式计划融合了 Property Enforcement。
 - DBO：基于数据依赖的优化能力。支持：唯一键、functional dependency、Order dependency、Inclusion dependency 等基于数据依赖关系的优化能力。
-- HBO：基于查询反馈的优化能力。支持：基数估计动态调整、并行度动态调整、执行计划动态调整等基于历史执行反馈的优化能力。
 
 # Turn on Query Optimizer
 
