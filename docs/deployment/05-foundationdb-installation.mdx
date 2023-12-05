@@ -162,10 +162,10 @@ Copy this file to other 2 machines and replace the old file then restart fdb ser
 systemctl restart fdb.service
 ```
 
-Then come back to the first machine, connect to FDB using fdbcli again and execute this command to change redundant mode to `triple`
+Then come back to the first machine, connect to FDB using fdbcli again and execute this command to change [redundant mode](https://apple.github.io/foundationdb/configuration.html#choosing-a-redundancy-mode) to `double`
 
 ```sh
-configure triple
+configure double
 ```
 
 Then execute the `status` command with `fdbcli` to see the result, you should see something like this
@@ -176,7 +176,7 @@ fdb> status
 Using cluster file `fdb_runtime/config/fdb.cluster'.
 
 Configuration:
-  Redundancy mode        - triple
+  Redundancy mode        - double
   Storage engine         - ssd-2
   Coordinators           - 3
   Usable Regions         - 1
