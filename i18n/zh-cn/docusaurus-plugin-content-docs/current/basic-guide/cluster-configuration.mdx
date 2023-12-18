@@ -435,27 +435,15 @@ Example:
 
 ```
 
-### zookeeper
-
-配置 zookeeper （可选）， 当使用 clickhouse keeper 时需要配置为空
-
-Example:
-
-```
-<zookeeper></zookeeper>
-
-```
-
 ## TSO 配置参数
 
 ### tso_service
 
-配置 tso 服务，包括服务端口，元数据存储，keeper 等
+配置 tso 服务，包括服务端口，元数据存储 等
 
 Keys:
 
 - **port**: TSO 服务 TCP 端口
-- **keeper**: tso，server_master 等组件 leader 选举服务
 - **type**: TSO 元数据存储引擎
 
 Example:
@@ -463,87 +451,12 @@ Example:
 ```
 <tso_service>
     <port>8080</port>
-    <keeper>
-        <port>2181</port>
-    </keeper>
     <!-- Support for CNCH-CE Merge. Metastore store type, support `bytekv` and `fdb` -->
     <type>fdb</type>
     <fdb>
         <cluster_file>/path/to/fdb/conf/fdb.cluster</cluster_file>>
     </fdb>
  </tso_service>
-
-```
-
-### keeper_server
-
-- path: keeper 数据存储路径
-
-```
-<path>/var/lib/tso_server/keeper/</path>
-
-```
-
-- keeper_server
-- tcp_port：keeper 服务的 tcp 端口
-- server_id：keeper 内部 leader 选举的 id，需要是 int 类型
-- log_storage_path：keeper log 存储路径
-- snapshot_storage_path：keeper snapshot 存储路径
-- coordination_settings：支持定制化 keeper settings
-- raft_configuration：可选，支持从配置文件读取 keeper 节点。如使用服务发现读取 keeper 节点，则不能配置该配置项
-- id: 同上 server_id
-- hostname: ip 地址
-- port: keeper 内部通信 port，与 tcp_port 不同
-
-```
-<keeper_server>
-    <tcp_port>9181</tcp_port>
-    <server_id>1</server_id>
-    <log_storage_path>/var/lib/tso_server/keeper/log</log_storage_path>
-    <snapshot_storage_path>/var/lib/tso_server/keeper1/snapshots</snapshot_storage_path>
-
-    <coordination_settings>
-        <operation_timeout_ms>10000</operation_timeout_ms>
-        <session_timeout_ms>30000</session_timeout_ms>
-        <raft_logs_level>warning</raft_logs_level>
-        <compress_logs>0</compress_logs>
-    </coordination_settings>
-<!--
-    <raft_configuration>
-        <server>
-            <id>1</id>
-            <hostname>host0</hostname>
-            <port>9445</port>
-        </server>
-        <server>
-            <id>2</id>
-            <hostname>host1</hostname>
-            <port>9445</port>
-        </server>
-        <server>
-            <id>3</id>
-            <hostname>host2</hostname>
-            <port>9445</port>
-        </server>
-    </raft_configuration>
--->
-</keeper_server>
-
-```
-
-- zookeeper
-
-配置 zookeeper 以启用 leader election，也可通过服务发现来获取 zookeeper 的节点信息，在这种情况下，需要配置一个空的 zookeeper 标签
-
-```
-<zookeeper>
-    <!--
-    <node index="1">
-        <host>host0</host>
-        <port>9181</port>
-    </node>
-    -->
-</zookeeper>
 
 ```
 
