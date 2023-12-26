@@ -37,7 +37,7 @@ byconity.github.io/
 │       └── doc-3.md
 │
 ├── versioned_sidebars/
-│   ├── version-0.2.0-sidebars.json # Version 0.2.0 English sidebar
+│   └── version-0.2.0-sidebars.json # Version 0.2.0 English sidebar
 │
 ├── blog/ # English blogs, use kebab-case
 │   ├── 2021-01-01-happy-new-year.md
