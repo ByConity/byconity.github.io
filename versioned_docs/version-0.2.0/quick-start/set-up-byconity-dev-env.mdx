@@ -1,0 +1,78 @@
+# ByConity development environment
+
+Our core developers develop ByConity using a plugin called Dev Containers in vscode.This plugin allows us to connect to a Docker container environment running on a Debian 11 virtual machine.So we recommend you to do the same in case of compatibility issues.
+For more information, see [offical dev](https://github.com/ByConity/ByConity/blob/master/docker/debian/dev-env/README.md)。
+
+## run dev-env image
+
+Start by pulling the image
+
+```shell
+git clone https://github.com/ByConity/ByConity.git
+
+cd byconity/docker/debian/dev-env
+
+# get the latest image
+make pull
+```
+
+You can start the container "byconity/dev-env" with the following command:
+
+```bash
+# run container
+make run
+```
+
+Inside the container, you can compile the ByConity code using the following commands.
+The compiled binary is located in your local file system under `${BYCONITY_SOURCE}/build_dev/program`
+
+```bash
+# get submodule, otherwise the IDE reports the error include head file error
+
+git submodule update --init --recursive
+
+cmake -S /root/ByConity -B build_dev
+
+# 64 means that 64 threads are used for building, you have to change it depending on your computer
+ninja -C build_dev clickhouse-server -j 64
+```
+
+# Config vscode
+
+## Install dev container
+
+![Install dev container](<.asset/Install dev container.jpg>)
+
+# Develop in vscode
+
+## Connect to the Docker container
+
+![Docker container connection](<.asset/Open the development container in vscode.jpg>)
+
+- When you use vscode for the first time, it reports many problems with header files cannot be found, as follows
+
+![Header file cannot be found problems](<.asset/Header file cannot be found problems.jpg>)
+
+## How to fix the Header files cannot be found problem
+
+- Now you need to go to the ~/ByConity directory of your Docker container and run the following command to download the submodules in Docker. The repository to download is quite large, so be patient and make sure your network is working properly.
+
+- Once the module download is complete, switch to the ~/ByConity directory again and run
+
+```shell
+# get submodule is essential, otherwise the IDE will report an include head file error
+
+git submodule update --init --recursive
+
+# cmake again
+cmake -S /root/ByConity -B build_dev
+
+# 64 means that 64 threads are used for building, you need change this depending on your computer
+ninja -C build_dev clickhouse-server -j 64
+```
+
+- the directory where cmake runs
+  ![the directory where cmake runs](<.asset/the directory where cmake runs.jpg>)
+
+- After the execution is finished, the problem that the header file cannot be found is solved.
+  ![fixed problems with header files not being found](<.asset/fixed problems with header files not being found.jpg>)

@@ -1,0 +1,39 @@
+---
+title: Column Storage Design Principles
+tags:
+  - Docs
+---
+
+# Column storage design principle
+
+Typically, transactional databases use row storage to support transactions and high concurrent reading and writing, while analytical databases use column storage to reduce IO and facilitate compression. ByConity, on the other hand, uses column storage to ensure read and write performance, support transaction consistency, and is well-suited for large-scale data calculations.
+
+### Data Layout
+
+Table data is physically divided into multiple parts based on the partition key and stored in a unified distributed file system and cloud storage logical storage path. The size of each part is limited by the amount of data and the number of rows. The computing group is allocated parts based on the service node strategies (pre-allocation and real-time allocation) to obtain their corresponding parts.
+
+### Part Delta
+
+After the initial construction of Part data, it is a Part data file with row and column mixed storage. With the construction of DML/data dictionary/Bitmap index, etc., Part has incremental data. This part of data can be stored in the following two ways:
+
+1. Every build will Rewrite Part data
+2. Generate incremental data and asynchronously merge it into a large Part file in the background
+
+The solution may have a certain impact on the availability of the entire cluster:
+
+1. Every construction of DML/data dictionary may involve a full amount of IO operations on the entire table Parts, which is relatively expensive.
+2. It takes a long time to build DML and other operations will take a long time to complete, which is not friendly to users. We adopt the second solution.
+
+### Part file content
+
+The part data is divided into two parts:
+
+One is that the whole Part includes meta-information such as rows/schema/column data in the data file, such as Offset, which is stored persistently and cached by computing nodes
+
+The second is the actual data information, this part of the information includes the actual column bin data/column mrk data/Map key bin/Map key index/data dictionary data/bitmap index data, etc., the data is in the data of the Part according to the Offset information in the meta information Files are stored sequentially.
+
+### Compaction
+
+ByConity supports splitting a Part file into multiple smaller files. The maximum size and maximum number of lines of a Part can be configured, and the resulting Parts after compaction must meet these limits.
+
+The compaction in ByConity is done globally, which is consistent with the previously raised global block ID.
