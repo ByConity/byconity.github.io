@@ -1,0 +1,142 @@
+---
+title: Basic Database Operations
+sidebar_position: 2
+tags:
+  - Docs
+---
+
+There are a few ways to get started with ByConity. You have the choice to deploy ByConity through [package deployment](../deployment/package-deployment), using [docker wrapper](../deployment/docker-wrapper) or [deploy ByConity in Kubernetes](../deployment/deploy-k8s). To get started quickly, we recommend that you use the [ByConity Playground](https://github.com/ByConity/byconity-docker) with docker-compose/the docker wrapper.
+
+The playground only requires a few dependencies:
+
+- Colima (Docker runtime)
+- Docker
+- Docker Compose
+
+After you've downloaded all of the dependencies, get your cluster up and running, follow the tutorial below, and give ByConity a quick spin!
+
+# Getting Started Tutorial
+
+## Connect to the database
+
+```
+./clickhouse-client -m -h HOST --port PORT
+
+```
+
+## Create database and table
+
+```
+CREATE DATABASE IF NOT EXISTS helloworld;
+
+CREATE TABLE helloworld.my_first_table
+(
+    user_id UInt32,
+    message String,
+    timestamp DateTime
+)
+ENGINE = CnchMergeTree()
+PARTITION BY timestamp
+ORDER BY (user_id, timestamp);
+
+```
+
+## Insert and query
+
+```
+INSERT INTO helloworld.my_first_table (user_id, message, timestamp) VALUES
+    (101, 'Hello, ByConity!',                                 now()),
+    (102, 'Insert a lot of rows per batch',                     yesterday()),
+    (102, 'Sort your data based on your commonly-used queries', today()),
+    (101, 'Granules are the smallest chunks of data read',      now() + 5);
+
+SELECT * FROM helloworld.my_first_table;
+
+SELECT * FROM helloworld.my_first_table ORDER BY timestamp;
+
+SELECT *　FROM helloworld.my_first_table　ORDER BY timestamp　FORMAT JSON;
+
+exit;
+
+```
+
+## Insert file
+
+Suppose we have a file data.csv
+
+```
+102,This is data in a file,2022-02-22 10:43:28
+101,It is comma-separated,2022-02-23 00:00:00
+103,Use FORMAT to specify the format,2022-02-21 10:43:30
+
+```
+
+```
+./clickhouse-client -h {HOST} --port {PORT} --query='INSERT INTO helloworld.my_first_table FORMAT CSV' < data.csv
+
+./clickhouse-client -h {HOST} --port {PORT} --query='SELECT * FROM helloworld.my_first_table'
+
+```
+
+# view VW status
+
+```
+SELECT * FROM system.worker_groups
+
+Query id: f60481b4-b9a7-494d-a639-ac7be3aa5292
+
+Row 1:
+──────
+id:             wg_default
+type:           Physical
+vw_uuid:        1a415df1-6265-40b3-9c00-230fc3b026c1
+vw_name:        vw_default
+linked_id:
+active_workers: 1
+min_cpu_usage:  9
+max_cpu_usage:  9
+avg_cpu_usage:  9
+min_mem_usage:  8
+max_mem_usage:  8
+avg_mem_usage:  8
+is_auto_linked: 0
+
+SELECT *
+FROM system.workers
+
+Query id: f2377b52-38eb-4437-9813-d34f9dd28049
+
+Row 1:
+──────
+worker_id:             w1
+host:                  {HOST}
+tcp_port:              {TCP_PORT}
+rpc_port:              {RPC_PORT}
+http_port:             {HTTP_PORT}
+exchange_port:         {EXCHANGE_PORT}
+exchange_status_port:  {EXCHANGE_STATUS_PORT}
+vw_name:               vw_default
+worker_group_id:       wg_default
+query_num:             0
+cpu_usage:             {xxx}
+reserved_cpu_cores:    0
+memory_usage:          {xxx}
+disk_space:            {xxx}
+memory_available:      {xxx}
+reserved_memory_bytes: 0
+register_time:         2022-11-30 18:19:49
+last_update_time:      2022-11-30 18:21:09
+state:                 1
+
+```
+
+# view history query
+
+[https://clickhouse.com/docs/en/operations/system-tables/query_log/](https://clickhouse.com/docs/en/operations/system-tables/query_log/)
+
+```
+SELECT * FROM system.query_log;
+
+```
+
+#
