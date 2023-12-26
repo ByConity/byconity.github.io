@@ -88,6 +88,11 @@ const config = {
           { to: '/community', label: 'Community', position: 'left' },
           { to: '/users', label: 'Users', position: 'left' },
           {
+            type: 'docsVersionDropdown',
+            position: 'right',
+            dropdownActiveClassDisabled: true,
+          },
+          {
             type: 'localeDropdown',
             position: 'right',
           },
