@@ -1,0 +1,250 @@
+---
+title: Database Table Design
+tags:
+  - Docs
+---
+
+# Database Table Design
+
+Document Type: Tutorial
+
+Document format: tutorial purpose, pre-preparation, step-by-step explanation of principles & examples, and related document recommendations;
+
+Abstract
+
+1. How ByConity organizes databases and data tables
+2. The specifications of the database table, such as how many data tables are supported by a single database, and how many columns are supported by a single table
+3. When designing a data table, which configurations should be understood (primary key, etc.)
+4. In a typical scenario, what is the best practice for designing a data table
+
+## Organization Database Table
+
+### database
+
+ByConity's database is a combination of a set of associated tables or views, which is convenient for users to manage the life cycle and permission control of this set of schemas. ByConity has no hard limit on the maximum number of databases.
+
+### data sheet
+
+Logically, a data table is a collection of data columns with the same number of rows and belongs to a certain database. ByConity also has no limit on the number of tables in a database (preferably no more than one million). A table has no more than 100,000 data columns.
+
+#### Table Engine
+
+The table engine is the type of the table, which determines:
+
+- How data is organized and stored
+- How to index and the type of index
+- Which queries are supported and how
+- Some other specific features and configurations
+
+The most common table engine used by ByConity is CnchMergeTree. Other special types of table engines include Hive tables, Kafka tables, etc. The following focuses on the principle of the MergeTree table engine.
+
+#### CnchMergeTree table principle
+
+The CnchMergeTree table is the most commonly used table engine. The core idea is similar to that of LSM-Tree. The data is partitioned according to the partition key (partition by), and then the sort key (order by) is stored in an orderly manner. main feature:
+
+- If a partition key is specified, the data will be divided into different logical data sets according to the partition key (logical partition, Partition)
+
+Each logical partition can have zero or more data fragments (DataPart). Queries can often be sped up if the query criteria can prune partitions. If no partition key is specified, all data is in one logical partition.
+
+- data fragment
+
+The data in the data fragment is sorted by the sort key. There will also be a min/max index for each data segment to speed up partition selection.
+
+- Data granules (Granule)
+
+Each data fragment is logically divided into granules, and the default granule is 8192 rows (determined by the index_granularity configuration of the table). A granule is the smallest indivisible dataset for data query in ByConity. The first row of each granule is marked by the primary key value of the row, and ByConity will create an index file for each data fragment to store these marks. For each column, whether it is included in the primary key or not, ByConity stores a similar flag. These tags allow you to find data directly in the column file. Granule is the index target of ByConity sparse index and also the unit of data scanning in memory.
+
+- Background Merge
+
+The background task will periodically merge the DataParts of the same partition and keep them in order according to the sort key. Background merging reduces the number of Parts for more efficient storage and improves query performance.
+
+## CnchMergeTree table creation statement and related configuration
+
+```
+CREATE TABLE [IF NOT EXISTS] [db.]table_name
+(
+    name1 [type1] [NULL|NOT NULL] [DEFAULT|ALIAS expr1] [compression_codec] [TTL expr1],
+    name2 [type2] [NULL|NOT NULL] [DEFAULT|ALIAS expr2] [compression_codec] [TTL expr2],
+    ...
+    INDEX index_name1 expr1 TYPE type1(...) GRANULARITY value1,
+    INDEX index_name2 expr2 TYPE type2(...) GRANULARITY value2，
+) ENGINE = CnchMergeTree()
+ORDER BY expr
+[PARTITION BY expr]
+[CLUSTER BY (column, expression, ...) INTO value1 BUCKETS SPLIT_NUMBER value2 WITH_RANGE]
+[PRIMARY KEY expr]
+[UNIQUE KEY expr]
+[SAMPLE BY expr]
+[TTL expr]
+[SETTINGS name=value, ...]
+
+```
+
+### Design partition key (PARTITION BY)
+
+A partition key defines a partition, which is a logical data set in a table divided by specified rules. Partitioning can be done by arbitrary criteria, such as by date. To reduce the data that needs to be manipulated, each partition is stored separately. When querying, ByConity tries to use the smallest subset of these partitions. It is specified by the `PARTITION BY expr` clause when creating a table. The partition key can be any expression of the columns in the table. For example, to specify partition by month, the expression is `toYYYYMM(date)`; or by expression tuple, such as `(toMonday(date), EventType)`, etc.
+
+It should be noted that the value range calculated by the partition expression in the table should not be too large (recommended not to exceed 10,000). Too many partitions will occupy relatively large memory and bring more IO and computing overhead.
+
+A reasonable design of the partition key can greatly reduce the amount of data that needs to be scanned during the query. Generally, it is considered to design the most commonly used conditions in the query and the column with a value range of no more than 10,000 as the partition key (such as date, etc.).
+
+### Design sort key (ORDER BY)
+
+Can be a tuple of columns or an arbitrary expression. For example: `ORDER BY (OrderID, Date)`.
+
+If sorting is not required, `ORDER BY tuple()` can be used. The data in the DataPart will be sorted according to the sort key.
+
+### Design primary key (PRIMARY KEY)
+
+By default there is no need to specify explicitly, ByConity will use the sort key as the primary key. When there is a special scenario where the primary key is inconsistent with the sort key, the primary key must be the leftmost prefix of the sort key. If the sort key is (OrderID, Date), the primary key must be OrderID, not Date. In some special table engines, such as CnchAggregatingMergeTree, CnchSummingMergeTree, the primary key will be different from the sort key.
+
+ByConity will create a sparse index with Granule as the unit on the primary key (in contrast, the so-called dense index means that each row will create index information).
+
+If the query condition can match the leftmost prefix of the primary key index, the data particles that may need to be read can be quickly filtered out through the primary key index, which is usually much more efficient than scanning the entire DataPart.
+
+In addition, it should be noted that PRIMARY KEY cannot guarantee uniqueness, so data rows with duplicate primary keys can be inserted.
+
+Partition (PARTITION BY) and primary key (PRIMARY KEY) are two different ways to speed up data query. When defining, you should try to stagger and use different columns to define the two to cover more query scenarios. For example, the first column of order by must not be placed in partition by repeatedly. Here are some considerations for how to choose a primary key:
+
+- Whether it is a commonly used column in the query condition
+- is not the first column of a non-partition key
+- The selectivity of this column, such as gender, yes/no, and columns with too few optional values ​​are not recommended to be placed in the primary key
+- If the current primary key is (a, b), if in most cases (a, b) corresponds to a large range of data (including multiple Granules), you can consider attaching a new common query column to the primary key , which allows more data to be filtered.
+- Excessively long primary keys have a negative impact on insert performance and memory consumption, but have no impact on query performance.
+
+### Unique key index (UNIQUE KEY)
+
+The primary key (PRIMARY KEY) cannot be guaranteed to be deduplicated. If there is a need to deduplicate the unique key, you need to set the unique key index when creating the table. After setting the unique key, ByConity provides upsert update write semantics, which can efficiently update data rows according to the unique key. Queries automatically return the latest value for each unique key.
+
+A unique key can be a tuple of columns or an arbitrary expression, such as `UNIQUE KEY (product_id, sipHash64(city))`.
+
+The unique index can be built by configuring `partition_level_unique_keys` to control whether it is unique at the partition level or unique for the entire table. The current recommended practice is: unique index for partition, and the data volume of a single partition should not exceed tens of millions**. **If it is unique in the entire table, it is recommended that the data volume of the entire table should not exceed tens of millions.
+
+When querying through the unique key, the unique key index will be used to filter data to speed up the query, so usually the primary key can be set to a different column from the unique key to cover more query conditions. However, if you want to use the partial column update function, you need the unique key to be the leftmost prefix of the sort key.
+
+### Jump index (Index)
+
+When creating a table, you can define the jump index like this
+
+```
+INDEX index_name expr TYPE type(...) GRANULARITY granularity_value
+
+```
+
+#### Available index types
+
+- `minmax` stores the extreme value of the specified expression (if the expression is `tuple`, stores the extreme value of each element in `tuple`), this information is used to skip data blocks, similar to the primary key.
+
+The hop index function is being tested, and the supported hop index types will be added after completion.
+
+### Design Bucket
+
+CNCH Bucket table best practice manual
+
+### Sampling
+
+The expression to use for sampling, optional.
+
+If a sampling expression is to be used, it must be included in the primary key. For example: `SAMPLE BY intHash32(UserID) ORDER BY (CounterID, EventDate, intHash32(UserID))`.
+
+For details, refer to the sampling function (a separate sampling function is required)
+
+### TTL for columns and tables
+
+A list of rules that specify the duration of the row store and define the logic for moving pieces of data across disks and volumes, optional.
+
+There must be at least one `Date` or `DateTime` type column in the expression, for example:
+
+`TTL date + INTERVAl 1 DAY`
+
+For more details, please check [TTL of tables and columns](https://clickhouse.com/docs/en/engines/table-engines/mergetree-family/mergetree#table_engine-mergetree-ttl) (too many, maybe To be an independent TTL)
+
+### Advanced configuration
+
+#### Granule configuration
+
+- `index_granularity` — index granularity. The number of data rows between adjacent "tags" in the index (corresponding to the size of the granule). The default value is 8192 .
+
+The latter three configurations are to be tested, and RD has not verified functionality.
+
+- `index_granularity_bytes` — index granularity in bytes, default: 10Mb. Set to 0 (not recommended) if you want to limit the index granularity by the number of data rows only.
+- `min_index_granularity_bytes` - Minimum data granularity allowed, default: 1024b. This option is used to prevent misuse, adding a table with a very low index granularity.
+- `enable_mixed_granularity_parts` — Whether to enable controlling the size of the index granularity via `index_granularity_bytes`. In older versions only the `index_granularity` configuration can be used to limit the size of the index granularity. The `index_granularity_bytes` configuration can improve ByConity's performance when querying data from tables with very large rows (tens to hundreds of megabytes). If your table has very large rows, you can enable this configuration to improve the performance of `SELECT` queries.
+
+#### Compute group configuration
+
+Refer to [Tutorial] Configuring Computing Groups
+
+#### merge related configuration
+
+Refer to background task chapter
+
+#### Storage related configuration
+
+Reference storage related chapters
+
+#### Unique index related configuration
+
+- `partition_level_unique_keys` - Whether the unique index is partition unique, default value: `true`; if it is `false`, it means that the unique index is at the whole table level;
+- `cloud_enable_staging_area` - Whether to enable asynchronous writing mode, default value: `false`.
+
+#### Other configuration
+
+## Best Practices
+
+### Best practices for primary key indexes
+
+[https://clickhouse.com/docs/en/guides/improving-query-performance/sparse-primary-indexes/](https://clickhouse.com/docs/en/guides/improving-query-performance/sparse -primary-indexes/)
+
+### Secondary Index Best Practices
+
+[https://clickhouse.com/docs/en/guides/improving-query-performance/skipping-indexes](https://clickhouse.com/docs/en/guides/improving-query-performance/skipping-indexes)
+
+###
+
+### Column type considerations
+
+### Avoid blindly using the String type
+
+Use Int(8|16|32|64|128|256) / Date / Date32 / DateTime / DateTime64 / Float / Decimal instead of String if possible
+
+The easiest way to judge is to see if it can be converted to the target type, such as `SELECT countIf(toUInt8OrNull(col) IS NULL) FROM table`, `SELECT countIf(toDateOrNull(col) IS NULL) FROM table`
+
+For String Column with relatively fixed content, you can consider using Enum instead, such as the name of a province. Enum can add new values ​​through `ALTER TABLE` later
+
+Use FixedString when the difference between the minimum and maximum length of String does not exceed 8, because String stores 8 bytes more offset in memory than FixedString `SELECT min(length(col)), max(length(col)) FROM table`
+
+### Nullable selection
+
+If you are sure that the column does not contain Null, do not use Nullable type, it will have a negative impact on performance
+
+### Low Cardinality
+
+If the cardinality of a column is low, for example, there are no more than 10,000 unequal values in a DataPart, you can consider using the LowCardinality type. The LowCardinality type dictionary-encodes the original column. For many applications, processing dictionary-encoded data can significantly increase query speed, reduce storage space, and improve IO efficiency.
+
+### Column Codec Selection
+
+Generic encoding lz4/lz4hc/zstd/deflate_qpl
+
+[https://clickhouse.com/docs/en/sql-reference/statements/create/table/#general-purpose-codecs](https://clickhouse.com/docs/en/sql-reference/statements/create/table/#general-purpose-codecs)
+
+Generally speaking, lz4 encoding is fast but the compression rate is not as high as zstd. You can consider using qpl on platforms that support Intel IAA
+
+Special encodings can be used together with the general encodings above: Delta / DoubleDelta / Gorilla / FPC / T64
+
+[https://clickhouse.com/docs/en/sql-reference/statements/create/table/#specialized-codecs](https://clickhouse.com/docs/en/sql-reference/statements/create/table/#specialized-codecs)
+
+Generally speaking, doubledelta can be used for timing, and gorilla can be used for values that change with time sequence. FPC works better on 64bit floating point numbers. T64 is to find the common high bits of 64 values for clipping, and only record the changed part
+
+Here are some best practices
+
+- DateTime type: unsorted, it is recommended to use Delta+LZ4
+- DateTime type: sorting, it is recommended to use LZ4
+- Date type: unsorted, ZSTD is recommended
+- Date type: sorting (eg: PK), it is recommended to use LZ4
+
+### Reference Documentation
+
+[https://clickhouse.com/docs/en/engines/table-engines/mergetree-family/mergetree#table_engine-mergetree-data_skipping-indexes](https://clickhouse.com/docs/en/engines/table-engines/mergetree-family/mergetree#table_engine-mergetree-data_skipping-indexes)
+
+[https://clickhouse.com/docs/en/sql-reference/statements/create/table/#column-compression-codecs](https://clickhouse.com/docs/en/sql-reference/statements/create/table/#column-compression-codecs)

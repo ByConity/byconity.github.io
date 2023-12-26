@@ -1,0 +1,65 @@
+---
+title: Setup ByConity Developement Environment
+tags:
+  - Docs
+---
+
+# Setup ByConity Developement Environment
+
+## Environment Dependencies
+
+The following components are required to compile ByConity from source code:
+
+```
+Git
+CMake 3.17 or newer
+Ninja
+C++ compiler: clang-11 or clang-12
+Linker: lld
+Third-Party Library: openssl
+
+```
+
+## Linux Development Environment
+
+### Installing dependencies
+
+Example for Debian 11 (Bullseye)
+
+```
+sudo apt-get update
+sudo apt-get install git cmake ccache python3 ninja-build libssl-dev
+
+# install llvm 12
+sudo apt install lsb-release wget software-properties-common gnupg # pre-requisites of llvm.sh
+wget https://apt.llvm.org/llvm.sh
+chmod +x llvm.sh
+sudo ./llvm.sh 12
+
+```
+
+### Compiling ByConity
+
+```
+git clone --recursive <ByConity Repository URL> byconity
+
+cd byconity
+mkdir build && cd build
+export CC=clang-12
+export CXX=clang++-12
+cmake ..
+ninja
+
+```
+
+The executable files are located in the programs directory:
+
+```
+clickhouse-client    # byconity client
+clickhouse-server    # byconity server
+clickhouse-worker    # byconity worker
+tso_server           # byconity tso
+daemon_manager       # byconity daemon manager
+resource_manager     # byconity resource manager
+
+```
