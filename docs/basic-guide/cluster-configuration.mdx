@@ -445,27 +445,16 @@ Example:
 
 ```
 
-### zookeeper
-
-Configure zookeeper (optional), when using clickhouse keeper, it needs to be empty
-
-Example:
-
-```
-<zookeeper></zookeeper>
-
-```
 
 ## TSO configuration parameters
 
 ### tso_service
 
-Configure tso service, including service port, metadata storage, keeper, etc.
+Configure tso service, including service port, metadata storage, etc.
 
 Keys:
 
 - **port**: TSO service TCP port
-- **keeper**: tso, server_master and other components leader election service
 - **type**: TSO metadata storage engine
 
 Example:
@@ -473,9 +462,6 @@ Example:
 ```
 <tso_service>
     <port>8080</port>
-    <keeper>
-        <port>2181</port>
-    </keeper>
     <!-- Support for CNCH-CE Merge. Metastore store type, support `bytekv` and `fdb` -->
     <type>fdb</type>
     <fdb>
@@ -485,77 +471,6 @@ Example:
 
 ```
 
-### keeper_server
-
-- path: keeper data storage path
-
-```
-<path>/var/lib/tso_server/keeper/</path>
-
-```
-
-- keeper_server
-- tcp_port: tcp port of the keeper service
-- server_id: the id of the leader election inside the keeper, which needs to be of type int
-- log_storage_path: keeper log storage path
-- snapshot_storage_path: keeper snapshot storage path
-- coordination_settings: support customized keeper settings
-- raft_configuration: optional, supports reading keeper nodes from configuration files. If you use service discovery to read the keeper node, you cannot configure this configuration item
-- id: Same as above server_id
-- hostname: ip address
-- port: keeper internal communication port, different from tcp_port
-
-```
-<keeper_server>
-    <tcp_port>9181</tcp_port>
-    <server_id>1</server_id>
-    <log_storage_path>/var/lib/tso_server/keeper/log</log_storage_path>
-    <snapshot_storage_path>/var/lib/tso_server/keeper1/snapshots</snapshot_storage_path>
-
-    <coordination_settings>
-        <operation_timeout_ms>10000</operation_timeout_ms>
-        <session_timeout_ms>30000</session_timeout_ms>
-        <raft_logs_level>warning</raft_logs_level>
-        <compress_logs>0</compress_logs>
-    </coordination_settings>
-<!--
-    <raft_configuration>
-        <server>
-            <id>1</id>
-            <hostname>host0</hostname>
-            <port>9445</port>
-        </server>
-        <server>
-            <id>2</id>
-            <hostname>host1</hostname>
-            <port>9445</port>
-        </server>
-        <server>
-            <id>3</id>
-            <hostname>host2</hostname>
-            <port>9445</port>
-        </server>
-    </raft_configuration>
--->
-</keeper_server>
-
-```
-
-- zookeeper
-
-Configure zookeeper to enable leader election, or obtain zookeeper node information through service discovery. In this case, you need to configure an empty zookeeper label
-
-```
-<zookeeper>
-    <!--
-    <node index="1">
-        <host>host0</host>
-        <port>9181</port>
-    </node>
-    -->
-</zookeeper>
-
-```
 
 ### service_discovery
 
