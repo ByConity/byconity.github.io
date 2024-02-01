@@ -51,9 +51,9 @@
     "message": "性能测试",
     "description": "The label for category Benchmarks in sidebar tutorialSidebar"
   },
-  "sidebar.tutorialSidebar.category.Development": {
+  "sidebar.tutorialSidebar.category.Developer Guides": {
     "message": "开发指南",
-    "description": "The label for category Development in sidebar tutorialSidebar"
+    "description": "The label for category Developer Guides in sidebar tutorialSidebar"
   },
   "sidebar.tutorialSidebar.category.FAQ": {
     "message": "常见问题",
