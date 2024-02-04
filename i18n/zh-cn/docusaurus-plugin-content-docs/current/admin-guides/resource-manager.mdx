@@ -1,5 +1,6 @@
 ---
 title: 资源管理器
+sidebar_position: 1
 tags:
   - Docs
 ---
@@ -18,23 +19,21 @@ ByConity 资源管理器的核心设计目标如下：
 4. 能够协调不同 VW 并动态调配 VW 的资源。
 5. 实现资源池化，弹性扩缩功能。
 
-## 计算资源的层级
-
 为了实现上述目标，我们将计算资源进行层级化的划分和管理。
 
-### 计算节点 Worker
+## 计算节点 Worker
 
-在 [主要原理概念](../introduction/main-principle-concepts) 中我们知道 ByConity 计算资源中最小的计算单元是一个 Worker 节点，它对应一个 Kubenetes Pod。
+在 [技术架构和原理](../introduction/main-principle-concepts) 中我们知道 ByConity 计算资源中最小的计算单元是一个 Worker 节点，它对应一个 Kubenetes Pod。
 
 Worker 启动后，将定期向 RM 汇报心跳信息，包括：
 
 - 身份标识信息，如 WORKER_ID, WORKER_GROUP_ID, VIRTUAL_WAREHOUSE_ID 等。
 - 节点物理负载信息，如 CPU 使用率、MEMORY 使用率等。
-- 查询负载信息，如正在运行的 query 数量，排队的 query 数量等。
+- 查询负载信息，如 正在运行的 query 数量，排队的 query 数量等。
 
 RM 维护和及时更新每个 Worker 的状态，在处理 query 时，根据 Worker 的身份标识和负载信息进行 query 的路由和调度。
 
-### 计算组副本 Worker Group
+## 计算组副本 Worker Group
 
 计算组副本（Worker Group，简称 WG）是实际处理一个查询请求所使用的计算资源，它对应一个 Kubenetes StatefulSet。
 
@@ -47,7 +46,7 @@ RM 维护和及时更新每个 Worker 的状态，在处理 query 时，根据 W
 
 当我们需要管理（创建、删除等）一个物理计算组副本时，除了在 ByConity 内部修改元信息，还需要执行对应的 K8s 操作。而管理一个共享计算组副本则只需要修改该计算组副本的元信息即可，因为共享计算组副本不拥有任何物理资源。
 
-### Virtual Warehouse
+## 计算组 Virtual Warehouse
 
 计算组（Virtual Warehouse，简称 VW）由多个配置相同的计算组副本构成。Worker 身份标识中的 VIRTUAL_WAREHOUSE_ID 即标识自己所属的 VW。
 
@@ -102,7 +101,3 @@ Server 除了处理用户查询，还需要为表调度后台任务，比如在�
 ![](./assets/resource-manager/boxcnwYSsOLigmR3d9nblBrpLFg.png)
 
 如图所示，在 Default VW 1 中，我们创建了一个共享计算组 Shared WG 3，它不拥有任何实际的物理计算资源，而是指向另一个 Default VW 3 中的物理计算组 Physical WG 6。Shared WG 3 拥有和 Physical WG 6 完全相同的负载信息，在 Default VW 1 进行调度决策时，可以选择 Shared WG 3（或其中的 Worker）来处理 SELECT 查询（或 INSERT 查询、后台任务）。最终，查询或后台任务实际是路由到 Physical WG 6 进行处理。
-
-## 参考文档
-
-[云原生数据仓库 ByteHouse 技术白皮书 V1.0](./assets/resource-manager/云原生数据仓库ByteHouse技术白皮书V1.0.pdf)
