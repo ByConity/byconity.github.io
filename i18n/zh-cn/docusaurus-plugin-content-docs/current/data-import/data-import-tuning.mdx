@@ -1,0 +1,45 @@
+
+---
+title: 导入调优
+sidebar_position: 3
+tags:
+  - Docs
+---
+
+
+# 导入调优
+
+## 直接写入方式调优
+
+在使用 `INSERT VALUES`、`INSERT INFILE` 或者 `PartWriter` 工具写入时，生成的 Part 数量会直接影响写入 HDFS 的次数，进而影响整体的写入耗时。为了优化这一过程，应尽量减少 Part 的数量。
+直接写入的流程如下：
+
+1. 读取部分文件数据
+2. 根据 `PartitionBy` 对这部分数据进行切分。
+3. 根据 `ClusterBy` 对这部分数据进行进一步切分。
+4. 将切分完的数据写成新的 Part 并写入 HDFS。
+
+调优建议：
+
+1. 为了减少 Part 的数量，我们可以将文件中具有相同的分区和 Bucket 的数据排列在一起，这样每次读取一些新的数据后，生成的 Part 数量会尽可能少。可以将数据按照分区相同，分区内 Bucket 相同的要求进行排序。
+
+2.Bucket 的计算规则是：
+
+- 如果没有指定 `SPLIT_NUMBER`，会将 `ClusterByKey` 所使用的列计算 SipHash 后对 `BucketNumber` 取模得到 `BucketNumber`
+- 如果指定了 `SPLIT_NUMBER`
+- 计算 `SplitValue`
+  - 如果 `ClusterBy` 某一列，利用 `dtspartition` 函数计算出对应的 `SplitValue`
+  - 如果 `ClusterBy` 多列，则将这些列利用 `SipHash` 计算出对应的 `SplitValue`
+- 计算 `BucketNumber`
+  - 如果是 `WithRange`，则用 `SplitValue \* BucketCount / SplitNumber` 计算对应 `BucketNumber`
+  - 如果不是 `WithRange`，则用 `SplitValue % BucketCount` 计算对应 `BucketNumber`
+
+3. 当读取文件时
+  - 如果每行数据大小较小，可以考虑增大 `max_insert_block_size` 以一次读取更大的数据块，从而生成更大的 Part。
+  - 如果读取的文件不是 HDFS/CFS 的，且使用了通配符匹配了多个文件，可以同时调整 `min_insert_block_size_rows` 和 `min_insert_block_size_bytes`。
+
+
+## Dumper 方式调优
+使用 Dumper 进行数据迁移时，可以一次性指定一张表及其中的部分分区，将其写入 HDFS，此过程的耗时与表的数据大小以及 Part 数量有关。为了优化这一过程：
+- 可以使用 `parallel` 参数增大上传 Part 的并发性。
+- 可以等待 Part 在本地先充分合并后再使用 Dumper 进行上传。

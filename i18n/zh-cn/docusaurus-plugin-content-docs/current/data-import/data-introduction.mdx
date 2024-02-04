@@ -1,0 +1,28 @@
+---
+title: 数据说明
+sidebar_position: 1
+tags:
+  - Docs
+---
+
+# 数据说明
+
+## 数据源
+
+ByConity支持导入多种数据源，根据使用场景划分如下表：
+
+| 数据源        | 导入方式 | 
+| :----------- | :---------------------- |
+| 本地文件      | 六十导入数据（本地文件及内存数据）   | 
+| HDFS          | 通过外部存储数据导入     |
+| Kafka          | 通过 Kafka 导入数据         |
+| Spark          | 通过 Spark 导入外部数据      |
+| Mysql、Hive     | 通过 ByConity 访问外部数据源    |
+
+## 数据格式
+
+|  导入方式       | 支持的数据格式     | 
+| :-------------- | :------------------------- |
+| HDFS          | Parquet，ORC，csv，gzip  |
+|本地文件以及内存数据 |snappy 压缩格式，json, csv, TSKV，Parquet，ORC  |
+|Kafka           |csv, gzip,json         |
