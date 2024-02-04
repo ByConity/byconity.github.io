@@ -1,14 +1,17 @@
 ---
-title: Hive External Table
+title: 外部表
+sidebar_position: 1
 tags:
   - Docs
 ---
 
-# CnchHive 介绍 
+# 外部表
+
+## CnchHive 
 
 CnchHive 是 ByConity 研发的表引擎，支持外部表联合查询，用户无需导入数据即可直接加速数据查询。CnchHive 支持查询存储在 HDFS 和 S3 的数据。它目前支持查询以 Parquet 和 ORC 格式存储的 Hive 数据文件。
 
-## 建表示例
+### 建表示例
 ```sql
 CREATE TABLE [IF NOT EXISTS] [db.]hive_ext
 ENGINE = CnchHive('thrift://127.0.0.1:9083', 'hive_db', 'hive_table')
@@ -17,7 +20,7 @@ ENGINE = CnchHive('thrift://127.0.0.1:9083', 'hive_db', 'hive_table')
 
 表的信息既能自动从hive的元数据中导入又能手动指定具体的列名即其类型。
 
-## 表的参数设置
+### 表的参数设置
 
 CnchHive 允许通过指定配置文件的值来设置表，如下：
 ```xml
@@ -35,7 +38,7 @@ CnchHive 允许通过指定配置文件的值来设置表，如下：
 * ak_id: S3 access key 密钥名
 * ak_secret: S3 secret key 密钥内容
 
-### 配置 HDFS hive table 举例
+#### 配置 HDFS hive table 举例
 
 ```xml
 <hive>
@@ -43,7 +46,7 @@ CnchHive 允许通过指定配置文件的值来设置表，如下：
 </hive>
 ```
 
-### 配置 S3 hive table 举例
+#### 配置 S3 hive table 举例
 ```xml
 <hive>
   <endpoint>http://127.0.0.1:9000</endpoint>
@@ -52,7 +55,7 @@ CnchHive 允许通过指定配置文件的值来设置表，如下：
 </hive>
 ```
 
-## Disk 缓存配置
+### Disk 缓存配置
 把下面配置加到 **worker.xml** 中打开缓存功能
 ```xml
 <yandex>
@@ -64,7 +67,7 @@ CnchHive 允许通过指定配置文件的值来设置表，如下：
 </yandex>
 ```
 
-## 查询设置
+### 查询设置
 
 ### 磁盘缓存模式
 是否在 SELECT 查询中使用磁盘缓存。可能的值：
@@ -75,7 +78,7 @@ CnchHive 允许通过指定配置文件的值来设置表，如下：
 
 默认值：AUTO
 
-### 使用 hive_metastore_filter
+#### 使用 hive_metastore_filter
 
 如果启用，CnchHive 将检查查询是否包含可传递给 Hive metastore以限制分区的分区键条件。Hive metastore将根据条件返回过滤后的分区列表。Hive metastore只能识别简单条件。
 
@@ -106,14 +109,14 @@ SELECT * FROM hive_ext WHERE toDate(d) = '2022-02-03'
 
 默认值: true
 
-### 使用 hive_split_level_filter
+#### 使用 hive_split_level_filter
 Parquet and ORC files have index data for each row group/stripe. If enabled, CnchHive will filter row groups/stripes.
 
 Parquet 和 ORC 文件对每个row group/stripe都有索引数据。如果启用，CnchHive 将过滤 row group/stripe。
 
 默认值: false
 
-## 表功能
+### 表功能
 
 ```sql
 SELECT count() FROM hive('thrift://127.0.0.1', 'hive_db', 'hive_table)

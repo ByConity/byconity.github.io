@@ -31,6 +31,10 @@
     "message": "数据导出",
     "description": "The label for category Data Export in sidebar tutorialSidebar"
   },
+  "sidebar.tutorialSidebar.category.Data Lake": {
+    "message": "数据湖",
+    "description": "The label for category Data Lake in sidebar tutorialSidebar"
+  },
   "sidebar.tutorialSidebar.category.Query Optimization": {
     "message": "查询加速",
     "description": "The label for category Query Optimization in sidebar tutorialSidebar"
