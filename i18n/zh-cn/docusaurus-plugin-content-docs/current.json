@@ -23,17 +23,17 @@
     "message": "数据表设计",
     "description": "The label for category Table Design in sidebar tutorialSidebar"
   },
-  "sidebar.tutorialSidebar.category.Data Loading": {
+  "sidebar.tutorialSidebar.category.Data Import": {
     "message": "数据导入",
-    "description": "The label for category Data Loading in sidebar tutorialSidebar"
+    "description": "The label for category Data Import in sidebar tutorialSidebar"
   },
-  "sidebar.tutorialSidebar.category.Data Unloading": {
+  "sidebar.tutorialSidebar.category.Data Export": {
     "message": "数据导出",
-    "description": "The label for category Data Unloading in sidebar tutorialSidebar"
+    "description": "The label for category Data Export in sidebar tutorialSidebar"
   },
-  "sidebar.tutorialSidebar.category.Query Acceleration": {
+  "sidebar.tutorialSidebar.category.Query Optimization": {
     "message": "查询加速",
-    "description": "The label for category Query Acceleration in sidebar tutorialSidebar"
+    "description": "The label for category Query Optimization in sidebar tutorialSidebar"
   },
   "sidebar.tutorialSidebar.category.Integration": {
     "message": "生态集成",

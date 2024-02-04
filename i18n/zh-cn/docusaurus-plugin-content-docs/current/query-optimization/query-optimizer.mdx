@@ -1,5 +1,6 @@
 ---
 title: 查询优化器
+sidebar_position: 1
 tags:
   - Docs
 ---
@@ -8,108 +9,116 @@ tags:
 
 优化器是数据库系统的核心，优秀的优化器能极大提高查询性能，特别是在复杂查询场景下优化器能带来数倍至数百倍的性能提升。
 
-ByConity 自研优化器基于四个大的优化方向提供极致优化能力：
+ByConity 自研优化器基于三个优化方向提供极致优化能力：
 
-- RBO：基于规则的优化能力。支持：列裁剪、分区裁剪、表达式简化、子查询解关联、谓词下推、冗余算子消除、Outer-JOIN 转 INNER-JOIN、算子下推存储、分布式算子拆分等常见的启发式优化能力。
-- CBO：基于代价的优化能力。支持：Join Reorder、Outer-Join Reorder、Join/Agg Reorder、CTE、物化视图、Dynamic Filter 下推、Magic Set 等基于代价的优化能力。并且面向分布式计划融合了 Property Enforcement。
+- RBO：基于规则的优化能力。ByConity实现了两种方案，一种是基于Visitor的全局改写，例如Filter的下推、列裁剪等。另一种是pattern match的局部改写，例如把两个Filter进行merge等。总体支持了列裁剪、分区裁剪、表达式简化、子查询解关联、谓词下推、冗余算子消除、Outer-JOIN 转 INNER-JOIN、算子下推存储、分布式算子拆分等常见的启发式优化能力。
+- CBO：基于代价的优化能力。这种优化依赖于统计信息的收集，目前是基于Cascades的一个搜索框架实现。ByConity支持了Join Reorder、Outer-Join Reorder、Join/Agg Reorder、CTE、物化视图、Dynamic Filter 下推、Magic Set 等基于代价的优化能力。并且面向分布式计划融合了 Property Enforcement。
 - DBO：基于数据依赖的优化能力。支持：唯一键、functional dependency、Order dependency、Inclusion dependency 等基于数据依赖关系的优化能力。
 
-# Turn on Query Optimizer
-
-set dialect_type ='ANSI' or set enable_optimizer =1
-
-If turn on ANSI mode, the optimizer will be turned on automatically.
-
-# Commands for collecting, displaying and deleting statistical information
-
-## Syntax Definition
-
-- Subsequent versions will have automatic collection, update and analysis of statistical information
+在ByConity中可以使用以下参数打开优化器：
 
 ```
--- NOTE: ALL means currentDatabase().*
+-- 注意：这里如果打开了ANSI mode, 优化器也会自动打开
+set dialect_type ='ANSI'
+-- 或者
+set enable_optimizer =1
+```
 
---    specifying columns and sample config is supportted
+## 收集、显示和删除统计信息的命令
+
+###语法定义：
+
+- 说明：后续版本将具有自动收集、更新和分析统计信息的功能
+
+```
+-- NOTE: 参数ALL表示当前数据库的所有表
+
+-- 支持指定列和样本配置
 CREATE STATS [IF NOT EXISTS] (<db>.* | ALL | [<db>.]<table>['(' <col1>, <col2>, ..., <coln> ')']) [WITH (FULLSCAN | SAMPLE [<rows> ROWS] [<ratio> RATIO])]
 
--- Delete statistics
---   specifying columns is supported
+-- 删除统计信息
+-- 支持指定列
 DROP STATS (<db>.* | ALL | [<db>.]<table>['(' <col1>, <col2>, ..., <coln> ')' ])
 
---   specifying columns is supported
+-- 支持指定列
 SHOW (STATS|COLUMN_STATS) (<db>.* | ALL | [<db>.]<table>'('<col1>, <col2>, ..., <coln> ')' )
+```
+
+### 收集统计信息
 
 ```
 
-## Syntax Example:
-
-### Create Statistics
-
-```
-
--- create stats for all table in current database which has no statistics
+-- 为当前数据库中没有统计信息的所有表创建统计信息
 create stats if not exists all;
--- create stats for all table in db1 which has no statistics
+
+-- 为db1中没有统计信息的所有表创建统计信息
 create stats if not exists db1.*;
 
--- create stats for t1.c1,
+-- 为t1.c1创建统计信息
 create stats t1(c1);
--- create stats for t1.c1, t1.c2,
+
+-- 为t1.c1,和t1.c2创建统计信息
 create stats t1(c1, c2);
 
--- create stats on t1, force to use fullscan,
--- otherwise controlled by statistics_enable_sample
+-- 在t1上创建统计信息，强制使用全表扫描，
 create stats t1 with fullscan
--- sample MAX(**statistics_sample_row_count**, 0.01 * full_rows_count) rows when create stats for each table
+
+-- 在创建每个表的统计信息时候，抽样如下行
+-- MAX(**statistics_sample_row_count**, 0.01 * full_rows_count)
 create stats all with 0.01 ratio;
--- sample MAX(40000000, 0.01 * full_rows_count) rows when create stats for each table
+
+-- 在创建每个表的统计信息时，抽样如下行
+-- MAX(40000000, 0.01 * full_rows_count) 
 create stats all with 0.01 ratio 40000000 rows;
--- sample with default settings,
--- controlled by **statistics_sample_row_count** and **statistics_sample_ratio
+
+-- 使用默认设置进行取样，
+-- 由 statistics_sample_row_count 和 statistics_sample_ratio 控制
 create stats all with sample;
 
 ```
 
-### Show Statistics
+### 显示统计信息
 
 ```
 
--- show table statistics for all tables in current database
+-- 显示当前数据库中所有表的表统计信息
 show stats all;
--- show table statistics for all tables in db1
+
+-- 显示 db1 中所有表的表统计信息
 show stats db1.*;
--- show table statistics for table t1
+
+-- 显示表 t1 的表统计信息
 show stats t1;
--- show column statistics for table t1
+
+-- 显示表 t1 的列统计信息
 show column_stats t1;
 
--- show column statistics for column c1, c2 of table t1
+-- 显示表 t1 的列 c1、c2 的列统计信息
 show column_stats t1(c1, c2);
 
 ```
 
-### Drop Statistics
+### 删除统计信息
 
 ```
 
--- show statistics for all tables in current database
+-- 删除当前数据库中所有表的统计信息
 drop stats all;
--- show statistics for all tables in db1.*
+
+-- 删除 db1.* 中所有表的统计信息
 drop stats db1.*;
--- show statistics for table t1
+
+-- 删除表 t1 的统计信息
 drop stats t1;
 
-
--- drop statistics for column c1, c2 of table t1
+-- 删除表 t1 的列 c1、c2 的统计信息
 drop stats t1(c1, c2);
 
 ```
 
-# Usage of Explain
+## Explain的使用
 
-## Explain
-
-- Explain + SQL
+1. Explain + SQL
 
 ```
 EXPLAIN
@@ -141,13 +150,11 @@ LIMIT 100
 
 ```
 
-- Result of Explain
+结果输出：
 
-![](./assets/query-optimiser/boxcnbHJgX6mTV1MHFyLXajy23f.png)
+![](./assets/boxcnbHJgX6mTV1MHFyLXajy23f.png)
 
-## **Explain Analyze**
-
-Explain analyze + SQL
+2. Explain analyze + SQL
 
 ```
 EXPLAIN ANALYZE LOGICAL
@@ -321,7 +328,7 @@ LIMIT 100
 
 ```
 
-Explain analyze distributed + SQL
+3. Explain analyze distributed + SQL
 
 ```
 EXPLAIN ANALYZE DISTRIBUTED
@@ -344,8 +351,10 @@ LIMIT 100
 
 ```
 
+结果输出：
 ![](./assets/query-optimiser/boxcnxiwhbhVnUQkflLLELMblMb.png)
 
-- QError: max(Est rows, Act rows) / min(Est rows, Act rows), 1 is the best.
-- Wall Time: max wall time of all the workers. We can figure out which step takes the most time.
-- CPU Time: We can figure out which step has the data skew issue. (If the max time is bigger than avg time, there is one worker which processed too much data.)
+说明：
+- QError: max(Est rows, Act rows) / min(Est rows, Act rows)，1 是最佳的。
+- Wall Time: 所有工作节点中的最大墙钟时间。我们可以找出哪个步骤花费了最多的时间。
+- CPU Time: 我们可以找出哪个步骤存在数据倾斜问题（如果最大时间大于平均时间，则表示有一个工作节点处理了过多的数据）。
