@@ -1,0 +1,63 @@
+---
+title: How to Build 
+sidebar_position: 1
+tags:
+  - Docs
+---
+
+
+# Building ByConity Source Code on Linux
+
+## Dependencies
+
+To build ByConity from source code on Linux, you need to install the following components:
+
+```
+Git
+CMake 3.17 or newer
+Ninja
+C++ compiler: clang-11 or clang-12
+Linker: lld
+Third-Party Library: openssl
+```
+
+## Installing Dependencies
+
+Example for Debian 11 (Bullseye):
+
+```bash
+sudo apt-get update
+sudo apt-get install git cmake ccache python3 ninja-build libssl-dev
+
+# install llvm 12
+sudo apt install lsb-release wget software-properties-common gnupg # pre-requisites of llvm.sh
+wget https://apt.llvm.org/llvm.sh
+chmod +x llvm.sh
+sudo ./llvm.sh 12
+```
+
+## Compiling ByConity
+
+```bash
+git clone --recursive <ByConity Repository URL> byconity
+
+cd byconity
+mkdir build && cd build
+export CC=clang-12
+export CXX=clang++-12
+cmake ..
+ninja
+```
+
+The executable files will be located in the `programs` directory:
+
+```bash
+clickhouse-client    # byconity client
+clickhouse-server    # byconity server
+clickhouse-worker    # byconity worker
+tso_server           # byconity tso
+daemon_manager       # byconity daemon manager
+resource_manager     # byconity resource manager
+```
+
+**Note:** The repository URL `<ByConity Repository URL>` in the `git clone` command is a placeholder. You need to replace it with the actual URL of the ByConity repository. Additionally, the executable file names (`clickhouse-client`, `clickhouse-server`, etc.) mentioned at the end might not reflect the actual names used in the ByConity project. These are placeholders and should be replaced with the correct executable names provided by the ByConity project.
