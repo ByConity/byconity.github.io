@@ -1,0 +1,165 @@
+---
+title: Docker Deployment
+sidebar_position: 1
+tags:
+  - Docs
+---
+
+# Docker Deployment
+
+This tutorial guides users to quickly deploy ByConity locally using Docker. Users can follow the steps below to deploy a simple ByConity cluster for a quick start experience. If you want to fully try and understand ByConity, it is recommended that you skip this section and refer directly to [ByConity Cluster Deployment](../deployment/02-deployment-with-k8s) to experience the powerful performance of ByConity.
+
+**Note**:
+
+1. ByConity uses FoundationDB as its metadata storage, but FoundationDB does not work properly in Docker on Apple Silicon machines. Therefore, Docker deployment of ByConity will not run on mac m1/m2.
+2. Docker deployment is only suitable for basic entry-level testing and is not recommended for large-scale testing or production environments. Refer to #ByConity Deployment# to understand deployment methods for other scenarios.
+
+## Environment Preparation
+
+**Hardware Requirements**:
+
+* It is recommended to use a server with a configuration of at least 8 cores and 16GB RAM.
+
+**Software Requirements**:
+
+* Install Docker
+* Install MySQL client
+
+## Deployment Steps
+
+1. **Get the Code**
+
+Clone the stable version of ByConity from Github and switch to the docker directory.
+
+
+```bash
+git clone git@github.com:ByConity/ByConity.git
+cd ByConity/docker/docker-compose
+```
+2. **Create an Environment File**
+
+Create an environment file named `.env` from the provided template `.env.tpl`.
+
+
+```bash
+cp .env.tpl .env
+```
+3. **Modify Environment Variables**
+
+Modify the `.env` file accordingly. Here are the variables you can configure:
+
+* `COMPOSE_PROJECT_NAME`: This sets the project name for the Docker Compose setup.
+* `DATA_DIR`: Specifies the local path to be mounted into the Docker containers. This path is used for local disk caching, logs, etc.
+* `SERVER_TCP_PORT` and `SERVER_HTTP_PORT`: These variables define the exposed ports for the TCP and HTTP ports of the ByConity server.
+4. **Set ByConity Docker Image Source**
+
+If running a specific released version of ByConity:
+
+* Update the `BYCONITY_IMAGE` variable in the `.env` file to the desired release version, e.g., `byconity/byconity:0.2.0`.
+* Set `BYCONITY_BINARY_PATH` to an empty string.
+
+If running ByConity with a locally built binary:
+
+* Update the `BYCONITY_IMAGE` variable in the `.env` file to `byconity/debian-runner`.
+* Set `BYCONITY_BINARY_PATH` to the path where the locally built binary is located.
+
+You can also use the ByConity dev-env Docker to compile and build your own ByConity image.
+
+5. **Start ByConity with Docker Compose**
+
+To start ByConity using Docker Compose, use the following command:
+
+
+```bash
+# -d indicates running the containers in the background
+docker-compose -f docker-compose.essentials.yml [-f docker-compose.simple.yml] up [-d]
+```
+* `docker-comple.essentials.yml`: Starts the essential dependencies for the byconity cluster.
+* `docker-comple.simple.yml`: A simple byconity cluster.
+* `docker-comple.multiworker.yml`: A multi-worker byconity cluster.
+6. **Print Logs to the Console**
+
+To print the logs of the services to the console, you need to update the configuration files under `byconity-*-cluster`. Set `logger: console: true` in the configuration files.
+
+## Connectivity Test
+
+Access ByConity using the CLI:
+
+
+```bash
+./scripts/byconity-cli.sh
+```
+Access HDFS files:
+
+
+```bash
+./scripts/hdfs-cli.sh "hdfs -dfs ls /user/clickhouse"
+```
+Access fdb through the CLI:
+
+
+```bash
+./scripts/fdb-cli.sh
+```
+## Checking the Worker Group Status:
+
+
+```sql
+SELECT * FROM system.worker_groups;
+```
+Sample Output:
+
+
+```diff
+Query id: f60481b4-b9a7-494d-a639-ac7be3aa5292
+
+Row 1:
+──────
+id:             wg_default
+type:           Physical
+vw_uuid:        1a415df1-6265-40b3-9c00-230fc3b026c1
+vw_name:        vw_default
+linked_id:
+active_workers: 1
+min_cpu_usage:  9
+max_cpu_usage:  9
+avg_cpu_usage:  9
+min_mem_usage:  8
+max_mem_usage:  8
+avg_mem_usage:  8
+is_auto_linked: 0
+```
+Check worker status:
+
+
+```sql
+SELECT * FROM system.workers;
+```
+Sample Output:
+
+
+```diff
+Query id: f2377b52-38eb-4437-9813-d34f9dd28049
+
+Row 1:
+──────
+worker_id:             w1
+host:                  {HOST}
+tcp_port:              {TCP_PORT}
+rpc_port:              {RPC_PORT}
+http_port:             {HTTP_PORT}
+exchange_port:         {EXCHANGE_PORT}
+exchange_status_port:  {EXCHANGE_STATUS_PORT}
+vw_name:               vw_default
+worker_group_id:       wg_default
+query_num:             0
+cpu_usage:             {xxx}
+reserved_cpu_cores:    0
+memory_usage:          {xxx}
+disk_space:            {xxx}
+memory_available:      {xxx}
+reserved_memory_bytes: 0
+register_time:         2022-11-30 18:19:49
+last_update_time:      2022-11-30 18:21:09
+state:                 1
+```

@@ -6,31 +6,29 @@ tags:
 ---
 
 
-There are a few ways to get started with ByConity. You have the choice to deploy ByConity through [package deployment](../deployment/package-deployment), using [docker wrapper](../deployment/docker-wrapper) or [deploy ByConity in Kubernetes](../deployment/deploy-k8s). To get started quickly, we recommend that you use the [ByConity Playground](https://github.com/ByConity/byconity-docker) with docker-compose/the docker wrapper. 
+# Basic Operations
 
-The playground only requires a few dependencies:
-- Colima (Docker runtime)
-- Docker
-- Docker Compose
+This tutorial guides users through the basic operations of creating tables, importing data, and querying data using ByConity in a Docker deployment environment.
 
-After you've downloaded all of the dependencies, get your cluster up and running, follow the tutorial below, and give ByConity a quick spin!   
+## Create Tables
 
+Connect to the database:
 
 
-# Getting Started Tutorial
-
-## Connect to the database
-
-```
+```bash
 ./clickhouse-client -m -h HOST --port PORT
-
 ```
+Create a database:
 
-## Create database and table
 
-```
+```sql
 CREATE DATABASE IF NOT EXISTS helloworld;
+use helloworld;
+```
+Create a table in the database:
 
+
+```sql
 CREATE TABLE helloworld.my_first_table
 (
     user_id UInt32,
@@ -40,105 +38,71 @@ CREATE TABLE helloworld.my_first_table
 ENGINE = CnchMergeTree()
 PARTITION BY timestamp
 ORDER BY (user_id, timestamp);
-
 ```
+View table information:
 
-## Insert and query
 
+```sql
+SHOW TABLES;
+DESC my_first_table;
 ```
+Insert data:
+
+
+```sql
 INSERT INTO helloworld.my_first_table (user_id, message, timestamp) VALUES
     (101, 'Hello, ByConity!',                                 now()),
     (102, 'Insert a lot of rows per batch',                     yesterday()),
     (102, 'Sort your data based on your commonly-used queries', today()),
     (101, 'Granules are the smallest chunks of data read',      now() + 5);
+```
+## Import Data
 
+ByConity supports five different methods of importing data: local file import, HDFS import, Kafka import, Spark import, MySQL import, and Hive external table import. Please refer to the "Data Import" section of the documentation for specific details. Here, we will briefly explain how to write a data file using ByConity, taking local file import as an example.
+
+## Insert to File
+
+Assuming we have a data file named `data.csv`:
+
+
+```csv
+102,This is data in a file,2022-02-22 10:43:28
+101,It is comma-separated,2022-02-23 00:00:00
+103,Use FORMAT to specify the format,2022-02-21 10:43:30
+...
+```
+Import the data from the file into the table:
+
+
+```bash
+./clickhouse-client -h {HOST} --port {PORT} --query='INSERT INTO helloworld.my_first_table FORMAT CSV' < data.csv
+```
+Query the data in the table:
+
+
+```bash
+./clickhouse-client -h {HOST} --port {PORT} --query='SELECT * FROM helloworld.my_first_table'
+```
+## Query Data
+
+ByConity supports simple query statements:
+
+
+```sql
 SELECT * FROM helloworld.my_first_table;
 
 SELECT * FROM helloworld.my_first_table ORDER BY timestamp;
 
-SELECT *　FROM helloworld.my_first_table　ORDER BY timestamp　FORMAT JSON;
-
-exit;
-
+SELECT * FROM helloworld.my_first_table ORDER BY timestamp FORMAT JSON;
 ```
+## View Historical Queries
 
-## Insert file
-
-Suppose we have a file data.csv
-
-```
-102,This is data in a file,2022-02-22 10:43:28
-101,It is comma-separated,2022-02-23 00:00:00
-103,Use FORMAT to specify the format,2022-02-21 10:43:30
-
-```
-
-```
-./clickhouse-client -h {HOST} --port {PORT} --query='INSERT INTO helloworld.my_first_table FORMAT CSV' < data.csv
-
-./clickhouse-client -h {HOST} --port {PORT} --query='SELECT * FROM helloworld.my_first_table'
-
-```
-
-# view VW status
-
-```
-SELECT * FROM system.worker_groups
-
-Query id: f60481b4-b9a7-494d-a639-ac7be3aa5292
-
-Row 1:
-──────
-id:             wg_default
-type:           Physical
-vw_uuid:        1a415df1-6265-40b3-9c00-230fc3b026c1
-vw_name:        vw_default
-linked_id:
-active_workers: 1
-min_cpu_usage:  9
-max_cpu_usage:  9
-avg_cpu_usage:  9
-min_mem_usage:  8
-max_mem_usage:  8
-avg_mem_usage:  8
-is_auto_linked: 0
-
-SELECT *
-FROM system.workers
-
-Query id: f2377b52-38eb-4437-9813-d34f9dd28049
-
-Row 1:
-──────
-worker_id:             w1
-host:                  {HOST}
-tcp_port:              {TCP_PORT}
-rpc_port:              {RPC_PORT}
-http_port:             {HTTP_PORT}
-exchange_port:         {EXCHANGE_PORT}
-exchange_status_port:  {EXCHANGE_STATUS_PORT}
-vw_name:               vw_default
-worker_group_id:       wg_default
-query_num:             0
-cpu_usage:             {xxx}
-reserved_cpu_cores:    0
-memory_usage:          {xxx}
-disk_space:            {xxx}
-memory_available:      {xxx}
-reserved_memory_bytes: 0
-register_time:         2022-11-30 18:19:49
-last_update_time:      2022-11-30 18:21:09
-state:                 1
-
-```
-
-# view history query
+You can view historical queries by accessing the system table `query_log`:
 
 [https://clickhouse.com/docs/en/operations/system-tables/query_log/](https://clickhouse.com/docs/en/operations/system-tables/query_log/)
 
-```
+
+```sql
 SELECT * FROM system.query_log;
-
 ```
 
-#
