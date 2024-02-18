@@ -29,7 +29,7 @@ kubectl port-forward -n cnch cnch-default-server-0 8123:8123
 
 对指标的存储选择 VictoriaMetric，方便进行存储的横向扩展和提供更丰富的功能。其中重要的功能是 VMRule，可对原始指标进行聚合。因各组件吐出的原始 Prometheus 指标其中一部分可以直接使用来构建监控告警，另一部分比较复杂，不容易直接构建监控看板和告警，所以通过 VWRule 进行聚合。
 
-具体配置规则参考文件 [cnch-metrics.yaml](../assets/monitoring/cnch-metrics.yaml)，可通过kubectl执行配置生效：
+具体配置规则参考文件 [cnch-metrics.yaml](./assets/monitoring/cnch-metrics.yaml)，可通过kubectl执行配置生效：
 
 ```
 kubctl apply -f cnch-metrics.yaml # 配置对应rule
