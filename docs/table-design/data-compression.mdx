@@ -1,0 +1,25 @@
+---
+title: Data Compression
+sidebar_position: 3
+tags:
+  - Docs
+---
+
+# Data Compression
+
+ByConity supports codecs for lists, which are methods for compressing and decompressing data aimed at saving storage space and improving I/O performance.
+
+## General Encodings
+
+ByConity supports four general encodings: lz4, lz4hc, zstd, and deflate_qpl. Among them, lz4 belongs to the fast compression algorithm, and its compression efficiency is not its main goal. Therefore, its compression ratio is lower than that of zstd. Intel's IAA (Intel Advanced Analytics) platform supports qpl encoding, so you can consider using qpl on this platform. Links to the documentation provide detailed references for the encodings.
+
+## Special Encodings
+
+ByConity also supports several special encodings that can be used together with general encodings, including Delta, DoubleDelta, Gorilla, FPC, and T64. Among them, DoubleDelta encoding can be considered for time series data, and Gorilla encoding can be considered for values that change over time. FPC encoding works well for 64-bit floating-point numbers. T64 encoding finds the common high bits of 64 values and trims them, only recording the changing parts.
+
+## Best Practices
+
+* For DateTime type (unsorted), it is recommended to use Delta+LZ4.
+* For DateTime type (sorted), LZ4 is recommended.
+* For Date type (unsorted), ZSTD is recommended.
+* For Date type (sorted, e.g., PK), LZ4 is recommended.
