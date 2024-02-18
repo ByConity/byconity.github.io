@@ -28,7 +28,7 @@ Afterward, you can open `localhost:8123/metrics` in a web browser to see the dis
 
 VictoriaMetric is chosen for metric storage, facilitating horizontal scaling and providing richer functionality. An important feature is VMRule, which allows aggregation of raw metrics. Some of the raw Prometheus metrics emitted by various components can be directly used to build monitoring alerts, while others are more complex and not suitable for directly building dashboards or alerts. These are aggregated using VWRule.
 
-Refer to the file [cnch-metrics.yaml](../assets/monitoring/cnch-metrics.yaml) for specific configuration rules, and apply the configuration using kubectl:
+Refer to the file [cnch-metrics.yaml](./assets/monitoring/cnch-metrics.yaml) for specific configuration rules, and apply the configuration using kubectl:
 
 ```bash
 kubctl apply -f cnch-metrics.yaml # Apply the corresponding rules
