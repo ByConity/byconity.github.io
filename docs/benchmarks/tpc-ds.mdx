@@ -1,11 +1,9 @@
 ---
-slug: 2023-09-13-byconity-vs-other-olap-engines-tpc-ds-benchmarks
-date: 2023-09-13
-title: ByConity and mainstream OLAP engines (Clickhouse, Doris, Presto) performance comparison
-authors: [vinijaiswal, tigerwangyb]
-tags: [tpc ds benchmarks, olap engines]
-keywords: ["ByteDance", "datawarehouse", "benchmarks", "olap", "open source"]
+title: TPC-DS
+tags:
+  - Docs
 ---
+
 # Introduction
 With the increasing amount and complexity of data, enterprises are increasingly turning to OLAP (On-Line Analytical Processing) engines to process large-scale data and deliver real-time analytical insights. Performance is a very important factor when choosing an OLAP engine. Therefore, this article aims to offer valuable insights by conducting a performance comparison among four prominent open-source OLAP engines: ClickHouse, Doris, Presto, and ByConity. To achieve this, we employ a set of 99 query statements sourced from the TPC-DS benchmark. Our aim is to provide reference for enterprises in their journey to select the most fitting OLAP engine for their specific needs.
 
@@ -82,33 +80,33 @@ ClickHouse presented unique challenges as it managed to execute only 50% of the 
 
 Figure 1 illustrates that ByConity's open-source query performance superseds the other engines, achieving approximately 3-4 times faster execution times. (Please note that all units on the vertical axis of the subsequent charts are expressed in seconds).
 
-![Figure 1: TPC-DS 99 query total time](./tpc-ds-query-total-time.jpeg)
+![Figure 1: TPC-DS 99 query total time](./assets/tpc-ds-query-total-time.jpeg)
 
 For the 99 query statements in the TPC-DS benchmark, we will classify them according to different query scenarios, such as basic query, join query, aggregate query, subquery, window function query, etc. In the sections below, we will utilize these classification criteria to assess and compare the performance of the four OLAP engines: ClickHouse, Doris, Presto, and ByConity.
 
 ## Scenario 1: Basic query
 In this scenario, we evaluate the performance of the four OLAP engines in handling fundamental query operations. The operations include retrieving data from a single table, applying filters, and sorting results. The primary focus of the basic query performance test is assessing how well each engine handles a single query. Among them, ByConity performs the best, with both Presto and Doris delivering commendable results. This success can be attributed to the fact that basic queries typically involve a limited number of data tables and fields, allowing Presto and Doris to leverage their distributed query capabilities and in-memory computing features effectively. However, ClickHouse faces some challenges in this regard, particularly with regards to multi-table associations. In certain cases, it encounters issues, with SQL5, 8, 11, 13, 14, 17, and 18 experiencing timeouts during testing. It's worth noting that our timeout threshold is set at 500 seconds, but for greater clarity, we've truncated the timeout limit to 350 seconds. Figure 2 below presents the average query times for the four engines in the basic query scenario:
 
-![Figure 2: Performance comparison of TPC-DS basic query](./perf-comparison-TPC-DS-basic-query.png)
+![Figure 2: Performance comparison of TPC-DS basic query](./assets/perf-comparison-TPC-DS-basic-query.png)
 
 ## Scenario 2: Join query
 Join queries represent a common multi-table query scenario where the JOIN statement is used to combine multiple tables and retrieve data based on specified conditions. As shown in Figure 3, we observe that ByConity excels in this scenario, primarily owing to its robust query optimizer optimization. ByConity benefits from the introduction of cost-based optimization capabilities (CBO), and the execution of re-order optimization operations during multi-table joins. Following closely behind, we have Presto and Doris, both delivering respectable results in handling multi-table join queries. However, ClickHouse exhibits comparatively weaker performance in multi-table joins when compared to the other three engines. It also faces limitations in its support for more complex statements.
 
-![Figure 3: Performance comparison of TPC-DS Join Query](./perf-comparison-TPC-DS-join-query.png)
+![Figure 3: Performance comparison of TPC-DS Join Query](./assets/perf-comparison-TPC-DS-join-query.png)
 
 ## Scenario 3: Aggregate query
 Aggregate queries involve statistical data calculations, typically encompassing the use of aggregation functions like SUM, AVG, COUNT, and more. In this scenario, ByConity continues to demonstrate strong performance, with Doris and Presto following suit. However, when it comes to handling aggregate queries, ClickHouse faced challenges, encountering timeouts on four occasions. To provide a clearer distinction, we've adjusted the timeout threshold to 250 seconds.
-![Figure 4: Performance comparison of TPC-DS Aggregation Query](./perf-comparison-TPC-DS-agg-query.png)
+![Figure 4: Performance comparison of TPC-DS Aggregation Query](./assets/perf-comparison-TPC-DS-agg-query.png)
 
 ## Scenario 4: Subquery
 Subquery, also known as nested queries in SQL, are typically used as a condition or constraint for the primary query. As illustrated in Figure 5 below, ByConity performs best because ByConity implements rule-based optimization capabilities (RBO) for query optimization, utilizing techniques such as operator pushdown, column clipping, and partition clipping. Complex nested queries are optimized comprehensively, replacing all subqueries and converting common operators into the form of Join + Agg. Following ByConity, we have Doris and Presto, which performed relatively well. However it's worth noting that Presto experiences timeouts in SQL68 and SQL73, while Doris encounters timeouts in three SQL queries. Clickhouse also experiences some timeouts and system errors, previously mentioned. To facilitate performance differences, we adjusted the timeout threshold to 250 seconds.
 
-![Figure 5. Performance comparison of TPC-DS subquery](./perf-comparison-TPC-DS-sub-query.png)
+![Figure 5. Performance comparison of TPC-DS subquery](./assets/perf-comparison-TPC-DS-sub-query.png)
 
 ## Scenario 5: Window function
 Window function query is an advanced SQL query scenario that enables operations such as ranking, grouping, sorting, and more within query results. As shown in Figure 6 below, ByConity has the best performance, followed by Presto. However, Doris encounters a timeout situation. Meanwhile, ClickHouse still faces challenges and hasn't completed the entire TPC-DS test in this scenario.
 
-![Figure 6. Performance comparison of TPC-DS window function query](./perf-comparison-TPC-DS-window-query.png) !(./f1)
+![Figure 6. Performance comparison of TPC-DS window function query](./assets/perf-comparison-TPC-DS-window-query.png) !(./f1)
 
 # Summary
 In conclusion, this article analyzes and compares the performance of ClickHouse, Doris, Presto, and ByConity, four prominent OLAP engines, across aspectrum of 99 query statements from the TPC-DS benchmark test. We found that there are differences in the performance of the four engines under different query scenarios. ByConity performs well in all 99 query scenarios of TPC-DS, surpassing the other three OLAP engines. Presto and Doris exhibited their strengths in join queries, aggregate queries, and window function scenarios, contrasting with ClickHouse's performance, which showed some limitations in optimizing multi-table associative queries.
