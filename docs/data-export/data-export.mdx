@@ -1,0 +1,105 @@
+---
+title: Data Export
+tags:
+  - Docs
+---
+
+# Exporting Data
+
+This tutorial aims to guide users on how to export data from tables in ByConity to different file systems or databases, as well as how to export query results. Currently, ByConity supports exporting data to local file systems and HDFS (Hadoop Distributed FileSystem).
+
+## Preparation
+
+Ensure that you are familiar with the basic operations of ByConity and the use of SQL syntax.
+
+## Exporting to Local
+
+1. Create a sample table and insert data:
+
+
+```sql
+CREATE TABLE test.select_outfile_testtable
+(
+    `a` Int8,
+    `b` String,
+    `c` Int8,
+    `date` Date
+)
+ENGINE = CnchMergeTree()
+PARTITION by toYYYYMM(date)
+ORDER BY tuple()
+```
+
+2. Insert data:
+
+
+```sql
+INSERT INTO test.select_outfile_testtable VALUES (1, 'a', 1,'2022-11-10'), (2, 'b', 2,'2022-11-11'), (3, 'c', 3,'2022-11-12'), (4, 'd', 4,'2022-11-13');
+```
+
+3. Use the `SELECT ... INTO OUTFILE` statement to export data as a CSV file:
+
+
+```sql
+SELECT * FROM test.select_outfile_testtable INTO OUTFILE 'select.csv' FORMAT CSV
+```
+
+4. Output result:
+
+
+```bash
+➜  ~ cat select.csv
+1,"a",1,"2022-11-10"
+2,"b",2,"2022-11-11"
+3,"c",3,"2022-11-12"
+4,"d",4,"2022-11-13"
+```
+
+## Exporting to HDFS
+
+Using the `SELECT ... INTO OUTFILE` statement, you can export data to HDFS. For example:
+
+
+```sql
+SELECT <expr_list> INTO OUTFILE 'hdfs://ip:port/user/tiger/test/test.gz' FORMAT format_name
+```
+Where `hdfs://ip:port/user/tiger/test/test.gz` is the HDFS address for uploading, with the following format:
+
+* `hdfs://` is a fixed prefix indicating upload to HDFS; `ip` is the hdfs namenode service address.
+* `/user/tiger/test/test.gz` is the path of the output file. Note that the hdfs directory path must be available.
+
+Common formats such as CSV, Parquet, and JSON are supported for exporting to HDFS. To reduce network transmission, gzip compression is enabled by default.
+
+## Using the Dumper Tool
+
+When using the Dumper for data migration, you can specify a table and some of its partitions at once and write them to HDFS. The main principle of work is to traverse the local disk of the table that needs to be migrated, find the active part, write it in ByConity's own format, and then use the Dumper to upload it to HDFS.
+
+
+```>
+
+-C<file>, --config-file=<file>             load configuration from a given file
+--database=<database>                      database to be<path>, --output=<path>                  output path on shared-storage
+-P<num_threads>, --parallel=<num_threads>  threads for dumping parts
+-R, --overwrite                            overwrite existed parts
+--partition_list 
+--skip_partition_list
+--S
+--skip_unkowning_settings
+--help                                     produce this help message
+```
+* `--config-file`: Specifies the configuration file for the open-source clickhouse.
+* `--database`: Specifies the database to be migrated.
+* `--table`: Specifies the table to be migrated.
+* `--hdfs_nnproxy`: Specifies the ByConity hdfs nnproxy.
+* `--output`: Specifies the path where the Dumper will upload to hdfs.
+* `--partition_list`: Supports specifying a particular partition_list.
+* `--skip_partition_list`: Specifies the partition_list to be skipped.
+* `-S`: Skips bad parts.
+* `-R`: Supports overwriting existing parts if they already exist in hdfs.
+
+Finally, execute the following command on the ByConity side to complete the migration:
+
+
+```sql
+ALTER TABLE test_db.test_table ATTACH PARTITION '2020-10-10' FROM '/tmp/hdfs_path/<ip>/test_db/test_table'
+```
