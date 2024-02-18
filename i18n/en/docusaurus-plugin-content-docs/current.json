@@ -1,6 +1,6 @@
 {
   "version.label": {
-    "message": "0.3.0 🚧",
+    "message": "0.3.0",
     "description": "The label for version current"
   },
   "sidebar.tutorialSidebar.category.Functions": {
@@ -11,20 +11,64 @@
     "message": "Introduction",
     "description": "The label for category Introduction in sidebar tutorialSidebar"
   },
+  "sidebar.tutorialSidebar.category.Quick Start": {
+    "message": "Quick Start",
+    "description": "The label for category Quick Start in sidebar tutorialSidebar"
+  },
+  "sidebar.tutorialSidebar.category.Deployment": {
+    "message": "Deployment",
+    "description": "The label for category Deployment in sidebar tutorialSidebar"
+  },
+  "sidebar.tutorialSidebar.category.Table Design": {
+    "message": "Table Design",
+    "description": "The label for category Table Design in sidebar tutorialSidebar"
+  },
+  "sidebar.tutorialSidebar.category.Data Import": {
+    "message": "Data Import",
+    "description": "The label for category Data Import in sidebar tutorialSidebar"
+  },
+  "sidebar.tutorialSidebar.category.Data Export": {
+    "message": "Data Export",
+    "description": "The label for category Data Export in sidebar tutorialSidebar"
+  },
+  "sidebar.tutorialSidebar.category.Data Lake": {
+    "message": "Data Lake",
+    "description": "The label for category Data Lake in sidebar tutorialSidebar"
+  },
+  "sidebar.tutorialSidebar.category.Query Optimization": {
+    "message": "Query Optimization",
+    "description": "The label for category Query Optimization in sidebar tutorialSidebar"
+  },
+  "sidebar.tutorialSidebar.category.Integration": {
+    "message": "Integration",
+    "description": "The label for category Integration in sidebar tutorialSidebar"
+  },
   "sidebar.tutorialSidebar.category.SQL Syntax": {
     "message": "SQL Syntax",
     "description": "The label for category SQL Syntax in sidebar tutorialSidebar"
   },
-  "sidebar.tutorialSidebar.category.Basic Guides": {
-    "message": "Basic Guides",
-    "description": "The label for category Basic Guides in sidebar tutorialSidebar"
+  "sidebar.tutorialSidebar.category.Admin Guides": {
+    "message": "Admin Guides",
+    "description": "The label for category Admin Guides in sidebar tutorialSidebar"
   },
-  "sidebar.tutorialSidebar.category.Advanced Guides": {
-    "message": "Advanced Guides",
-    "description": "The label for category Advanced Guides in sidebar tutorialSidebar"
+  "sidebar.tutorialSidebar.category.Benchmarks": {
+    "message": "Benchmarks",
+    "description": "The label for category Benchmarks in sidebar tutorialSidebar"
+  },
+  "sidebar.tutorialSidebar.category.Developer Guides": {
+    "message": "Developer Guides",
+    "description": "The label for category Developer Guides in sidebar tutorialSidebar"
+  },
+  "sidebar.tutorialSidebar.category.FAQ": {
+    "message": "FAQ",
+    "description": "The label for category FAQ in sidebar tutorialSidebar"
   },
   "sidebar.tutorialSidebar.category.Community": {
     "message": "Community",
     "description": "The label for category Community in sidebar tutorialSidebar"
+  },
+  "sidebar.tutorialSidebar.category.Release Note": {
+    "message": "Release Note",
+    "description": "The label for category Release Note in sidebar tutorialSidebar"
   }
 }
