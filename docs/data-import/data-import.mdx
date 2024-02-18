@@ -1,0 +1,623 @@
+---
+title: Data Import
+sidebar_position: 2
+tags:
+  - Docs
+---
+
+# Importing Data
+
+## Streaming Data Import (Local Files and In-Memory Data)
+
+ByConity provides three methods to stream data from local files and in-memory sources. These methods cover simple insertion of test data, importing data from various file formats, and saving query results. Different methods are suitable for different use cases, but please note that some advanced features may result in performance degradation.
+
+### Method 1: Using Conventional Syntax with VALUES Format
+
+This method is suitable for temporarily inserting small amounts of data for testing. The syntax is as follows:
+
+```
+INSERT INTO [db.]table [(c1, c2, c3...)] VALUES (v11, v12, v13), (v21, v22, v23), ...
+```
+
+Here, `c1`, `c2`, `c3` are column declarations that can be omitted. `VALUES` is followed by the data to be written in the form of tuples, corresponding to the column declarations by index. Data can be written in batches, with multiple rows separated by commas.
+
+For example, for the following table:
+
+```
+CREATE TABLE test.insert_select_testtable
+(
+    `a` Int8,
+    `b` String,
+    `c` Int8,
+    `date` Date
+)
+ENGINE = CnchMergeTree()
+PARTITION by toYYYYMM(date)
+ORDER BY tuple()
+```
+
+You can use the following statement to insert data:
+
+```
+INSERT INTO insert_select_testtable VALUES (1, 'a', 1,'2022-11-10');
+```
+
+You can also include expressions or functions when writing data, for example:
+
+```
+INSERT INTO insert_select_testtable VALUES (1, 'a', 1, now());
+```
+
+### Method 2: Using Syntax with Specified Format
+
+This method uses syntax with a specified format to insert data:
+
+```
+INSERT INTO [db.]table [(c1, c2, c3...)] FORMAT format_name data_set
+```
+
+ByConity supports various data formats. Taking the commonly used CSV format as an example:
+
+```
+INSERT INTO insert_select_testtable FORMAT CSV
+1, 'a', 1, '2022-11-10'
+2, 'b', 2, '2022-11-11'
+```
+
+You can also insert data from a file into a table. For example:
+
+```
+INSERT INTO [db.]table [(c1, c2, c3)] FORMAT format_name INFILE file_name
+```
+
+Using the above statement, you can read data from a client file and insert it into a table. Both `file_name` and `type` are of the `String` type, and the input file format must be set in the `FORMAT` statement.
+
+### Method 3: Using SELECT Clause
+
+This method is suitable for saving the results of a query for subsequent retrieval:
+
+```
+INSERT INTO [db.]table [(c1, c2, c3...)] SELECT ...
+```
+
+The correspondence between the columns when writing and the columns in the `SELECT` statement is based on position, even if the names in the `SELECT` expression and `INSERT` statement are different. If necessary, corresponding type conversions will be performed.
+
+For example, if you want to write data from `insert_select_testtable_1` to `insert_select_testtable`, you can use the following statement:
+
+```
+INSERT INTO insert_select_testtable SELECT * FROM insert_select_testtable_1
+```
+
+When writing data using the `SELECT` clause, you can also include expressions or functions, for example:
+
+```
+INSERT INTO insert_select_testtable SELECT 1, 'a', 1, now();
+```
+
+Although both the `VALUES` and `SELECT` clause formats support declaring expressions or functions, these can introduce additional performance overhead, leading to reduced write performance. Therefore, if you are seeking optimal write performance, you should avoid using them.
+
+## Importing from HDFS
+
+ByConity also supports importing data from either a local source or HDFS, as shown in the following example:
+
+```
+INSERT INTO [db.]table [(c1, c2, c3)] FORMAT format_name INFILE 'hdfs://ip:port/file_name'
+```
+
+## Importing from Kafka
+
+CnchKafka is a table engine developed by ByConity based on the community ClickHouse Kafka table engine and optimized for cloud-native architectures. It efficiently and rapidly imports user data in real-time from Apache Kafka into ByConity. Its design and implementation are tailored to cloud-native infrastructures while enhancing certain functionalities beyond the community's implementations.
+
+### User Guide
+
+#### Table Creation
+
+Creating a CnchKafka consumer table is similar to creating a Kafka table in the community version. It requires configuring Kafka data sources and consumption parameters through the `Setting` parameter. Here's an example:
+
+```
+CREATE TABLE kafka_test.cnch_kafka_consume
+(
+    `i` Int64,
+    `ts` DateTime
+)
+ENGINE = CnchKafka()
+SETTINGS
+kafka_broker_list = '10.10.10.10:9092',  -- replace with your own broker list
+kafka_topic_list = 'my_kafka_test_topic', -- topic name to subscribe
+kafka_group_name = 'hansome_boy_consume_group', -- your consumer-group name
+kafka_format = 'JSONEachRow', -- always be json
+kafka_row_delimiter = '\n', -- always be \n
+kafka_num_consumers = 1
+```
+
+(Please refer to the section below for explanations of the `Setting` parameters and support for additional parameters.)
+
+Due to the design of Kafka consumption, three tables are required. Therefore, you need to create two additional tables.
+
+First, create a storage table (using CnchMergeTree as an example):
+
+```
+CREATE TABLE kafka_test.cnch_store_kafka
+(
+    `i` Int64,
+    `ts` DateTime
+)
+ENGINE = CnchMergeTree
+PARTITION BY toDate(ts)
+ORDER BY ts
+```
+
+Finally, create a materialized view table (only after successfully creating the Kafka table and storage table):
+
+```
+CREATE MATERIALIZED VIEW kafka_test.cnch_kafka_view
+TO kafka_test.cnch_store_kafka
+(
+    `i` Int64,
+    `ts` DateTime
+)
+AS
+SELECT * -- you can add virtual columns here if you need
+FROM kafka_test.cnch_kafka_consume
+```
+
+Once you have the necessary permissions for the corresponding topic, consumption will automatically start executing after all three tables are created.
+
+#### Virtual Column Support
+
+Sometimes, there's a business need to access metadata from Kafka messages (e.g., message partition, offset, etc.). In such cases, you can use the virtual columns feature to meet this requirement. Virtual columns don't need to be specified during table creation; they are inherent properties of the table engine. They can be included in the SELECT statement of the VIEW table and stored in the underlying table (provided the underlying table has the corresponding columns added):
+
+```
+SELECT
+    _topic,    -- String
+    _partition,    -- UInt64
+    _key,    -- String
+    _offset,    -- UInt64
+    _content,  -- String: complete message content
+    *    -- Normal columns can be expanded with *, but virtual columns cannot
+FROM kafka_test.cnch_kafka_consume
+```
+
+#### Setting Description
+
+**Table of Parameters**
+
+| **Parameter Name**                              | **Type**        | **Required/Default** | **Description**                                                                                                                                                                                                                              |
+| --------------------------------------------- | --------------- | -------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| kafka_cluster / kafka_broker_list              | String          | Required             | Internal Kafka cluster for the company; for community version of Kafka, use the `kafka_broker_list` parameter.                                                                                                                          |
+| kafka_topic_list                              | String          | Required             | Can be multiple, separated by commas.                                                                                                                                                                                                      |
+| kafka_group_name                              | String          | Required             | Consumer group name.                                                                                                                                                                                                                       |
+| kafka_format                                  | String          | Required             | Message format; currently, JSONEachRow is the most commonly used.                                                                                                                                                                       |
+| kafka_row_delimiter                           | String          | '\0'                 | Generally used as '\n'.                                                                                                                                                                                                                    |
+| kafka_num_consumers                           | UInt64          | 1                    | Number of consumers, recommended not to exceed the maximum number of partitions in the topic.                                                                                                                                           |
+| kafka_max_block_size                          | UInt64          | 65536                | Write block_size, with an upper limit of 1M.                                                                                                                                                                                              |
+| kafka_max_poll_interval_ms                    | Milliseconds    | 7500                 | The maximum time to poll from the broker during each iteration.                                                                                                                                                                         |
+| kafka_schema                                  | String          | ""                   | Schema file setup parameter, set in the format of filename + colon + message name. E.g., `schema.proto:MyMessage`.                                                                                                                   |
+| kafka_format_schema_path                      | String          | ""                   | Remote schema file path (excluding filename) setup parameter, currently only supports hdfs. (If this parameter is not set, it will read from the default path set in the configuration file).                                        |
+| kafka_protobuf_enable_multiple_message        | bool            | true                 | Set to true to indicate that multiple protobuf messages can be read from a single kafka message, separated by their respective lengths.                                                                                              |
+| kafka_protobuf_default_length_parser          | bool            | false                | Only effective when `kafka_protobuf_enable_multiple_message` is true: true indicates that the message header has a variable record length; false indicates that a fixed 8 bytes are used as the header record length.              |
+| kafka_extra_librdkafka_config                 | Json format string | ""                 | Other parameters supported by rdkafka, typically used for authentication (More params refer to [here](https://github.com/edenhill/librdkafka/blob/master/CONFIGURATION.md#:~:text=see%20dedicated%20API-,ssl.ca.location,-*)).        |
+| cnch_vw_write                                 | String          | "vw_write"           | Configures consumption using Virtual WareHouse, where consumer tasks will be scheduled to execute on the configured Virtual Warehouse nodes.                                                                                           |
+| kafka_cnch_schedule_mode                      | String          | "random"             | Scheduling strategy adopted by ConsumeManager when scheduling consumer tasks. Currently supports: random, hash, and least_consumers; if using independent vw or with more than 10 consumers, least_consumers is recommended. |
+
+#### Modifying Consumption Parameters
+
+Supports quickly modifying Setting parameters through the ALTER command, primarily used for adjusting consumer count and other parameters to enhance consumption capacity.
+
+Command:
+
+```
+ALTER TABLE <cnch_kafka_name> MODIFY SETTING <name1> = <value1>, <name2> = <value2>
+```
+
+Executing this command will automatically restart the consumption task.
+
+#### Manual Start/Stop Consumption
+
+In some scenarios, users may need to manually stop consumption and then resume it later; we provide corresponding SYSTEM commands to achieve this:
+
+```
+SYSTEM START/STOP/RESTART CONSUME <cnch_kafka_name>
+```
+
+Note: The START/STOP commands will persist the corresponding state to the Catalog. Therefore, after executing the STOP command, if START is not executed, even if the service is restarted, the consumption task will not resume.
+
+#### Resetting Offset
+
+Since CnchKafka manages and saves offsets internally, we have implemented SYSTEM commands for users to reset offsets when needed. Specifically, the following three methods are supported:
+
+#### Reset to Special Positions
+
+- By latest/earliest position
+
+```
+SYSTEM RESET CONSUME OFFSET '{"database_name":"XXX", "table_name": "XXX", "offset_value":-1}'
+```
+
+- Possible values for special positions:
+
+```
+    enum Offset {
+        OFFSET_BEGINNING = -2,
+        OFFSET_END = -1,
+        OFFSET_STORED = -1000,
+        OFFSET_INVALID = -1001
+    };
+```
+
+- Reset by timestamp
+
+```
+SYSTEM RESET CONSUME OFFSET '{"database_name":"XXX", "table_name": "XXX", "timestamp":1646125258000}'
+```
+
+The timestamp value should be within the valid data retention period on the Kafka side and should be in milliseconds.
+
+- Specify offset value
+
+```
+system reset consume offset '{"database_name":"XXX", "table_name": "XXX", "topic_name": "XXX", "offset_values":[{"partition":0, "offset":100}, {"partition":10, "offset":101}]}'
+```
+
+This is less common and used to specify a specific offset value for a particular topic partition.
+
+### Operation and Maintenance Manual
+
+#### Common Consumption Performance Tuning
+
+When there is a persistent lag in consumption, it is usually due to insufficient consumption capacity. By default, CnchKafka creates one consumer with a maximum block size of 65536 for writing in a single consumption. When the consumption capacity is insufficient, it is recommended to adjust the consumer and block-size parameters. Refer to the **Modifying Consumption Parameters** section above for adjustment methods.
+
+#### Adjusting max-block-size
+
+- This parameter directly affects consumption memory usage, and a larger value requires more memory. For consumption tables with larger individual data sizes, adjust this parameter carefully to avoid exceeding memory limits (the upper limit is 1M).
+- When users have low requirements for data latency and have a large amount of data with sufficient memory, they can simultaneously adjust this parameter and the "kafka_max_poll_interval_ms" parameter to increase the consumption time for each round, making each written part larger, reducing MERGE pressure, and improving query performance.
+
+#### Adjusting num_consumers
+
+- The upper limit for this parameter is the number of partitions corresponding to the consumed topic.
+- When there is no lag in consumption, it is recommended to minimize this parameter (i.e., avoid increasing it unnecessarily) to reduce resource usage, avoid generating too many small parts during consumption, reduce MERGE pressure, and facilitate queries.
+
+#### System Tables for Troubleshooting
+
+- Consumption Events: cnch_system.cnch_kafka_log
+
+The kafka_log table records basic consumption events. To enable it, configure the kafka_log item in config.xml (required for both server and worker), and restart the service for the changes to take effect.
+
+The kafka_log is written by the consumer task in the Virtual Warehouse and aggregated in real-time into the global cnch_system.cnch_kafka_log table, allowing you to view consumption records for all consumption tables from the server side.
+
+#### Field Description
+
+##### Event Table (event_table)
+
+| **Column Name** | **Type** | **Description** |
+| --------------- | -------- | --------------- |
+| event_type | Enum8 | See the table below for details |
+| event_date | Date | The date when the event occurred. It is a partition field and is recommended to be included in every query. |
+| event_time | DateTime | The time when the event occurred, in seconds |
+| duration_ms | UInt64 | The duration of the event, in milliseconds |
+| cnch_database | String | The name of the CnchKafka database |
+| cnch_table | String | The name of the CnchKafka table |
+| database | String | The database name of the consumer task (currently the same as cnch_database) |
+| table | String | The table name of the consumer task (usually suffixed with a timestamp and consumer ID based on cnch_table) |
+| consumer | String | The consumer ID |
+| metric | UInt64 | The number of consumed rows |
+| has_error | UInt8 | 1 indicates an exception; 0 indicates no exception |
+| exception | String | Exception description |
+
+### Event Type Description (event_type)
+
+
+
+| **UInt8 Value** | **String Value** | **Description** |
+| --- | --- | --- |
+| 1 | POLL | The metric indicates the number of data items consumed, and duration_ms covers the entire consumption process including WRITE time. |
+| 2 | PARSE_ERROR | The metric represents the number of consumption entries with parsing errors. If multiple entries have errors, only one will be selected for printing. |
+| 3 | WRITE | The metric represents the number of data rows written, and duration_ms is basically equivalent to the data persistence time. |
+| 4 | EXCEPTION | Exceptions during the consumption process. Common examples include: authentication exceptions, data persistence failures, and VIEW SELECT execution failures. |
+| 5 | EMPTY_MESSAGE | The number of empty messages. |
+| 6 | FILTER | Data filtered during the write phase. |
+| 7 | COMMIT | Final transaction commit record. Only this record indicates successful data writing and can be used as a data audit standard. |
+
+### Consumption Status Table: system.cnch_kafka_tables
+
+The kafka_tables records the real-time status of CnchKafka tables, which are memory tables by default;
+
+
+
+| **Field Name** | **Data Type** | **Description** |
+| --- | --- | --- |
+| database | String | Database name |
+| name | String | Kafka table name |
+| uuid | String | Unique identifier UUID for the kafka table |
+| kafka_cluster | String | Kafka cluster |
+| topics | Array(String) | List of consumed topics |
+| consumer_group | String | Associated consumer group |
+| num_consumers | UInt32 | The current number of actively executing consumers |
+| consumer_tables | Array(String) | Data table names corresponding to each consumer |
+| consumer_hosts | Array(String) | Execution nodes assigned to each consumer |
+| consumer_partitions | Array(String) | Partitions assigned to each consumer for consumption |
+
+### Common Queries for Troubleshooting Consumption Issues
+
+* Checking the real-time status of CnchKafka consumption tables
+
+
+```sql
+SELECT * FROM system.cnch_kafka_tables
+WHERE database = '<database_name>' AND name = '<cnch_kafka_table>'
+```
+* Viewing recent consumption records
+
+
+```sql
+SELECT * FROM cnch_system.cnch_kafka_log
+WHERE event_date = today()
+ AND cnch_database = '<database_name>'
+ AND cnch_table = '<cnch_kafka_table>'
+ AND event_time > now() - 600 -- Last 10 minutes
+ORDER BY event_time
+```
+* Summarizing consumption records for the current day by hour
+
+
+```sql
+SELECT
+ toHour(event_time) as hour,
+ sumIf(metric, event_type = 'POLL') as poll_rows,
+ sumIf(metric, event_type = 'PARSE_ERROR') as error_rows,
+ sumIf(metric, event_type = 'COMMIT') as commit_rows
+FROM cnch_system.cnch_kafka_log
+WHERE event_date = today()
+ AND cnch_database = '<database_name>'
+ AND cnch_table = '<cnch_kafka_table>'
+GROUP BY hour
+ORDER BY hour
+```
+
+## Data Import via Spark
+
+Using the part writer tool, data files can be converted into part files without going through the ByConity engine. This separation of ByConity's query and build processes can alleviate resource competition during data import and querying, improving query performance. Below is an introduction to how to use the part writer to import data into ByConity.
+
+1. Generating part files using the part writer
+
+The part writer accepts an SQL statement as a parameter. Users specify details such as the source data file, data file format, data schema, and part file save path through the SQL statement. Here's how to use it:
+
+
+```bash
+./part_writer "load CSV file '/path/to/data/test.csv' as table db.tablename(col1 UInt64, col2 String, col3 Nullable(String)) partition by col1 order by (col2, col3) location '/path/to/dest/'"
+```
+* `CSV` specifies the source data file format. Additionally, the part writer supports various data file formats natively supported by ClickHouse, such as CSVWithNames and JSONEachRow.
+* `/path/to/data/test.csv` specifies the source data file. It supports reading source data from both local and HDFS locations. To use an HDFS data file, specify the path as: `hdfs://host:port/path/to/data/file`.
+* `/path/to/dest/` specifies the target folder for writing the part files. It supports writing part files directly to HDFS, from which ByConity can pull and load them.
+* `as table` specifies the schema information for the inserted data.
+* `partition by` and `order by` specify the partition key and sorting key for the data table, respectively. Multiple keys should be separated by commas and enclosed in parentheses, e.g., `partition by (name, id)`.
+* A special option for ByConity, `settings cnch=1`, is used to dump the generated part directly into the ByConity part format and write it to the HDFS path specified by the location option.
+
+2. Importing part files into ByConity
+
+Generated part files can be directly copied to the corresponding data file path of the ByConity table and then loaded by restarting the ByConity server. Alternatively, the part file directory can be copied to the detached directory of the table and loaded using the attach command, such as:
+
+
+```sql
+alter table test attach part 'partfile'
+```
+If the part writer is used to generate part files with direct upload to hdfs specified, the following command can be executed:
+
+
+```bash
+system fetch parts into db.table 'hdfs://host:port/path/to/part/'
+```
+ByConity will automatically pull the part files from the hdfs path and load them. Additionally, the following ByConity attach syntax is supported for importing dumped parts from hdfs into the target table:
+
+
+```bash
+alter table test attach parts from '/hdfs/path/to/dumped/dir'
+```
+This approach supports spark imports. In practical scenarios where large amounts of data need to be imported into a ByConity cluster, spark can be considered. Firstly, read the data into a spark dataset from an external source. Then, repartition the dataset based on the sharding key to ensure that data destined for different ByConity nodes falls into separate partitions (you may need to adjust the `spark.sql.shuffle.partitions` parameter based on the actual situation to have partitions not less than the number of ByConity master nodes). For each partition, generate a part file by calling the part writer, specify uploading the part file to hdfs, and then notify ByConity to load the part file by sending an http request to the corresponding ByConity node.
+
+![](./assets/boxcnlSkMX0zkWno7WT7250zU1f.png)
+
+## Importing via MySQL
+
+The MySQL engine allows users to access MySQL tables through ByConity and perform SELECT and INSERT queries.
+
+### Creating tables in MySQL
+
+- Creating a database:
+
+
+```sql
+CREATE DATABASE db1;
+```
+- Creating a table in MySQL:
+
+
+```sql
+CREATE TABLE db1.table1(
+    id Int,
+    column1 VARCHAR(255)
+);
+```
+- Inserting some data:
+
+
+```sql
+INSERT INTO db1.table1
+    (id, column1)
+values
+    (1, 'mysql-ab'),
+    (2, 'mysql-cd');
+```
+- Creating a user in MySQL for connecting from ByConity:
+
+
+```sql
+CREATE USER 'mysql_byconity'@'%' IDENTIFIED BY 'Password123!';
+```
+- Granting permissions (e.g., granting admin privileges to the `mysql_byconity` user):
+
+
+```sql
+GRANT ALL PRIVILEGES ON *.* TO 'mysql_byconity'@'%';
+```
+
+### Creating a MySQL table in ByConity
+
+#### Creating a ByConity table using the MySQL table engine:
+
+
+```sql
+CREATE TABLE mysql_table1 (
+  id UInt64,
+  column1 String
+)
+ENGINE = MySQL('mysql-host.domain.com','db1','table1','mysql_byconity','Password123!');
+```
+The parameters for the `MySQL` engine are as follows:
+
+| Parameter  | Description             | Example                 |
+| ---------- | ----------------------- | ----------------------- |
+| host       | Domain name or IP:Port  | mysql-host.domain.com |
+| database   | MySQL database name     | db1                   |
+| table      | MySQL table name        | table1                |
+| user       | MySQL connection user   | mysql_byconity        |
+| password   | MySQL connection password | Password123!          |
+
+Note: There are a few typos and inconsistencies in the original text (e.g., "tabele" should be "table", "ByConity" is not a recognized database system, and some commands/syntax may not be accurate). I have corrected some of these issues in the translation, but please keep in mind that the ByConity system mentioned in the text may be fictitious or a typo for an existing database system.
+
+### Testing in ByConity
+
+* Testing SELECT Queries
+
+
+```sql
+select * from mysql_table1;
+```
+![](./assets/boxcnJv89B9UChc3nI0EPHoba6c.png)
+
+* Testing INSERT Queries
+
+
+```sql
+INSERT INTO mysql_table1
+    (id, column1)
+VALUES
+    (3, 'byconity-test');
+```
+
+* Verifying Inserted Data from ByConity in MySQL
+
+
+```bash
+mysql> select id, column1 from db1.table1;
+```
+![](./assets/boxcnQdV8Jpg8jcqEKwAOjONxkh.png)
+
+### Importing from Hive External Tables
+
+CnchHive is a table engine provided by ByConity that supports federated queries using external tables. Users can directly accelerate data queries without the need for data import.
+
+#### Usage Examples:
+
+* Example 1: Creating a Full Set of Hive Tables
+
+
+```sql
+-- Creating a Hive external table
+CREATE TABLE t
+(
+  client_ip   String,
+  request     String,
+  status_code INT,
+  object_size INT,
+  date String
+)
+ENGINE = CnchHive('psm', 'hive_database_name', 'hive_table_name')
+PARTITION BY date;
+
+-- Parameter Explanation:
+-- psm: hivemetastore psm
+-- hive_database_name: Hive database name
+-- hive_table_name: Hive table name
+
+-- Querying the Hive external table
+select * from  t where xxx;
+```
+
+* Example 2: Creating a Subset of Hive Tables
+
+
+```sql
+CREATE TABLE t
+(
+  client_ip   String,
+  request     String,
+  date String
+)
+ENGINE = CnchHive('psm', 'hive_database_name', 'hive_table_name')
+PARTITION BY date;
+
+-- Parameter Explanation:
+-- psm: hivemetastore psm
+-- hive_database_name: Hive database name
+-- hive_table_name: Hive table name
+
+-- Querying the Hive external table
+select * from  t where xxx;
+```
+
+* Example 3: Creating a Hive Bucket Table
+
+
+```sql
+CREATE TABLE t
+(
+  client_ip   String,
+  request     String,
+  device_id   String,
+  server_time String,
+  date String
+)
+ENGINE = CnchHive('psm', 'hive_database_name', 'hive_table_name')
+PARTITION BY date
+CLUSTER BY device_id INTO 65536 BUCKETS
+ORDER BY server_time
+SETTINGS cnch_vw_default ='vw_default';
+
+-- Parameter Explanation:
+-- psm: hivemetastore psm
+-- hive_database_name: Hive database name
+-- hive_table_name: Hive table name
+
+-- Querying the Hive external table
+select * from  t where xxx;
+```
+
+**Notes:**
+
+* The external table columns must correspond one-to-one with the Hive table columns, but the order of the columns does not matter. You can select some of the columns from the Hive table, but all partition columns must be included.
+* Partitions need to be specified using the `PARTITION BY` statement and defined in the description list. For bucket tables, the bucket column and the number of buckets need to be specified. If there is an `ORDER BY` field, it also needs to be specified.
+* The engine is specified as CnchHive. The parameters include: psm, hive_database_name, and hive_table_name. Views are not supported.
+* There are two configurations: `cnch_vw_default` is used to specify the vw, and `max_read_row_group_threads` is used to specify the number of concurrent reads for Parquet row groups.
+* The supported column type mappings are shown in the following table:
+
+| Hive Column Type | CnchHive Column Type | Description |
+| --- | --- | --- |
+| INT/INTERGER | INT/INTERGER | |
+| BIGINT | BIGINT | |
+| TIMESTAMP | DateTime | |
+| STRING | String | |
+| VARCHAR | FixedString | Internally converted to FixedString |
+| CHAR | FixedString | Internally converted to FixedString |
+| DOUBLE | DOUBLE | |
+| FLOAT | FLOAT | |
+| DECIMAL | DECIMAL | |
+| MAP | Map | |
+| ARRAY | Array | |
+
+**Note:** Schema changes in Hive tables are not automatically synchronized and require recreating the Hive external table in ClickHouse. Currently, only the Parquet storage format is supported, and insert and alter operations are not supported.
+
+#### Parameter Settings
+
+* `cnch_vw_default`: Used to specify the vw.
+* `max_read_row_group_threads`: Used to specify the number of concurrent reads for Parquet row groups.

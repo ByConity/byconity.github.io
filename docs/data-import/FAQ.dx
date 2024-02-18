@@ -1,0 +1,28 @@
+---
+title: FAQ
+sidebar_position: 4
+tags:
+  - Docs
+---
+
+# FAQ
+
+| Keyword | Reason | Solution |
+| --- | --- | --- |
+| Too many map keys in table (more than 10000) | The number of key types in the Map column exceeds 10,000 | If it exceeds 10,000, it cannot be imported. Please reduce the number of map keys in the imported data. |
+| Memory limit (total) | Memory limit exceeded during the import process | Enable trace logging to view specific error messages on the Kafka side. |
+| Cannot parse JSON | Data type mismatch between JSON and ClickHouse | Please check if the upstream data type matches the required format. |
+| Duplicate field found while parsing JSONEachRow format: hour | Duplicate field "hour" in JSON data | Check the upstream data and configuration for correctness. |
+| HDFS json size xxx > 1099511627776 | Imported data is too large (1T), import is prohibited | Reduce the amount of data being imported. |
+| Unable to parse hdfs json file | Incorrect data format in HDFS | Please check if the file in HDFS is a valid JSON. |
+| DB::Exception: Error while reading parquet data: IOError: definition level exceeds maximum. Stack trace | Error reading HDFS file, mostly due to missing blocks, etc. | Regenerate the HDFS file. |
+| DB::Exception: Cannot parse string 'time="2021-11-12' as Date: syntax error at position 10 (parsed just 'time="2021'). Note: there are toDateOrZero and toDateOrNull functions, which returns zero/NULL instead of throwing exception.: while pushing to view | Dirty data in the user's topic | 1. Temporarily modify the VIEW table to filter dirty data; 2. Add data cleaning and protection mechanisms upstream; 3. Ensure Kafka table parsing is consistent with the base table. It is not recommended to perform additional transformations during the write phase. Failed Kafka parsing can discard dirty data without blocking the entire consumption. |
+| Code: 1001, type: cppkafka::Exception, e.what() = Failed to create consumer handle: consumer regist error, please check output! | Enable trace logging to view specific error messages on the Kafka side | Handle the error based on the error message. |
+| Code: 49, e.displayText() = DB::Exception: Check dependencies failed for | VIEW table not found | Rebuild the VIEW table. |
+| Code: 6001. DB::Exception: DB::Exception: Cannot get metadata of table XXX by UUID : XXX. | Error executing ALTER TABLE command. The cnch table is bound to a specific server, and this error occurs when the command is not executed on the corresponding server. | First, query system.cnch_table_host to find the server associated with the table, and then execute the command on that server. |
+| No space left on device: while pushing to view | Disk is full | Clean up disk space. |
+| DB::Exception: Can not insert NULL data into non-nullable column "name" | The column "name" is set as non-nullable but NULL data is being inserted. | Modify the column "name" to allow NULL values or ensure that no NULL data is inserted. |
+| DB::Exception: The hive type is not match in cnch. | | The CnchHive schema type does not match the Hive schema type. |
+| DB::Exception: column name xxx doesn't match. | | The CnchHive schema name does not match the Hive schema name. |
+| DB::Exception: CnchHive only support parquet format. Current format is org.apache.hadoop.hive.ql.io.HiveIgnoreKeyTextOutputFormat. | | CnchHive currently only supports the Parquet storage format. |
+| DB::Exception: No available nnproxy xxx. | | There is an issue with the HiveMetastore's psm. Check if the HiveMetastore psm is accessible. |
