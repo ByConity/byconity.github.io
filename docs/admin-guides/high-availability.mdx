@@ -1,0 +1,28 @@
+---
+title: High Availability
+sidebar_position: 4
+tags:
+  - Docs
+---
+
+# High Availability
+
+Enabling the high availability feature for the ByConity cluster requires activating the Zookeeper configuration for all components. Please refer to [server.yaml](https://github.com/ByConity/byconity-deploy/blob/master/chart/byconity/files/server.yaml) for more details.
+
+1. Activating the Zookeeper configuration:
+
+```
+partition_by: event_date
+flush_interval_milliseconds: 15000
+mark_cache_size: 5368709120
+zookeeper: {} enable zookeeper
+cnch_config: /etc/byconity/cnch-config.yaml
+```
+
+The official high availability Helm configuration YAML file [value_HA_example.yaml](https://github.com/ByConity/byconity-deploy/blob/master/examples/k8s/value_HA_example.yaml) is provided for reference.
+
+2. Updating the cluster using Helm:
+
+```
+helm upgrade --install --create-namespace --namespace byconity -f ./your/custom/values.yaml byconity ./chart/byconity
+```
