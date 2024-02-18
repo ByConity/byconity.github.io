@@ -1,0 +1,193 @@
+---
+title: Hive External Catalog
+sidebar_position: 2
+tags:
+  - Docs
+---
+
+# External Catalog
+
+In addition to supporting access to Hive data using external tables, Byconity also supports access through the External Catalog feature.
+
+## Configuring `external_catalog_mgr`
+
+We need to store the metadata of the External Catalog in Byconity's metadata store. Therefore, we need to configure `external_catalog_mgr` in `cnch_config.yaml` to specify the location where External Catalog-related metadata will be stored.
+
+Typically, users can choose to store External Catalog metadata in the same location as Byconity metadata. Therefore, users can directly reuse the content of the `catalog_service` configuration previously used for metadata, such as:
+
+```yaml
+external_catalog_mgr:
+  type: fdb
+  fdb:
+    cluster_file: /config/fdb.cluster
+```
+
+## Creating an External Catalog
+
+Currently, only IAM authentication is supported.
+
+### Creating a Hive Catalog
+
+For data stored in S3:
+
+```sql
+create external catalog hive_s3
+properties
+    type='hive',
+    hive.metastore.uri = 'thrift://hive_thrift_server_ip:port',
+    aws.s3.region= 's3_region',
+    aws.s3.endpoint = 's3_endpoint',
+    aws.s3.access_key = 's3_ak',
+    aws.s3.secret_key = 's3_sk'
+```
+
+For data stored in HDFS:
+
+```sql
+create external catalog hive_hdfs
+properties
+    type='hive',
+    hive.metastore.uri = 'thrift://hive_thrift_server_ip:port'
+```
+
+Note: For Hive external tables stored in HDFS, we only support reading data configured in `cnch-config.yaml`.
+
+### Creating a Glue Catalog
+
+We also provide experimental support for the AWS Glue Data Catalog.
+
+```sql
+create external catalog glue_s3
+properties
+    type='glue',
+    aws.glue.endpoint = 'glue_endpoint',
+    aws.glue.region='glue_region',
+    aws.glue.catalog_id='glue_catalog_id',
+    aws.glue.access_key = 'glue_ak',
+    aws.glue.secret_key = 'glue_sk',
+    aws.s3.region= 's3_region',
+    aws.s3.endpoint = 's3_endpoint',
+    aws.s3.access_key = 's3_ak',
+    aws.s3.secret_key = 's3_sk'
+```
+
+Here, `glue_catalog_id` is a 12-digit AWS account ID. For more information, refer to [Aws Account ID Doc](https://repost.aws/questions/QUWxpW7KY7RsCj2ttURvb7jQ/get-glue-data-catalog-name-id).
+
+### Dropping an External Catalog
+
+Users can drop an External Catalog as follows:
+
+```sql
+drop external catalog your_catalog_name;
+```
+
+## Basic Usage
+
+Assuming a user has already created an External Catalog called `hive_s3`.
+
+### Three-part Naming Convention
+
+Users can directly access tables in Hive using the three-part naming convention: `catalog_name.db_name.table_name`. For example:
+
+```sql
+select * from hive_s3.hive_db_name.hive_table_name;
+```
+
+Native CnchMergeTree tables in Byconity can also be accessed using SQL like:
+
+```sql
+select * from cnch.cnch_db_name.cnch_table_name;
+-- this is equivalent to select * from cnch_db_name.cnch_table_name;
+```
+
+`cnch` (short for cloud-native-clickhouse) is used as the default Catalog name in Byconity.
+
+### Cross-Catalog Queries
+
+With the External Catalog, users can directly join Hive external tables with CnchMergeTree tables in Cnch:
+
+```sql
+select * from hive_s3.hive_db.hive_table union all select (1) from cnch.cnch_db.cnch_table;
+```
+
+### Showing Databases and Tables
+
+Listing database names in a Catalog:
+
+```sql
+show databases [from hive_catalog]
+```
+
+Listing table names in a database:
+
+```sql
+show tables from [hive_catalog.][database]
+```
+
+Getting the create statement for a table:
+
+```sql
+show create table [hive_catalog.][database.][table]
+```
+
+Please note that the `show create table` result for an external table will look similar to this:
+
+```sql
+CREATE TABLE `hive_catalog$$hive_db_name`.hive_table_name UUID 'some-uuid' (--field list-- `cc_call_center_sk` Nullable(Int64), `cc_call_center_id` Nullable(String))) ENGINE = CnchHive(hive_catalog, hive_db_name, hive_table_name) PARTITION BY tuple() SETTINGS endpoint = 'hive_endpoint', ak_id = 's3_ak', ak_secret = 's3_sk', region = 's3_region'
+```
+
+This is only used to display schema information for the external table and cannot be used to create an external table in Hive.
+
+Currently, Byconity does not support directly creating Hive tables.
+
+### Switching Catalogs
+
+Users can use the following SQL to change the default Catalog:
+
+```sql
+switch catalog hive_s3;
+```
+
+At this point, running:
+
+```sql
+select * from tpcds.call_center;
+```
+
+Byconity will read data from the `call_center` table in the `tpcds` database in Hive.
+
+To switch back to the default Catalog, users can use:
+
+```sql
+switch catalog cnch;
+```
+
+Users can also use:
+
+```sql
+use hive_s3.tpcds;
+```
+
+to directly change the default database to `tpcds` in Hive.
+
+To switch back, simply use:
+
+```sql
+use cnch.cnch_database_name;
+```
+
+### Implementation Details
+
+We use a SQL rewriting approach to support multiple Catalogs. For example:
+
+```sql
+select * from catalog_name.db.tbl;
+```
+
+is actually rewritten to:
+
+```sql
+select * from `catalog_name$$db`.tbl;
+```
+
+So users should not be surprised to see this in the logs.
