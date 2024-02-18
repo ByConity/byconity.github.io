@@ -31,7 +31,7 @@ The execution of transactions in a distributed system requires clock synchroniza
 
 TSO utilizes a mixed logical clock, where the clock consists of a physical part and a logical part, and 64 bits represent a time. To avoid the loss of timestamps caused by TSO downtime, the timestamps need to be persisted. However, if the timing is persisted every time, performance will be reduced. Thus, TSO pre-applies for an allocatable time window (e.g., 3 seconds). After the application is successful, TSO can directly allocate all timestamps within the 3-second window in memory. When a client requests a timestamp, the logical clock part is incremented with the request. If there is an overflow in the logical part, it will sleep for 50ms and wait for the physical clock to be advanced. TSO checks the clock every 50ms. If the physical clock of the current TSO is behind the current time, the physical clock part of the TSO needs to be updated to the current physical time. If the logical clock is more than half, the physical clock of TSO will also be increased. Once the physical clock increases, the logical clock will be cleared. If the current time window has been used up, the next time window needs to be applied for. At the same time, the upper bound of the persistent window is updated.
 
-![](./assets/managing-concurrency/boxcnIQ0kKkzfdE6l3QnZZ31iGb.png)
+![](./assets/transaction-management/boxcnIQ0kKkzfdE6l3QnZZ31iGb.png)
 
 ### Transaction Processing
 
@@ -49,7 +49,7 @@ ByConity's single transaction has high-throughput read and write requirements fo
 - Submit the transaction and update the submission time of the transaction record;
 - The commit time of asynchronously updating part data is the commit time of the transaction (before the commit time of part is not updated, it is necessary to check the commit time of the transaction record);
 
-![](./assets/managing-concurrency/boxcnSsWWnS2sH5qiwBsILZyaNg.png)
+![](./assets/transaction-management/boxcnSsWWnS2sH5qiwBsILZyaNg.png)
 
 ```
                                                         Transaction submission detailed flow chart
@@ -75,7 +75,7 @@ ByConity uses multiple versions and locks to ensure the correctness of data in c
 
 In addition to its original basic information, the metadata of each part has a corresponding version (version). Every time the existing data is changed, a new version will be generated instead of directly updating the original data. . For the RC isolation level, the read transaction that has already started continues to read the old version, and the new version is invisible to it, so that reading and writing do not affect each other, maximizing read and write performance.
 
-![](./assets/managing-concurrency/boxcnJmeAgBLo86uZBHIHKbdRhc.png)
+![](./assets/transaction-management/boxcnJmeAgBLo86uZBHIHKbdRhc.png)
 
 #### Lock
 

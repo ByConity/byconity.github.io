@@ -12,7 +12,8 @@ tags:
 
 ByConity can be broadly divided into three layers: the service access layer, the computation layer, and the storage layer. The service access layer responds to user queries, the computation layer is responsible for data computation, and the storage layer stores user data.
 
-<img src="./assets/ByConity-technical-architecture.png"> <center>Figure 1: ByConity Technical Architecture Diagram</center>
+![](./assets/ByConity-technical-architecture.png)
+<center>Figure 1: ByConity Technical Architecture</center>
 
 ## Service Access Layer
 
@@ -44,7 +45,8 @@ Both metadata and data in ByConity achieve storage-computation separation. Metad
 
 The following diagram illustrates the component interactions in ByConity. We will analyze its interactions across various components through the complete lifecycle of a SQL query. The dashed line in the figure represents the inflow of a SQL query, the bidirectional arrows indicate interactions within components, and the unidirectional arrows represent data processing and output to the client.
 
-<img src="./assets/boxcnCarlKKAt0hSPtXFOpfmo7c.png"> <center>Figure 2: ByConity Interaction Principles</center>
+![](./assets/boxcnCarlKKAt0hSPtXFOpfmo7c.png)
+<center>Figure 2: ByConity Interaction Principles</center>
 
 - The client submits a Query request to the Server. The Server first performs parsing, then generates a more efficient executable plan (Plan Segment) through analysis (Analyzer) and optimization (Optimizer). This process involves reading metadata from a distributed KV store. ByConity uses FoundationDB and reads metadata through the Catalog.
 
