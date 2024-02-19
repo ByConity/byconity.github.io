@@ -47,6 +47,7 @@ const config = {
           // Remove this to remove the "edit this page" links.
           editUrl: 'https://github.com/ByConity/byconity.github.io/tree/main',
           editLocalizedFiles: true,
+          lastVersion: 'current', 
         },
         blog: {
           showReadingTime: true,
