@@ -1,0 +1,98 @@
+---
+title: Stream Import
+sidebar_position: 1
+tags:
+  - Docs
+---
+
+# Importing Data
+
+## Streaming Data Import (Local Files and In-Memory Data)
+
+ByConity provides three methods to stream data from local files and in-memory sources. These methods cover simple insertion of test data, importing data from various file formats, and saving query results. Different methods are suitable for different use cases, but please note that some advanced features may result in performance degradation.
+
+### Method 1: Using Conventional Syntax with VALUES Format
+
+This method is suitable for temporarily inserting small amounts of data for testing. The syntax is as follows:
+
+```
+INSERT INTO [db.]table [(c1, c2, c3...)] VALUES (v11, v12, v13), (v21, v22, v23), ...
+```
+
+Here, `c1`, `c2`, `c3` are column declarations that can be omitted. `VALUES` is followed by the data to be written in the form of tuples, corresponding to the column declarations by index. Data can be written in batches, with multiple rows separated by commas.
+
+For example, for the following table:
+
+```
+CREATE TABLE test.insert_select_testtable
+(
+    `a` Int8,
+    `b` String,
+    `c` Int8,
+    `date` Date
+)
+ENGINE = CnchMergeTree()
+PARTITION by toYYYYMM(date)
+ORDER BY tuple()
+```
+
+You can use the following statement to insert data:
+
+```
+INSERT INTO insert_select_testtable VALUES (1, 'a', 1,'2022-11-10');
+```
+
+You can also include expressions or functions when writing data, for example:
+
+```
+INSERT INTO insert_select_testtable VALUES (1, 'a', 1, now());
+```
+
+### Method 2: Using Syntax with Specified Format
+
+This method uses syntax with a specified format to insert data:
+
+```
+INSERT INTO [db.]table [(c1, c2, c3...)] FORMAT format_name data_set
+```
+
+ByConity supports various data formats. Taking the commonly used CSV format as an example:
+
+```
+INSERT INTO insert_select_testtable FORMAT CSV
+1, 'a', 1, '2022-11-10'
+2, 'b', 2, '2022-11-11'
+```
+
+You can also insert data from a file into a table. For example:
+
+```
+INSERT INTO [db.]table [(c1, c2, c3)] FORMAT format_name INFILE file_name
+```
+
+Using the above statement, you can read data from a client file and insert it into a table. Both `file_name` and `type` are of the `String` type, and the input file format must be set in the `FORMAT` statement.
+
+### Method 3: Using SELECT Clause
+
+This method is suitable for saving the results of a query for subsequent retrieval:
+
+```
+INSERT INTO [db.]table [(c1, c2, c3...)] SELECT ...
+```
+
+The correspondence between the columns when writing and the columns in the `SELECT` statement is based on position, even if the names in the `SELECT` expression and `INSERT` statement are different. If necessary, corresponding type conversions will be performed.
+
+For example, if you want to write data from `insert_select_testtable_1` to `insert_select_testtable`, you can use the following statement:
+
+```
+INSERT INTO insert_select_testtable SELECT * FROM insert_select_testtable_1
+```
+
+When writing data using the `SELECT` clause, you can also include expressions or functions, for example:
+
+```
+INSERT INTO insert_select_testtable SELECT 1, 'a', 1, now();
+```
+
+Although both the `VALUES` and `SELECT` clause formats support declaring expressions or functions, these can introduce additional performance overhead, leading to reduced write performance. Therefore, if you are seeking optimal write performance, you should avoid using them.
+
