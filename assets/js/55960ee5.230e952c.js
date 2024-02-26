@@ -1,1 +1,0 @@
-"use strict";(self.webpackChunkbyconity=self.webpackChunkbyconity||[]).push([[4121],{8070:e=>{e.exports=JSON.parse('[{"label":"Docs","permalink":"/docs/next/tags/docs","count":69},{"label":"tpc ds benchmarks","permalink":"/docs/next/tags/tpc-ds-benchmarks","count":1},{"label":"olap engines","permalink":"/docs/next/tags/olap-engines","count":1}]')}}]);
