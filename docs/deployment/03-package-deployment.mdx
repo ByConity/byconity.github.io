@@ -1,108 +1,417 @@
 ---
-title: Package Deployment
+title: Deploy on Physical Machines
+sidebar_position: 3
 tags:
   - Docs
 ---
 
-# Package Deployment
-One way to deploy ByConity to physical machines is using package manager. 
-For example, install Debian package for Debian OS and rpm packages for Centos OS
 
-## Install FoundationDB and HDFS
-ByConity using FoundationDB as meta store, and HDFS as datastore. So before 
-starting to deploy ByConity, we need to deploy FoundationDB and HDFS first.
+# Deploy on Physical Machines
 
-For deploying [Foundation](https://apple.github.io/foundationdb/) database, 
-you can refer to the installation guide [here](./foundationdb-installation)
+Currently, the way to install ByConity on physical machines is through package managers, such as installing Debian packages for Debian OS or rpm packages for Centos OS. Since ByConity uses FoundationDB as its metadata storage and HDFS as its data storage, before deploying ByConity, we need to deploy FoundationDB and HDFS first. The steps are to install FoundationDB (FDB) first, then install HDFS, and finally deploy the ByConity software package. Details are as follows.
 
-After that we need to deploy an HDFS cluster consist of name node and data node, 
-and create the directory `/user/clickhouse` in HDFS for store data. You can refer 
-to the installation guide [here](./hdfs-installation). 
-After this step, you got the name node url which ussually the value of `fs.defaultFS` 
-that you can find in the `core-site.xml` config. 
+## Installing FoundationDB
 
-## Install FoundationDB client
-Now we will start deploying Byconity. ByConity packages depends on the FoundationDB client package.
-Hence, before deploying ByConity packages on any machine, we need to deploy FoundationDB client package first. 
-The Foundation client package are tight coupled to version of FoundationDB server. 
-So we need to choose the client package with version that match the version of FoundationDB server
+In this section, we will set up a FoundationDB cluster on 3 physical machines, all using the Debian operating system. We refer to the official guides: [Getting Started on Linux](https://apple.github.io/foundationdb/getting-started-linux.html) and [Building a Cluster](https://apple.github.io/foundationdb/building-cluster.html).
 
-To deploy FoundationDB client package, we go to the release [page](https://github.com/apple/foundationdb/releases), 
-find the right package to your OS and download it. For example, here i download version `7.1.27` for Debian OS, `amd64` machine.
+First, we need to download the binary files from [the official download page](https://github.com/apple/foundationdb/releases/) for installation. If access is slow from within China, we provide a domestic download address. Download the **server**, **monitor**, and **cli** binary files, as well as the corresponding **sha256** checksum files (we use version **7.1.25** as an example).
+
+Create a `foundationdb/bin` folder locally and download the installation files:
+
+```sh
+curl -L -o fdbserver.x86_64 https://github.com/apple/foundationdb/releases/download/7.1.25/fdbserver.x86_64
+curl -L -o fdbserver.x86_64.sha256 https://github.com/apple/foundationdb/releases/download/7.1.25/fdbserver.x86_64.sha256
+
+curl -L -o fdbmonitor.x86_64 https://github.com/apple/foundationdb/releases/download/7.1.25/fdbmonitor.x86_64
+curl -L -o fdbmonitor.x86_64.sha256 https://github.com/apple/foundationdb/releases/download/7.1.25/fdbmonitor.x86_64.sha256
+
+curl -L -o fdbcli.x86_64 https://github.com/apple/foundationdb/releases/download/7.1.25/fdbcli.x86_64
+curl -L -o fdbcli.x86_64.sha256 https://github.com/apple/foundationdb/releases/download/7.1.25/fdbcli.x86_64.sha256
+```
+
+After the download is complete, check the checksums:
+
+```sh
+$ sha256sum --binary fdbserver.x86_64
+73b70a75464e64fd0a01a7536e110e31c3e6ce793d425aecfc40f0be9f0652b7 *fdbserver.x86_64
+
+$ cat fdbserver.x86_64.sha256
+73b70a75464e64fd0a01a7536e110e31c3e6ce793d425aecfc40f0be9f0652b7  fdbserver.x86_64
+```
+
+Rename the executable files, add executable permissions, and delete unnecessary files:
+
+```sh
+rm *.sha256
+mv fdbcli.x86_64 fdbcli
+mv fdbmonitor.x86_64 fdbmonitor
+mv fdbserver.x86_64 fdbserver
+chmod ug+x fdbcli fdbmonitor fdbserver
+```
+
+Create folders to store configurations, data, and logs:
+
+```sh
+mkdir -p /<your_directory>/fdb_runtime/config
+mkdir -p /<your_directory>/fdb_runtime/data
+mkdir -p /<your_directory>/fdb_runtime/logs
+```
+
+Create a `foundationdb.conf` configuration file in the `/<your_directory>/fdb_runtime/config/` folder with the following content:
+
+```sh
+$ cat /<your_directory>/fdb_runtime/config/foundationdb.conf
+[fdbmonitor]
+user = root
+
+[general]
+cluster-file = /<your_directory>/fdb_runtime/config/fdb.cluster
+restart-delay = 60
+
+[fdbserver]
+
+command = /<your_directory>/foundationdb/bin/fdbserver
+datadir = /<your_directory>/fdb_runtime/data/$ID
+logdir = /<your_directory>/fdb_runtime/logs/
+public-address = auto:$ID
+listen-address = public
+
+
+[fdbserver.4500]
+class=stateless
+[fdbserver.4501]
+class=transaction
+[fdbserver.4502]
+class=storage
+[fdbserver.4503]
+class=stateless
+```
+
+Create a file named `fdb.cluster` in the same folder with the following content:
+
+```sh
+$ cat /<your_directory>/fdb_runtime/config/fdb.cluster
+
+# Replace <your_ip_address> with the local IP address
+clusterdsc:test@<your_ip_address>:4500
+```
+
+Install FDB as a `systemd` service. In the same folder, create a file named `fdb.service` with the following content:
+
+```sh
+$ cat /<your_directory>/fdb_runtime/config/fdb.service
+[Unit]
+Description=FoundationDB (KV storage for cnch metastore)
+
+[Service]
+Restart=always
+RestartSec=30
+TimeoutStopSec=600
+ExecStart=/<your_directory>/foundationdb/bin/fdbmonitor --conffile /<your_directory>/fdb_runtime/config/foundationdb.conf --lockfile /<your_directory>/fdb_runtime/fdbmonitor.pid
+
+[Install]
+WantedBy=multi-user.target
+```
+
+Now that the configuration files are prepared, proceed to install FDB into `systemd`.
+
+Copy the service file to the `/etc/systemd/system/` directory:
+
+```sh
+cp fdb.service /etc/systemd/system/
+```
+
+Reload the service files to include the new service:
+
+```sh
+systemctl daemon-reload
+```
+
+Enable and start the service:
+
+```sh
+systemctl enable fdb.service
+systemctl start fdb.service
+```
+
+Check the service and see if it's active:
+
+```sh
+$ systemctl status fdb.service
+  fdb.service - FoundationDB (KV storage for cnch metastore)
+  Loaded: loaded (/etc/systemd/system/fdb.service; disabled; vendor preset: enabled)
+  Active: active (running) since Tue 2023-01-17 18:35:42 CST; 20s ago
+...
+```
+
+Now that the FDB service has been installed on one machine, repeat the same steps to install the FDB service on the other two machines.
+
+After installation, you need to connect the three FDB services to form a cluster. Go back to the first node and use fdbcli to connect to FDB.
+
+```sh
+$ ./foundationdb/bin/fdbcli -C fdb_runtime/config/fdb.cluster
+Using cluster file `fdb_runtime/config/fdb.cluster'.
+
+The database is unavailable; type `status' for more information.
+
+Welcome to the fdbcli. For help, type `help'.
+fdb>
+```
+
+Execute the following command to initialize the database:
+
+```sh
+configure new single ssd
+```
+
+Set all three machines as coordinators, replacing the addresses with your machine addresses:
+
+```sh
+coordinators <node_1_ip_address>:4500 <node_2_ip_address>:4500 <node_3_ip_address>:4500
+```
+
+Then exit fdbcli, and you'll find that the `fdb.cluster` file now has new content:
+
+```sh
+$ cat fdb_runtime/config/fdb.cluster
+# DO NOT EDIT!
+# This file is auto-generated, it is not to be edited by hand
+clusterdsc:wwxVEcyLvSiO3BGKxjIw7Sg5d1UTX5ad@example1.host.com:4500,example2.host.com:4500,example3.host.com:4500
+```
+
+Copy this file to the other two machines and replace the old files, then restart the fdb service:
+
+
+```sh
+systemctl restart fdb.service
+```
+After that, return to the first machine, connect to FDB using fdbcli again, and execute the following command to change the redundancy mode to `double`:
+
+
+```sh
+configure double
+```
+Then execute the `status` command in fdbcli to view the results. You should see something similar to the following:
+
+
+```sh
+fdb> status
+
+Using cluster file `fdb_runtime/config/fdb.cluster'.
+
+Configuration:
+  Redundancy mode        - double
+  Storage engine         - ssd-2
+  Coordinators           - 3
+  Usable Regions         - 1
+```
+This confirms that you have completed the installation of the FoundationDB server. Now you have the `fdb.cluster` file, which we will use in the Byconity configuration.
+
+
+## Installing HDFS
+
+Here, we will install HDFS on three machines, with one machine acting as the namenode and the other two as datanodes. For detailed instructions, refer to the official documentation: [SingleCluster](https://hadoop.apache.org/docs/stable/hadoop-project-dist/hadoop-common/SingleCluster.html) and [ClusterSetup](https://hadoop.apache.org/docs/stable/hadoop-project-dist/hadoop-common/ClusterSetup.html). We will install HDFS version 3.3.4 based on Java 8.
+
+First, install Java on all three machines. There are many ways to install Java, but here we will use the following two commands:
+
+
+```sh
+sudo apt-get update
+sudo apt-get install openjdk-8-jdk
+```
+Next, download a Hadoop distribution from the official website or use our provided domestic fast download link. Extract the archive and navigate to the directory:
+
+
+```sh
+$ curl -L -o hadoop-3.3.4.tar.gz https://dlcdn.apache.org/hadoop/common/stable/hadoop-3.3.4.tar.gz
+$ tar xvf hadoop-3.3.4.tar.gz
+$ ls
+hadoop-3.3.4  hadoop-3.3.4.tar.gz
+$ cd hadoop-3.3.4
+```
+Edit the `etc/hadoop/hadoop-env.sh` file to set the environment variables:
+
+
+```sh
+export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64
+export HADOOP_HOME=/<your_directory>/hdfs/hadoop-3.3.4
+export HADOOP_LOG_DIR=/<your_directory>/hdfs/logs
+```
+Edit the `etc/hadoop/core-site.xml` file with the following content, replacing `<your_name_node_ip_address>` with the actual IP address of your namenode:
+
+
+```xml
+<configuration>
+        <property>
+                <name>fs.defaultFS</name>
+                <value>hdfs://<your_name_node_ip_address>:12000</value>
+        </property>
+</configuration>
+```
+Now that the common setup for all three machines is complete, we will proceed with the specific configurations for the namenode and datanodes.
+
+On the namenode, create a file containing the list of datanodes. For example, `datanodes_list.txt` should look like this:
+
+
+```sh
+$ cat /root/user_xyz/hdfs/datanodes_list.txt
+<datanode_1_address>
+<datanode_2_address>
+```
+Create a directory to store the namenode's runtime data:
+
+
+```sh
+mkdir -p /<your_directory>/hdfs/root_data_path_for_namenode
+```
+Edit the `etc/hadoop/hdfs-site.xml` file on the namenode with the following content:
+
+
+```xml
+<configuration>
+        <property>
+                <name>dfs.replication</name>
+                <value>1</value>
+        </property>
+        <property>
+                <name>dfs.namenode.name.dir</name>
+                <value>file:///<your_directory>/hdfs/root_data_path_for_namenode</value>
+        </property>
+        <property>
+                <name>dfs.hosts</name>
+                <value>/<your_directory>/hdfs/datanodes_list.txt</value>
+        </property>
+</configuration>
+```
+This completes the configuration for the namenode. Next, we will configure the two datanodes.
+
+On each datanode, create a directory to store the runtime data:
+
+
+```sh
+mkdir -p /root/user_xyz/hdfs/root_data_path_for_datanode
+```
+Edit the `etc/hadoop/hdfs-site.xml` file on the datanodes with the following content:
+
+
+```xml
+<configuration>
+        <property>
+                <name>dfs.data.dir</name>
+                <value>file:///<your_directory>/hdfs/root_data_path_for_datanode</value>
+        </property>
+</configuration>
+```
+After completing the configuration, return to the namenode, navigate to the hadoop directory, format the file system, and start the namenode using the following commands:
+
+
+```sh
+bin/hdfs namenode -format
+bin/hdfs --daemon start namenode
+```
+Then, on each of the two datanodes, navigate to the hadoop directory and start the datanode using the following command:
+
+
+```sh
+bin/hdfs --daemon start datanode
+```
+Once the entire HDFS cluster is configured, we need to create a directory to store data. On the namenode, in the hadoop directory, execute the following commands:
+
+
+```sh
+bin/hdfs dfs -mkdir -p /user/clickhouse/
+bin/hdfs dfs -chown clickhouse /user/clickhouse
+bin/hdfs dfs -chmod -R 775 /user/clickhouse
+```
+Finally, check the status of the entire HDFS cluster and verify that the datanodes are active by running the following command on the namenode:
+
+
+```sh
+bin/hdfs dfsadmin -report
+```
+## Installing the FoundationDB Client
+
+The deployment of the ByConity software package depends on the FoundationDB client software package. The FoundationDB client package is tightly coupled with the FoundationDB server version. Therefore, we need to choose a client package that matches the FoundationDB server version.
+The FoundationDB client package can be downloaded from the [official website](https://github.com/apple/foundationdb/releases). In this example, we are downloading version 7.1.27 for Debian OS on amd64 machines.
+
+
 ```sh
 curl -L -o foundationdb-clients_7.1.27-1_amd64.deb https://github.com/apple/foundationdb/releases/download/7.1.27/foundationdb-clients_7.1.27-1_amd64.deb
 ```
+Execute the installation command:
 
-Then install with this command
+
 ```sh
 sudo dpkg -i foundationdb-clients_7.1.27-1_amd64.deb
 ```
 
-## Deploy ByConity Packages
-Next we will deploy ByConity packages, you can find them in release [page](https://github.com/ByConity/ByConity/releases). 
-Or you can build the package by yourself, in that case follow this [guide](https://github.com/ByConity/ByConity/tree/master/docker/packager).
+## Deploying the ByConity Software Package
 
-### Install byconity-common-static
-The first package that need to install is the common package `byconity-common-static`, 
-this is the package that all other packages depend on.
+Next, we will deploy the ByConity software package, which can be found on our [official downloads page](https://github.com/ByConity/ByConity/releases). Alternatively, you can build the software package yourself by following this [software package build guide](https://github.com/ByConity/ByConity/tree/master/docker/packager).
+
+1. Installing byconity-common-static
+
+First, install `byconity-common-static`, which is a dependency for all other packages.
+
 
 ```sh
 sudo dpkg -i byconity-common-static_0.1.1.1_amd64.deb
 ```
-After that edit configuration files `/etc/byconity-server/cnch_config.xml` and
- `/etc/byconity-server/fdb.config`.  The `cnch_config.xml` file contains service_discovery config,
-  hdfs config, foundationdb cluster config path. The `fdb.config` is the cluster config file of 
-  FoundationDB cluster. 
+Edit the configuration files `/etc/byconity-server/cnch_config.xml` and `/etc/byconity-server/fdb.config`. The `cnch_config.xml` file contains service_discovery configuration, hdfs configuration, and the path to the foundationdb cluster configuration. The `fdb.config` is the cluster configuration file for the FoundationDB cluster.
+
+2. Configuring `cnch_config.xml`
+
+The `cnch_config.xml` file contains two sections that require user configuration: the `service_discovery` tag and the `hdfs_nnproxy` tag. In ByConity, there are three ways for components to discover each other. The `mode` tag is used to specify the method, with three modes available: `local`, `dns`, and `consul`.
+
+In `local` mode, the user needs to specify the IP addresses or hostnames of all components in this configuration file by replacing the placeholders `{your_xxx_address}` (such as `{your_server_address}`), which are actually the IP addresses of the components, such as `10.0.2.72`.
+
+For the `hdfs_nnproxy` tag, it contains the address of the HDFS namenode.
+
+3. Configuring `fdb.cluster`
+
+As mentioned in the FoundationDB cluster deployment, after configuring the FoundationDB servers, a `fdb.cluster` file will be generated. This file is used by FoundationDB clients to connect to the FoundationDB servers.
+
+4. Installing the TSO service component
+
+To install the TSO service, download the `byconity-tso` package and install it:
 
 
-### Config `cnch_config.xml`
-
-The `cnch_config.xml` file contains 2 parts that have to be configured by user,  
-the `service_discovery` tag and the `hdfs_nnproxy` tags.
-In ByConity there are 3 ways component can discover each other. The `mode` tag is used 
-to specify the way. There are 3 modes: `local`, `dns` and `consul`
-In the `local` mode, the user have to specify the ip address or host name of all components 
-in this config file, by replace the place holder `{your_xxx_address}`, for example `{your_server_address}`, 
-which the actually ip address of the component, for example, `10.0.2.72`. 
-
-For the `hdfs_nnproxy` tags contains the address of HDFS name node 
-
-### Config `fdb.config`
-
-The `fdb.config` is the file for foundation db client to connect to FoundationDB server, 
-you will have it after you config FoundationDB server. 
-Read more in [here](./foundationdb-installation)
-
-
-After that on the machine you want to install TSO service. Download the `byconity-tso` package and install.
 ```sh
 sudo dpkg -i byconity-tso_0.1.1.1_amd64.deb
 ```
-If this is the first time the package is install on system, it won't start immediately but in next reboot. 
-You can check it status by
-```sh
-systemctl status byconity-tso
-```
-The config for tso service is located in `/etc/byconity-server/byconity-tso.xml`, you can config as you like 
-but the default are good enough, to start it immediately execute
+The configuration file for the TSO service is located at `/etc/byconity-server/byconity-tso.xml` and can be configured according to your needs, although the default values should be sufficient. Additionally, the first installation will not start immediately, so you need to start it manually using the following command:
+
+
 ```sh
 systemctl start byconity-tso
 ```
-The next time you install this package again (for example, you want to upgrade), then you don't need to execute `start` command.
+You can also check the status of the TSO using the following command:
 
-In the same way, install ByConity resource manager, ByConity server, ByConity worker, ByConity worker write 
-and ByConity daemon manager. The `byconity-resource-manager`, `byconity-daemon-manger` and `byconity-tso` 
-are light weight service so it could be install in shared machine with other package. 
-But for `byconity-server`, `byconity-worker`, `byconity-worker-write` we should install them in separate machines.
 
 ```sh
-sudo dpkg -i byconity-resource-manager_0.1.1.1_amd64.deb 
-sudo dpkg -i byconity-server_0.1.1.1_amd64.deb 
-sudo dpkg -i byconity-worker_0.1.1.1_amd64.deb 
-sudo dpkg -i byconity-worker-write_0.1.1.1_amd64.deb 
-sudo dpkg -i byconity-daemon-manager_0.1.1.1_amd64.deb 
+systemctl status byconity-tso
 ```
-You can install more workers in the same way. Each worker has a settings call `WORKER_ID` 
-in the config file `/etc/byconity-server/(byconity-worker|byconity-worker-write).xml` to config `worker id` for worker, 
-`worker id` have to be unique between workers, the default value of `WORKER_ID` in config file is empty. 
-In that case the `worker_id` is automatically assigned to be the IP address of the host machine.
+*Note: If you reinstall the package in the future (e.g., for an upgrade), you do not need to execute the `start` command again.*
+
+5. Installing other components
+
+In a similar manner, install the ByConity Resource Manager, ByConity Server, ByConity Worker, ByConity Worker Write, and ByConity Daemon Manager. The `byconity-resource-manager`, `byconity-daemon-manger`, and `byconity-tso` are lightweight services and can be installed on shared machines along with other software packages. However, for `byconity-server`, `byconity-worker`, and `byconity-worker-write`, they should be installed on separate machines.
+
+
+```sh
+sudo dpkg -i byconity-resource-manager_0.1.1.1_amd64.deb
+sudo dpkg -i byconity-server_0.1.1.1_amd64.deb
+sudo dpkg -i byconity-worker_0.1.1.1_amd64.deb
+sudo dpkg -i byconity-worker-write_0.1.1.1_amd64.deb
+sudo dpkg -i byconity-daemon-manager_0.1.1.1_amd64.deb
+```
+Install additional worker nodes in the same way. Each worker node has a setting called `WORKER_ID`, which is configured in the configuration file `/etc/byconity-server/(byconity-worker|byconity-worker-write).xml`. The `worker id` must be unique among worker nodes. The default value for `WORKER_ID` in the configuration file is empty. In this case, the `worker_id` will be automatically assigned as the IP address of the host machine.
+
+6. Checking the status of the compute group
+
+
+```sh
+Clickhouse client --port 9010
+
+:) select * from system.workers
+```

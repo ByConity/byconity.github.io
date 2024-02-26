@@ -1,20 +1,18 @@
 ---
-title: TPC-DS标准测试
+title: TPC-DS基准测试
 tags:
   - Docs
 ---
 
 
-# ByConity与主流开源OLAP引擎（Clickhouse、Doris、Presto）性能对比分析
+# TPC-DS基准测试 
 
-
-## 引言：
 随着数据量和数据复杂性的不断增加，越来越多的企业开始使用OLAP（联机分析处理）引擎来处理大规模数据并提供即时分析结果。在选择OLAP引擎时，性能是一个非常重要的因素。因此，本文将使用TPC-DS基准测试的99个查询语句来对比开源的ClickHouse、Doris、Presto以及ByConity这4个OLAP引擎的性能表现，以便为企业选择合适的OLAP引擎提供参考。
 
-## TPC-DS基准测试简介
+## TPC-DS简介
 TPC-DS（Transaction Processing Performance Council Decision Support Benchmark）是一个面向决策支持系统（Decision Support System，简称DSS）的基准测试，该工具是由TPC组织开发，它模拟了多维分析和决策支持场景，并提供了99个查询语句，用于评估数据库系统在复杂的多维分析场景下的性能。每个查询都设计用于模拟复杂的决策支持场景，包括跨多个表的连接、聚合和分组、子查询等高级SQL技术。
 
-## OLAP引擎介绍
+## 测试引擎介绍
 ClickHouse、Doris、Presto和ByConity都是当前比较流行的开源OLAP引擎，它们都具有高性能和可扩展性的特点。
 - ClickHouse是由俄罗斯搜索引擎公司Yandex开发的一个列式数据库管理系统，它专注于大规模数据的快速查询和分析。
 - Doris是一个分布式列式存储和分析系统，它支持实时查询和分析，并可以与Hadoop、Spark和Flink等大数据技术进行集成。
@@ -37,6 +35,8 @@ ClickHouse、Doris、Presto和ByConity都是当前比较流行的开源OLAP引�
 
 
 服务器配置：
+
+```
 Architecture:          x86_64
 CPU op-mode(s):        32-bit, 64-bit
 Byte Order:            Little Endian
@@ -62,6 +62,7 @@ L2 cache:              256K
 L3 cache:              30720K
 NUMA node0 CPU(s):     0-11,24-35
 NUMA node1 CPU(s):     12-23,36-47
+```
 
 测试方法：
 - 使用TPC-DS基准测试的99个查询语句，和1TB（28亿行）的数据测试4个OLAP引擎的性能。
@@ -69,8 +70,7 @@ NUMA node1 CPU(s):     12-23,36-47
 - 对于每个查询，多次执行并取平均值，以减少测量误差，设置每次查询超时时间为500秒。
 - 记录查询执行的细节，例如查询执行计划、I/O和CPU使用情况等。
 
-
-## 性能测试结果
+## 测试结果及分析
 我们使用了相同的数据集和硬件环境来测试这四个OLAP引擎的性能。测试数据集大小为1TB，硬件和软件环境如上介绍，我们使用了TPC-DS基准测试中的99个查询语句分别在四个OLAP引擎上进行了连续三次的测试，并取三次平均结果。其中ByConity跑通了所有99个查询测试。Doris在SQL15出现Crash，另外有4次的Timeout，分别是SQL54、SQL67、SQL78和SQL95。Presto只在SQL67和SQL72发生Timeout，其他查询测试都跑通了。而Clickhouse只跑通了50%的查询语句，大概有一部分是Timeout，另一部分是系统报错，分析原因是Clickhouse不能有效的支持多表关联查询导致，只能把这类SQL语句做手动改写拆分才能执行。因此在对比总耗时我们暂时排除Clickhouse，其他三个OLAP引擎TPC-DS测试总耗时如下图1所示，从图1 中我们可以看出开源的ByConity查询性能明显优于其他引擎，性能约是其他的3-4倍。（注：以下所有图表纵坐标单位为秒）
 ![](./assets/tpc-ds/tpc-ds-total.png)
 图1 TPC-DS 99条查询总耗时

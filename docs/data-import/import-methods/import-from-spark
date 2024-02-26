@@ -1,0 +1,52 @@
+---
+title: Import from Spark
+sidebar_position: 4
+tags:
+  - Docs
+---
+
+
+# Importing Data
+
+## Data Import via Spark
+
+Using the part writer tool, data files can be converted into part files without going through the ByConity engine. This separation of ByConity's query and build processes can alleviate resource competition during data import and querying, improving query performance. Below is an introduction to how to use the part writer to import data into ByConity.
+
+1. Generating part files using the part writer
+
+The part writer accepts an SQL statement as a parameter. Users specify details such as the source data file, data file format, data schema, and part file save path through the SQL statement. Here's how to use it:
+
+
+```bash
+./part_writer "load CSV file '/path/to/data/test.csv' as table db.tablename(col1 UInt64, col2 String, col3 Nullable(String)) partition by col1 order by (col2, col3) location '/path/to/dest/'"
+```
+* `CSV` specifies the source data file format. Additionally, the part writer supports various data file formats natively supported by ClickHouse, such as CSVWithNames and JSONEachRow.
+* `/path/to/data/test.csv` specifies the source data file. It supports reading source data from both local and HDFS locations. To use an HDFS data file, specify the path as: `hdfs://host:port/path/to/data/file`.
+* `/path/to/dest/` specifies the target folder for writing the part files. It supports writing part files directly to HDFS, from which ByConity can pull and load them.
+* `as table` specifies the schema information for the inserted data.
+* `partition by` and `order by` specify the partition key and sorting key for the data table, respectively. Multiple keys should be separated by commas and enclosed in parentheses, e.g., `partition by (name, id)`.
+* A special option for ByConity, `settings cnch=1`, is used to dump the generated part directly into the ByConity part format and write it to the HDFS path specified by the location option.
+
+2. Importing part files into ByConity
+
+Generated part files can be directly copied to the corresponding data file path of the ByConity table and then loaded by restarting the ByConity server. Alternatively, the part file directory can be copied to the detached directory of the table and loaded using the attach command, such as:
+
+
+```sql
+alter table test attach part 'partfile'
+```
+If the part writer is used to generate part files with direct upload to hdfs specified, the following command can be executed:
+
+
+```bash
+system fetch parts into db.table 'hdfs://host:port/path/to/part/'
+```
+ByConity will automatically pull the part files from the hdfs path and load them. Additionally, the following ByConity attach syntax is supported for importing dumped parts from hdfs into the target table:
+
+
+```bash
+alter table test attach parts from '/hdfs/path/to/dumped/dir'
+```
+This approach supports spark imports. In practical scenarios where large amounts of data need to be imported into a ByConity cluster, spark can be considered. Firstly, read the data into a spark dataset from an external source. Then, repartition the dataset based on the sharding key to ensure that data destined for different ByConity nodes falls into separate partitions (you may need to adjust the `spark.sql.shuffle.partitions` parameter based on the actual situation to have partitions not less than the number of ByConity master nodes). For each partition, generate a part file by calling the part writer, specify uploading the part file to hdfs, and then notify ByConity to load the part file by sending an http request to the corresponding ByConity node.
+
+![](../assets/boxcnlSkMX0zkWno7WT7250zU1f.png)

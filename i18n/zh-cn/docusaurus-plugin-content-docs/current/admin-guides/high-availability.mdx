@@ -1,0 +1,28 @@
+---
+title: 高可用
+sidebar_position: 4
+tags:
+  - Docs
+---
+
+# 高可用
+
+高可用的 ByConity 集群功能开启需要打开所有组件的 zookeeper 配置，参考[server.yaml](https://github.com/ByConity/byconity-deploy/blob/master/chart/byconity/files/server.yaml)
+
+1. 打开 zookeeper 配置：
+
+```
+partition_by: event_date
+flush_interval_milliseconds: 15000
+mark_cache_size: 5368709120
+zookeeper: {} enable zookeeper
+cnch_config: /etc/byconity/cnch-config.yaml
+```
+
+官方提供了高可用的 helm 配置 yaml 文件[value_HA_example.yaml](https://github.com/ByConity/byconity-deploy/blob/master/examples/k8s/value_HA_example.yaml)供参考。
+
+2. 使用 helm 更新集群：
+
+```
+helm upgrade --install --create-namespace --namespace byconity -f ./your/custom/values.yaml byconity ./chart/byconity
+```

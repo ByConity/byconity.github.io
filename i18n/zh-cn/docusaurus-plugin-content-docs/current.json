@@ -1,6 +1,6 @@
 {
   "version.label": {
-    "message": "0.3.0 🚧",
+    "message": "0.3.x",
     "description": "The label for version current"
   },
   "sidebar.tutorialSidebar.category.Functions": {
@@ -15,28 +15,60 @@
     "message": "快速上手",
     "description": "The label for category Quick Start in sidebar tutorialSidebar"
   },
+  "sidebar.tutorialSidebar.category.Deployment": {
+    "message": "ByConity部署",
+    "description": "The label for category Deployment in sidebar tutorialSidebar"
+  },
+  "sidebar.tutorialSidebar.category.Table Design": {
+    "message": "数据表设计",
+    "description": "The label for category Table Design in sidebar tutorialSidebar"
+  },
+  "sidebar.tutorialSidebar.category.Data Import": {
+    "message": "数据导入",
+    "description": "The label for category Data Import in sidebar tutorialSidebar"
+  },
+  "sidebar.tutorialSidebar.category.Data Export": {
+    "message": "数据导出",
+    "description": "The label for category Data Export in sidebar tutorialSidebar"
+  },
+  "sidebar.tutorialSidebar.category.Data Lake": {
+    "message": "数据湖",
+    "description": "The label for category Data Lake in sidebar tutorialSidebar"
+  },
+  "sidebar.tutorialSidebar.category.Query Optimization": {
+    "message": "查询加速",
+    "description": "The label for category Query Optimization in sidebar tutorialSidebar"
+  },
+  "sidebar.tutorialSidebar.category.Integration": {
+    "message": "生态集成",
+    "description": "The label for category Integration in sidebar tutorialSidebar"
+  },
   "sidebar.tutorialSidebar.category.SQL Syntax": {
-    "message": "SQL语法说明",
+    "message": "SQL手册",
     "description": "The label for category SQL Syntax in sidebar tutorialSidebar"
   },
-  "sidebar.tutorialSidebar.category.Basic Guides": {
-    "message": "基础使用手册",
-    "description": "The label for category Basic Guides in sidebar tutorialSidebar"
-  },
-  "sidebar.tutorialSidebar.category.Advanced Guides": {
-    "message": "高级用户手册",
-    "description": "The label for category Advanced Guides in sidebar tutorialSidebar"
-  },
-  "sidebar.tutorialSidebar.category.Deployment": {
-    "message": "部署",
-    "description": "The label for category Deployment in sidebar tutorialSidebar"
+  "sidebar.tutorialSidebar.category.Admin Guides": {
+    "message": "管理手册",
+    "description": "The label for category Admin Guides in sidebar tutorialSidebar"
   },
   "sidebar.tutorialSidebar.category.Benchmarks": {
     "message": "性能测试",
     "description": "The label for category Benchmarks in sidebar tutorialSidebar"
   },
+  "sidebar.tutorialSidebar.category.Developer Guides": {
+    "message": "开发指南",
+    "description": "The label for category Developer Guides in sidebar tutorialSidebar"
+  },
+  "sidebar.tutorialSidebar.category.FAQ": {
+    "message": "常见问题",
+    "description": "The label for category FAQ in sidebar tutorialSidebar"
+  },
   "sidebar.tutorialSidebar.category.Community": {
     "message": "参与社区",
     "description": "The label for category Community in sidebar tutorialSidebar"
+  },
+  "sidebar.tutorialSidebar.category.Release Note": {
+    "message": "版本发布",
+    "description": "The label for category Release Note in sidebar tutorialSidebar"
   }
 }
