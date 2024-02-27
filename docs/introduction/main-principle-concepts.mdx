@@ -15,7 +15,7 @@ ByConity can be broadly divided into three layers: the service access layer, the
 ![](./assets/ByConity-technical-architecture.png)
 <center>Figure 1: ByConity Technical Architecture</center>
 
-## Service Access Layer
+### Service Access Layer
 
 The service access layer of ByConity receives user queries. It first parses the queries and generates efficient execution plans by combining metadata information obtained from the Catalog API. Then, it acquires available computing resources through the Resource Manager and schedules the query plans to appropriate computing nodes (e.g., those with caches) for execution.
 
@@ -23,13 +23,13 @@ The service access layer consists of one or more servers and supports horizontal
 
 The query optimizer is one of the core components of the ByConity system. An excellent optimizer can significantly improve query performance, especially in complex query scenarios where it can bring several times to hundreds of times performance improvement. ByConity's self-developed optimizer provides ultimate optimization capabilities based on three directions: rule-based optimization (RBO), cost-based optimization (CBO), and data dependency-based optimization (DBO).
 
-## Computation Layer
+### Computation Layer
 
 The computation layer of ByConity consists of one or more compute groups, allowing different tenants to achieve physical resource isolation using different compute groups. The Resource Manager is responsible for unified management and scheduling of computing resources. It collects performance data and resource usage information from each compute group, dynamically allocates resources for queries, writes, and background tasks, and performs dynamic scaling to improve resource utilization.
 
 A compute group comprises multiple Workers. Each Worker receives a Plan Segment, drives its execution, reads data from data sources, and distributes it to downstream nodes according to shuffle rules. Plan Segments containing exchange inputs wait for upstream data and continue to shuffle data to various nodes if necessary. After multiple stages are completed, the results are returned to the server.
 
-## Data Storage Layer
+### Data Storage Layer
 
 Both metadata and data in ByConity achieve storage-computation separation. Metadata is stored in a distributed key-value store, while data is stored in a distributed file system or object storage.
 
@@ -54,4 +54,4 @@ The following diagram illustrates the component interactions in ByConity. We wil
 
 - The Query request is ultimately executed on ByConity's Workers. The Workers read data from the underlying cloud storage (Cloud Storage) and perform computations by establishing pipelines. Finally, the computation results from multiple Workers are aggregated through the Server and returned to the client.
 
-ByConity also has two main components: the Time-stamp Oracle and the Daemon Manager. The former supports transaction processing in ByConity, while the latter manages and schedules background tasks.
+- ByConity also has two main components: the Time-stamp Oracle and the Daemon Manager. The former supports transaction processing in ByConity, while the latter manages and schedules background tasks.
