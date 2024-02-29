@@ -7,22 +7,25 @@ tags:
 
 # 高可用
 
-高可用的 ByConity 集群功能开启需要打开所有组件的 zookeeper 配置，参考[server.yaml](https://github.com/ByConity/byconity-deploy/blob/master/chart/byconity/files/server.yaml)
+ByConity支持在同一集群中部署多个ByConity Server、Resource Manager、以及TSO进程以实现高可用性。原理是通过在共享的FoundationDB中执行“比较并交换”（"Compare And Swap" ）的操作来确定谁是主。
 
-1. 打开 zookeeper 配置：
+一般来说，可以根据自身需求启动任意数量的ByConity Server、Resource Manager、或者TSO服务进程。多个Server将自动使用一致性哈希实现元数据管理和访问负载。多个Resource Manager或TSO进程将选择一个主提供服务。具体来说：
 
-```
-partition_by: event_date
-flush_interval_milliseconds: 15000
-mark_cache_size: 5368709120
-zookeeper: {} enable zookeeper
-cnch_config: /etc/byconity/cnch-config.yaml
-```
 
-官方提供了高可用的 helm 配置 yaml 文件[value_HA_example.yaml](https://github.com/ByConity/byconity-deploy/blob/master/examples/k8s/value_HA_example.yaml)供参考。
+## 基于Kubernates集群部署
 
-2. 使用 helm 更新集群：
+以这种方式部署ByConity集群，只需调整每个服务组件的副本数，如以下示例所示：
 
-```
-helm upgrade --install --create-namespace --namespace byconity -f ./your/custom/values.yaml byconity ./chart/byconity
-```
+官方提供了高可用的 helm 配置 yaml 文件[value_HA_example.yaml](https://github.com/ByConity/byconity-deploy/blob/master/examples/k8s/value_HA_example.yaml)供参考。可以使用 `kubectl scale` 命令根据需要灵活地增加或减少副本。
+
+
+## 其他部署方式
+
+对于没有Kubernetes支持的ByConity集群的手动部署，您可以启动额外的副本服务进程，使用不同的监听地址和日志路径进行扩展，或停止它们进行收缩。当ByConity组件“server”的副本数发生更改时，请记得更新cnch-config配置文件中的服务发现信息，如下所示：[cnch-config.yml](https://github.com/ByConity/ByConity/blob/67e2eaab6d5b9c646a336619b2b5500203efc4fd/docker/docker-compose/byconity-multi-cluster/cnch-config.yml)。
+
+
+
+
+
+
+
