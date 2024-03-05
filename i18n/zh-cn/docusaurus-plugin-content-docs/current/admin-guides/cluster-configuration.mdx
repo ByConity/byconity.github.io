@@ -355,14 +355,13 @@ Example:
 | :--: | :--: | :--: |
 | hits_to_cache | 同一份数据被访问多少次才会被缓存 | 2 |
 | segment_size | 缓存DiskCache的最小单位所包含的行数 | 8192 |
-| lru_max_size | LRU cache的最大容量（bytes） | 2T |
-| lru_max_object_num | LRU cache的最大数量 | std::numeric_limits<size_t>::max() |
+| lru_max_size | LRU cache的最大容量（bytes） | 2 |
+| lru_max_object_num | LRU cache的最大数量（std::numeric_limits<size_t>::max()） | 4294967295（32位系统） |
 | random_drop_threshold | 随机丢弃缓存任务的阈值 | 50 |
 | stats_bucket_size | 存储并缓存Key次数的bucket数目 | 10000 |
-| lru_update_interval | LRU cache更新间隔（秒） | 60s |
+| lru_update_interval | LRU cache更新间隔（秒） | 60 |
 | cache_dispatcher_per_disk | 是否为每个盘启动加载线程 | true |
 | cache_loader_per_disk | 为每个盘分配的多线程数 | 2 |
-| cache_load_dispatcher_drill_down_level |  |  |
 | cache_shard_num | LRU cache的分片数目 | 12 |
 | cache_set_rate_limit | 缓存写入速率限制器 | 0 (不限速) |
 | disk_cache_dir | 缓存写入的相对路径 | disk_cache_v1 |
@@ -431,6 +430,33 @@ Server在分发Part给Worker时会根据负载均衡调整算法，可能导致�
     </MergeTree>
 </disk_cache_strategies>
 ```
+
+#### 如何在表级别启动StealingDiskCache
+
+- 对于现有表，可以使用 `ALTER TABLE` 语句来更改表的配置：
+
+```
+ALTER TABLE [database].[table] ON CLUSTER cluster  
+SETTINGS disk_cache_stealing_mode = 3;
+```
+
+- 对于新表，可以在创建表时 `CREATE TABLE` 指定参数：
+
+```
+CREATE TABLE [database].[table]  
+(  
+    ... -- 列定义  
+) ENGINE = MergeTree()  
+SETTINGS disk_cache_stealing_mode = 3;
+```
+
+参数说明：
+| `disk_cache_stealing_mode` | 描述 |
+| :--: | :--: |
+| 0 | 默认值，关闭DiskCacheStealing |
+| 1 | 仅在缓存读取时向远端节点发起RPC请求，以读取远端缓存副本 |
+| 2 | 仅在缓存写入时向远端节点发起RPC请求，以写入远端缓存副本 |
+| 3 | 写入缓存时尝试向远端节点写入副本，读取缓存时若本地没有，尝试向远端节点读取 |
 
 ### cnch_kafka_log
 

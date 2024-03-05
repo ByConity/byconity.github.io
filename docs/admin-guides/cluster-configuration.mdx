@@ -370,14 +370,13 @@ The `disk_cache_strategies` configuration manages the DiskCache behavior in ByCo
 | :--: | :--: | :--: |
 | hits_to_cache | Number of times a data item must be accessed to be cached | 2 |
 | segment_size | The minimum number of rows per DiskCache unit | 8192 |
-| lru_max_size | Maximum size of the LRU cache (in bytes) | 2T |
-| lru_max_object_num | Maximum number of objects in the LRU cache | std::numeric_limits<size_t>::max() |
+| lru_max_size | Maximum size of the LRU cache (in bytes) | 2 |
+| lru_max_object_num | Maximum number of objects in the LRU cache （std::numeric_limits<size_t>::max()） | 4294967295（sys 32-bit） |
 | random_drop_threshold | Threshold for randomly dropping cache tasks | 50 |
 | stats_bucket_size | Number of buckets for storing and caching key counts | 10000 |
-| lru_update_interval | LRU cache update interval (in seconds) | 60s |
+| lru_update_interval | LRU cache update interval (in seconds) | 60 |
 | cache_dispatcher_per_disk | Whether to start a loading thread for each disk | true |
 | cache_loader_per_disk | Number of threads allocated for each disk | 2 |
-| cache_load_dispatcher_drill_down_level |  |  |
 | cache_shard_num | Number of shards for the LRU cache | 12 |
 | cache_set_rate_limit | Cache write rate limiter | 0 (no limit) |
 | disk_cache_dir | Relative path for cache writes | disk_cache_v1 |
@@ -446,6 +445,34 @@ Example:
     </MergeTree>
 </disk_cache_strategies>
 ```
+
+#### How to Enable StealingDiskCache at the Table Level
+
+- For existing tables, you can use the `ALTER TABLE` statement to change the table configuration:
+
+```
+ALTER TABLE [database].[table] ON CLUSTER cluster  
+SETTINGS disk_cache_stealing_mode = 3;
+```
+
+- For new tables, you can specify the parameter when creating the table using `CREATE TABLE`:
+
+```
+CREATE TABLE [database].[table]  
+(  
+    ... -- Column definitions  
+) ENGINE = MergeTree()  
+SETTINGS disk_cache_stealing_mode = 3;
+```
+
+Parameter Description:
+
+| `disk_cache_stealing_mode` | Description |
+| --- | --- |
+| 0 | Default value, DiskCacheStealing is disabled |
+| 1 | Only issue RPC requests to remote nodes for cache reads to retrieve remote cache copies |
+| 2 | Only issue RPC requests to remote nodes for cache writes to store remote cache copies |
+| 3 | Attempt to write cache copies to remote nodes during writes, and if the local copy is not available, attempt to read from remote nodes during reads |
 
 ### cnch_kafka_log
 
