@@ -347,25 +347,117 @@ Example:
 
 ### disk_cache_strategies
 
-配置 disk cache 策略，包括策略 simple 和 lru 两种不同策略：
+该配置项用于管理 ByConity 中的 DiskCache 行为，包含三种不同的策略，如文件级别、MergeTree表、Hive外表。有不同的缓存路径和管理策略。该配置项定义了定义了多个参数用于管理缓存行为，以优化 I/O 性能和提高数据处理速度。具体示例和参数项说明如下：
 
-- **lru**，LRUCache 淘汰策略相关配置
-- lru_max_size，DiskCache 最大的大小，默认 2T
-- random_drop_threshold，Cache 队列有长度限制，当队列长度到达一定比例后会按一定几率开始丢弃 Cache 请求来避免大表 Scan 导致 Cache 队列被占满，默认 50%
-- **simple**，Cache 策略相关配置
-- segment_size，DiskCache 的粒度，默认 8192，即将一个 ColumnStream 的最多 8192 个 Granule 组成一个 DiskCacheSegment进行Cache
-- hits_to_cache，数据开始 Cache 的阈值，默认为 2
+#### 配置DiskCache的相关参数：
 
-Example:
+| 参数名称 | 描述 | 默认值 |
+| :--: | :--: | :--: |
+| hits_to_cache | 同一份数据被访问多少次才会被缓存 | 2 |
+| segment_size | 缓存DiskCache的最小单位所包含的行数 | 8192 |
+| lru_max_size | LRU cache的最大容量（bytes） | 2 |
+| lru_max_object_num | LRU cache的最大数量（std::numeric_limits<size_t>::max()） | 4294967295（32位系统） |
+| random_drop_threshold | 随机丢弃缓存任务的阈值 | 50 |
+| stats_bucket_size | 存储并缓存Key次数的bucket数目 | 10000 |
+| lru_update_interval | LRU cache更新间隔（秒） | 60 |
+| cache_dispatcher_per_disk | 是否为每个盘启动加载线程 | true |
+| cache_loader_per_disk | 为每个盘分配的多线程数 | 2 |
+| cache_shard_num | LRU cache的分片数目 | 12 |
+| cache_set_rate_limit | 缓存写入速率限制器 | 0 (不限速) |
+| disk_cache_dir | 缓存写入的相对路径 | disk_cache_v1 |
+
+举例:
+
+```
+<disk_cache_strategies>
+    <File> // 通用的文件粒度的DiskCache
+        <disk_cache_dir>file_disk_cache</disk_cache_dir>
+    </File>
+    <MergeTree>// 适用于MergeTree表的DiskCache
+        <disk_cache_dir>mergetree_disk_cache</disk_cache_dir>
+    </MergeTree>
+    <Hive> // 适用于Hive外表的DiskCache
+        <disk_cache_dir>hive_disk_cache</disk_cache_dir>
+    </Hive>
+</disk_cache_strategies>
+```
+
+#### 配置SplitDiskCache的相关参数
+
+ByConity本地缓存策略支持Meta&Data数据缓存分离，在一些特定场景下优先缓存Meta数据，有效降低一些小I/O带来的远程读长尾现象。
+
+| 参数名称 | 描述 | 默认值 |
+| :--: | :--: | :--: |
+| meta_cache_nums_ratio | meta缓存的文件占用比例 | 默认0表示混合混存；大于0表示分离缓存 |
+| meta_cache_size_ratio | meta缓存的空间占用比例 | 50 |
+
+举例：
 
 ```
 <disk_cache_strategies>
     <simple>
-        <lru_max_size>1099511627776</lru_max_size>
+          ...
+          <meta_cache_nums_ratio>50</meta_cache_nums_ratio>
+          <meta_cache_size_ratio>10</meta_cache_size_ratio>
     </simple>
-</disk_cache_strategies>
+ <disk_cache_strategies>
+```
+
+#### 配置StealingDiskCache的相关参数
+
+Server在分发Part给Worker时会根据负载均衡调整算法，可能导致同一Part在不同查询中分发到不同节点，增加Cache失效率。另外，当启用Preload功能时，这种不一致性可能导致预热的Part无法被后续查询利用。而DiskCacheStealing通过一致性HASH算法确保Part在固定节点缓存，并在非缓存节点查询时从远端节点读取数据，以提升本地磁盘缓存性能。
+
+| 参数名称 | 描述 | 默认值 |
+| :--: | :--: | :--: |
+| stealing_max_request_rate | 读远端缓存的最大速率 | 0（不限制） |
+| stealing_connection_timeout_ms | 读远端缓存的连接超时阈值 | 5000（5秒） |
+| stealing_read_timeout_ms | 读远端缓存的读取超时阈值 | 10000（10秒） |
+| stealing_max_retry_times | 读远端缓存失败时的最大重试次数 | 3 |
+| stealing_retry_sleep_ms | 读远端缓存失败时的重试间隔 | 100（100毫秒） |
+| stealing_max_queue_count | 读远端缓存的最大队列长度 | 10000 |
+
+举例：
 
 ```
+<disk_cache_strategies>
+    <MergeTree>
+        <stealing_max_request_rate>0</stealing_max_request_rate>
+        <stealing_connection_timeout_ms>5</stealing_connection_timeout_ms>
+        <stealing_read_timeout_ms>10</stealing_read_timeout_ms>
+        <stealing_max_retry_times>3</stealing_max_retry_times>
+        <stealing_retry_sleep_ms>100</stealing_retry_sleep_ms>
+        <stealing_max_queue_count>10000</stealing_max_queue_count>
+    </MergeTree>
+</disk_cache_strategies>
+```
+
+#### 如何在表级别启动StealingDiskCache
+
+- 对于现有表，可以使用 `ALTER TABLE` 语句来更改表的配置：
+
+```
+ALTER TABLE [database].[table] ON CLUSTER cluster  
+SETTINGS disk_cache_stealing_mode = 3;
+```
+
+- 对于新表，可以在创建表时 `CREATE TABLE` 指定参数：
+
+```
+CREATE TABLE [database].[table]  
+(  
+    ... -- 列定义  
+) ENGINE = MergeTree()  
+SETTINGS disk_cache_stealing_mode = 3;
+```
+
+- 参数说明
+
+| `disk_cache_stealing_mode` | 描述 |
+| :--: | :--: |
+| 0 | 默认值，关闭DiskCacheStealing |
+| 1 | 仅在缓存读取时向远端节点发起RPC请求，以读取远端缓存副本 |
+| 2 | 仅在缓存写入时向远端节点发起RPC请求，以写入远端缓存副本 |
+| 3 | 写入缓存时尝试向远端节点写入副本，读取缓存时若本地没有，尝试向远端节点读取 |
 
 ### cnch_kafka_log
 

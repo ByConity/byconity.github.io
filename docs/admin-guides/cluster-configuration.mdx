@@ -362,25 +362,117 @@ Example:
 
 ### disk_cache_strategies
 
-Configure the disk cache strategy, including two different strategies: simple and lru:
+The `disk_cache_strategies` configuration manages the DiskCache behavior in ByConity, encompassing three different strategies for file-level, MergeTree tables, and Hive external tables. These strategies have distinct cache paths and management techniques. The configuration defines multiple parameters to optimize I/O performance and enhance data processing speed.
 
-- **lru**, LRUCache elimination policy related configuration
-- lru_max_size, the maximum size of DiskCache, the default is 2T
-- random_drop_threshold, the cache queue has a length limit. When the queue length reaches a certain percentage, cache requests will be discarded with a certain probability to avoid large table scans causing the cache queue to be full. The default is 50%
-- **simple**, Cache policy related configuration
-- segment_size, the granularity of DiskCache, the default is 8192, that is, up to 8192 GranuleCaches of a ColumnStream form a DiskCacheSegment
-- hits_to_cache, the threshold of data start Cache, the default is 2
+#### DiskCache Configuration Parameters:
+
+| Parameter Name | Description | Default Value |
+| :--: | :--: | :--: |
+| hits_to_cache | Number of times a data item must be accessed to be cached | 2 |
+| segment_size | The minimum number of rows per DiskCache unit | 8192 |
+| lru_max_size | Maximum size of the LRU cache (in bytes) | 2 |
+| lru_max_object_num | Maximum number of objects in the LRU cache （std::numeric_limits<size_t>::max()） | 4294967295（sys 32-bit） |
+| random_drop_threshold | Threshold for randomly dropping cache tasks | 50 |
+| stats_bucket_size | Number of buckets for storing and caching key counts | 10000 |
+| lru_update_interval | LRU cache update interval (in seconds) | 60 |
+| cache_dispatcher_per_disk | Whether to start a loading thread for each disk | true |
+| cache_loader_per_disk | Number of threads allocated for each disk | 2 |
+| cache_shard_num | Number of shards for the LRU cache | 12 |
+| cache_set_rate_limit | Cache write rate limiter | 0 (no limit) |
+| disk_cache_dir | Relative path for cache writes | disk_cache_v1 |
+
+Example:
+
+```
+<disk_cache_strategies>
+    <File>
+        <disk_cache_dir>file_disk_cache</disk_cache_dir>
+    </File>
+    <MergeTree>
+        <disk_cache_dir>mergetree_disk_cache</disk_cache_dir>
+    </MergeTree>
+    <Hive>
+        <disk_cache_dir>hive_disk_cache</disk_cache_dir>
+    </Hive>
+</disk_cache_strategies>
+```
+
+#### SplitDiskCache Configuration Parameters:
+
+ByConity's local caching strategy supports the separation of Meta and Data caching. In specific scenarios, it prioritizes Meta caching, effectively reducing remote read tail latency caused by small I/O operations.
+
+| Parameter Name | Description | Default Value |
+| :--: | :--: | :--: |
+| meta_cache_nums_ratio | Ratio of files for meta caching | Default 0 for mixed storage; >0 for separate caching |
+| meta_cache_size_ratio | Ratio of space for meta caching | 50 |
 
 Example:
 
 ```
 <disk_cache_strategies>
     <simple>
-        <lru_max_size>1099511627776</lru_max_size>
+        ...
+        <meta_cache_nums_ratio>50</meta_cache_nums_ratio>
+        <meta_cache_size_ratio>10</meta_cache_size_ratio>
     </simple>
 </disk_cache_strategies>
+```
+
+#### StealingDiskCache Configuration Parameters:
+
+When Server distributes Parts to Workers, it adjusts the algorithm for load balancing, which may result in the same Part being dispatched to different nodes in different queries, increasing Cache miss rates. Additionally, when the Preload feature is enabled, this inconsistency can cause preheated Parts to not be utilized by subsequent queries. DiskCacheStealing ensures that Parts are cached on fixed nodes using a consistent HASH algorithm and reads data from remote nodes when querying non-cache nodes, improving local disk cache performance.
+
+| Parameter Name | Description | Default Value |
+| :--: | :--: | :--: |
+| stealing_max_request_rate | Maximum rate for reading from remote caches | 0 (no limit) |
+| stealing_connection_timeout_ms | Connection timeout threshold for reading from remote caches | 5000 (5 seconds) |
+| stealing_read_timeout_ms | Read timeout threshold for reading from remote caches | 10000 (10 seconds) |
+| stealing_max_retry_times | Maximum number of retries for failed remote cache reads | 3 |
+| stealing_retry_sleep_ms | Retry interval for failed remote cache reads | 100 (100 milliseconds) |
+| stealing_max_queue_count | Maximum queue length for reading from remote caches | 10000 |
+
+Example:
 
 ```
+<disk_cache_strategies>
+    <MergeTree>
+        <stealing_max_request_rate>0</stealing_max_request_rate>
+        <stealing_connection_timeout_ms>5</stealing_connection_timeout_ms>
+        <stealing_read_timeout_ms>10</stealing_read_timeout_ms>
+        <stealing_max_retry_times>3</stealing_max_retry_times>
+        <stealing_retry_sleep_ms>100</stealing_retry_sleep_ms>
+        <stealing_max_queue_count>10000</stealing_max_queue_count>
+    </MergeTree>
+</disk_cache_strategies>
+```
+
+#### How to Enable StealingDiskCache at the Table Level
+
+- For existing tables, you can use the `ALTER TABLE` statement to change the table configuration:
+
+```
+ALTER TABLE [database].[table] ON CLUSTER cluster  
+SETTINGS disk_cache_stealing_mode = 3;
+```
+
+- For new tables, you can specify the parameter when creating the table using `CREATE TABLE`:
+
+```
+CREATE TABLE [database].[table]  
+(  
+    ... -- Column definitions  
+) ENGINE = MergeTree()  
+SETTINGS disk_cache_stealing_mode = 3;
+```
+
+Parameter Description:
+
+| `disk_cache_stealing_mode` | Description |
+| --- | --- |
+| 0 | Default value, DiskCacheStealing is disabled |
+| 1 | Only issue RPC requests to remote nodes for cache reads to retrieve remote cache copies |
+| 2 | Only issue RPC requests to remote nodes for cache writes to store remote cache copies |
+| 3 | Attempt to write cache copies to remote nodes during writes, and if the local copy is not available, attempt to read from remote nodes during reads |
 
 ### cnch_kafka_log
 
