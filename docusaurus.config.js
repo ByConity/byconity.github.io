@@ -48,6 +48,23 @@ const config = {
         editLocalizedFiles: true,
       }),
     ],
+    [
+      'client-redirects',
+      /** @type {import('@docusaurus/plugin-client-redirects').Options} */
+      ({
+        fromExtensions: ['html', 'mdx'],
+        redirects: [
+          {
+            from: ['/docs'],
+            to: '/docs/introduction/what-is-byconity',
+          },
+          {
+            from: ['/community'],
+            to: '/community/become-maintainer',
+          },
+        ],
+      }),
+    ],
   ],
 
   presets: [
@@ -95,7 +112,7 @@ const config = {
         items: [
           {
             type: 'doc',
-            docId: 'introduction/main-principle-concepts',
+            docId: 'introduction/what-is-byconity',
             position: 'left',
             label: 'Docs',
           },
