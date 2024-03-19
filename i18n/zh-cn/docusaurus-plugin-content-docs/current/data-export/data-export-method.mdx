@@ -67,7 +67,13 @@ SELECT <expr_list> INTO OUTFILE 'hdfs://ip:port/user/tiger/test/test.gz ' FORMAT
 - `/user/tiger/test/test.gz` 即为输出文件的路径，需要注意的是 hdfs 目录路径必须是可用的。
 同时，支持常见格式导出到 HDFS，比如 CSV、Parquet、JSON 等，为减少网络传输量，默认开启 gzip 压缩。
 
-## 使用Dumper工具
+## 使用Dumper工具迁移数据
+
+把数据从ClickHouse迁移到ByConity，主要有以下两个步骤：
+
+- step1：数据以离线的方式Dump到HDFS上（通过Dumper工具完成）
+
+- step2：ByConity 批量从HDFS attach
 
 使用 Dumper 进行数据迁移时，可以一次性指定一张表及其中的部分分区，将其写入 HDFS，主要工作的原理是：遍历需要迁移表的本地盘，找出active part，写成ByConity自己的格式，然后通过Dumper到HDFS上。
 
@@ -101,8 +107,13 @@ usage: clickhouse-dumper --config-file <config-file> --database <db> --table <ta
 `-S`：跳过坏的part
 `-R`：如果hdfs已经存在的相同的part，支持覆盖写
 
+注意：
 
-最后在 ByConity端执行即可完成迁移：
+- Dumper工具目前不支持cmrk3和mrk3，同时在map类型上和社区有兼容性问题，且仅支持引擎MergeTree、ReplicatedMergeTree
+
+- 在配置方面Dumper不支持自适应的index_granularity（index_granularity_bytes = 0，关闭自适应），不支持压缩（compress_marks = 0，关闭压缩），仅支持Wide part（min_rows_for_wide_part = 0，Wide part），且Database需要是Ordinary
+
+最后在 ByConity端执行即可完成迁移，具体如下：
 
 ```
 ALTER TABLE test_db.test_table ATTACH PARTITION '2020-10-10' FROM '/tmp/hdfs_path/<ip>/test_db/test_table'
