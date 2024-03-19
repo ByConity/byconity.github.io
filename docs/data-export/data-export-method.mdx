@@ -70,10 +70,15 @@ Where `hdfs://ip:port/user/tiger/test/test.gz` is the HDFS address for uploading
 
 Common formats such as CSV, Parquet, and JSON are supported for exporting to HDFS. To reduce network transmission, gzip compression is enabled by default.
 
-## Using the Dumper Tool
+## Migrating Data Using the Dumper Tool
+
+Migrating data from ClickHouse to ByConity involves the following two main steps:
+
+- Step 1: Dump the data in an offline manner onto HDFS (accomplished using the Dumper tool)
+
+- Step 2: ByConity attaches the data from HDFS in batch
 
 When using the Dumper for data migration, you can specify a table and some of its partitions at once and write them to HDFS. The main principle of work is to traverse the local disk of the table that needs to be migrated, find the active part, write it in ByConity's own format, and then use the Dumper to upload it to HDFS.
-
 
 ```>
 
@@ -97,8 +102,13 @@ When using the Dumper for data migration, you can specify a table and some of it
 * `-S`: Skips bad parts.
 * `-R`: Supports overwriting existing parts if they already exist in hdfs.
 
-Finally, execute the following command on the ByConity side to complete the migration:
+Note：
 
+- The Dumper tool currently does not support cmrk3 and mrk3. Additionally, it has compatibility issues with the community regarding map types. It only supports the MergeTree and ReplicatedMergeTree engines.
+
+- In terms of configuration, Dumper does not support adaptive index_granularity (index_granularity_bytes = 0, disabling adaptivity) or compression (compress_marks = 0, disabling compression). It only supports Wide parts (min_rows_for_wide_part = 0, enabling Wide parts). Furthermore, the database must be of the Ordinary type.
+
+Finally, execute the following command on the ByConity side to complete the migration:
 
 ```sql
 ALTER TABLE test_db.test_table ATTACH PARTITION '2020-10-10' FROM '/tmp/hdfs_path/<ip>/test_db/test_table'
