@@ -34,7 +34,38 @@ const config = {
     locales: ['en', 'zh-cn'],
   },
 
-  plugins: ['docusaurus-plugin-sass'],
+  plugins: [
+    'docusaurus-plugin-sass',
+    [
+      'content-docs',
+      /** @type {import('@docusaurus/plugin-content-docs').Options} */
+      ({
+        id: 'community',
+        path: 'community',
+        routeBasePath: 'community',
+        sidebarPath: require.resolve('./sidebarsCommunity.js'),
+        editUrl: 'https://github.com/ByConity/byconity.github.io/tree/main',
+        editLocalizedFiles: true,
+      }),
+    ],
+    [
+      'client-redirects',
+      /** @type {import('@docusaurus/plugin-client-redirects').Options} */
+      ({
+        fromExtensions: ['html', 'mdx'],
+        redirects: [
+          {
+            from: ['/docs'],
+            to: '/docs/introduction/what-is-byconity',
+          },
+          {
+            from: ['/community'],
+            to: '/community/become-maintainer',
+          },
+        ],
+      }),
+    ],
+  ],
 
   presets: [
     [
@@ -47,7 +78,7 @@ const config = {
           // Remove this to remove the "edit this page" links.
           editUrl: 'https://github.com/ByConity/byconity.github.io/tree/main',
           editLocalizedFiles: true,
-          lastVersion: 'current', 
+          lastVersion: 'current',
         },
         blog: {
           showReadingTime: true,
@@ -81,12 +112,17 @@ const config = {
         items: [
           {
             type: 'doc',
-            docId: 'introduction/main-principle-concepts',
+            docId: 'introduction/what-is-byconity',
             position: 'left',
             label: 'Docs',
           },
           { to: '/blog', label: 'Blog', position: 'left' },
-          { to: '/community', label: 'Community', position: 'left' },
+          {
+            to: '/community/become-maintainer',
+            label: 'Community',
+            position: 'left',
+            activeBaseRegex: `/community/`,
+          },
           { to: '/users', label: 'Users', position: 'left' },
           {
             type: 'docsVersionDropdown',
