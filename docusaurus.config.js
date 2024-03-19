@@ -34,7 +34,21 @@ const config = {
     locales: ['en', 'zh-cn'],
   },
 
-  plugins: ['docusaurus-plugin-sass'],
+  plugins: [
+    'docusaurus-plugin-sass',
+    [
+      'content-docs',
+      /** @type {import('@docusaurus/plugin-content-docs').Options} */
+      ({
+        id: 'community',
+        path: 'community',
+        routeBasePath: 'community',
+        sidebarPath: require.resolve('./sidebarsCommunity.js'),
+        editUrl: 'https://github.com/ByConity/byconity.github.io/tree/main',
+        editLocalizedFiles: true,
+      }),
+    ],
+  ],
 
   presets: [
     [
@@ -47,7 +61,7 @@ const config = {
           // Remove this to remove the "edit this page" links.
           editUrl: 'https://github.com/ByConity/byconity.github.io/tree/main',
           editLocalizedFiles: true,
-          lastVersion: 'current', 
+          lastVersion: 'current',
         },
         blog: {
           showReadingTime: true,
@@ -86,7 +100,12 @@ const config = {
             label: 'Docs',
           },
           { to: '/blog', label: 'Blog', position: 'left' },
-          { to: '/community', label: 'Community', position: 'left' },
+          {
+            to: '/community/become-maintainer',
+            label: 'Community',
+            position: 'left',
+            activeBaseRegex: `/community/`,
+          },
           { to: '/users', label: 'Users', position: 'left' },
           {
             type: 'docsVersionDropdown',

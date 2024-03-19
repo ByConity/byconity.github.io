@@ -19,6 +19,14 @@ npm run build # Build the Website
 
 ```txt
 byconity.github.io/
+├── community/ # English pages for the community/* routes
+│   ├── category-1
+│   │   ├── assets/ # Images used in category-1
+│   │   ├── _category_.json # Metadata for category-1
+│   │   └──doc-1.md
+│   ├── become-maintainer.mdx
+│   └── community-code-of-conduct.mdx
+│
 ├── docs/ # Latest English docs, use kebab-case
 │   ├── category-1
 │   │   ├── assets/ # Images used in category-1
@@ -46,16 +54,16 @@ byconity.github.io/
 ├── i18n/
 │   └── zh-CN/
 │       ├── docusaurus-plugin-content-docs/
-│       │   │── current/ # Latest Chinese docs, use kebab-case
+│       │   ├── current/ # Latest Chinese docs, use kebab-case
 │       │   │   ├── category-1
 │       │   │   │   ├── assets/ # Images used in category-1
 │       │   │   │   ├── _category_.json # Metadata for category-1
 │       │   │   │   └──doc-1.md
 │       │   │   ├── doc-2.md
 │       │   │   └── doc-3.md
-│       │   │── current.json # Latest Chinese sidebar
+│       │   ├── current.json # Latest Chinese sidebar
 │       │   │
-│       │   │── version-0.2.0/ # Version 0.2.0 Chinese docs, use kebab-case
+│       │   ├── version-0.2.0/ # Version 0.2.0 Chinese docs, use kebab-case
 │       │   │   ├── category-1
 │       │   │   │   ├── assets/ # Images used in category-1
 │       │   │   │   ├── _category_.json # Metadata for category-1
@@ -63,6 +71,10 @@ byconity.github.io/
 │       │   │   ├── doc-2.md
 │       │   │   └── doc-3.md
 │       │   └── version-0.2.0.json # Version 0.2.0 Chinese sidebar
+│       │
+│       ├── docusaurus-plugin-content-docs-community/ # Chinese commuity pages, use kebab-case
+│       │   ├── become-maintainer.mdx
+│       │   └── community-code-of-conduct.mdx
 │       │
 │       └── docusaurus-plugin-content-blog/
 │           └── current/ # Chinese blogs, use kebab-case
