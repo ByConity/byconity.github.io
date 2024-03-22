@@ -5,14 +5,16 @@
 This website is powered by [Docusarus](https://docusaurus.io/). We are using version 2.x at the moment.
 You are encouraged to understand the basics of Docusaurus first.
 
+Before run the below script, please [install pnpm](https://pnpm.io/installation) first.
+
 ```bash
-npm install # Install NPM dependencies
+pnpm install # Install NPM dependencies
 
-npm start # Start local server, OR
+pnpm start # Start local server, OR
 
-npm start -l zh-cn # Start the zh-cn server
+pnpm start -l zh-cn # Start the zh-cn server
 
-npm run build # Build the Website
+pnpm run build # Build the Website
 ```
 
 ## General Folder Structure
