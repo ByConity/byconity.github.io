@@ -69,7 +69,7 @@ Q1：ByConity配置s3之后，当写数据时，是先写本地磁盘后，多�
 A：写入数据时，数据直接写入S3，本地磁盘存放存放的是临时文件。查询时，先查找本地磁盘的cache，如果没有再访问远端存储。
 
 Q2：AWS s3 endpoint是使用https://xxx还是s3://xxxx？要访问s3 bucket，就要把上面的endpoint, bucket, path 合并吗？
-A：参考：https://ByConity.github.io/zh-cn/docs/basic-guide/cluster-configuration。是的合并路径。
+A：参考：https://byconity.github.io/zh-cn/docs/admin-guides/cluster-configuration#storage_configuration。是的合并路径。
  
 Q3：S3配置里的ak_id和ak_secret就是s3 的access_key 和secret_key？type是什么？virtual_host_style是做什么的？
 A：ak_id和ak_secret就是s3 的access_key 和secret_key。Type配置成bytes3。virtual_host_style 可以设置成true，公有云基本上都用的是虚拟主机的请求方式，minio 默认不配置的话 用的是 PathStyle。
