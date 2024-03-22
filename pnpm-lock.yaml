@@ -8,6 +8,9 @@ dependencies:
   '@docusaurus/core':
     specifier: 2.3.1
     version: 2.3.1(@docusaurus/types@2.3.1)(react-dom@17.0.2)(react@17.0.2)(typescript@4.9.5)
+  '@docusaurus/plugin-client-redirects':
+    specifier: 2.3.1
+    version: 2.3.1(@docusaurus/types@2.3.1)(react-dom@17.0.2)(react@17.0.2)(typescript@4.9.5)
   '@docusaurus/preset-classic':
     specifier: 2.3.1
     version: 2.3.1(@algolia/client-search@4.14.3)(react-dom@17.0.2)(react@17.0.2)(typescript@4.9.5)
@@ -1753,6 +1756,43 @@ packages:
       - esbuild
       - uglify-js
       - webpack-cli
+
+  /@docusaurus/plugin-client-redirects@2.3.1(@docusaurus/types@2.3.1)(react-dom@17.0.2)(react@17.0.2)(typescript@4.9.5):
+    resolution: {integrity: sha512-Ye0z36/L8685ni0DIxHqPPaHIXFXiSF90QYiYfpODBX6NxvvveUTyylsDBU1GQhPXPn1bd39QgaOuZ+j9gfaog==}
+    engines: {node: '>=16.14'}
+    peerDependencies:
+      react: ^16.8.4 || ^17.0.0
+      react-dom: ^16.8.4 || ^17.0.0
+    dependencies:
+      '@docusaurus/core': 2.3.1(@docusaurus/types@2.3.1)(react-dom@17.0.2)(react@17.0.2)(typescript@4.9.5)
+      '@docusaurus/logger': 2.3.1
+      '@docusaurus/utils': 2.3.1(@docusaurus/types@2.3.1)
+      '@docusaurus/utils-common': 2.3.1(@docusaurus/types@2.3.1)
+      '@docusaurus/utils-validation': 2.3.1(@docusaurus/types@2.3.1)
+      eta: 2.0.0
+      fs-extra: 10.1.0
+      lodash: 4.17.21
+      react: 17.0.2
+      react-dom: 17.0.2(react@17.0.2)
+      tslib: 2.5.0
+    transitivePeerDependencies:
+      - '@docusaurus/types'
+      - '@parcel/css'
+      - '@swc/core'
+      - '@swc/css'
+      - bufferutil
+      - csso
+      - debug
+      - esbuild
+      - eslint
+      - lightningcss
+      - supports-color
+      - typescript
+      - uglify-js
+      - utf-8-validate
+      - vue-template-compiler
+      - webpack-cli
+    dev: false
 
   /@docusaurus/plugin-content-blog@2.3.1(react-dom@17.0.2)(react@17.0.2)(typescript@4.9.5):
     resolution: {integrity: sha512-f5LjqX+9WkiLyGiQ41x/KGSJ/9bOjSD8lsVhPvYeUYHCtYpuiDKfhZE07O4EqpHkBx4NQdtQDbp+aptgHSTuiw==}
