@@ -68,7 +68,7 @@ Q1: After configuring ByConity with s3, how long does it take for data to be wri
 A: When writing data, it is directly written to S3, and the local disk stores temporary files. During a query, the system first checks the local disk cache. If the data is not found, it then accesses the remote storage.
 
 Q2: When configuring the AWS s3 endpoint, should I use https://xxx or s3://xxxx? To access an s3 bucket, do I need to combine the endpoint, bucket, and path?
-A: Refer to https://ByConity.github.io/zh-cn/docs/basic-guide/cluster-configuration. Yes, you would combine the endpoint, bucket, and path.
+A: Refer to https://byconity.github.io/docs/admin-guides/cluster-configuration#storage_configuration. Yes, you would combine the endpoint, bucket, and path.
 
 Q3: In the S3 configuration, what are ak_id and ak_secret? What is the type? What is the purpose of virtual_host_style?
 A: ak_id and ak_secret correspond to the access_key and secret_key of s3, respectively. The type should be set to bytes3. The virtual_host_style can be set to true. Most public clouds use the virtual host request style, while minio defaults to the PathStyle unless otherwise configured.
