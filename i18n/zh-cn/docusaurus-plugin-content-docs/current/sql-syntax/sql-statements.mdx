@@ -626,6 +626,77 @@ SELECT * FROM test.example_table1 UNION ALL SELECT * FROM test.example_table2;
 | ----------- | ----------- |
 | 2015-08-08  | 2           |
 
+
+### INSERT OVERWRITE
+
+** 描述 **
+该语句的功能是重写表或表的某些分区
+
+- 重写为原子性操作
+
+- 分区替换时会自动过滤不符合指定分区的导入数据
+
+** 语法 **
+
+```sql
+
+INSERT OVERWRITE TABLE table_name
+    [ PARTITION (p1, ... | *) ]
+    [ (COLUMN [, ...]) ]
+    { VALUES ([, ...] ), ([, ...]) | QUERY }
+
+```sql
+
+- table_name: 需要重写的目标表名
+- PARTITION：需要重写的分区
+  - 可以为 partition id 或者 parition tuple
+  - 可以为一个或者多个，使用逗号分隔
+  - 最外层需要使用括号
+  - 不写 partition 字段则为整表重写
+- COLUMN: 需要写入目标表的列
+  - 可以为一个或者多个，使用逗号分隔
+  - 最外层需要使用括号
+- VALUES：需要写入的值列表
+- QUERY：需要写入的查询query
+
+** 举例 **
+
+- 单分区键的分区重写
+
+```sql
+INSERT OVERWRITE test.insert_overwrite_t PARTITION (1) SELECT * FROM test.insert_overwrite_s WHERE d = 1;
+```sql
+
+- 单分区键的分区VALUES重写
+
+```sql
+INSERT OVERWRITE test.insert_overwrite_t PARTITION (2) VALUES (2,6), (3,3);
+```sql
+
+- 单分区键的多分区重写
+
+```sql
+INSERT OVERWRITE test.insert_overwrite_t PARTITION (1,2) SELECT * FROM test.insert_overwrite_s;
+```sql
+
+- 多分区键的多分区重写
+
+```sql
+INSERT OVERWRITE test.insert_overwrite_t PARTITION (('1',1), ('2',2)) SELECT * FROM test.insert_overwrite_s;
+```sql
+
+- 多分区键指定列的导入重写
+
+```sql
+INSERT OVERWRITE test.insert_overwrite_t PARTITION (('1',1)) (s,d,n) SELECT s,d,n FROM test.insert_overwrite_s;
+```sql
+
+- 整表重写
+
+```sql
+INSERT OVERWRITE test.insert_overwrite_t SELECT * FROM test.insert_overwrite_s;
+```sql
+
 ## Select Statement
 
 `SELECT` queries perform data retrieval from tables.
