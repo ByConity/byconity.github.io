@@ -571,62 +571,6 @@ INSERT INTO [TABLE] [tableIdentifier] [columnsClause] [FORMAT format_name] INFIL
 INSERT INTO my_table FORMAT csvwithnames INFILE '/Users/my_name/Downloads/ETH-USD.csv'
 ```
 
-## Rename Statement
-
-### RENAME TABLE
-
-Renames one or more tables.
-** Syntax**
-
-```sql
-RENAME TABLE [tableIdentifier] TO [tableIdentifier], [tableIdentifier] TO [tableIdentifier]
-```
-
-**Example**
-
-```sql
-# step 1: create a table
-CREATE TABLE `example_table`
-(
-    `a` Int8,
-    `b` String,
-    `c` Date
-)
-ENGINE = `CnchMergeTree`
-ORDER BY (`a`)
-
-# step 2: rename the new created table
-RENAME TABLE example_table to new_table_name
-```
-
-## Select Union Statement
-
-SELECT query, possibly with UNION ALL.
-** Syntax**
-
-```sql
-[selectStmt] [UNION ALL [selectStmt]...
-```
-
-**Example**
-
-```sql
-CREATE TABLE IF NOT EXISTS test.example_table1 (column1 Date, column2 UInt32) ENGINE=CnchMergeTree ORDER BY column1;
-CREATE TABLE IF NOT EXISTS test.example_table2 (column1 Date, column2 UInt32) ENGINE=CnchMergeTree ORDER BY column1;
-INSERT INTO test.example_table1 VALUES ('2015-08-07',1);
-INSERT INTO test.example_table2 VALUES ('2015-08-08',2);
-SELECT * FROM test.example_table1 UNION ALL SELECT * FROM test.example_table2;
-```
-
-| **column1** | **column2** |
-| ----------- | ----------- |
-| 2015-08-07  | 1           |
-
-| **column1** | **column2** |
-| ----------- | ----------- |
-| 2015-08-08  | 2           |
-
-
 ### INSERT OVERWRITE
 
 ** 描述 **
@@ -696,6 +640,62 @@ INSERT OVERWRITE test.insert_overwrite_t PARTITION (('1',1)) (s,d,n) SELECT s,d,
 ```sql
 INSERT OVERWRITE test.insert_overwrite_t SELECT * FROM test.insert_overwrite_s;
 ```sql
+
+## Rename Statement
+
+### RENAME TABLE
+
+Renames one or more tables.
+** Syntax**
+
+```sql
+RENAME TABLE [tableIdentifier] TO [tableIdentifier], [tableIdentifier] TO [tableIdentifier]
+```
+
+**Example**
+
+```sql
+# step 1: create a table
+CREATE TABLE `example_table`
+(
+    `a` Int8,
+    `b` String,
+    `c` Date
+)
+ENGINE = `CnchMergeTree`
+ORDER BY (`a`)
+
+# step 2: rename the new created table
+RENAME TABLE example_table to new_table_name
+```
+
+## Select Union Statement
+
+SELECT query, possibly with UNION ALL.
+** Syntax**
+
+```sql
+[selectStmt] [UNION ALL [selectStmt]...
+```
+
+**Example**
+
+```sql
+CREATE TABLE IF NOT EXISTS test.example_table1 (column1 Date, column2 UInt32) ENGINE=CnchMergeTree ORDER BY column1;
+CREATE TABLE IF NOT EXISTS test.example_table2 (column1 Date, column2 UInt32) ENGINE=CnchMergeTree ORDER BY column1;
+INSERT INTO test.example_table1 VALUES ('2015-08-07',1);
+INSERT INTO test.example_table2 VALUES ('2015-08-08',2);
+SELECT * FROM test.example_table1 UNION ALL SELECT * FROM test.example_table2;
+```
+
+| **column1** | **column2** |
+| ----------- | ----------- |
+| 2015-08-07  | 1           |
+
+| **column1** | **column2** |
+| ----------- | ----------- |
+| 2015-08-08  | 2           |
+
 
 ## Select Statement
 
