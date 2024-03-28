@@ -589,7 +589,7 @@ INSERT OVERWRITE TABLE table_name
     [ (COLUMN [, ...]) ]
     { VALUES ([, ...] ), ([, ...]) | QUERY }
 
-```sql
+```
 
 - table_name: 需要重写的目标表名
 - PARTITION：需要重写的分区
@@ -609,37 +609,37 @@ INSERT OVERWRITE TABLE table_name
 
 ```sql
 INSERT OVERWRITE test.insert_overwrite_t PARTITION (1) SELECT * FROM test.insert_overwrite_s WHERE d = 1;
-```sql
+```
 
 - 单分区键的分区VALUES重写
 
 ```sql
 INSERT OVERWRITE test.insert_overwrite_t PARTITION (2) VALUES (2,6), (3,3);
-```sql
+```
 
 - 单分区键的多分区重写
 
 ```sql
 INSERT OVERWRITE test.insert_overwrite_t PARTITION (1,2) SELECT * FROM test.insert_overwrite_s;
-```sql
+```
 
 - 多分区键的多分区重写
 
 ```sql
 INSERT OVERWRITE test.insert_overwrite_t PARTITION (('1',1), ('2',2)) SELECT * FROM test.insert_overwrite_s;
-```sql
+```
 
 - 多分区键指定列的导入重写
 
 ```sql
 INSERT OVERWRITE test.insert_overwrite_t PARTITION (('1',1)) (s,d,n) SELECT s,d,n FROM test.insert_overwrite_s;
-```sql
+```
 
 - 整表重写
 
 ```sql
 INSERT OVERWRITE test.insert_overwrite_t SELECT * FROM test.insert_overwrite_s;
-```sql
+```
 
 ## Rename Statement
 
