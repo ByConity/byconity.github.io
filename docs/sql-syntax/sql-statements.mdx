@@ -569,6 +569,73 @@ INSERT INTO [TABLE] [tableIdentifier] [columnsClause] [FORMAT format_name] INFIL
 INSERT INTO my_table FORMAT csvwithnames INFILE '/Users/my_name/Downloads/ETH-USD.csv'
 ```
 
+### INSERT OVERWRITE
+
+** Description **
+This statement is used to overwrite a table or certain partitions of a table.
+
+- Overwriting is an atomic operation.
+- When overwriting partitions, imported data that does not match the specified partitions will be automatically filtered out.
+
+** Syntax **
+
+```sql
+INSERT OVERWRITE TABLE table_name
+    [ PARTITION (p1, ... | *) ]
+    [ (COLUMN [, ...]) ]
+    { VALUES ([, ...] ), ([, ...]) | QUERY }
+```
+
+- table_name: The name of the target table to be overwritten.
+- PARTITION: The partitions to be overwritten.
+  - Can be a partition ID or partition tuple.
+  - Can be one or more, separated by commas.
+  - The outermost layer needs to use parentheses.
+  - If the partition field is not specified, the entire table will be overwritten.
+- COLUMN: The columns to be written to the target table.
+  - Can be one or more, separated by commas.
+  - The outermost layer needs to use parentheses.
+- VALUES: The list of values to be written.
+- QUERY: The query to be written.
+
+** Examples **
+
+- Overwriting a partition with a single partition key:
+
+```sql
+INSERT OVERWRITE test.insert_overwrite_t PARTITION (1) SELECT * FROM test.insert_overwrite_s WHERE d = 1;
+```
+
+- Overwriting a partition with VALUES and a single partition key:
+
+```sql
+INSERT OVERWRITE test.insert_overwrite_t PARTITION (2) VALUES (2,6), (3,3);
+```
+
+- Overwriting multiple partitions with a single partition key:
+
+```sql
+INSERT OVERWRITE test.insert_overwrite_t PARTITION (1,2) SELECT * FROM test.insert_overwrite_s;
+```
+
+- Overwriting multiple partitions with multiple partition keys:
+
+```sql
+INSERT OVERWRITE test.insert_overwrite_t PARTITION (('1',1), ('2',2)) SELECT * FROM test.insert_overwrite_s;
+```
+
+- Overwriting specified columns for partitions with multiple partition keys:
+
+```sql
+INSERT OVERWRITE test.insert_overwrite_t PARTITION (('1',1)) (s,d,n) SELECT s,d,n FROM test.insert_overwrite_s;
+```
+
+- Overwriting the entire table:
+
+```sql
+INSERT OVERWRITE test.insert_overwrite_t SELECT * FROM test.insert_overwrite_s;
+```
+
 ## Rename Statement
 
 ### RENAME TABLE
