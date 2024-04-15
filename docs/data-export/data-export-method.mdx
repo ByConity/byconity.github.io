@@ -80,7 +80,8 @@ Migrating data from ClickHouse to ByConity involves the following two main steps
 
 When using the Dumper for data migration, you can specify a table and some of its partitions at once and write them to HDFS. The main principle of work is to traverse the local disk of the table that needs to be migrated, find the active part, write it in ByConity's own format, and then use the Dumper to upload it to HDFS.
 
-```>
+```
+usage: clickhouse-dumper --config-file <config-file> --database <db> --table <table> --output <path>
 
 -C<file>, --config-file=<file>             load configuration from a given file
 --database=<database>                      database to be<path>, --output=<path>                  output path on shared-storage
