@@ -23,7 +23,7 @@ tags:
 1. 表设置 `parts_preload_level` 应大于 0 (若未设置，默认为 0)。可以通过以下 DDL 命令更新此设置：
 
    ```sql
-   ALTER TABLE [db.]table_name MODIFY SETTINGS parts_preload_level = {level};
+   ALTER TABLE [db.]table_name MODIFY SETTING parts_preload_level = {level};
    ```
 
    其中，`parts_preload_level` 的值含义如下：
@@ -35,7 +35,7 @@ tags:
 2. 表设置 `enable_local_disk_cache` 应设置为 1（若未设置，默认为 1）。可通过以下 DDL 命令进行更新：
   
    ```sql
-   ALTER TABLE [db.]table_name MODIFY SETTINGS enable_local_disk_cache = 1;
+   ALTER TABLE [db.]table_name MODIFY SETTING enable_local_disk_cache = 1;
    ```
 
 3. 系统配置 `user.xml` 内的 `parts_preload_level` 应大于 0（默认为 1）
