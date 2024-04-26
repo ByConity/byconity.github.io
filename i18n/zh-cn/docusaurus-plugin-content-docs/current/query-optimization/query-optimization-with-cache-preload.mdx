@@ -49,7 +49,7 @@ tags:
 对于启用预加载功能之前的表格旧数据，可以通过以下 DDL 触发预加载：
 
    ```sql
-   ALTER DISK CACHE PRELOAD TABLE [db.]table_name [PARTITION p] [SYNC|ASYNC] [SETTING parts_preload_level = {level}, virtual_warehouse = {vw_name}];
+   ALTER DISK CACHE PRELOAD TABLE [db.]table_name [PARTITION p] [SYNC|ASYNC] [SETTINGS parts_preload_level = {level}, virtual_warehouse = {vw_name}];
    ```
    
    其中：

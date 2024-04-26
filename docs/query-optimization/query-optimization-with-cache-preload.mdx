@@ -47,7 +47,7 @@ Preloading involves fetching data from remote storage and storing it in the loca
 For older data in tables where preloading was not enabled initially, manual preloading can be triggered using the following DDL:
 
 ```sql
-ALTER DISK CACHE PRELOAD TABLE [db.]table_name [PARTITION p] [SYNC|ASYNC] [SETTING parts_preload_level = {level}, virtual_warehouse = {vw_name}];
+ALTER DISK CACHE PRELOAD TABLE [db.]table_name [PARTITION p] [SYNC|ASYNC] [SETTINGS parts_preload_level = {level}, virtual_warehouse = {vw_name}];
 ```
 
 - Partition `p`: Specifies the target partition for loading. If omitted, all data within the table will be preloaded by default.
