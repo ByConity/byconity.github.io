@@ -88,7 +88,8 @@ SETTINGS index_granularity = 1024;
 
 #### Chinese Text Indexing
 
-ByteHouse Cloud Edition can index Chinese text using a default configured dictionary.
+ByConity can index Chinese text using a default configured dictionary.
+
 
 ```sql
 CREATE TABLE test_gin.ch_docs
@@ -169,7 +170,7 @@ select count() from test_gin.ch_docs_ngram where doc like '%溥仪%';
 
 When dealing with large amounts of data, query performance can deteriorate as a complete scan of every column value may be required to apply WHERE clause conditions.
 
-To address this, ByteHouse supports data skipping indexes, enabling skipping of significant data blocks confirmed to contain no matching values.
+To address this, ByConity supports data skipping indexes, enabling skipping of significant data blocks confirmed to contain no matching values.
 
 ### Usage Limitations
 
@@ -228,7 +229,7 @@ Bloom filters are particularly effective for efficiently testing a large number 
 
 ### Usage Examples
 
-#### Loading Dataset into ByteHouse
+#### Loading Dataset into 
 
 ```sql
 DROP DATABASE IF EXISTS test_si;

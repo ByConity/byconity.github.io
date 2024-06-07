@@ -83,7 +83,8 @@ SETTINGS index_granularity = 1024;
 ```
 
 #### 中文文本索引方式
-ByteHouse 云数仓版可以通过默认配置的词库进行中文文本索引。
+
+ByConity 可以通过默认配置的词库进行中文文本索引。
 
 ```sql
 CREATE TABLE test_gin.ch_docs
@@ -168,7 +169,8 @@ select count() from test_gin.ch_docs_ngram where doc like '%溥仪%';
 ## 跳数索引
 
 当尝试处理大量数据时，查询性能可能会恶化，因为可能需要对每个列值进行完整扫描才能应用 WHERE 子句条件。
-为了解决这个问题，ByteHouse 支持跳数索引（Data Skipping Index），使人们能够跳过一些确认没有匹配值的重要数据块。
+
+为了解决这个问题，ByConity 支持跳数索引（Data Skipping Index），使人们能够跳过一些确认没有匹配值的重要数据块。
 
 ### 使用限制
 暂不支持索引类型:
@@ -220,7 +222,7 @@ INDEX key_i_idx key_i TYPE minmax GRANULARITY 1,
 
 ###  使用举例
 
-#### 载入数据集到 ByteHouse
+#### 载入数据集到 ByConity
 
 ```sql
 DROP DATABASE IF EXISTS test_si;
