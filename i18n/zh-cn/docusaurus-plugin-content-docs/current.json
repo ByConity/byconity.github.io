@@ -27,6 +27,10 @@
     "message": "数据导入",
     "description": "The label for category Data Import in sidebar tutorialSidebar"
   },
+  "sidebar.tutorialSidebar.category.Data Import.Import Methods": {
+    "message": "导入方式",
+    "description": "The label for category Data Import in sidebar tutorialSidebar"
+  },
   "sidebar.tutorialSidebar.category.Data Export": {
     "message": "数据导出",
     "description": "The label for category Data Export in sidebar tutorialSidebar"
