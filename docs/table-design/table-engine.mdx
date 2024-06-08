@@ -84,15 +84,6 @@ When querying using a unique key, the unique key index is used to filter data an
   - `partition_level_unique_keys`: Determines whether the unique index is at the partition level. The default value is `true`. If set to `false`, the unique index applies to the entire table.
   - `cloud_enable_staging_area`: Determines whether asynchronous write mode is enabled. The default value is `false`.
 
-#### Index (Skip Index)
-When creating a table, a skip index can be defined as follows:
-
-
-```sql
-INDEX index_name expr TYPE type(...) GRANULARITY granularity_value
-```
-* Available index types: `minmax` stores the extreme values of the specified expression (if the expression is a `tuple`, it stores the extreme values of each element in the `tuple`). This information is used to skip data blocks, similar to a primary key. The skip index feature is currently in testing, and supported skip index types will be added once completed.
-
 #### Granule Configuration
 
 * `index_granularity` - Index granularity. The number of data rows between adjacent 'marks' in the index (corresponding to Granule size). The default value is 8192.
