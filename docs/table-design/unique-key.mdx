@@ -1,0 +1,230 @@
+---
+title: Unique Key
+sidebar_position: 5
+tags:
+  - Docs
+---
+
+# Unique Key
+
+## Introduction
+
+The ByConity Unique table is mainly used to implement the upsert functionality. This capability is a unique feature developed by the ByConity team, which can maintain efficient query performance while supporting primary key updates. It mainly solves the pain point that the open-source ClickHouse cannot support efficient update operations, helping businesses develop real-time analysis applications more easily. Users can implement upsert update write semantics by specifying a unique key UNIQUE KEY, and the query will automatically return the latest value of each unique key.
+
+The Unique table mainly has the following characteristics:
+
+- Users configure the unique key through UNIQUE KEY, provide upsert update write semantics, and the query automatically returns the latest value of each unique key.
+- While ensuring real-time update capabilities, it still maintains high query performance with almost no loss.
+- Supports deleting rows by deleting fields.
+- Supports version management for specified fields, retaining only the latest version.
+
+## Use Cases for Real-Time Updates
+
+Businesses need to perform real-time analysis on transactional data. During the process of synchronizing the OLTP database to the OLAP database, since order data, etc. need to support update capabilities, the OLAP database also requires support for real-time updates and deletions.
+
+In another scenario, although there is no update, de-duplication is required. When developing real-time data, it is difficult to ensure that there are no duplicate data in the data stream, so the storage system usually needs to support idempotent writes of data.
+
+The above scenarios can all be supported by the unique key upsert functionality, regardless of the need for idempotence or updates.
+
+## Usage Examples
+
+### Upsert Usage Example
+
+Create a database and the corresponding Unique table.
+
+```sql
+CREATE DATABASE upsertdb;
+CREATE TABLE IF NOT EXISTS upsertdb.uniquetable
+(
+  `event_time` DateTime,
+  `product_id` UInt64,
+  `city` String,
+  `category` String,
+  `amount` UInt32,
+  `revenue` UInt64
+)
+ENGINE = CnchMergeTree()
+PARTITION BY toDate(event_time)
+ORDER BY (city, category)
+UNIQUE KEY (product_id, sipHash64(city));
+-- UNIQUE KEY can contain multiple fields and expressions
+```
+
+Insert the following fields in sequence:
+
+```sql
+INSERT INTO upsertdb.uniquetable VALUES
+('2020-10-29 23:40:00', 10001, 'Beijing', '男装', 5, 500),
+('2020-10-29 23:40:00', 10002, 'Beijing', '男装', 2, 200),
+('2020-10-29 23:40:00', 10003, 'Beijing', '男装', 1, 100),
+('2020-10-29 23:50:00', 10002, 'Shanghai', '男装', 4, 400),
+('2020-10-29 23:50:00', 10003, 'Beijing', '男装', 2, 200),
+('2020-10-29 23:50:00', 10004, 'Beijing', '男装', 1, 100);
+```
+
+- Writing data with the same key can implement an update (upsert semantics), that is, if the key does not exist, the data is inserted, otherwise this data is updated.
+
+Query the data in the table, and the de-duplication has been performed:
+
+```sql
+select * from upsertdb.uniquetable;
+┌──────event_time─┬product_id─┬─city──┬─category─┬─amount─┬─revenue─┐
+│ 2020-10-29 23:40:00 │ 10001 │ Beijing  │ 男装  │    5    │    500 │
+│ 2020-10-29 23:40:00 │ 10002 │ Beijing  │ 男装  │    2    │    200 │
+│ 2020-10-29 23:50:00 │ 10003 │ Beijing  │ 男装  │    2    │    200 │
+│ 2020-10-29 23:50:00 │ 10004 │ Beijing  │ 男装  │    1    │    100 │
+│ 2020-10-29 23:50:00 │ 10002 │ Shanghai │ 男装  │    4    │    400 │
+└─────────────────────┴───────┴──────────┴──────┴─────────┴─────────┘
+```
+
+Deletion: Delete the specified key by setting the virtual column `_delete_flag_=1`.
+
+Insert data through the following statement and specify the delete flag:
+
+```sql
+-- Specify the delete field to delete the data, and when the delete field is set to a non-zero value, it indicates deletion, and when set to 0, it indicates a normal upsert operation
+INSERT INTO upsertdb.uniquetable (event_time, product_id, city, category, amount, revenue, _delete_flag_) VALUES
+('2020-10-29 23:50:00', 10001, 'Beijing', '男装', 4, 400, 5),
+('2020-10-29 23:50:00', 10002, 'Beijing', '男装', 2, 200, 1),
+('2020-10-29 23:50:00', 10004, 'Beijing', '男装', 3, 600, 0);
+```
+
+Check the effect after deletion:
+
+```sql
+select * from upsertdb.uniquetable order by toDate(event_time), product_id;
+```
+
+It can be seen that the query result contains a row of data replacing `product_id=10004` and deletes the old data of three rows where `product_id = 10001` or `10002` and the city is 'Beijing'.
+
+```sql
+┌──────────event_time─┬─product_id─┬─city────┬─category─┬─amount─┬─revenue─┐
+│ 2020-10-29 23:50:00 │      10002 │ Shanghai │ 男装     │      4 │     400 │
+│ 2020-10-29 23:50:00 │      10003 │ Beijing  │ 男装     │      2 │     200 │
+│ 2020-10-29 23:50:00 │      10004 │ Beijing  │ 男装     │      3 │     600 │
+└─────────────────────┴────────────┴──────────┴─────────┴────────┴─────────┘
+```
+
+### UPDATE & DELETE Usage Example
+
+In the Unique table, you can refer to the following syntax to update and delete data.
+
+```sql
+-- Only for the syntax of the Unique Table
+UPDATE [db.]table SET a=b WHERE expr;
+DELETE FROM [db.]table WHERE expr;
+```
+
+For example, perform update and delete operations through the following statements:
+
+```sql
+-- Update the specified field
+Update test.uniquetable set str = 'updated'  WHERE date = '2023-12-18';
+
+-- Delete the specified field
+DELETE FROM test.uniquetable WHERE product_id=10001;
+```
+
+### Bucketing Example
+
+Suppose a user enables six computing nodes, and due to the large amount of data in a single partition, exceeding 200 million records, the application often performs aggregation and join operations based on the `c1` and `c2` fields. Therefore, it is decided to use a bucket table for optimization. The design options for the bucket table are as follows:
+
+Bucket key (CLUSTER Key) selection: Select the `c1` and `c2` columns as the bucket keys.
+
+Number of buckets (Bucket): Twice the number of nodes: 12.
+
+```sql
+-- Create a table with bucketing
+create or replace table table_01 (c1 timestamp, c2 string, c3 number) cluster by (to_date(c1), c2) INTO 12 BUCKETS;
+
+-- Add buckets to existing data
+ALTER TABLE t CLUSTER BY (column, expression,...) INTO 64 BUCKETS
+
+-- Add buckets to the cluster by multiple columns
+ALTER TABLE t CLUSTER BY sipHash(a,b,c) INTO 64 BUCKETS
+```
+
+### Version Management Example
+
+The Unique table uses `ENGINE = CnchMergeTree(version)` for version management. After defining the `version` parameter, when inserting data, only the latest version of the record is retained. As shown below:
+
+```sql
+--Create a unique table
+CREATE TABLE UniqTest
+(
+        `key` Int64,
+        `val` String,
+        `eventTime` DateTime
+)
+ENGINE = CnchMergeTree(eventTime)
+ORDER BY `key`
+PRIMARY KEY `key`
+UNIQUE KEY `key`
+
+--Insert two records separately, using eventTime as the version field to distinguish
+insert into UniqTest VALUES (1, 'first', '2020-01-01 01:01:01');
+insert into Uniqtest VALUES (1, 'econd', '2020-01-01 00:00:00');
+
+--After the insertion is complete, execute the query, and the second record, which is the old version of the data, will be ignored
+select * from UniqTest
+┌─key─┬─val───┬─eventTime───────────┐
+│ 1   │ first │ 2020-01-01 01:01:01 │
+└─────┴───────┴─────────────────────┘
+```
+
+### Supported SQL Statements
+
+#### SELECT
+
+#### INSERT
+- INSERT VALUES
+- INSERT SELECT
+- INSERT FORMAT
+- INSERT INFILE
+- Explanation
+Performance in concurrent INSERT:
+- For each unique table, insert is executed by a single thread.
+- Concurrent inserts are executed sequentially, so large-scale processing (insert infile) may take a long time.
+
+#### CREATE TABLE with UNIQUE KEY
+
+- Note:
+
+The following restrictions apply in this case:
+- Only [U]Int8/16/32/64, Boolean, Date, DateTime, String data types can be used as UNIQUE KEY.
+- UNIQUE KEY cannot be used with CLUSTER BY (future support will be provided).
+- The size of each String type UNIQUE KEY must be <= 1 MB (this value depends on max_string_size_for_unique_key), otherwise insert will fail.
+
+#### DROP TABLE
+
+#### DELETE TABLE
+
+#### DELETE FROM [db.]table WHERE expr;
+
+#### UNDROP TABLE
+
+#### TRUNCATE TABLE
+
+#### ALTER TABLE DROP PARTITION
+
+#### OPTIMIZE TABLE
+
+#### RENAME TABLE
+
+#### UPDATE TABLE
+
+```sql
+UPDATE table_name
+    SET assignment_list
+    [WHERE where_condition]
+    [ORDER BY...] 
+    [LIMIT...]
+```
+
+## Usage Restrictions
+
+Currently, the default is to perform de-duplication at the partition level, that is, the unique id will implement the upsert capability in the same partition, and duplicates may occur in different partitions.
+
+When importing from a Kafka data source, users need to ensure that the data with the same unique key is written to the same Topic Partition and Topic expansion is disabled.
+
+The unique key Unique Key can support a maximum of 10 fields.
