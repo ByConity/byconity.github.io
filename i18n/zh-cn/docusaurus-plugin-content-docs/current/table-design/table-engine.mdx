@@ -100,14 +100,6 @@ ByConity 会在主键上建立以 Granule 为单位的稀疏索引，（与之�
   - `partition_level_unique_keys` - 唯一索引是否是分区唯一，默认值：`true`；如果为 `false`，代表唯一索引是全表级别；
   - `cloud_enable_staging_area` - 是否开启异步写入模式，默认值：`false`。
 
-#### 跳数索引（Index）
-建表时可以这样定义跳数索引
-
-```
-INDEX index_name expr TYPE type(...) GRANULARITY granularity_value
-```
-
-- 可用的索引类型: `minmax` 存储指定表达式的极值（如果表达式是 `tuple` ，则存储 `tuple` 中每个元素的极值），这些信息用于跳过数据块，类似主键。跳数索引功能正在测试中，等完成后补充支持的跳数索引类型。
 
 #### Granule 配置
 
