@@ -1,5 +1,5 @@
 ---
-slug: byconity-elt
+slug: byconity-benchmark
 title: ByConity与主流开源OLAP引擎（Clickhouse、Doris、Presto）性能对比分析
 authors: [tigerwangyb]
 tags: [video introduction, docusaurus]

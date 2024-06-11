@@ -1,6 +1,6 @@
 
 ---
-slug: byconity-elt
+slug: byconity-benchmark
 title: Performance Comparison Analysis of ByConity and Mainstream Open-Source OLAP Engines (ClickHouse, Doris, Presto)
 authors: [tigerwangyb]
 tags: [video introduction, docusaurus]
