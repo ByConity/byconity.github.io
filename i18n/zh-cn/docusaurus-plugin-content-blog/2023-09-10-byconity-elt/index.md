@@ -1,7 +1,7 @@
 ---
 slug: byconity-elt
 title: ByConity ELT原理详解
-authors: [wangtao, tigerwangyb]
+authors: [WangTaoTheTonic, tigerwangyb]
 tags: [video introduction, docusaurus]
 ---
 
