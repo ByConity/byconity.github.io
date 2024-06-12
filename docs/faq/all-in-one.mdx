@@ -37,6 +37,20 @@ A: In cnch, the traditional concepts of replicas and shards are no longer releva
 Q3: Can the MergeTree engine from ClickHouse be used with ByConity?
 A: It is generally not used and is only employed for storing some local logs, such as system.query_log.
 
+Q4: Can I use SQL to check the storage size occupied by each table in the database and the number of partitions in a certain table?
+
+A: To check the storage size and partition count of a specific partition:
+
+```sql
+select sum(bytes_on_disk), sum(rows_count), count(1) from system.cnch_parts where database = 'xxx' and table = 'xxx' and partition_id = 'xxx' and visible
+```
+
+To check the number of partitions in a certain table:
+
+```sql
+select count(1) from system.cnch_parts where database = 'xxx' and table = 'xxx'  and visible
+```
+
 ## SQL-related
 
 Q1: Summary of commonly used SQL statements in ByConity.
