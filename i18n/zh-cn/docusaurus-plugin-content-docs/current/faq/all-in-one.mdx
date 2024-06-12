@@ -38,6 +38,18 @@ A：cnch没有 原来的replica 和shard概念了
 Q3：ClickHouse的MergeTree engine可以在ByConity上使用吗？
 A：基本用不上，只用来存储一些本地的log，例如system.query_log
 
+
+Q4：请问下通过sql能查到数据库里各个表占用的存储大小以及某个表的分区数量吗？
+A: 查询某个分区存储量和part数:
+```sql
+select sum(bytes_on_disk), sum(rows_count), count(1) from system.cnch_parts where database = 'xxx' and table = 'xxx' and partition_id = 'xxx' and visible
+```
+
+查询某个表的分区数:
+```sql
+select count(1) from system.cnch_parts where database = 'xxx' and table = 'xxx'  and visible
+```
+
 ## SQL相关
 
 Q1：ByConity常用SQL语句总结
