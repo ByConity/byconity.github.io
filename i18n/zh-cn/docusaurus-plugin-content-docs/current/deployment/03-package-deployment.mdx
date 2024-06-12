@@ -29,6 +29,14 @@ curl -L -o fdbcli.x86_64 https://github.com/apple/foundationdb/releases/download
 curl -L -o fdbcli.x86_64.sha256 https://github.com/apple/foundationdb/releases/download/7.1.25/fdbcli.x86_64.sha256
 ```
 
+- 国内下载地址
+https://release-bin.tos-cn-beijing.volces.com/fdb/7.1.25/fdbcli.x86_64
+https://release-bin.tos-cn-beijing.volces.com/fdb/7.1.25/fdbmonitor.x86_64
+https://release-bin.tos-cn-beijing.volces.com/fdb/7.1.25/fdbserver.x86_64
+https://release-bin.tos-cn-beijing.volces.com/fdb/7.1.25/foundationdb-clients-7.1.25-1.el7.x86_64.rpm
+https://release-bin.tos-cn-beijing.volces.com/fdb/7.1.25/foundationdb-clients_7.1.25-1_amd64.deb
+
+
 下载完成后，检查校验码：
 
 ```sh
@@ -230,6 +238,9 @@ hadoop-3.3.4  hadoop-3.3.4.tar.gz
 $ cd hadoop-3.3.4
 ```
 
+- 国内下载地址
+https://release-bin.tos-cn-beijing.volces.com/hdfs/3.3.6/hadoop-3.3.6.tar.gz
+
 然后编辑文件`etc/hadoop/hadoop-env.sh`以设置环境变量：
 
 ```sh
@@ -357,7 +368,7 @@ sudo dpkg -i foundationdb-clients_7.1.27-1_amd64.deb
 首先 `byconity-common-static`，这是所有其他软件包的依赖
 
 ```sh
-sudo dpkg -i byconity-common-static_0.1.1.1_amd64.deb
+sudo dpkg -i byconity-common-static_0.4.0_amd64.deb
 ```
 
 编辑配置文件 `/etc/byconity-server/cnch_config.xml` 和 `/etc/byconity-server/fdb.config`。 `cnch_config.xml` 文件包含 service_discovery 配置、hdfs 配置和 foundationdb 集群配置路径。 `fdb.config` 是 FoundationDB 集群的集群配置文件。
@@ -379,7 +390,7 @@ sudo dpkg -i byconity-common-static_0.1.1.1_amd64.deb
 安装 TSO 服务，下载 `byconity-tso` 包并安装：
 
 ```sh
-sudo dpkg -i byconity-tso_0.1.1.1_amd64.deb
+sudo dpkg -i byconity-tso_0.4.0_amd64.deb
 ```
 
 TSO 服务的配置文件位于 `/etc/byconity-server/byconity-tso.xml`，可以按照自己的需求进行配置，但默认值已足够。另外首次安装不会立即启动，需要通过以下命令启动：
@@ -401,11 +412,11 @@ systemctl status byconity-tso
 以相同的方式，安装 ByConity 资源管理器、ByConity 服务器、ByConity 工作器、ByConity 工作器写入和 ByConity 守护程序管理器。 `byconity-resource-manager`、`byconity-daemon-manger` 和 `byconity-tso` 是轻量级服务，因此可以安装在共享机器上与其他软件包一起使用。但是，对于 `byconity-server`、`byconity-worker` 和 `byconity-worker-write`，我们应该将它们分别安装在不同的机器上。
 
 ```sh
-sudo dpkg -i byconity-resource-manager_0.1.1.1_amd64.deb 
-sudo dpkg -i byconity-server_0.1.1.1_amd64.deb 
-sudo dpkg -i byconity-worker_0.1.1.1_amd64.deb 
-sudo dpkg -i byconity-worker-write_0.1.1.1_amd64.deb 
-sudo dpkg -i byconity-daemon-manager_0.1.1.1_amd64.deb 
+sudo dpkg -i byconity-resource-manager_0.4.0_amd64.deb 
+sudo dpkg -i byconity-server_0.4.0_amd64.deb 
+sudo dpkg -i byconity-worker_0.4.0_amd64.deb 
+sudo dpkg -i byconity-worker-write_0.4.0_amd64.deb 
+sudo dpkg -i byconity-daemon-manager_0.4.0_amd64.deb 
 ```
 
 通过同样的方式安装更多的工作节点。每个工作节点都有一个名为`WORKER_ID`的设置项，在配置文件`/etc/byconity-server/(byconity-worker|byconity-worker-write).xml`中配置工作节点的`worker id`，`worker id`在工作节点之间必须是唯一的，配置文件中`WORKER_ID`的默认值为空。在这种情况下，`worker_id`会自动分配为主机机器的IP地址。

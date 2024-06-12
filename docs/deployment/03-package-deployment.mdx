@@ -29,6 +29,13 @@ curl -L -o fdbcli.x86_64 https://github.com/apple/foundationdb/releases/download
 curl -L -o fdbcli.x86_64.sha256 https://github.com/apple/foundationdb/releases/download/7.1.25/fdbcli.x86_64.sha256
 ```
 
+- Domestic download address
+https://release-bin.tos-cn-beijing.volces.com/fdb/7.1.25/fdbcli.x86_64
+https://release-bin.tos-cn-beijing.volces.com/fdb/7.1.25/fdbmonitor.x86_64
+https://release-bin.tos-cn-beijing.volces.com/fdb/7.1.25/fdbserver.x86_64
+https://release-bin.tos-cn-beijing.volces.com/fdb/7.1.25/foundationdb-clients-7.1.25-1.el7.x86_64.rpm
+https://release-bin.tos-cn-beijing.volces.com/fdb/7.1.25/foundationdb-clients_7.1.25-1_amd64.deb
+
 After the download is complete, check the checksums:
 
 ```sh
@@ -229,6 +236,10 @@ $ ls
 hadoop-3.3.4  hadoop-3.3.4.tar.gz
 $ cd hadoop-3.3.4
 ```
+
+- Domestic download address
+https://release-bin.tos-cn-beijing.volces.com/hdfs/3.3.6/hadoop-3.3.6.tar.gz
+
 Edit the `etc/hadoop/hadoop-env.sh` file to set the environment variables:
 
 
@@ -355,7 +366,7 @@ First, install `byconity-common-static`, which is a dependency for all other pac
 
 
 ```sh
-sudo dpkg -i byconity-common-static_0.1.1.1_amd64.deb
+sudo dpkg -i byconity-common-static_0.4.0_amd64.deb
 ```
 Edit the configuration files `/etc/byconity-server/cnch_config.xml` and `/etc/byconity-server/fdb.config`. The `cnch_config.xml` file contains service_discovery configuration, hdfs configuration, and the path to the foundationdb cluster configuration. The `fdb.config` is the cluster configuration file for the FoundationDB cluster.
 
@@ -377,7 +388,7 @@ To install the TSO service, download the `byconity-tso` package and install it:
 
 
 ```sh
-sudo dpkg -i byconity-tso_0.1.1.1_amd64.deb
+sudo dpkg -i byconity-tso_0.4.0_amd64.deb
 ```
 The configuration file for the TSO service is located at `/etc/byconity-server/byconity-tso.xml` and can be configured according to your needs, although the default values should be sufficient. Additionally, the first installation will not start immediately, so you need to start it manually using the following command:
 
@@ -399,11 +410,11 @@ In a similar manner, install the ByConity Resource Manager, ByConity Server, ByC
 
 
 ```sh
-sudo dpkg -i byconity-resource-manager_0.1.1.1_amd64.deb
-sudo dpkg -i byconity-server_0.1.1.1_amd64.deb
-sudo dpkg -i byconity-worker_0.1.1.1_amd64.deb
-sudo dpkg -i byconity-worker-write_0.1.1.1_amd64.deb
-sudo dpkg -i byconity-daemon-manager_0.1.1.1_amd64.deb
+sudo dpkg -i byconity-resource-manager_0.4.0_amd64.deb
+sudo dpkg -i byconity-server_0.4.0_amd64.deb
+sudo dpkg -i byconity-worker_0.4.0_amd64.deb
+sudo dpkg -i byconity-worker-write_0.4.0_amd64.deb
+sudo dpkg -i byconity-daemon-manager_0.4.0_amd64.deb
 ```
 Install additional worker nodes in the same way. Each worker node has a setting called `WORKER_ID`, which is configured in the configuration file `/etc/byconity-server/(byconity-worker|byconity-worker-write).xml`. The `worker id` must be unique among worker nodes. The default value for `WORKER_ID` in the configuration file is empty. In this case, the `worker_id` will be automatically assigned as the IP address of the host machine.
 
