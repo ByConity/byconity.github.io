@@ -421,6 +421,19 @@ sudo dpkg -i byconity-worker_0.4.0_amd64.deb
 sudo dpkg -i byconity-worker-write_0.4.0_amd64.deb
 sudo dpkg -i byconity-daemon-manager_0.4.0_amd64.deb
 ```
+
+Start each component in the same way:
+
+```sh
+systemctl start byconity-server // as well as byconity-worker, byconity-resource-manager, byconity-daemon-manager
+```
+
+Check the startup status of each component:
+
+```sh
+systemctl status | grep byconity
+```
+
 Install additional worker nodes in the same way. Each worker node has a setting called `WORKER_ID`, which is configured in the configuration file `/etc/byconity-server/(byconity-worker|byconity-worker-write).xml`. The `worker id` must be unique among worker nodes. The default value for `WORKER_ID` in the configuration file is empty. In this case, the `worker_id` will be automatically assigned as the IP address of the host machine.
 
 6. Checking the status of the compute group

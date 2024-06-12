@@ -423,6 +423,18 @@ sudo dpkg -i byconity-worker-write_0.4.0_amd64.deb
 sudo dpkg -i byconity-daemon-manager_0.4.0_amd64.deb 
 ```
 
+以同样的方式启动各个组件：
+
+```sh
+systemctl start byconity-server // 以及byconity-worker、byconity-resource-manager、byconity-daemon-manager
+```
+
+查看各组件启动状态：
+
+```sh
+systemctl status ｜ grep byconity-
+```
+
 通过同样的方式安装更多的工作节点。每个工作节点都有一个名为`WORKER_ID`的设置项，在配置文件`/etc/byconity-server/(byconity-worker|byconity-worker-write).xml`中配置工作节点的`worker id`，`worker id`在工作节点之间必须是唯一的，配置文件中`WORKER_ID`的默认值为空。在这种情况下，`worker_id`会自动分配为主机机器的IP地址。
 
 6. 查看计算组状态
