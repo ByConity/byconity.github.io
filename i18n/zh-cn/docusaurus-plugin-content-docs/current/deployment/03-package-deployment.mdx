@@ -30,12 +30,14 @@ curl -L -o fdbcli.x86_64.sha256 https://github.com/apple/foundationdb/releases/d
 ```
 
 - 国内下载地址
+
+```sh
 https://release-bin.tos-cn-beijing.volces.com/fdb/7.1.25/fdbcli.x86_64
 https://release-bin.tos-cn-beijing.volces.com/fdb/7.1.25/fdbmonitor.x86_64
 https://release-bin.tos-cn-beijing.volces.com/fdb/7.1.25/fdbserver.x86_64
 https://release-bin.tos-cn-beijing.volces.com/fdb/7.1.25/foundationdb-clients-7.1.25-1.el7.x86_64.rpm
 https://release-bin.tos-cn-beijing.volces.com/fdb/7.1.25/foundationdb-clients_7.1.25-1_amd64.deb
-
+```
 
 下载完成后，检查校验码：
 
@@ -239,7 +241,9 @@ $ cd hadoop-3.3.4
 ```
 
 - 国内下载地址
+```sh
 https://release-bin.tos-cn-beijing.volces.com/hdfs/3.3.6/hadoop-3.3.6.tar.gz
+```
 
 然后编辑文件`etc/hadoop/hadoop-env.sh`以设置环境变量：
 
@@ -424,7 +428,7 @@ sudo dpkg -i byconity-daemon-manager_0.4.0_amd64.deb
 6. 查看计算组状态
 
 ```sh
-Clickhouse client --port 9010
+clickhouse client --port 9010
 
 :) select * from system.workers
 

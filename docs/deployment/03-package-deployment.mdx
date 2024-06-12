@@ -30,11 +30,14 @@ curl -L -o fdbcli.x86_64.sha256 https://github.com/apple/foundationdb/releases/d
 ```
 
 - Domestic download address
+
+```sh
 https://release-bin.tos-cn-beijing.volces.com/fdb/7.1.25/fdbcli.x86_64
 https://release-bin.tos-cn-beijing.volces.com/fdb/7.1.25/fdbmonitor.x86_64
 https://release-bin.tos-cn-beijing.volces.com/fdb/7.1.25/fdbserver.x86_64
 https://release-bin.tos-cn-beijing.volces.com/fdb/7.1.25/foundationdb-clients-7.1.25-1.el7.x86_64.rpm
 https://release-bin.tos-cn-beijing.volces.com/fdb/7.1.25/foundationdb-clients_7.1.25-1_amd64.deb
+```
 
 After the download is complete, check the checksums:
 
@@ -238,7 +241,9 @@ $ cd hadoop-3.3.4
 ```
 
 - Domestic download address
+```sh
 https://release-bin.tos-cn-beijing.volces.com/hdfs/3.3.6/hadoop-3.3.6.tar.gz
+```
 
 Edit the `etc/hadoop/hadoop-env.sh` file to set the environment variables:
 
@@ -422,7 +427,7 @@ Install additional worker nodes in the same way. Each worker node has a setting 
 
 
 ```sh
-Clickhouse client --port 9010
+clickhouse client --port 9010
 
 :) select * from system.workers
 ```
