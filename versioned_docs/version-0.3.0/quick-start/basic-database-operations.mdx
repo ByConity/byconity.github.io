@@ -1,0 +1,108 @@
+---
+title: Basic Operations
+sidebar_position: 2
+tags:
+  - Docs
+---
+
+
+# Basic Operations
+
+This tutorial guides users through the basic operations of creating tables, importing data, and querying data using ByConity in a Docker deployment environment.
+
+## Create Tables
+
+Connect to the database:
+
+
+```bash
+./clickhouse-client -m -h HOST --port PORT
+```
+Create a database:
+
+
+```sql
+CREATE DATABASE IF NOT EXISTS helloworld;
+use helloworld;
+```
+Create a table in the database:
+
+
+```sql
+CREATE TABLE helloworld.my_first_table
+(
+    user_id UInt32,
+    message String,
+    timestamp DateTime
+)
+ENGINE = CnchMergeTree()
+PARTITION BY timestamp
+ORDER BY (user_id, timestamp);
+```
+View table information:
+
+
+```sql
+SHOW TABLES;
+DESC my_first_table;
+```
+Insert data:
+
+
+```sql
+INSERT INTO helloworld.my_first_table (user_id, message, timestamp) VALUES
+    (101, 'Hello, ByConity!',                                 now()),
+    (102, 'Insert a lot of rows per batch',                     yesterday()),
+    (102, 'Sort your data based on your commonly-used queries', today()),
+    (101, 'Granules are the smallest chunks of data read',      now() + 5);
+```
+## Import Data
+
+ByConity supports five different methods of importing data: local file import, HDFS import, Kafka import, Spark import, MySQL import, and Hive external table import. Please refer to the "Data Import" section of the documentation for specific details. Here, we will briefly explain how to write a data file using ByConity, taking local file import as an example.
+
+## Insert to File
+
+Assuming we have a data file named `data.csv`:
+
+
+```csv
+102,This is data in a file,2022-02-22 10:43:28
+101,It is comma-separated,2022-02-23 00:00:00
+103,Use FORMAT to specify the format,2022-02-21 10:43:30
+...
+```
+Import the data from the file into the table:
+
+
+```bash
+./clickhouse-client -h {HOST} --port {PORT} --query='INSERT INTO helloworld.my_first_table FORMAT CSV' < data.csv
+```
+Query the data in the table:
+
+
+```bash
+./clickhouse-client -h {HOST} --port {PORT} --query='SELECT * FROM helloworld.my_first_table'
+```
+## Query Data
+
+ByConity supports simple query statements:
+
+
+```sql
+SELECT * FROM helloworld.my_first_table;
+
+SELECT * FROM helloworld.my_first_table ORDER BY timestamp;
+
+SELECT * FROM helloworld.my_first_table ORDER BY timestamp FORMAT JSON;
+```
+## View Historical Queries
+
+You can view historical queries by accessing the system table `query_log`:
+
+[https://clickhouse.com/docs/en/operations/system-tables/query_log/](https://clickhouse.com/docs/en/operations/system-tables/query_log/)
+
+
+```sql
+SELECT * FROM system.query_log;
+```
+

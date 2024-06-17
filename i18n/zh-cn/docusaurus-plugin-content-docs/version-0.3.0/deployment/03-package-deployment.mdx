@@ -1,0 +1,447 @@
+---
+title: 物理机部署
+sidebar_position: 3
+tags:
+  - Docs
+---
+
+
+# 物理机部署
+
+目前在物理机上安装ByConity的方式是通过软件包管理器，例如为 Debian OS 安装 Debian 软件包，为 Centos OS 安装 rpm 软件包。
+由于ByConity 使用 FoundationDB 作为元存储，使用 HDFS 作为数据存储。因此，在开始部署 ByConity 之前，我们需要先部署 FoundationDB 和 HDFS。步骤是首先安装FoundationDB（FDB），然后安装HDFS，最后再部署ByConity软件包，具体说明如下。
+
+## 安装 FoundationDB
+
+本章节我们将在 3 台物理机上设置 Foundation DB 集群。它们都使用 debian 操作系统。参考了官方指南：[在 Linux 上入门](https://apple.github.io/foundationdb/getting-started-linux.html) 和 [构建一个集群](https://apple.github.io/foundationdb/building-cluster.html)。
+
+首先，我们需要在[官方下载](https://github.com/apple/foundationdb/releases/)下载二进制文件进行安装。如果国内访问较慢，我们提供了国内下载地址。分别下载 __server__，__monitor__ 和 __cli__ 二进制文件，以及对应的 __sha256__ 校验和文件（我们以版本 __7.1.25__为例）。
+在本地创建 `foundationdb/bin` 文件夹中，并下载安装文件：
+
+```sh
+curl -L -o fdbserver.x86_64 https://github.com/apple/foundationdb/releases/download/7.1.25/fdbserver.x86_64
+curl -L -o fdbserver.x86_64.sha256 https://github.com/apple/foundationdb/releases/download/7.1.25/fdbserver.x86_64.sha256
+
+curl -L -o fdbmonitor.x86_64 https://github.com/apple/foundationdb/releases/download/7.1.25/fdbmonitor.x86_64
+curl -L -o fdbmonitor.x86_64.sha256 https://github.com/apple/foundationdb/releases/download/7.1.25/fdbmonitor.x86_64.sha256
+
+curl -L -o fdbcli.x86_64 https://github.com/apple/foundationdb/releases/download/7.1.25/fdbcli.x86_64
+curl -L -o fdbcli.x86_64.sha256 https://github.com/apple/foundationdb/releases/download/7.1.25/fdbcli.x86_64.sha256
+```
+
+- 国内下载地址
+
+```sh
+https://release-bin.tos-cn-beijing.volces.com/fdb/7.1.25/fdbcli.x86_64
+https://release-bin.tos-cn-beijing.volces.com/fdb/7.1.25/fdbmonitor.x86_64
+https://release-bin.tos-cn-beijing.volces.com/fdb/7.1.25/fdbserver.x86_64
+https://release-bin.tos-cn-beijing.volces.com/fdb/7.1.25/foundationdb-clients-7.1.25-1.el7.x86_64.rpm
+https://release-bin.tos-cn-beijing.volces.com/fdb/7.1.25/foundationdb-clients_7.1.25-1_amd64.deb
+```
+
+下载完成后，检查校验码：
+
+```sh
+$ sha256sum --binary fdbserver.x86_64
+73b70a75464e64fd0a01a7536e110e31c3e6ce793d425aecfc40f0be9f0652b7 *fdbserver.x86_64
+
+$ cat fdbserver.x86_64.sha256
+73b70a75464e64fd0a01a7536e110e31c3e6ce793d425aecfc40f0be9f0652b7  fdbserver.x86_64
+```
+
+重命名可执行文件，并添加可执行权限，删除多余文件：
+
+```sh
+rm *.sha256
+mv fdbcli.x86_64 fdbcli
+mv fdbmonitor.x86_64 fdbmonitor
+mv fdbserver.x86_64 fdbserver
+chmod ug+x fdbcli fdbmonitor fdbserver
+```
+
+创建文件夹用以存储配置、数据和日志：
+
+```sh
+mkdir -p /<your_directory>/fdb_runtime/config
+mkdir -p /<your_directory>/fdb_runtime/data
+mkdir -p /<your_directory>/fdb_runtime/logs
+```
+
+在`/<your_directory>/fdb_runtime/config/`文件夹下创建`foundationdb.conf`配置文件，内容如下：
+
+```sh
+$ cat /<your_directory>/fdb_runtime/config/foundationdb.conf
+[fdbmonitor]
+user = root
+
+[general]
+cluster-file = /<your_directory>/fdb_runtime/config/fdb.cluster
+restart-delay = 60
+
+[fdbserver]
+
+command = /<your_directory>/foundationdb/bin/fdbserver
+datadir = /<your_directory>/fdb_runtime/data/$ID
+logdir = /<your_directory>/fdb_runtime/logs/
+public-address = auto:$ID
+listen-address = public
+
+
+[fdbserver.4500]
+class=stateless
+[fdbserver.4501]
+class=transaction
+[fdbserver.4502]
+class=storage
+[fdbserver.4503]
+class=stateless
+```
+
+在相同的文件夹中创建名为`fdb.cluster`的文件，内容如下：
+
+```sh
+$ cat /<your_directory>/fdb_runtime/config/fdb.cluster
+
+# <your_ip_address> 换成本地ip地址
+clusterdsc:test@<your_ip_address>:4500
+```
+
+将FDB安装为`systemd`服务。在同一文件夹中，创建名为`fdb.service`的文件，内容如下：
+
+```sh
+$ cat /<your_directory>/fdb_runtime/config/fdb.service
+[Unit]
+Description=FoundationDB (KV storage for cnch metastore)
+
+[Service]
+Restart=always
+RestartSec=30
+TimeoutStopSec=600
+ExecStart=/<your_directory>/foundationdb/bin/fdbmonitor --conffile /<your_directory>/fdb_runtime/config/foundationdb.conf --lockfile /<your_directory>/fdb_runtime/fdbmonitor.pid
+
+[Install]
+WantedBy=multi-user.target
+```
+
+目前已经完成了配置文件的准备工作。现在将FDB安装到`systemd`中。
+
+将服务文件复制到`/etc/systemd/system/`目录下：
+
+```sh
+cp fdb.service /etc/systemd/system/
+```
+
+重新加载服务文件以包括新服务：
+
+```sh
+systemctl daemon-reload
+```
+
+启用并启动服务：
+
+```sh
+systemctl enable fdb.service
+systemctl start fdb.service
+```
+
+检查服务并查看它是否处于活动状态：
+
+```sh
+$ systemctl status fdb.service
+  fdb.service - FoundationDB (KV storage for cnch metastore)
+  Loaded: loaded (/etc/systemd/system/fdb.service; disabled; vendor preset: enabled)
+  Active: active (running) since Tue 2023-01-17 18:35:42 CST; 20s ago
+
+```
+
+现在已经在一台机器上安装了FDB服务，重复相同的步骤在另外两台机器上安装FDB服务。
+
+安装完成之后，需要连接三台FDB服务以形成一个集群。
+现在回到第一台节点，使用fdbcli连接到FDB。
+
+```sh
+$ ./foundationdb/bin/fdbcli -C fdb_runtime/config/fdb.cluster
+Using cluster file `fdb_runtime/config/fdb.cluster'.
+
+The database is unavailable; type `status' for more information.
+
+Welcome to the fdbcli. For help, type `help'.
+fdb>
+```
+
+执行以下命令来初始化数据库：
+
+```sh
+configure new single ssd
+```
+
+将3台机器都设置为coordinator，并将地址替换为你的机器地址：
+
+```sh
+coordinators <node_1_ip_address>:4500 <node_2_ip_address>:4500 <node_3_ip_address>:4500
+```
+
+然后退出fdbcli，你会发现`fdb.cluster`文件现在有了新内容：
+
+```sh
+$ cat fdb_runtime/config/fdb.cluster
+# DO NOT EDIT!
+# This file is auto-generated, it is not to be edited by hand
+clusterdsc:wwxVEcyLvSiO3BGKxjIw7Sg5d1UTX5ad@example1.host.com:4500,example2.host.com:4500,example3.host.com:4500
+```
+
+将此文件复制到另外两台机器并替换旧文件，然后重新启动fdb服务：
+
+```sh
+systemctl restart fdb.service
+```
+
+然后返回第一台机器，再次使用fdbcli连接到FDB，并执行以下命令将冗余模式更改为`double`：
+
+```sh
+configure double
+```
+
+然后在fdbcli中执行`status`命令以查看结果，你应该看到类似以下的内容：
+
+```sh
+fdb> status
+
+Using cluster file `fdb_runtime/config/fdb.cluster'.
+
+Configuration:
+  Redundancy mode        - double
+  Storage engine         - ssd-2
+  Coordinators           - 3
+  Usable Regions         - 1
+```
+
+证明你完成了FoundationDB服务器的安装。现在你拥有了`fdb.cluster`文件。我们将在Byconity的配置中使用它。
+
+
+## 安装HDFS
+
+这里我们使用3台机器上安装HDFS，其中1台机器用于namenode，其他2台机器用于datanode。详细参考官方文档[SingleCluster](https://hadoop.apache.org/docs/stable/hadoop-project-dist/hadoop-common/SingleCluster.html)和[ClusterSetup](https://hadoop.apache.org/docs/stable/hadoop-project-dist/hadoop-common/ClusterSetup.html)。我将安装HDFS版本3.3.4，基于Java-8版本。
+
+首先，在3台机器上安装Java。有很多安装Java的方法，这里将使用以下两个命令进行安装：
+
+```sh
+sudo apt-get update
+sudo apt-get install openjdk-8-jdk
+```
+
+接下来，我们需要下载一个Hadoop发行版，可以在官网下载，我们同样也提供了国内快速下载地址，解压缩并进入该目录
+
+```sh
+$ curl -L -o hadoop-3.3.4.tar.gz https://dlcdn.apache.org/hadoop/common/stable/hadoop-3.3.4.tar.gz
+$ tar xvf hadoop-3.3.4.tar.gz
+$ ls
+hadoop-3.3.4  hadoop-3.3.4.tar.gz
+$ cd hadoop-3.3.4
+```
+
+- 国内下载地址
+```sh
+https://release-bin.tos-cn-beijing.volces.com/hdfs/3.3.6/hadoop-3.3.6.tar.gz
+```
+
+然后编辑文件`etc/hadoop/hadoop-env.sh`以设置环境变量：
+
+```sh
+export JAVA_HOME=/usr/lib/jvm/java-8-byteopenjdk-amd64
+export HADOOP_HOME=/<your_directory>/hdfs/hadoop-3.3.4
+export HADOOP_LOG_DIR=/<your_directory>/hdfs/logs
+```
+
+使用以下内容编辑文件`etc/hadoop/core-site.xml`：
+
+```sh
+#value标签需替换您的namenode地址的值
+
+<configuration>
+        <property>
+                <name>fs.defaultFS</name>
+                <value>hdfs://<your_name_node_ip_address>:12000</value>
+        </property>
+</configuration>
+```
+
+目前所有三台机器的通用设置已经完成，下面针对namenode和datanode的做不同的配置安装。
+首先在namenode的节点上，创建一个包含datanode列表的文件。例如`datanodes_list.txt`内容如下：
+
+```sh
+$ cat /root/user_xyz/hdfs/datanodes_list.txt
+<datanode_1_address>
+<datanode_2_address>
+```
+
+然后创建一个目录以存储namenode运行时数据
+
+```sh
+mkdir -p /<your_directory>/hdfs/root_data_path_for_namenode
+```
+
+接下来，使用以下内容编辑文件`etc/hadoop/hdfs-site.xml`
+
+```xml
+<configuration>
+        <property>
+                <name>dfs.replication</name>
+                <value>1</value>
+        </property>
+        <property>
+                <name>dfs.namenode.name.dir</name>
+                <value>file:///<your_directory>/hdfs/root_data_path_for_namenode</value>
+        </property>
+        <property>
+                <name>dfs.hosts</name>
+                <value>/<your_directory>/hdfs/datanodes_list.txt</value>
+        </property>
+
+</configuration>
+```
+
+到此完成namenode的配置，接下来配置另外两个datanode节点。
+首先在datanode节点上创建一个目录，来存储数据节点的运行时数据：
+
+```sh
+mkdir -p /root/user_xyz/hdfs/root_data_path_for_datanode
+```
+
+接下来编辑文件`etc/hadoop/hdfs-site.xml`，内容如下：
+
+```xml
+<configuration>
+        <property>
+                <name>dfs.data.dir</name>
+                <value>file:///<your_directory>/hdfs/root_data_path_for_datanode</value>
+        </property>
+</configuration>
+```
+
+完成配置后，再转到namenode节点，进入hadoop目录，格式化文件系统并使用以下命令启动namenode
+
+```sh
+bin/hdfs namenode -format
+bin/hdfs --daemon start namenode
+```
+
+然后进入另外两个datanode节点，进入hadoop目录并使用以下命令启动datanode节点：
+
+```sh
+bin/hdfs --daemon start datanode
+```
+
+在完成整个HDFS集群的配置后，我们必须创建一个目录来存储数据。 进入namenode节点，在hadoop目录中执行以下命令：
+
+```sh
+bin/hdfs dfs -mkdir -p /user/clickhouse/
+bin/hdfs dfs -chown clickhouse /user/clickhouse
+bin/hdfs dfs -chmod -R 775 /user/clickhouse
+```
+
+最后通过如下命令，查看下整个hdfs的状态，查看dn节点是否是active：
+
+```sh
+bin/hdfs dfsadmin -report
+```
+
+
+## 安装FoundationDB客户端
+
+ByConity 软件包部署依赖于 FoundationDB 客户端软件包。FoundationDB 客户端软件包与 FoundationDB 服务器版本紧密耦合。因此，我们需要选择与 FoundationDB 服务器版本匹配的客户端软件包。
+FoundationDB 客户端软件包可以在[官网下载](https://github.com/apple/foundationdb/releases)，本例我们下载版本 7.1.27 用于 Debian OS amd64 机器。
+
+```sh
+curl -L -o foundationdb-clients_7.1.27-1_amd64.deb https://github.com/apple/foundationdb/releases/download/7.1.27/foundationdb-clients_7.1.27-1_amd64.deb
+```
+
+执行安装命令:
+
+```sh
+sudo dpkg -i foundationdb-clients_7.1.27-1_amd64.deb
+```
+
+
+## 部署ByConity软件包
+
+接下来，我们将部署 ByConity 软件包，我们发布在 [官方下载](https://github.com/ByConity/ByConity/releases) 中找到它们。或者可以自己构建软件包，请按照此 [软件包构建指南](https://github.com/ByConity/ByConity/tree/master/docker/packager)。
+
+1. 安装 byconity-common-static
+
+首先 `byconity-common-static`，这是所有其他软件包的依赖
+
+```sh
+sudo dpkg -i byconity-common-static_0.4.0_amd64.deb
+```
+
+编辑配置文件 `/etc/byconity-server/cnch_config.xml` 和 `/etc/byconity-server/fdb.config`。 `cnch_config.xml` 文件包含 service_discovery 配置、hdfs 配置和 foundationdb 集群配置路径。 `fdb.config` 是 FoundationDB 集群的集群配置文件。
+
+2. 配置 `cnch_config.xml`
+
+`cnch_config.xml` 文件包含两部分需要用户配置的内容，`service_discovery` 标签和 `hdfs_nnproxy` 标签。在 ByConity 中，组件之间有三种相互发现的方式。`mode` 标签用于指定方式，有三种模式：`local`、`dns` 和 `consul`。
+
+在 `local` 模式下，用户需要在此配置文件中指定所有组件的 IP 地址或主机名，通过替换占位符 `{your_xxx_address}`（例如 `{your_server_address}`），该占位符实际上是组件的 IP 地址，例如 `10.0.2.72`。
+
+对于 `hdfs_nnproxy` 标签，包含 HDFS的namenode地址。
+
+3. 配置 `fdb.cluster`
+
+我们在部署FoundationDB集群提到，在配置FoundationDB服务器后，会产生`fdb.cluster`， 该文件是 FoundationDB 客户端连接到 FoundationDB 服务器的文件。
+
+4. 安装TSO服务组件
+
+安装 TSO 服务，下载 `byconity-tso` 包并安装：
+
+```sh
+sudo dpkg -i byconity-tso_0.4.0_amd64.deb
+```
+
+TSO 服务的配置文件位于 `/etc/byconity-server/byconity-tso.xml`，可以按照自己的需求进行配置，但默认值已足够。另外首次安装不会立即启动，需要通过以下命令启动：
+
+```sh
+systemctl start byconity-tso
+```
+
+也可通过如下命令检查TSO状态：
+
+```sh
+systemctl status byconity-tso
+```
+
+*注意：下次再次安装该软件包（如升级），则无需执行 `start` 命令*
+
+5. 安装其他组件
+
+以相同的方式，安装 ByConity 资源管理器、ByConity 服务器、ByConity 工作器、ByConity 工作器写入和 ByConity 守护程序管理器。 `byconity-resource-manager`、`byconity-daemon-manger` 和 `byconity-tso` 是轻量级服务，因此可以安装在共享机器上与其他软件包一起使用。但是，对于 `byconity-server`、`byconity-worker` 和 `byconity-worker-write`，我们应该将它们分别安装在不同的机器上。
+
+```sh
+sudo dpkg -i byconity-resource-manager_0.4.0_amd64.deb 
+sudo dpkg -i byconity-server_0.4.0_amd64.deb 
+sudo dpkg -i byconity-worker_0.4.0_amd64.deb 
+sudo dpkg -i byconity-worker-write_0.4.0_amd64.deb 
+sudo dpkg -i byconity-daemon-manager_0.4.0_amd64.deb 
+```
+
+以同样的方式启动各个组件：
+
+```sh
+systemctl start byconity-server // 以及byconity-worker、byconity-resource-manager、byconity-daemon-manager
+```
+
+查看各组件启动状态：
+
+```sh
+systemctl status ｜ grep byconity-
+```
+
+通过同样的方式安装更多的工作节点。每个工作节点都有一个名为`WORKER_ID`的设置项，在配置文件`/etc/byconity-server/(byconity-worker|byconity-worker-write).xml`中配置工作节点的`worker id`，`worker id`在工作节点之间必须是唯一的，配置文件中`WORKER_ID`的默认值为空。在这种情况下，`worker_id`会自动分配为主机机器的IP地址。
+
+6. 查看计算组状态
+
+```sh
+clickhouse client --port 9010
+
+:) select * from system.workers
+
+```

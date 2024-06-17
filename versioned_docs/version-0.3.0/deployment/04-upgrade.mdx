@@ -1,0 +1,72 @@
+---
+title: ByConity upgrade
+sidebar_position: 4
+tags:
+  - Docs
+---
+
+
+# Cluster Upgrade and Downgrade
+
+## Upgrading Clusters Based on S3 Storage (Applicable Only to Versions Before 0.2.0)
+
+After the preview version of S3 (from pre-0.2.0 to 0.2.0), some S3 object keys and S3 metadata have changed. We provide tools to migrate from older versions. Use these tools only if you are using an older version of ByConity (before version 0.2.0) and storing data in S3. Follow these steps:
+
+1. Stop the ByConity cluster.
+
+```sh
+# stop the cluster
+```
+
+2. Use the provided tool to migrate S3 data.
+
+- If you are running ByConity using docker, you can log in to the server/worker node and use the ps command to find the clickhouse binary file.
+
+```sh
+./clickhouse s3-rename --s3_ak_id ${S3_AK_ID} --s3_ak_secret ${S3_AK_SECRET} --from_bucket ${BYCONITY_S3_BUCKET} --s3_endpoint ${S3_ENDPOINT} --s3_region ${S3_REGION} --root_prefix ${BYCONTIY_DATA_PREFIX}
+```
+
+- If you are running ByConity using a docker wrapper:
+
+```sh
+docker run -it --rm --network host --name byconity-s3-sanitizer byconity/byconity:0.2.0 clickhouse s3-rename --s3_ak_id ${S3_AK_ID} --s3_ak_secret ${S3_AK_SECRET} --from_bucket ${BYCONITY_S3_BUCKET} --s3_endpoint ${S3_ENDPOINT} --s3_region ${S3_REGION} --root_prefix ${BYCONTIY_DATA_PREFIX}
+```
+
+| tool arguments | explanation |
+|----------------|-------------|
+| s3_ak_id       | S3 access key ID used by byconity    |
+| s3_ak_secret   | S3 secret access key used by byconity |
+| s3_region      | S3 region used by byconity           |
+| s3_endpoint    | S3 endpoint used by byconity          |
+| from_bucket    | S3 bucket name used by byconity       |
+| root_prefix    | S3 object prefix used by byconity     |
+| thread_number  | Number of threads to use (default is 1)|
+| need_delete    | Whether to delete the original file (default is true) |
+| uuid_check     | Whether to check if the UUID is valid (default is true) |
+| enable_logging | Whether to enable logging output      |
+| logging_level  | Logging level (default is debug output)|
+
+3. Use the provided tool to migrate S3 metadata.
+
+- If you know the location of the clickhouse binary file:
+
+```sh
+./clickhouse s3-meta-sanitizer -C cnch_config.xml
+```
+
+- If you are running ByConity using a docker wrapper:
+
+```sh
+docker run -it --rm --network host --name byconity-s3-sanitizer byconity/byconity:0.2.0 clickhouse s3-meta-sanitizer --config-file /root/app/config/cnch_config.xml
+```
+
+| tool arguments | explanation |
+|----------------|-------------|
+| C              | Specify the config file from the `cnch_config` configuration field in your ByConity server configuration file. |
+
+4. Restart the ByConity cluster.
+
+```sh
+# restart the cluster
+```
+

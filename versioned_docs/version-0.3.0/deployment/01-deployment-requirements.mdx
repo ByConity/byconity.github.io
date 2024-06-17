@@ -1,0 +1,41 @@
+---
+title: Deployment Requirements
+sidebar_position: 1
+tags:
+  - Docs
+---
+
+# Deployment Requirements
+
+## Software Requirements
+
+ByConity can run on most mainstream commercial servers. We recommend that the deployment of ByConity follows the following requirements:
+
+- Linux operating system requirements: Kernel version 4.14 and above, Ubuntu 16.04.5 LTS and above, Centos 8 and above
+- Software dependencies are included in the lib, no additional software dependencies are required
+
+## Hardware Requirements
+
+Users need to deploy and purchase their own Kubernetes clusters, and the minimum hardware configuration required without affecting test performance is as follows:
+
+| Component Name  | CPU | Memory | Hard Disk | Network    | Instance Count |
+| :-------------- | :-- | :----- | :-------- | :--------- | :------------- |
+| TSO             | 1   | 300M   | 5G        | Gigabit NIC | 1              |
+| Server          | 8   | 32G    | 100G      | Gigabit NIC | 1              |
+| Worker          | 4   | 16G    | 100G+     | Gigabit NIC | 2 (r+w)        |
+| DaemonManager   | 1   | 500M   | 5G        | Gigabit NIC | 1              |
+| ResourceManager | 1   | 2G     | 5G        | Gigabit NIC | 1              |
+
+*Note: It is recommended to configure 1 read Worker and 1 write Worker for Worker.*
+
+Meanwhile, we also provide a recommended hardware configuration for production environments for reference:
+
+| Component Name  | CPU | Memory | Hard Disk | Network     | Instance Count |
+| :-------------- | :-- | :----- | :-------- | :---------- | :------------- |
+| TSO             | 2   | 500M   | 5G        | 10 Gigabit NIC | 3              |
+| Server          | 14  | 60G    | 1T        | 10 Gigabit NIC | >=1            |
+| Worker          | 30  | 240G   | 2T+       | 10 Gigabit NIC | >=2            |
+| DaemonManager   | 4   | 10G    | 10G       | 10 Gigabit NIC | 1              |
+| ResourceManager | 8   | 16G    | 10G       | 10 Gigabit NIC | 1              |
+
+*Note: In the hardware specifications, the local disks of Worker and Server are mainly used to store temporary data and log files during writing. At the same time, the local disks of Worker will also store data Cache. Therefore, the size of the disk needs to be determined based on the configured DiskCache size and the amount of data written.*

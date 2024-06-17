@@ -1,0 +1,316 @@
+---
+title: Privilege Management
+sidebar_position: 8
+tags:
+  - Docs
+---
+
+
+# Privilege Management
+
+## RBAC Model
+
+ByConity's access control design is based on the Role-Based Access Control (RBAC) model, which is used to manage and control user access to system resources. It assigns permissions to roles rather than individual users, leveraging the concept of roles. RBAC mainly consists of three core components: roles, permissions, and users.
+
+1. **Role**: A role is a group of users with similar responsibilities and permissions. For example, a system might define different roles such as "administrator," "editor," and "reader." Each role represents a set of permissions, and users can be assigned to one or multiple roles.
+2. **Permission**: Permission refers to the access rights to system resources. Resources can be files, databases, functional modules, etc. Permissions define the ability to perform operations on these resources, such as reading, writing, modifying, etc. Each role is associated with a set of permissions.
+3. **User**: A user is an individual entity within the system, such as an administrator, employee, or customer. Users can be assigned to one or multiple roles, thereby acquiring the permissions associated with those roles.
+
+The core idea of RBAC is to grant permissions to roles and then assign roles to users. This approach simplifies access control, enhances system scalability, and improves security. By using RBAC, administrators can flexibly manage and control user access to system resources based on different roles and responsibilities, achieving fine-grained access control and permission management.
+
+RBAC in ByConity adopts most aspects of the ClickHouse version of RBAC, with some syntactic differences and underlying implementations, as explained further below.
+
+## Operation Management
+
+### Enabling RBAC
+
+You can enable RBAC by setting `access_management = 1` and adding a password for the default user in the`users.xml` configuration file. More info can be found [here](https://clickhouse.com/docs/en/operations/access-rights/#enabling-access-control).
+![](./assets/privilege-management/enable-rbac.png)
+
+After enabling RBAC, the `default` user would have all the permissions. After this, it is recommended that:
+
+1.  You create all the required users. Also create an admin account (for eg. `admin_user` ) using the following syntax `GRANT ALL ON *.* TO admin_user_account WITH GRANT OPTION`.
+2.  You can then restrict the `default` user permissions by setting `<readonly>` value to 1 in the `users.xml` file
+
+### Differences
+
+The main differences are as follows:
+
+1. The [underlying implementation](https://github.com/ByConity/ByConity/issues/660) uses the key value store by default in order to persist and perform operations on access entities instead of disk storage. This is to support the cloud native architecture of Byconity.
+2. The `CREATE/ALTER` User/Role does not support the `HOST` keyword as Byconity does not store entities on the server disk.
+
+- Settings
+
+| Configuration Name | Default Value, Meaning                                             | Description                                                                                                                                                           |
+| :----------------- | :----------------------------------------------------------------- | :-------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --- |
+| access_entity_ttl  | 3600(60 Mins), TTL for access entities stored in memory in seconds | It is recommended that this value be set at a reasonable interval for updating the entities in memory so as to not put too much read pressure on the key value store. |     |
+
+### How to use RBAC
+
+#### CREATE and ALTER User/Role
+
+Create user accounts with the following syntax. Note that passwords should follow the following rules:
+
+- Be at least 12 characters long
+- Contain at least 1 numeric character
+- Contain at least 1 uppercase character
+- Contain at least 1 lowercase character
+- Contain at least 1 special character
+
+A user account has the following properties:
+
+- Identification information.
+- Privileges that define a scope of queries the user can execute.
+- Assigned and default roles.
+- Settings with their constraints applied by default at user login.
+- Assigned settings profiles.
+
+```SQL
+CREATE USER [IF NOT EXISTS | OR REPLACE] name
+[NOT IDENTIFIED | IDENTIFIED {[WITH {no_password | plaintext_password | sha256_password | sha256_hash | double_sha1_password | double_sha1_hash}]
+BY {'password' | 'hash'}}| {WITH ssl_certificate CN 'common_name'}]
+[DEFAULT ROLE role [,...]] [DEFAULT DATABASE database | NONE]
+[GRANTEES {user | role | ANY | NONE} [,...] [EXCEPT {user | role} [,...]]]
+[SETTINGS variable [= value] [MIN [=] min_value] [MAX [=] max_value] [READONLY | WRITABLE] | PROFILE 'profile_name'] [,...]
+
+-- Example
+CREATE USER john IDENTIFIED WITH sha256_password BY 'my_password' DEFAULT ROLE accountant;
+
+-- To login as a user
+clickhouse-client --host 127.0.0.1 --port 9000 --user=john password=my_password
+```
+
+Create roles with the following syntax
+
+```SQL
+CREATE ROLE [IF NOT EXISTS | OR REPLACE] name
+[SETTINGS variable [= value] [MIN [=] min_value] [MAX [=] max_value] [CONST|READONLY|WRITABLE|CHANGEABLE_IN_READONLY] | PROFILE 'profile_name'] [,...]
+
+-- Create and Grant privilege to role. Now accountant role can read from `db` database
+CREATE ROLE accountant;
+GRANT SELECT ON db.* TO accountant;
+
+-- user can set his granted role to then execute allowed queries. Note that user and role permissions are unioned.
+SET ROLE accountant;
+SELECT * FROM db.*;
+```
+
+#### GRANT Privileges and Roles
+
+Privilege in RBAC is a permission to execute specific kind of queries. They have a hierarchical structure. It is similar to ClickHouse. More types of permissions will be added in the future. The current permissions list is follows:
+
+- SELECT
+- INSERT
+- ALTER
+  - `ALTER TABLE`
+    - `ALTER UPDATE`
+    - `ALTER DELETE`
+    - `ALTER COLUMN`
+      - `ALTER ADD COLUMN`
+      - `ALTER DROP COLUMN`
+      - `ALTER MODIFY COLUMN`
+      - `ALTER COMMENT COLUMN`
+      - `ALTER CLEAR COLUMN`
+      - `ALTER RENAME COLUMN`
+    - `ALTER INDEX`
+      - `ALTER ORDER BY`
+      - `ALTER SAMPLE BY`
+      - `ALTER ADD INDEX`
+      - `ALTER DROP INDEX`
+      - `ALTER MATERIALIZE INDEX`
+      - `ALTER CLEAR INDEX`
+    - `ALTER CONSTRAINT`
+      - `ALTER ADD CONSTRAINT`
+      - `ALTER DROP CONSTRAINT`
+    - `ALTER TTL`
+      - `ALTER MATERIALIZE TTL`
+    - `ALTER SETTINGS`
+    - `ALTER MOVE PARTITION`
+    - `ALTER FETCH PARTITION`
+    - `ALTER FREEZE PARTITION`
+  - `ALTER VIEW`
+    - `ALTER VIEW REFRESH`
+    - `ALTER VIEW MODIFY QUERY`
+- CREATE
+  - `CREATE DATABASE`
+  - `CREATE TABLE`
+    - `CREATE ARBITRARY TEMPORARY TABLE`
+      - `CREATE TEMPORARY TABLE`
+  - `CREATE VIEW`
+  - `CREATE DICTIONARY`
+  - `CREATE FUNCTION`
+- DROP
+  - `DROP DATABASE`
+  - `DROP TABLE`
+  - `DROP VIEW`
+  - `DROP DICTIONARY`
+  - `DROP FUNCTION`
+- TRUNCATE
+- OPTIMIZE
+- SHOW
+  - `SHOW DATABASES`
+  - `SHOW TABLES`
+  - `SHOW COLUMNS`
+  - `SHOW DICTIONARIES`
+- KILL QUERY
+- ACCESS MANAGEMENT
+  - `CREATE USER`
+  - `ALTER USER`
+  - `DROP USER`
+  - `CREATE ROLE`
+  - `ALTER ROLE`
+  - `DROP ROLE`
+  - `CREATE ROW POLICY`
+  - `ALTER ROW POLICY`
+  - `DROP ROW POLICY`
+  - `CREATE QUOTA`
+  - `ALTER QUOTA`
+  - `DROP QUOTA`
+  - `CREATE SETTINGS PROFILE`
+  - `ALTER SETTINGS PROFILE`
+  - `DROP SETTINGS PROFILE`
+  - `SHOW ACCESS`
+    - `SHOW_USERS`
+    - `SHOW_ROLES`
+    - `SHOW_ROW_POLICIES`
+    - `SHOW_QUOTAS`
+    - `SHOW_SETTINGS_PROFILES`
+  - `ROLE ADMIN`
+- SYSTEM
+  - `SYSTEM SHUTDOWN`
+  - `SYSTEM DROP CACHE`
+    - `SYSTEM DROP DNS CACHE`
+    - `SYSTEM DROP MARK CACHE`
+    - `SYSTEM DROP UNCOMPRESSED CACHE`
+  - `SYSTEM RELOAD`
+    - `SYSTEM RELOAD CONFIG`
+    - `SYSTEM RELOAD DICTIONARY`
+      - `SYSTEM RELOAD EMBEDDED DICTIONARIES`
+    - `SYSTEM RELOAD FUNCTION`
+    - `SYSTEM RELOAD FUNCTIONS`
+  - `SYSTEM MERGES`
+  - `SYSTEM TTL MERGES`
+  - `SYSTEM FETCHES`
+  - `SYSTEM MOVES`
+  - `SYSTEM FLUSH`
+    - `SYSTEM FLUSH DISTRIBUTED`
+    - `SYSTEM FLUSH LOGS`
+- INTROSPECTION
+  - `addressToLine`
+  - `addressToLineWithInlines`
+  - `addressToSymbol`
+  - `demangle`
+- SOURCES
+  - `FILE`
+  - `URL`
+  - `REMOTE`
+  - `YSQL`
+  - `ODBC`
+  - `JDBC`
+  - `HDFS`
+  - `S3`
+- dictGet
+- displaySecretsInShowAndSelect
+
+Use the GRANT syntax to grant permissions or assign roles to a user/role.
+
+```SQL
+-- Grant Privellege
+GRANT privilege[(column_name [,...])] [,...]
+ON {db.table|db.*|*.*|table|*}
+TO {user | role | CURRENT_USER} [,...] [WITH GRANT OPTION] [WITH REPLACE OPTION]
+
+-- Grant Roles
+GRANT role [,...] TO {user | another_role | CURRENT_USER} [,...]
+[WITH ADMIN OPTION] [WITH REPLACE OPTION]
+
+-- Grant SELECT permissions on all tables in `db` to `accoutant` role
+GRANT SELECT ON db.* TO accountant;
+
+-- Grant SELECT permissions on `db.table` to user `john`. Also grant `john` the permission to grant other users (who are GRANTEEs of `john`) his own permissions.
+GRANT SELECT(x,y) ON db.table TO john WITH GRANT OPTION;
+ALTER  USER john GRANTEES jack;
+
+-- Examples of creating users, roles and granting roles.
+CREATE ROLE column1_users;
+GRANT SELECT(id, column1) ON db1.table1 TO column1_users;
+CREATE USER column_user IDENTIFIED BY 'password';
+GRANT column1_users TO column_user;
+```
+
+#### SET Role
+
+Activates roles for the current user. This role should be granted to the user
+
+```SQL
+SET ROLE {DEFAULT | NONE | role [,...] | ALL | ALL EXCEPT role [,...]}
+```
+
+Sets default roles to a user.
+
+Default roles are roles that are activated at user login. Roles can be set as default only if the usr was granted these roles. An exception is thrown otherwise
+
+```SQL
+SET DEFAULT ROLE {NONE | role [,...] | ALL | ALL EXCEPT role [,...]} TO {user|CURRENT_USER} [,...]
+```
+
+#### Revoke
+
+Revokes privileges from users or roles
+
+```SQL
+-- Revoking privileges from users
+REVOKE [ON CLUSTER cluster_name] privilege[(column_name [,...])] [,...] ON {db.table|db.*|*.*|table|*} FROM {user | CURRENT_USER} [,...] | ALL | ALL EXCEPT {user | CURRENT_USER} [,...]
+
+-- Example
+REVOKE  SELECT  ON accounts.*  FROM john;
+
+-- REVOKE part of a user's privilege
+GRANT  SELECT  ON accounts.staff TO mira;
+REVOKE  SELECT(wage)  ON accounts.staff FROM mira;
+```
+
+```SQL
+-- Revoking roles from users
+REVOKE [ON CLUSTER cluster_name] [ADMIN OPTION FOR] role [,...] FROM {user | role | CURRENT_USER} [,...] | ALL | ALL EXCEPT {user_name | role_name | CURRENT_USER} [,...]
+```
+
+#### Drop
+
+Drop roles or users
+
+```SQL
+DROP USER [IF EXISTS] name [,...] [ON CLUSTER cluster_name] [FROM access_storage_type]
+```
+
+```SQL
+DROP ROLE [IF EXISTS] name [,...] [ON CLUSTER cluster_name] [FROM access_storage_type]
+```
+
+#### System Tables for Access Entities
+
+Shows privileges for a user
+
+```SQL
+SHOW GRANTS [FOR user1 [, user2 ...]]
+```
+
+Shows parameters that were used at a user creation
+
+```SQL
+SHOW CREATE USER [name1 [, name2 ...] | CURRENT_USER]
+```
+
+Shows parameters that were used at a role creation
+
+```SQL
+SHOW CREATE ROLE name1 [, name2 ...]
+```
+
+System tables for access entities can be found in the following tables `role_grants`, `roles`, `users`
+
+```SQL
+SELECT * FROM system.role_grants;
+SELECT * FROM system.roles;
+SELECT * FROM system.users;
+```

@@ -1,0 +1,735 @@
+---
+title: Cluster Configuration
+sidebar_position: 7
+tags:
+  - Docs
+---
+
+# Cluster Configuration
+
+Document Type: Descriptive
+
+Summary:
+
+1. In the process of installation and deployment, what basic parameters need to be understood
+2. What are the advanced parameters of each component and what are their functions?
+
+## Server Configuration Parameters
+
+ByConity (formerly codenamed CNCH) server-side configuration is stored in cnch-server.xml, specified by `--config-file` when the process starts, and the server will automatically load the configuration from cnch-server.xml.
+
+### cnch_type
+
+Configure the ByConity process type, which can be configured as server or worker. Among them, the server is mainly responsible for receiving query requests and dispatching queries to workers; the worker nodes are mainly responsible for executing query tasks from the server. Examples are as follows:
+
+Example:
+
+```
+<cnch_type>server</cnch_type>
+
+```
+
+### tcp_port
+
+The TCP port used by server and client to connect
+
+Example：
+
+```
+<tcp_port>9000</tcp_port>
+
+```
+
+### http_port
+
+The HTTP port used by server and client to connect
+
+Example:
+
+```
+<https_port>9999</https_port>
+
+```
+
+### rpc_port
+
+The RPC port for server to interact with other components
+
+Example:
+
+```
+<rpc_port>8124</rpc_port>
+
+```
+
+### exchange_port
+
+Data transfer port for complex queries (to be considered for merging with rpc_port in the future)
+
+### exchange_status_port
+
+Control command port for complex queries (to be considered for merging with rpc_port in the future)
+
+### path
+
+Local data path directory
+
+Example:
+
+```
+<path>/var/lib/clickhouse/</path>
+
+```
+
+### tmp_path
+
+Local temporary directory path, used to store temporary data during the query process
+
+Example：
+
+```
+<tmp_path>/var/lib/clickhouse/tmp/</tmp_path>
+
+```
+
+### users_config
+
+The path to the user-related configuration file.
+
+Example:
+
+```
+<users_config>/path/to/userconf/users.xml</users_config>
+
+```
+
+### Service discovery
+
+Configure other components (including other servers) that communicate with the server process. Other components that interact with the server are server, tso, daemon manager, virtual warehouse and resource manager
+
+keys**:**
+
+- **mode** : service discovery mode, optional configuration parameters are local , dns, consul
+- **cluster** : cluster name
+- **disable_cache** : If configured as false, caching will be enabled to reduce the number of calls to service discovery
+- **cache_timeout** : cache expiration time
+
+Example
+
+```
+<service_discovery>
+    <mode>dns</mode>
+    <cluster>default</cluster>
+        <disable_cache>false</disable_cache>
+        <cache_timeout>5</cache_timeout>
+    <server>
+        <psm>data.cnch.server</psm>
+        <service>cnch-server-pp</service>
+        <headless_service>cnch-server-pp-headless</headless_service>
+    </server>
+    <tso>
+        <psm>data.cnch.tso</psm>
+        <service>cnch-tso</service>
+        <headless_service>cnch-tso-headless</headless_service>
+    </tso>
+    <vw>
+        <psm>data.cnch.vw</psm>
+    </vw>
+    <daemon_manager>
+        <psm>data.cnch.daemon_manager</psm>
+        <service>cnch-daemon-manager</service>
+        <headless_service>cnch-daemon-manager-headless</headless_service>
+    </daemon_manager>
+    <resource_manager>
+        <psm>data.cnch.resource_manager</psm>
+        <service>cnch-resource-manager</service>
+        <headless_service>cnch-resource-manager-headless</headless_service>
+    </resource_manager>
+</service_discovery>
+
+```
+
+### Catalog service
+
+Catalog service related configuration
+
+Keys:
+
+- **type** : Metadata storage engine type, support bytekv, fdb
+
+Example:
+
+```
+<!-- For foundationDB metastore-->
+<catalog_service>
+    <!--TODO: move name_space into catalog_service tag -->
+    <!--Metastore storage type, support `bytekv` and `fdb`-->
+    <type>fdb</type>
+    <fdb>
+        <cluster_file>/path/to/fdb/cluster_config</cluster_file>
+    </fdb>
+</catalog_service>
+
+```
+
+###
+
+## HDFS configuration parameters
+
+When starting the service, the configuration items will be detected in the order of cfs_addr>hdfs_addr>hdfs_ha_nameservice>hdfs_nnproxy. Once a configuration item configuration is hit, the corresponding configuration item will be used to access HDFS
+
+### hdfs_user
+
+The name of the user used by default when accessing HDFS, the default is clickhouse
+
+Example:
+
+```
+<hdfs_user>clickhouse</hdfs_user>
+
+```
+
+### cfs_addr
+
+The address of the cfs service, the format is cfs://service_url
+
+Example:
+
+```
+<cfs_addr>cfs://service_url</cfs_addr>
+
+```
+
+### hdfs_addr
+
+The address of hdfs service, the format is hdfs://nnip:nnport/path
+
+Example:
+
+```
+<hdfs_addr>hdfs://nnip:nnport/path</hdfs_addr>
+
+```
+
+### hdfs_ha_nameservice
+
+If the user's HDFS cluster supports High Avaliability feature,  the namespace needs to be configured in advance in the configuration file, and the addresses of the namespace need to be configured in [libhdfs3
+config](#markdown-header-hdfs3_config). 
+Example:
+
+```
+<hdfs_ha_nameservice>hdfs_service</hdfs_ha_nameservice>
+
+```
+and in libhdfs3 config:
+```
+<property>
+<name>dfs.nameservices</name>
+<value>my-hadoop</value>
+</property>
+<property>
+<name>dfs.ha.namenodes.my-hadoop</name>
+<value>machine1, machine2</value>
+</property>
+<property>
+<name>dfs.namenode.rpc-address.my-hadoop.machine1</name>
+<value>master:65212</value>
+</property>
+<property>
+<name>dfs.namenode.rpc-address.my-hadoop.machine2</name>
+<value>standby:65212</value>
+</property>
+```
+
+
+
+### storage_configuration
+
+1. The next configuration level corresponds to the storage_configuration configuration level in the configuration file
+
+- storage_configuration
+    - cnch_default_policy, specifies the StoragePolicy used by ByConity to store actual data, an optional configuration item, the default is cnch_default_hdfs, and the default storage policy for cnch should only include one HDFSDisk or S3Disk
+        - When creating a table, for a ByConity table, if the storage_policy MergeTreeSettings is not specified, it will be changed to ${cnch_default_policy} by default
+    - cnch_auxility_policy, specifies the StoragePolicy used by ByConity to store temporary data on the local disk, optional configuration item, the default is default
+    - disks
+        - ${DISK_NAME}
+            - type, the type of this disk, optional configuration item, the default is local
+                - ByConity supports the selection of four disks, hdfs/bytehdfs/s3/bytes3, as remote storage. Currently, only a single Disk is supported in the StoragePolicy
+                - In order to be compatible with the internal configuration, hdfs/bytehdfs are resolved to the internal bytehdfs Disk, s3/bytes3 are resolved to internal bytes3 disk, and the type of the community version HDFSDisk is renamed to communityhdfs, community version S3Disk is renamed to communitys3
+                - The configuration items of HDFSDisk/S3Disk specified by the StoragePolicy used by ByConity should be the same in all Server/Worker configuration files
+            - path
+                - Which path or data key prefix of this Disk will the data be stored in, required configuration items
+            - hdfs_params
+                - A new optional configuration item for disks of type bytehdfs, including the following parameters
+                    - hdfs_user, the user used to connect to hdfs, an optional configuration item, the default is clickhouse
+                    - cfs_addr, the address of cfs, an optional configuration item, this configuration item needs to be configured only when using cfs
+                    - hdfs_addr, the namenode address of hdfs, optional configuration items, such as hdfs://nnip:nnport/path
+                    - hdfs_ha_nameservice, an optional configuration item. If you need to use hdfs HA, you can use this configuration item to specify the corresponding service. The corresponding hdfs configuration needs to be configured through the hdfs3_config configuration file
+                    - hdfs_nnproxy, nnproxy address of hdfs, optional configuration item, default is nnproxy
+                    - If DiskByteHDFS does not configure the hdfs_params configuration item, it will find the global configuration item in the configuration file, such as the value of the hdfs_user configuration item in the configuration file
+            - region
+                - For bytes3 disk, specified the region of s3 service
+            - endpoint
+                - For bytes3 disk, specified the endpoint of s3 service
+            - bucket
+                - For bytes3 disk, specified the bucket of s3 service
+            - akid
+                - For bytes3 disk, specified the access key id of s3 service, if not configured, will check environment variable AWS_ACCESS_KEY_ID
+            - aksecret
+                - For bytes3 disk, specified the access key secret of s3 service, if not configured, will check environment variable AWS_SECRET_ACCESS_KEY
+    - policies
+        - ${STORAGE_POLICY_NAME}
+            - volumes
+                - ${VOLUME_NAME}
+                    - default, the default disk in this Volume, a required configuration item, the default disk will be used to store some data that does not support multi-disk storage, such as metastore, etc.
+                    - disk, the name of all the disks contained in this Volume, the required configuration items, the corresponding Disk needs to be configured in storage_configuration.disks
+
+1. configuration demo (with both hdfs and s3 as storage, but hdfs as default)
+
+```
+<storage_configuration>
+    <disks>
+        <default></default>
+        <server_local_disk1>
+            <path>/home/ch_test_service/service_test_env/server_data1/</path>
+        </server_local_disk1>
+        <server_local_disk2>
+            <path>/home/ch_test_service/service_test_env/server_data2/</path>
+        </server_local_disk2>
+        <server_hdfs_disk0>
+            <path>/user/cnch/</path>
+            <type>bytehdfs</type>
+        </server_hdfs_disk0>
+        <server_s3_disk0>
+            <type>bytes3</type>
+            <region>cn-beijing</region>
+            <endpoint>https://tos-s3-cn-beijing.volces.com</endpoint>
+            <bucket>byconity</bucket>
+            <path>test-service/</path>
+            <ak_id>some_access_key_id</ak_id>
+            <ak_secret>some_access_key_secret</ak_secret>
+        </server_s3_disk0>
+    </disks>
+    <policies>
+        <default>
+            <volumes>
+                <local>
+                    <default>default</default>
+                    <disk>default</disk>
+                    <disk>server_local_disk1</disk>
+                    <disk>server_local_disk2</disk>
+                </local>
+            </volumes>
+        </default>
+        <cnch_default_hdfs>
+            <volumes>
+                <hdfs>
+                    <default>server_hdfs_disk0</default>
+                    <disk>server_hdfs_disk0</disk>
+                </hdfs>
+            </volumes>
+        </cnch_default_hdfs>
+        <cnch_default_s3>
+            <volumes>
+                <s3>
+                    <default>server_s3_disk0</default>
+                    <disk>server_s3_disk0</disk>
+                </s3>
+            </volumes>
+        </cnch_default_s3>
+    </policies>
+</storage_configuration>
+
+```
+
+1. In order to be compatible with the internal configuration items of the old version, if the user only specifies a StoragePolicy of default, which also includes two volumes of hdfs and local, then this configuration item will be parsed into two StoragePolicy, one is default, but only contains The local volume, the other is ${cnch_default_policy}, which only includes the hdfs volume
+2. By specified multiple storage policy in storage_configuration, you can specified how the data of table is stored. For example, you can set cnch_default_policy to `cnch_default_hdfs` to let data store in hdfs by default, and specified some table stored in s3 by specify settings in create table query
+    ```
+        create table test_store (key Int) engine = CnchMergeTree order by key settings storage_policy = 'cnch_default_s3';
+    ```
+    1. One thing to note is that s3 storage is still a preview feature, the support for attach&detach is still WIP, data store layout and format may still have some changes before it's fully available
+
+### hdfs3_config
+
+libhdfs3 configuration doc path
+
+Example:
+
+```
+<hdfs3_config>/path/to/conf/hdfs3.xml</hdfs3_config>
+
+```
+
+### disk_cache_strategies
+
+The `disk_cache_strategies` configuration manages the DiskCache behavior in ByConity, encompassing three different strategies for file-level, MergeTree tables, and Hive external tables. These strategies have distinct cache paths and management techniques. The configuration defines multiple parameters to optimize I/O performance and enhance data processing speed.
+
+#### DiskCache Configuration Parameters:
+
+| Parameter Name | Description | Default Value |
+| :--: | :--: | :--: |
+| hits_to_cache | Number of times a data item must be accessed to be cached | 2 |
+| segment_size | The minimum number of rows per DiskCache unit | 8192 |
+| lru_max_size | Maximum size of the LRU cache (in bytes) | 2 |
+| lru_max_object_num | Maximum number of objects in the LRU cache （std::numeric_limits<size_t>::max()） | 4294967295（sys 32-bit） |
+| random_drop_threshold | Threshold for randomly dropping cache tasks | 50 |
+| stats_bucket_size | Number of buckets for storing and caching key counts | 10000 |
+| lru_update_interval | LRU cache update interval (in seconds) | 60 |
+| cache_dispatcher_per_disk | Whether to start a loading thread for each disk | true |
+| cache_loader_per_disk | Number of threads allocated for each disk | 2 |
+| cache_shard_num | Number of shards for the LRU cache | 12 |
+| cache_set_rate_limit | Cache write rate limiter | 0 (no limit) |
+| disk_cache_dir | Relative path for cache writes | disk_cache_v1 |
+
+Example:
+
+```
+<disk_cache_strategies>
+    <File>
+        <disk_cache_dir>file_disk_cache</disk_cache_dir>
+    </File>
+    <MergeTree>
+        <disk_cache_dir>mergetree_disk_cache</disk_cache_dir>
+    </MergeTree>
+    <Hive>
+        <disk_cache_dir>hive_disk_cache</disk_cache_dir>
+    </Hive>
+</disk_cache_strategies>
+```
+
+#### SplitDiskCache Configuration Parameters:
+
+ByConity's local caching strategy supports the separation of Meta and Data caching. In specific scenarios, it prioritizes Meta caching, effectively reducing remote read tail latency caused by small I/O operations.
+
+| Parameter Name | Description | Default Value |
+| :--: | :--: | :--: |
+| meta_cache_nums_ratio | Ratio of files for meta caching | Default 0 for mixed storage; >0 for separate caching |
+| meta_cache_size_ratio | Ratio of space for meta caching | 50 |
+
+Example:
+
+```
+<disk_cache_strategies>
+    <simple>
+        ...
+        <meta_cache_nums_ratio>50</meta_cache_nums_ratio>
+        <meta_cache_size_ratio>10</meta_cache_size_ratio>
+    </simple>
+</disk_cache_strategies>
+```
+
+#### StealingDiskCache Configuration Parameters:
+
+When Server distributes Parts to Workers, it adjusts the algorithm for load balancing, which may result in the same Part being dispatched to different nodes in different queries, increasing Cache miss rates. Additionally, when the Preload feature is enabled, this inconsistency can cause preheated Parts to not be utilized by subsequent queries. DiskCacheStealing ensures that Parts are cached on fixed nodes using a consistent HASH algorithm and reads data from remote nodes when querying non-cache nodes, improving local disk cache performance.
+
+| Parameter Name | Description | Default Value |
+| :--: | :--: | :--: |
+| stealing_max_request_rate | Maximum rate for reading from remote caches | 0 (no limit) |
+| stealing_connection_timeout_ms | Connection timeout threshold for reading from remote caches | 5000 (5 seconds) |
+| stealing_read_timeout_ms | Read timeout threshold for reading from remote caches | 10000 (10 seconds) |
+| stealing_max_retry_times | Maximum number of retries for failed remote cache reads | 3 |
+| stealing_retry_sleep_ms | Retry interval for failed remote cache reads | 100 (100 milliseconds) |
+| stealing_max_queue_count | Maximum queue length for reading from remote caches | 10000 |
+
+Example:
+
+```
+<disk_cache_strategies>
+    <MergeTree>
+        <stealing_max_request_rate>0</stealing_max_request_rate>
+        <stealing_connection_timeout_ms>5</stealing_connection_timeout_ms>
+        <stealing_read_timeout_ms>10</stealing_read_timeout_ms>
+        <stealing_max_retry_times>3</stealing_max_retry_times>
+        <stealing_retry_sleep_ms>100</stealing_retry_sleep_ms>
+        <stealing_max_queue_count>10000</stealing_max_queue_count>
+    </MergeTree>
+</disk_cache_strategies>
+```
+
+#### How to Enable StealingDiskCache at the Table Level
+
+- For existing tables, you can use the `ALTER TABLE` statement to change the table configuration:
+
+```
+ALTER TABLE [database].[table] ON CLUSTER cluster  
+SETTINGS disk_cache_stealing_mode = 3;
+```
+
+- For new tables, you can specify the parameter when creating the table using `CREATE TABLE`:
+
+```
+CREATE TABLE [database].[table]  
+(  
+    ... -- Column definitions  
+) ENGINE = MergeTree()  
+SETTINGS disk_cache_stealing_mode = 3;
+```
+
+Parameter Description:
+
+| `disk_cache_stealing_mode` | Description |
+| --- | --- |
+| 0 | Default value, DiskCacheStealing is disabled |
+| 1 | Only issue RPC requests to remote nodes for cache reads to retrieve remote cache copies |
+| 2 | Only issue RPC requests to remote nodes for cache writes to store remote cache copies |
+| 3 | Attempt to write cache copies to remote nodes during writes, and if the local copy is not available, attempt to read from remote nodes during reads |
+
+### cnch_kafka_log
+
+After configuration, ByConity will open kafka_log, and the consumption log can be viewed through the system table
+
+Example:
+
+```
+<cnch_kafka_log>
+    <database>cnch_system</database>
+    <table>cnch_kafka_log</table>
+    <flush_max_row_count>10000</flush_max_row_count>
+    <flush_interval_milliseconds>7500</flush_interval_milliseconds>
+</cnch_kafka_log>
+
+```
+
+### brpc
+
+### cnch_transaction_cleaner_max_threads
+
+The thread pool size of ByConity background cleaning transaction record, the default is 128
+
+Example:
+
+```
+<cnch_transaction_cleaner_max_threads>128</cnch_transaction_cleaner_max_threads>
+
+```
+
+### cnch_transaction_cleaner_queue_size
+
+The thread pool queue size of ByConity background cleaning transaction record, the default is 10000
+
+Example:
+
+```
+<cnch_transaction_cleaner_queue_size>10000</cnch_transaction_cleaner_queue_size>
+
+```
+
+### dance_merge_selector
+
+Configure self-developed merge selection strategy parameters
+
+Example:
+
+```
+<dance_merge_selector>
+    <max_total_rows_to_merge>10000000</max_total_rows_to_merge>
+</dance_merge_selector>
+
+```
+
+### exchange_timeout_ms
+
+Complex query data transfer rpc timeout, default 100000
+
+Example:
+
+```
+<exchange_timeout_ms>100000</exchange_timeout_ms>
+
+```
+
+
+## TSO configuration parameters
+
+### tso_service
+
+Configure tso service, including service port, metadata storage, etc.
+
+Keys:
+
+- **port**: TSO service TCP port
+- **type**: TSO metadata storage engine
+
+Example:
+
+```
+<tso_service>
+    <port>8080</port>
+    <!-- Support for CNCH-CE Merge. Metastore store type, support `bytekv` and `fdb` -->
+    <type>fdb</type>
+    <fdb>
+        <cluster_file>/path/to/fdb/conf/fdb.cluster</cluster_file>>
+    </fdb>
+ </tso_service>
+
+```
+
+
+### service_discovery
+
+Service discovery related configuration, the highly available TSO process obtains other TSO server addresses and ports for communication through service discovery
+
+Keys:
+
+- **mode** : Like other modules service discovery, it supports dns, consul, local and other modes
+
+Example:
+
+```
+<service_discovery>
+    <mode>dns</mode>
+    <tso>
+        <psm>data.cnch.tso</psm>
+        <service>cnch-tso</service>
+        <headless_service>cnch-tso-headless</headless_service>
+    </tso>
+</service_discovery>
+
+```
+
+## Daemon Manager configuration parameters
+
+### daemon_manager
+
+Configure daemon manager process ports and information about scheduling background tasks
+
+Keys:
+
+- pport: DM process TCP port
+- http: DM process http port and other configurations
+- workload_thread_interval_ms: The time interval for background task scheduling
+- daemon_jobs: The type and configuration of background tasks that DM is responsible for scheduling. Schedulable task types include: PART_GC, PART_MERGE, CONSUMER, GLOBAL_GC, TXN_GC, etc.
+
+Example:
+
+```
+<daemon_manager>
+    <port>8090</port>
+    <http>
+        <port>8091</port>
+        <receive_timeout>1800</receive_timeout>
+        <send_timeout>1800</send_timeout>
+    </http>
+    <workload_thread_interval_ms>1000</workload_thread_interval_ms>
+    <daemon_jobs>
+        <job>
+            <name>PART_GC</name>
+            <!-- Interval in millisecond -->
+            <interval>10000</interval>
+        </job>
+        <job>
+            <name>PART_MERGE</name>
+            <!-- Interval in millisecond -->
+            <interval>10000</interval>
+        </job>
+        <job>
+            <name>CONSUMER</name>
+            <!-- Interval in millisecond -->
+            <interval>10000</interval>
+        </job>
+        <job>
+            <name>GLOBAL_GC</name>
+            <!-- Interval in millisecond -->
+            <interval>50000</interval>
+        </job>
+        <job>
+            <name>TXN_GC</name>
+            <!-- Interval in millisecond -->
+            <interval>600000</interval>
+        </job>
+        <job>
+            <name>DEDUP_WORKER</name>
+            <!-- Interval in millisecond -->
+            <interval>10000</interval>
+        </job>
+        <job>
+            <name>PART_CLUSTERING</name>
+            <!-- Interval in millisecond -->
+            <interval>10000</interval>
+        </job>
+    </daemon_jobs>
+</daemon_manager>
+
+```
+
+### cnch_data_retention_time_in_sec
+
+The retention time of deleted tables and databases before being completely cleaned up, defaults to 3 days. During this period, users can recover deleted data.
+
+Example:
+
+```
+<cnch_data_retention_time_in_sec>86400</cnch_data_retention_time_in_sec>
+
+```
+
+## Resource Manager configuration parameters
+
+### resource_manager
+
+Configure resource manager process port, initial VW configuration and other information.
+
+Keys：
+
+- **port: **The port number where the service starts
+- **vws: ** Initially configured VW related information
+
+Example：
+
+```
+<resource_manager>
+    <port>18989</port>
+    <vws>
+        <vw>
+            <name>vw_default</name>
+            <type>Default</type>
+            <num_workers>1</num_workers>
+            <worker_groups>
+                <worker_group>
+                    <name>wg_default</name>
+                    <type>Physical</type>
+                </worker_group>
+            </worker_groups>
+        </vw>
+    </vws>
+</resource_manager>
+
+```
+
+### catalog
+
+Catalog related configuration.
+
+Keys:
+
+- name_space
+
+Example:
+
+```
+<name_space>default</name_space>
+
+```
+
+### catalog_service
+
+catalog_service related configuration.
+
+Keys:
+
+- **type** - catalog service type
+
+Example:
+
+```
+<!-- For foundationDB metastore-->
+<catalog_service>
+    <!--TODO: move name_space into catalog_service tag -->
+    <!--Metastore storage type, support `bytekv` and `fdb`-->
+    <type>fdb</type>
+    <fdb>
+        <cluster_file>/path/to/fdb/cluster_config</cluster_file>
+    </fdb>
+</catalog_service>
+
+```

@@ -1,0 +1,22 @@
+---
+title: High Availability
+sidebar_position: 4
+tags:
+  - Docs
+---
+
+# High Availability
+
+ByConity supports deploying multiple ByConity Server, Resource Manager, and TSO processes within the same cluster to achieve high availability. This is achieved by determining the leader through a "Compare And Swap" operation in the shared FoundationDB.
+
+In general, you can launch any number of ByConity Server, Resource Manager, or TSO service processes based on your requirements. Multiple Servers will automatically distribute the load of metadata management and access using consistent hashing. Multiple Resource Manager or TSO processes will elect one leader to provide the service. Specifically:
+
+## Deployment Based on Kubernetes Cluster
+
+When deploying the ByConity cluster using this approach, you can simply adjust the replica count for each service component, as shown in the following example:
+
+An official high-availability Helm configuration YAML file, [value_HA_example.yaml](https://github.com/ByConity/byconity-deploy/blob/master/examples/k8s/value_HA_example.yaml), is provided for reference. You can flexibly increase or decrease replicas as needed using the `kubectl scale` command.
+
+## Other Deployment Methods
+
+For manual deployment of the ByConity cluster without Kubernetes support, you can launch additional replica service processes with different listening addresses and log paths for expansion, or stop them for contraction. When the replica count for the ByConity component "server" is changed, remember to update the service discovery information in the cnch-config configuration file, as demonstrated here: [cnch-config.yml](https://github.com/ByConity/ByConity/blob/67e2eaab6d5b9c646a336619b2b5500203efc4fd/docker/docker-compose/byconity-multi-cluster/cnch-config.yml).

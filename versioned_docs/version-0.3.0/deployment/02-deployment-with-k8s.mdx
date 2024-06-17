@@ -1,0 +1,114 @@
+---
+title: Deploy on Kubernetes
+sidebar_position: 2
+tags:
+  - Docs
+---
+
+
+# Deploy on a Kubernetes Cluster
+
+This article demonstrates how to deploy a ByConity cluster on a Kubernetes (k8s) environment.
+
+## Environment Setup
+
+* Install the Kubernetes command-line tool [kubectl](https://kubernetes.io/docs/tasks/tools/install-kubectl/) locally to manage the Kubernetes cluster.
+* Install [helm](https://helm.sh/), the package manager for Kubernetes applications.
+* Clone the bconity-deploy repository locally.
+
+```bash
+git clone git@github.com:ByConity/byconity-deploy.git
+cd byconity-deploy
+```
+
+## Deployment Steps
+
+1. **Acquire a Kubernetes Cluster**
+
+   You can either deploy or purchase a Kubernetes cluster. [Refer to the official documentation](https://kubernetes.io/docs/setup/production-environment/) for more details.
+
+2. **Prepare Storage**
+
+   For optimal [TCO](https://en.wikipedia.org/wiki/Total_cost_of_ownership) and performance, it's recommended to use local disks alongside ByConity server and worker nodes. Storage solutions like [OpenEBS local PV](https://openebs.io/docs/concepts/localpv) can be utilized.
+   *Note: Storage for ByConity server and worker nodes is only used for disk caching and can be deleted at any time.*
+
+3. **Configure your Helm File**
+
+   Copy and modify certain fields from `./chart/byconity/values.yaml` such as:
+   - Storage class name
+   - Timezone
+   - Number of server/worker replicas
+   - HDFS storage configuration
+
+   If you want to use your own HDFS cluster, set `hdfs.enabled` to false and override the HDFS configuration in the `values.yaml` file.
+
+   ```yaml
+   byconity:
+     hdfs_address: hdfs://your-own-hdfs:port
+   hdfs:
+     enabled: false
+   ```
+
+   For FDB (FoundationDB) configuration:
+   If you want to use your own FDB, set both `fdb.enabled` and `fdb-operator.enabled` to false. You can refer to `values_use_existing_fdb.yaml` for configuration.
+
+   ```yaml
+   byconity:
+     hdfs_address: hdfs://byconity-hdfs-namenodes:8020 # or use your own hdfs
+     use_existing_fdb: true
+     fdb_cluster_file: your-fdb-cluster-file-content # e.g., byconity_fdb:Is0hBgl6iICdHuspBmhAODmD5WISXKzI@192.168.224.150:4501,192.168.226.83:4501,192.168.228.152:4501
+   fdb:
+     enabled: false
+   fdb-operator:
+     enabled: false
+   ```
+
+4. **Initialize the ByConity Cluster**
+
+   ```bash
+   # Install with fdb CRD first (if using custom FDB setup)
+   helm upgrade --install --create-namespace --namespace byconity -f ./your/custom/values.yaml byconity ./chart/byconity --set fdb.enabled=false
+
+   # Install with fdb cluster (if using ByConity's FDB setup)
+   helm upgrade --install --create-namespace --namespace byconity -f ./your/custom/values.yaml byconity ./chart/byconity
+   ```
+
+   Check and wait for all Pods to be ready:
+
+   ```bash
+   kubectl -n byconity get pods
+   ```
+
+   Once the installation is successful, you can start using ByConity!
+
+   ```bash
+   $ kubectl -n byconity exec -it sts/byconity-server -- bash
+   root@byconity-server-0:/# clickhouse-client
+
+   172.16.1.1 :)
+   ```
+
+5. **Deleting the ByConity Cluster**
+
+   To delete the ByConity cluster, run:
+
+   ```bash
+   helm uninstall --namespace byconity byconity
+   ```
+
+6. **Testing**
+
+   You can run some simple queries to test the cluster:
+
+   ```sql
+   CREATE DATABASE IF NOT EXISTS test;
+   USE test;
+   DROP TABLE IF EXISTS test.lc;
+   CREATE TABLE test.lc (b LowCardinality(String)) ENGINE = CnchMergeTree ORDER BY b;
+   INSERT INTO test.lc SELECT '0123456789' FROM numbers(100000000);
+   SELECT count(), b FROM test.lc GROUP BY b;
+   DROP TABLE IF EXISTS test.lc;
+   DROP DATABASE test;
+   ```
+
+Make sure to replace any placeholders (like `./your/custom/values.yaml`) with the actual path to your customized Helm values file.
