@@ -1,0 +1,16 @@
+---
+title: Import from HDFS
+sidebar_position: 2
+tags:
+  - Docs
+---
+
+# Importing Data
+
+## Importing from HDFS
+
+ByConity also supports importing data from either a local source or HDFS, as shown in the following example:
+
+```
+INSERT INTO [db.]table [(c1, c2, c3)] FORMAT format_name INFILE 'hdfs://ip:port/file_name'
+```

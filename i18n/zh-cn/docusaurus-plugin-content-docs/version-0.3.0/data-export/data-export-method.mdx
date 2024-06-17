@@ -1,0 +1,120 @@
+---
+title: 导出数据
+tags:
+  - Docs
+---
+
+# 导出数据
+
+本教程旨在指导用户了解如何在 ByConity 中将表的数据导出到不同的文件系统或数据库，以及如何导出查询结果。目前ByConity 支持将数据导出到本地文件系统以及 HDFS（Hadoop Distributed FileSystem）。
+前置准备
+确保你已经熟悉 ByConity 的基本操作和 SQL 语法的使用。
+
+## 导出到本地
+
+1. 创建一个示例表并插入数据：
+
+```
+CREATE TABLE test.select_outfile_testtable
+(
+    `a` Int8,
+    `b` String,
+    `c` Int8,
+    `date` Date
+)
+ENGINE = CnchMergeTree()
+PARTITION by toYYYYMM(date)
+ORDER BY tuple()
+
+```
+
+2. 插入数据：
+
+```
+ INSERT INTO test.select_outfile_testtable VALUES (1, 'a', 1,'2022-11-10'), (2, 'b', 2,'2022-11-11'), (3, 'c', 3,'2022-11-12'), (4, 'd', 4,'2022-11-13');
+
+```
+
+3. 使用 `SELECT ... INTO OUTFILE` 语句将数据导出为 CSV 文件：
+
+```
+SELECT * FROM test.select_outfile_testtable INTO OUTFILE 'select.csv' FORMAT CSV
+
+```
+
+4. 结果输出：
+
+```
+➜  ~ cat select.csv
+1,"a",1,"2022-11-10"
+2,"b",2,"2022-11-11"
+3,"c",3,"2022-11-12"
+4,"d",4,"2022-11-13"
+
+```
+
+## 导出到 HDFS
+
+使用 `SELECT ... INTO OUTFILE` 语句，你可以将数据导出到 HDFS。例如：
+
+```
+SELECT <expr_list> INTO OUTFILE 'hdfs://ip:port/user/tiger/test/test.gz ' FORMAT format_name
+
+```
+
+其中 `hdfs://ip:port/user/tiger/test/test.gz` 为上传的 HDFS 地址，格式为：
+- `hdfs://`为固定前缀，表明是上传到 HDFS；`ip` 是 hdfs namenode 服务地址。
+- `/user/tiger/test/test.gz` 即为输出文件的路径，需要注意的是 hdfs 目录路径必须是可用的。
+同时，支持常见格式导出到 HDFS，比如 CSV、Parquet、JSON 等，为减少网络传输量，默认开启 gzip 压缩。
+
+## 使用Dumper工具迁移数据
+
+把数据从ClickHouse迁移到ByConity，主要有以下两个步骤：
+
+- step1：数据以离线的方式Dump到HDFS上（通过Dumper工具完成）
+
+- step2：ByConity 批量从HDFS attach
+
+使用 Dumper 进行数据迁移时，可以一次性指定一张表及其中的部分分区，将其写入 HDFS，主要工作的原理是：遍历需要迁移表的本地盘，找出active part，写成ByConity自己的格式，然后通过Dumper到HDFS上。
+
+```
+usage: clickhouse-dumper --config-file <config-file> --database <db> --table <table> --output <path>
+
+
+-C<file>, --config-file=<file>             load configuration from a given 
+                                           file
+--database=<database>                      database to be dumped
+--table=<table>                            table to be dumped
+--hdfs_nnproxy=<psm>                       nnproxy for Byconity
+-O<path>, --output=<path>                  output path on shared-storage
+-P<num_threads>, --parallel=<num_threads>  threads for dumping parts
+-R, --overwrite                            overwrite existed parts
+--partition_list 
+--skip_partition_list
+--S
+--skip_unkowning_settings
+--help                                     produce this help message
+
+```
+
+`--config-file`：指定开源clickhouse的配置文件
+`--database`：需要迁移的库
+`--table`：需要迁移的表
+`--hdfs_nnproxy`：ByConity hdfs nnproxy
+`--output`：需要Dumper到hdfs的路径
+`--partition_list`：支持指定特定的partition_list
+`--skip_partition_list`：指定需要跳过的partition_list
+`-S`：跳过坏的part
+`-R`：如果hdfs已经存在的相同的part，支持覆盖写
+
+注意：
+
+- Dumper工具目前不支持cmrk3和mrk3，同时在map类型上和社区有兼容性问题，且仅支持引擎MergeTree、ReplicatedMergeTree
+
+- 在配置方面Dumper不支持自适应的index_granularity（index_granularity_bytes = 0，关闭自适应），不支持压缩（compress_marks = 0，关闭压缩），仅支持Wide part（min_rows_for_wide_part = 0，Wide part），且Database需要是Ordinary
+
+最后在 ByConity端执行即可完成迁移，具体如下：
+
+```
+ALTER TABLE test_db.test_table ATTACH PARTITION '2020-10-10' FROM '/tmp/hdfs_path/<ip>/test_db/test_table'
+```

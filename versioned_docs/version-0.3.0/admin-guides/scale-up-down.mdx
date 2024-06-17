@@ -1,0 +1,88 @@
+---
+title: Scaling
+sidebar_position: 3
+tags:
+  - Docs
+---
+
+# Scaling
+
+ByConity supports containerized and modular deployment, allowing for elastic scaling. It can scale computing resources in real-time and on-demand, ensuring efficient resource utilization. This section describes how to scale ByConity on a Kubernetes cluster.
+
+## Scaling Through Configuration Files
+
+Suppose you want to add two compute groups: one with five replicas for `my-new-vw-default` reads and another with two replicas for `my-new-vw-write` writes.
+
+- Modify the `values.yaml` file:
+
+```yaml
+byconity:
+  virtualWarehouses:
+    ...
+    - <<: *defaultWorker
+      name: my-new-vw-default
+      replicas: 5
+    - <<: *defaultWorker
+      name: my-new-vw-write
+      replicas: 2
+```
+
+- Update the ByConity cluster using Helm:
+
+```bash
+helm upgrade --install --create-namespace --namespace byconity -f ./your/custom/values.yaml byconity ./chart/byconity
+```
+
+- Run the CREATE WAREHOUSE DDL statements in Byconity to create logical virtual warehouses:
+
+```sql
+CREATE WAREHOUSE IF NOT EXISTS `my-new-vw-default` SETTINGS num_workers = 0, type = 'Read';
+CREATE WAREHOUSE IF NOT EXISTS `my-new-vw-write` SETTINGS num_workers = 0, type = 'Write';
+```
+
+- Create a table and use the new virtual warehouses:
+
+```sql
+-- Create a table with SETTINGS cnch_vw_default = 'my-new-vw-default', cnch_vw_write = 'my-new-vw-write'
+CREATE DATABASE IF NOT EXISTS test;
+CREATE TABLE test.lc2 (b LowCardinality(String)) ENGINE=CnchMergeTree
+ORDER BY b
+SETTINGS cnch_vw_default = 'my-new-vw-default', cnch_vw_write = 'my-new-vw-write';
+
+-- Check if the table has the new settings
+SHOW CREATE TABLE test.lc2;
+```
+
+## Scaling Through kubectl
+
+Suppose you have a `my-new-vw-default` virtual warehouse and you want to scale it up by adding two more workers. You can directly update the Kubernetes StatefulSet resource:
+
+- First, use the following command to get the names of all StatefulSet resources in the current Kubernetes cluster:
+
+```bash
+kubectl get statefulset
+```
+
+- Then, find and edit the configuration for `my-new-vw-default` using:
+
+```bash
+kubectl edit statefulset.apps/my-new-vw-default
+```
+
+- Change the `replicas` value from `1` to `2`:
+
+```yaml
+spec:
+  podManagementPolicy: OrderedReady
+  replicas: 2 # Changed from 1 to 2
+  revisionHistoryLimit: 10
+  selector:
+    matchLabels:
+      app.kubernetes.io/instance: byconity
+      app.kubernetes.io/name: byconity
+      byconity-role: worker
+      byconity-vw: vw_default
+  serviceName: my-new-vw-default
+```
+
+After updating, you can use `kubectl` to verify that the virtual warehouse has been scaled to include two workers.

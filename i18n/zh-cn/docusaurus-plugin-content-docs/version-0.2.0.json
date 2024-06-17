@@ -1,6 +1,6 @@
 {
   "version.label": {
-    "message": "0.2.0",
+    "message": "0.2.x",
     "description": "The label for version current"
   },
   "sidebar.tutorialSidebar.category.Functions": {

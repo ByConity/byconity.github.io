@@ -1,0 +1,201 @@
+---
+title: Virtual Warehouse Configuration
+sidebar_position: 2
+tags:
+  - Docs
+---
+
+# Virtual Warehouse Configuration
+
+Document Type: Tutorial
+
+Document format: tutorial purpose, pre-preparation, step-by-step explanation of principles & examples, and related document recommendations;
+
+# Calculate the relationship between groups, Workers and Servers
+
+In the [Resource Manager](./resource-manager) chapter, we introduced **Virtual Warehouse** (referred to as VW), **Worker Group** (referred to as WG) and Worker. In a ByConity cluster, computing resources are divided into multiple Virtual Warehouse, each Virtual Warehouse contains multiple Worker Groups with the same configuration, and each Worker Group contains multiple workers. Resources can be freely expanded and contracted at different levels to achieve elastic computing. Taking expansion as an example, we can have different expansion methods:
+
+- Vertically expand the CPU and MEM resources of the Worker to improve the processing performance of a single node.
+- Increase the number of workers in a Worker Group to improve the performance of the Worker Group when processing queries.
+- Increase the number of Worker Group in the Virtual Warehouse to improve the concurrency capability of the Virtual Warehouse to process queries.
+- Add new Virtual Warehouse resources for new businesses or tenants to achieve resource isolation between tenants.
+
+The service node, which we also call server, mainly undertakes the functions of sql receiving, scheduling, and result return. Computing nodes, also called workers, are mainly responsible for computing tasks, which can be data writing, user query, or some background tasks. User queries and background tasks can share the same worker to improve utilization, or use independent workers to ensure strict resource isolation. Users can build multiple virtual_warehouses according to the characteristics, priorities, and business categories of computing tasks, and set different resource elasticity policies to improve computing efficiency and reduce costs.
+
+# View Virtual Warehouse information
+
+We provide a set of system tables to query the metadata related to the Virtual Warehouse. These system tables only provide observable capabilities, and the Virtual Warehouse information cannot be changed by modifying the table content. If you need to modify the configuration of the Virtual Warehouse, please refer to [Modify the configuration of the Virtual Warehouse] (todo: link).
+
+## system.virtual_warehouses
+
+The system table shows the meta information, main fields and descriptions of all virtual warehouse (VW):
+
+| Field name             | Descriptions                                                                                 |
+| :--------------------- | :------------------------------------------------------------------------------------------- |
+| name                   | The name of the virtual warehouse, unique identification.                                    |
+| **type**               | The type of the virtual warehouse, Default/Write.                                            |
+| **num_workers**        | The number of workers configured for each worker group by this virtual warehouse             |
+| active_worker_groups   | The number of running worker groups in this virtual warehouse                                |
+| active_workers         | The number of healthy workers in this virtual warehouse                                      |
+| min_worker_groups      | The minimum number of worker groups this virtual warehouse is allowed to run                 |
+| max_worker_groups      | The maximum number of worker groups that this virtual warehouse is allowed to run            |
+| max_concurrent_queries | The maximum number of concurrent queries allowed by the virtual warehouse                    |
+| max_queued_queries     | The maximum number of queued queries allowed by this virtual warehouse                       |
+| max_queued_waiting_ms  | The maximum waiting time for queued queries allowed by this virtual warehouse (milliseconds) |
+
+## system.worker_groups
+
+This system table displays the meta information, main fields and descriptions of all worker groups (WG):：
+
+| Field name     | Descriptions                                                                                     |
+| :------------- | :----------------------------------------------------------------------------------------------- |
+| vw_name        | The name of the virtual warehouse to which this worker group belongs                             |
+| id             | The id of the worker group, unique identification                                                |
+| num_workers    | The number of workers configured for each worker group by this virtual warehouse                 |
+| linked_id      | If the worker group is a Shared type, linked_id points to the Physical worker group it refers to |
+| active_workers | The number of active workers in this worker group                                                |
+| min_cpu_usage  | The smallest worker cpu_usage in the worker group                                                |
+| max_cpu_usage  | The maximum worker cpu_usage in the worker group                                                 |
+| avg_cpu_usage  | The average cpu_usage of all workers in this worker group                                        |
+| min_mem_usage  | The smallest worker memory_usage in the worker group                                             |
+| max_mem_usage  | The largest worker memory_usage in the worker group                                              |
+| avg_mem_usage  | The average memory_usage of all workers in the worker group                                      |
+
+## system.workers
+
+The system table records all running worker information, main fields and descriptions:
+
+| Field name       | Descriptions                                |
+| :--------------- | :------------------------------------------ |
+| worker_id        | The id of the worker, unique identification |
+| vw_name          | The virtual warehouse the worker belongs to |
+| worker_group_id  | The worker group the worker belongs to      |
+| host             | The host (ip) of the worker                 |
+| tcp_port         | The tcp_port of the worker                  |
+| cpu_usage        | Current cpu_usage                           |
+| memory_usage     | Current memory_usage                        |
+| memory_available | Current memory amount（byte） available     |
+| last_update_time | The latest heartbeat update time            |
+
+Create and use Virtual Warehouse
+
+We provide two different configuration methods, local mode and cluster mode, to create Virtual Warehouse.
+
+In local mode, you can directly fill in the Virtual Warehouse and worker group related information in the configuration file, which is convenient for debugging or demo operation.
+
+Cluster mode is the recommended way to use it in a production environment. At this time, we need to create a Virtual Warehouse through specific SQL, and create actual Virtual Warehouse resources through corresponding K8s operations.
+
+## local mode
+
+When starting the resource manager component, we can fill in the Virtual Warehouse related information in the configuration file (refer to [cluster-configuration](./cluster-configuration) resource manager section). The resource manager will directly create corresponding Virtual Warehouse (and worker group) based on these information. Example:
+
+```
+<vws>
+  <vw>
+    <name>vw_default</name>
+    <type>Default</type>
+    <num_workers>1</num_workers>
+    <worker_groups>
+      <worker_group>
+        <name>wg_default</name>
+        <type>Physical</type>
+      </worker_group>
+    </worker_groups>
+  </vw>
+</vws>
+
+```
+
+We have configured a Virtual Warehouse named vw_default, the type is Default, and it is expected that there will be 1 worker in this vw (num_workers is only used as an instruction to create a vw, the actual number of workers can be <u>query related system tables</u><u>(todo: link [view Virtual Warehouse information]</u><u>)</u> get). At the same time, we configured 1 replica for this Virtual Warehouse, named wg_default.
+
+When starting the server component, we can directly configure the worker information corresponding to each vw in the service discovery part of the configuration file (refer to [cluster configuration](./cluster-configuration) server part).
+
+```
+<service_discovery>
+  <mode>local</mode>
+  <vw>
+    <psm>data.cnch.vw_default</psm>
+    <node>
+      <vw_name>vw_default</vw_name>
+      <host>10.1.2.3</host>
+      <hostname>vw_default0</hostname>
+      <ports>
+        <!-- TCP/Primary -->
+        <port><name>PORT0</name><value>31067</value></port>
+        <!-- RPC -->
+        <port><name>PORT1</name><value>32099</value></port>
+        <!-- HTTP -->
+        <port><name>PORT2</name><value>35166</value></port>
+        <!-- Exchange -->
+        <port><name>PORT5</name><value>39481</value></port>
+        <!-- Exchange status -->
+        <port><name>PORT6</name><value>39482</value></port>
+      </ports>
+    </node>
+  </vw>
+</service_discovery>
+
+```
+
+In this example, when the server does service discovery, it will find a worker whose ip is 10.1.2.3 in the virtual warehouse vw_default.
+
+## cluster mode
+
+We can create new Virtual Warehouse while the ByConity cluster is running.
+
+### Create Virtual Warehouse
+
+```
+CREATE WAREHOUSE
+IF NOT EXISTS `vw_default`
+SETTINGS num_workers = 1, type = 'Default',
+         auto_suspend = 3600, auto_resume = 1,
+         min_worker_groups = 0, max_worker_groups = 1, max_concurrent_queries=200;
+
+```
+
+`CREATE WAREHOUSE IF NOT EXISTS `$VW_NAME` SETTINGS ...` This SQL is used to create computed groups. $VW_NAME is the unique identifier of the computing group. When creating a computing group, num_workers and type in the settings are required. For other configurations, please refer to the [View Virtual Warehouse Information] section.
+
+### Creat Worker Group
+
+```
+CREATE WORKER GROUP
+IF NOT EXISTS `wg_default` in `vw_default`
+SETTINGS type = 'Physical';
+
+```
+
+`CREATE WORKER GROUP IF NOT EXISTS `$WG_NAME`SETTINGS ...`This SQL is used to create a worker group. $WG_NAME is the unique identifier of the worker group.
+
+### Creat K8s Worker Pods
+
+After ByConity creates the meta information of the virtual warehouses and worker group, you can create the corresponding K8s Worker resource, and configure the corresponding environment variables VIRTUAL_WAREHOUSE_ID=$VW_NAME, WORKER_GROUP_ID=$WG_NAME for the worker.
+
+After the Worker is started, it can be automatically registered in the corresponding virtual warehouse and worker group.
+
+For specific operations, please check：[https://github.com/ByConity/byconity-deploy](https://github.com/ByConity/byconity-deploy)
+
+# Modify Virtual Warehouses
+
+In addition to viewing and creating virtual warehouses information, we can also modify virtual warehouses related meta information at runtime.
+
+```
+DROP WAREHOUSE IF EXISTS `vw_default`;
+DROP WORKER GROUP IF EXISTS `wg_default`;
+
+```
+
+The above DROP statement will delete the specified virtual warehouses and worker group.
+
+Note: When the virtual warehouse specified by the worker pod cannot be found in the ByConity meta information, the resource manager will reject the registration of the worker, so the worker cannot be used to process queries.
+
+```
+ALTER WAREHOUSE `vw_default`
+SETTINGS auto_suspend = 3600, auto_resume = 0,
+          min_worker_groups = 0, max_worker_groups = 0, max_concurrent_queries=50;
+
+```
+
+The above ALTER statement can modify the configuration of the virtual warehouses. After modification, all worker groups in the virtual warehouses will use the new configuration.
+
+Note: We cannot modify the configuration of the worker group through `ALTER WORKER GROUP ...`. All configurations of a worker group are inherited from the configuration of the owning virtual warehouses, so no such syntax exists.

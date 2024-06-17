@@ -1,0 +1,120 @@
+---
+title: Direct Access via Hive
+sidebar_position: 6
+tags:
+  - Docs
+---
+
+
+# Data Direct Access
+
+## Importing from Hive External Tables
+
+CnchHive is a table engine provided by ByConity that supports federated queries using external tables. Users can directly accelerate data queries without the need for data import.
+
+### Usage Examples:
+
+* Example 1: Creating a Full Set of Hive Tables
+
+
+```sql
+-- Creating a Hive external table
+CREATE TABLE t
+(
+  client_ip   String,
+  request     String,
+  status_code INT,
+  object_size INT,
+  date String
+)
+ENGINE = CnchHive('psm', 'hive_database_name', 'hive_table_name')
+PARTITION BY date;
+
+-- Parameter Explanation:
+-- psm: hivemetastore psm
+-- hive_database_name: Hive database name
+-- hive_table_name: Hive table name
+
+-- Querying the Hive external table
+select * from  t where xxx;
+```
+
+* Example 2: Creating a Subset of Hive Tables
+
+
+```sql
+CREATE TABLE t
+(
+  client_ip   String,
+  request     String,
+  date String
+)
+ENGINE = CnchHive('psm', 'hive_database_name', 'hive_table_name')
+PARTITION BY date;
+
+-- Parameter Explanation:
+-- psm: hivemetastore psm
+-- hive_database_name: Hive database name
+-- hive_table_name: Hive table name
+
+-- Querying the Hive external table
+select * from  t where xxx;
+```
+
+* Example 3: Creating a Hive Bucket Table
+
+
+```sql
+CREATE TABLE t
+(
+  client_ip   String,
+  request     String,
+  device_id   String,
+  server_time String,
+  date String
+)
+ENGINE = CnchHive('psm', 'hive_database_name', 'hive_table_name')
+PARTITION BY date
+CLUSTER BY device_id INTO 65536 BUCKETS
+ORDER BY server_time
+SETTINGS cnch_vw_default ='vw_default';
+
+-- Parameter Explanation:
+-- psm: hivemetastore psm
+-- hive_database_name: Hive database name
+-- hive_table_name: Hive table name
+
+-- Querying the Hive external table
+select * from  t where xxx;
+```
+
+**Notes:**
+
+* The external table columns must correspond one-to-one with the Hive table columns, but the order of the columns does not matter. You can select some of the columns from the Hive table, but all partition columns must be included.
+* Partitions need to be specified using the `PARTITION BY` statement and defined in the description list. For bucket tables, the bucket column and the number of buckets need to be specified. If there is an `ORDER BY` field, it also needs to be specified.
+* The engine is specified as CnchHive. The parameters include: psm, hive_database_name, and hive_table_name. Views are not supported.
+* There are two configurations: `cnch_vw_default` is used to specify the vw, and `max_read_row_group_threads` is used to specify the number of concurrent reads for Parquet row groups.
+* The supported column type mappings are shown in the following table:
+
+| Hive Column Type | CnchHive Column Type | Description |
+| --- | --- | --- |
+| INT/INTERGER | INT/INTERGER | |
+| BIGINT | BIGINT | |
+| TIMESTAMP | DateTime | |
+| STRING | String | |
+| VARCHAR | FixedString | Internally converted to FixedString |
+| CHAR | FixedString | Internally converted to FixedString |
+| DOUBLE | DOUBLE | |
+| FLOAT | FLOAT | |
+| DECIMAL | DECIMAL | |
+| MAP | Map | |
+| ARRAY | Array | |
+
+**Note:** Schema changes in Hive tables are not automatically synchronized and require recreating the Hive external table in ClickHouse. Currently, only the Parquet storage format is supported, and insert and alter operations are not supported.
+
+### Parameter Settings
+
+* `cnch_vw_default`: Used to specify the vw.
+* `max_read_row_group_threads`: Used to specify the number of concurrent reads for Parquet row groups.
+
+
