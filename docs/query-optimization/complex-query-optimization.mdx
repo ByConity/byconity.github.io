@@ -17,7 +17,7 @@ Simple queries can adopt a two-stage execution model, with the partial stage exe
 
 **Diagram of Complex Query Execution Model**
 
-The execution flow of complex queries is as follows:
+The execution flow of a complex query is as follows:
 
 1. The Query SQL String is parsed into an AST (Abstract Syntax Tree) by the parser.
 2. The AST undergoes rewriting and optimization to generate an execution plan.
@@ -47,13 +47,20 @@ Using `explain analyze sql` can display the execution time of each step.
 
 - Tuning Parameters
 
-ByteHouse supports query-level parameter tuning, allowing isolatable parameters to be set at the query level, including the following types of parameters:
+ByteHouse supports query-level parameter tuning manually, which means these parameters can be set separately for different queries. Parameters related to exchange operator can also be set in this way. You can specify parameter values for a query via keyword `SETTINGS` as follows:
+
+```
+SELECT 1 SETTINGS TEST_KNOB=1;
+```
+When this SQL statement is executed, the parameter TEST_KNOB will be forcibly set to 1. Note that setting parameters in this way does not affect the parameter values ​​of other queries. 
+
+We show some query-level parameters that have important impacts on performance in the following sentence.
 
 1. The exchange operator is responsible for data transmission between PlanSegments.
 
 `exchange_source_pipeline_threads` affects the total number of threads for pipeline execution, especially for non-source pipelines (those that read data directly from storage). The default setting is the number of CPU cores. There is no ideal recommended value, but considering halving or doubling the value and observing the results can be helpful. If the query has a high memory footprint, reducing this value may be beneficial.
 
-`exchange_timeout_ms` is the Exchange timeout duration in milliseconds, with a default value of 100 seconds. If Exchange-related timeout errors occur, increasing this value may be appropriate.
+`exchange_timeout_ms` is the exchange timeout duration in milliseconds, with a default value of 100 seconds. If Exchange-related timeout errors occur, increasing this value may be appropriate.
 
 `exchange_unordered_output_parallel_size` affects the concurrent ability of Exchange to output data, with a default value of 8. Generally, there is no need to adjust this value. However, if `exchange_source_pipeline_threads` is adjusted significantly, it may be beneficial to increase `exchange_unordered_output_parallel_size` to enhance upstream output capability.
 
@@ -67,13 +74,13 @@ ByteHouse supports query-level parameter tuning, allowing isolatable parameters 
 
 `exchange_buffer_send_threshold_in_bytes` limits the minimum bytes when exchange will flush send buffer, which determined the backlog threshold size of the receiver.
 
-`exchange_buffer_send_threshold_in_row` limits the minimum row num when exchange will flush send buffer, which determined the backlog threshold size of the receiver.
+`exchange_buffer_send_threshold_in_row` limits the minimum number of rows when exchange will flush send buffer, which determined the backlog threshold size of the receiver.
 
 2. There are some parameters that can take effect for the entire database as well as for a single query.
 
 `max_threads` limits the maximum number of threads to execute the request. By default, it is determined automatically.
 
-`max_block_size` limits the maximum block size for reading. By default, it is 65536 rows.
+`max_block_size` limits the maximum block size for reading. By default, it is 65536.
 
 3. Routing-related parameters are usually used to determine the storage and access paths of data in distributed systems.
 
