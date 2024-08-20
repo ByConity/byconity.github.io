@@ -32,7 +32,7 @@ tags:
 - 包含 exchange 输入的 PlanSegment 等待上游的数据，如果需要继续做 shuffle 则会继续将数据下发给各个节点
 - 多轮 stage 完成之后，结果会返回到服务端
 
-## 如何开启
+## 如何开启查询级别参数
 
 开启优化器会自动走复杂查询执行模型。通过配置 `enable_optimizer=1`，或者 `dialect_type='ANSI'` 可以开启。
 

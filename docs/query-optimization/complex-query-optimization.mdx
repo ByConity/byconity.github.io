@@ -33,7 +33,7 @@ The execution flow of a complex query is as follows:
 9. PlanSegments with exchange inputs wait for upstream data and continue shuffling the data to various nodes if necessary.
 10. After multiple stages are completed, the results are returned to the server.
 
-## How to Enable
+## How to Enable Query-Level Knobs
 
 Enabling the optimizer automatically triggers the complex query execution model. This can be done by configuring `enable_optimizer=1` or setting `dialect_type='ANSI'`.
 
@@ -52,7 +52,8 @@ ByteHouse supports query-level parameter tuning manually, which means these para
 ```
 SELECT 1 SETTINGS TEST_KNOB=1;
 ```
-When this SQL statement is executed, the parameter TEST_KNOB will be forcibly set to 1. Note that setting parameters in this way does not affect the parameter values ​​of other queries. 
+
+When this SQL statement is executed, the parameter TEST_KNOB will be forcibly set to 1. Note that setting parameters in this way does not affect the parameter values ​​of other queries.
 
 We show some query-level parameters that have important impacts on performance in the following sentence.
 
