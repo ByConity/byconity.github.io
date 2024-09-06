@@ -35,6 +35,10 @@
     "message": "Data Lake",
     "description": "The label for category Data Lake in sidebar tutorialSidebar"
   },
+  "sidebar.tutorialSidebar.category.ELT": {
+    "message": "ELT",
+    "description": "The label for category ELT in sidebar tutorialSidebar"
+  },
   "sidebar.tutorialSidebar.category.Query Optimization": {
     "message": "Query Optimization",
     "description": "The label for category Query Optimization in sidebar tutorialSidebar"
