@@ -32,7 +32,7 @@
     "description": "The label for category Data Export in sidebar tutorialSidebar"
   },
   "sidebar.tutorialSidebar.category.ELT": {
-    "message": "ELT数据加工能力",
+    "message": "ELT(批处理)",
     "description": "The label for category ELT in sidebar tutorialSidebar"
   },
   "sidebar.tutorialSidebar.category.Data Lake": {

@@ -16,9 +16,9 @@ For complex queries, especially typical ETL tasks in data warehouses, ClickHouse
 - Huge resource occupation: Due to the lack of iterative calculation and effective task splitting. In the case of large amounts of queried data and complex calculations, nodes usually require sufficient memory for processing.
 - Concurrency control: When multiple queries run simultaneously, ClickHouse does not schedule according to the usage of resources. Mutual squeezing between tasks can lead to failures (usually Memory limit errors). The lack of a retry mechanism often causes an avalanche effect.
 
-  ![](./assets/why_elt.jpg)
+  ![](./assets/why_elt_en.jpg)
 
-  <center>图1 ByConity = OLAP + Data Warehouse</center>
+  <center>Figure 1 ByConity = Data Warehouse + OLAP</center>
 
 To address the above problems, the ByConity team has added support for the bsp mode on the basis of the ClickHouse high-performance computing framework: it can perform task-level fault tolerance; finer-grained scheduling; and support resource-aware scheduling in the future. The benefits are:
 
