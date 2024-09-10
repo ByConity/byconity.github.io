@@ -18,7 +18,7 @@ ClickHouse 从设计之初是面向 OLAP（在线分析）场景，无论是列�
 
   ![](./assets/why_elt.jpg)
 
-  <center>Figure 1 ByConity = OLAP + Data Warehouse</center>
+  <center>图1 ByConity = OLAP + Data Warehouse</center>
 
 针对以上问题，ByConity 在 ClickHouse 高性能计算框架的基础上，增加了对 bsp 模式的支持：可以进行 task 级别的容错；更细粒度的调度；在将来支持资源感知的调度。带来的收益有：
 

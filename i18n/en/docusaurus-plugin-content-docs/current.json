@@ -36,7 +36,7 @@
     "description": "The label for category Data Lake in sidebar tutorialSidebar"
   },
   "sidebar.tutorialSidebar.category.ELT": {
-    "message": "ELT",
+    "message": "ELT(Batch Processing)",
     "description": "The label for category ELT in sidebar tutorialSidebar"
   },
   "sidebar.tutorialSidebar.category.Query Optimization": {
