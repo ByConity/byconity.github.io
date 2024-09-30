@@ -1,0 +1,77 @@
+---
+title: 集群升降级
+sidebar_position: 4
+tags:
+  - Docs
+---
+
+# 集群升降级
+
+## 升级基于S3存储的集群（仅适用0.2.0之前的版本）
+
+在S3的预览版本（从pre 0.2.0版本到0.2.0版本）之后，一些S3对象键（object key）和S3元数据发生了变化。我们提供了一些工具来从旧版本进行迁移。如果你正在使用旧版本的ByConity（0.2.0版本之前），且数据存储在S3中时才使用这些工具。步骤如下：
+
+1. 停止ByConity集群
+
+```sh
+# stop the cluster
+
+```
+
+2. 使用提供的工具迁移S3数据
+
+  - 如果使用docker运行ByConity，可以登录到服务器/工作节点并使用ps命令找到clickhouse二进制文件
+
+```sh
+./clickhouse s3-rename --s3_ak_id ${S3_AK_ID} --s3_ak_secret ${S3_AK_SECRET} --from_bucket ${BYCONITY_S3_BUCKET} --s3_endpoint ${S3_ENDPOINT} --s3_region ${S3_REGION} --root_prefix ${BYCONTIY_DATA_PREFIX}
+
+```
+
+  - 如果您正在使用docker包装运行ByConity
+
+```sh
+docker run -it --rm --network host --name byconity-s3-sanitizer byconity/byconity:0.2.0 clickhouse s3-rename --s3_ak_id ${S3_AK_ID} --s3_ak_secret ${S3_AK_SECRET} --from_bucket ${BYCONITY_S3_BUCKET} --s3_endpoint ${S3_ENDPOINT} --s3_region ${S3_REGION} --root_prefix ${BYCONTIY_DATA_PREFIX}
+
+```sh
+
+| tool arguments    |  explanation|
+| -------- | ------- |
+| s3_ak_id | s3 access key id which byconity is using |
+| s3_ak_secret| s3 secret access key which byconity is using|
+| s3_region| s3 region which byconity is using|
+| s3_endpoin| s3 endpoint which byconity is using|
+| from_bucket| s3 bucket name which byconity is using|
+| root_prefix| s3 object prefix which byconity is using|
+| thread_number| using how many threads, default to 1 thread|
+| need_delete| whether delete origin file, default true|
+| uuid_check| whether check uuid is valid or not, default true|
+| enable_logging| whether enable logging output|
+| logging_level| logging level, default is debug output|
+
+3. 使用提供的工具迁移S3元数据
+
+  - 如果您知道clickhouse二进制文件的位置
+
+```sh
+./clickhouse s3-meta-sanitizer -C cnch_config.xml
+
+```
+
+  - 如果您正在使用docker包装运行ByConity
+
+```sh
+docker run -it --rm --network host --name byconity-s3-sanitizer byconity/byconity:0.2.0 clickhouse s3-meta-sanitizer --config-file /root/app/config/cnch_config.xml
+
+```
+
+| tool arguments    |  explanation|
+| -------- | ------- |  
+| C | specify config file from `cnch_config` configuration field in your bycontiy server configuration file|
+
+
+4. 重启ByConity集群
+
+```sh
+# restart the cluster
+
+```

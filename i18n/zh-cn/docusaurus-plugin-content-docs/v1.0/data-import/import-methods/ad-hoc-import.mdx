@@ -1,0 +1,78 @@
+---
+title: 即席导入
+sidebar_position: 7
+tags:
+  - Docs
+---
+
+
+# 即席导入
+
+## 列式摄取
+
+### 介绍
+列式摄取查询通过从另一个表中获取另一列的值来更新表中某个分区的某列的值。
+
+示例：
+`db.target` 表
+
+| 日期          |  ID      | 姓名  |  收入 |
+|:--------------|:--------:|:-----:|-------:|
+| 2021-01-01    |   1      | A     |  4      |
+| 2021-01-01    |   2      | B     |  5      |
+| 2021-01-01    |   3      | C     |  6      |
+
+`db.source` 表
+
+| 日期          |  ID      | 姓名  |
+|:--------------|:--------:|------:|
+| 2021-01-01    |   1      | aa    |
+| 2021-01-01    |   2      | bb    |
+| 2021-01-01    |   4      | cc    |
+
+
+```sql
+ALTER TABLE db.target INGEST PARTITION '2021-01-01' COLUMNS Name KEY ID FROM db.source
+```
+
+执行查询后的 `db.target` 表
+
+| 日期          |  ID      | 姓名  |  收入 |
+|:--------------|:--------:|:-----:|-------:|
+| 2021-01-01    |   1      | aa    |  4      |
+| 2021-01-01    |   2      | bb    |  5      |
+| 2021-01-01    |   3      |       |  6      |
+| 2021-01-01    |   4      | dd    |  0      |
+
+如果目标表的 `ingest_default_column_value_if_not_provided` 设置为0（通过在创建表时使用以下语法实现），则 ID = 3 的行的 Name 值可以保持为 C。
+
+```sql
+CREATE TABLE db.target
+(
+    `date` Date,
+    `id` Int32,
+    `name` String
+)
+ENGINE = CnchMergeTree
+PARTITION BY date
+ORDER BY id
+SETTINGS ingest_default_column_value_if_not_provided = 0
+```
+
+在这种情况下，结果将是
+
+| 日期          |  ID      | 姓名  |  收入 |
+|:--------------|:--------:|:-----:|-------:|
+| 2021-01-01    |   1      | aa    |  4      |
+| 2021-01-01    |   2      | bb    |  5      |
+| 2021-01-01    |   3      | C     |  6      |
+| 2021-01-01    |   4      | dd    |  0      |
+
+### 语法
+
+```sql
+ALTER TABLE db.target INGEST PARTITION xxx COLUMNS col1, col2 [KEY k1, k2] FROM db.temp_table
+```
+
+### 实现注意事项
+列式摄取的主要执行将在工作节点中完成。

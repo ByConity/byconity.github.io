@@ -1,0 +1,152 @@
+---
+title: Docker部署
+sidebar_position: 1
+tags:
+  - Docs
+---
+
+
+# Docker部署
+
+本教程指导用户使用Docker在本地快速部署ByConity，用户可以依照如下步骤部署一个简单的ByConity集群，进行快速入门体验。如果想全面试用和了解ByConity，建议您跳过该章节，直接参考[ByConity集群部署](../deployment/02-deployment-with-k8s.mdx)，体验ByConity强大的性能。
+
+**注意**：
+1、ByConity使用FoundationDB作为元数据存储，但FoundationDB无法在Apple Silicon机器上的Docker中正常工作，因此ByConity的Docker部署无法在mac m1/m2上运行
+
+2、Docker部署仅适用于基本入门测试，不建议用于大规模测试或生产环境，可参考#ByConity部署#，了解其他场景部署方式
+
+## 环境准备
+
+硬件要求
+- 建议使用1台 16 core 和 32GB 配置以上的服务器 
+
+软件要求
+- 安装Docker
+- 安装MySQL客户端
+
+## 部署步骤
+
+1. 获取代码
+
+```
+从Github上获取稳定版本的ByConity，并切换到docker目录下
+git clone git@github.com:ByConity/ByConity.git
+cd ByConity/docker/docker-compose
+```
+
+2. 创建环境文件
+
+从提供的模板. env.tpl创建一个名为.env的环境文件。
+
+```
+cp .env.tpl .env
+```
+
+3. 修改环境变量
+
+相应地修改. env文件。以下是您可以配置的变量：
+
+- COMPOSE_PROJECT_NAME：这将设置DockerCompose设置的项目名称。
+- DATA_DIR：指定将挂载到Docker容器中的本地路径。此路径用于本地磁盘缓存、日志等。
+- SERVER_TCP_PORT和SERVER_HTTP_PORT：这些变量定义ByConity服务器的TCP和HTTP端口的公开端口。
+
+4. 设置ByConity Docker镜像来源
+
+如果运行特定的发布版本的ByConity
+
+- 将. env文件中的BYCONITY_IMAGE变量更新为所需的发行版本，例如byconity/byconity：0.3.0。
+- 将BYCONITY_BINARY_PATH设置为空字符串。
+
+如果使用本地构建的二进制文件运行ByConity
+
+- 将.env文件中的BYCONITY_IMAGE变量更新为byconity/debian-runner.
+- 将BYCONITY_BINARY_PATH设置为本地构建的二进制文件所在的路径。
+
+还可以使用ByConity dev-env docker 的方式编译构建自己的ByConity镜像
+
+5. 启动ByConity与Docker Compose
+
+要使用DockerCompose启动ByConity，请使用以下命令：
+
+```
+# -d 表示在后台运行容器
+docker-compose -f docker-compose.essentials.yml [-f docker-compose.simple.yml] up [-d]
+```
+
+- docker-comple. essentials.yml：启动byconity集群的重要依赖项
+- docker-comple. simple.yml：简单的byconity集群
+- docker-comple. multiworker.yml：multi-workerbyconity集群
+
+6. 将日志打印到控制台
+要将服务的日志打印到控制台，需要更新byconity-*-cluster下的配置文件。在配置文件中设置logger： console：true。
+
+## 连接测试
+使用cli访问ByConity：
+
+```
+./scripts/byconity-cli.sh
+```
+
+访问HDFS文件：
+
+```
+./scripts/hdfs-cli.sh "hdfs -dfs ls /user/clickhouse"
+```
+
+通过cli访问fdb：
+
+```
+./scripts/fdb-cli.sh
+```
+
+## 查看计算组状态：
+
+```
+SELECT * FROM system.worker_groups
+
+Query id: f60481b4-b9a7-494d-a639-ac7be3aa5292
+
+Row 1:
+──────
+id:             wg_default
+type:           Physical
+vw_uuid:        1a415df1-6265-40b3-9c00-230fc3b026c1
+vw_name:        vw_default
+linked_id:
+active_workers: 1
+min_cpu_usage:  9
+max_cpu_usage:  9
+avg_cpu_usage:  9
+min_mem_usage:  8
+max_mem_usage:  8
+avg_mem_usage:  8
+is_auto_linked: 0
+
+SELECT *
+FROM system.workers
+
+Query id: f2377b52-38eb-4437-9813-d34f9dd28049
+
+Row 1:
+──────
+worker_id:             w1
+host:                  {HOST}
+tcp_port:              {TCP_PORT}
+rpc_port:              {RPC_PORT}
+http_port:             {HTTP_PORT}
+exchange_port:         {EXCHANGE_PORT}
+exchange_status_port:  {EXCHANGE_STATUS_PORT}
+vw_name:               vw_default
+worker_group_id:       wg_default
+query_num:             0
+cpu_usage:             {xxx}
+reserved_cpu_cores:    0
+memory_usage:          {xxx}
+disk_space:            {xxx}
+memory_available:      {xxx}
+reserved_memory_bytes: 0
+register_time:         2022-11-30 18:19:49
+last_update_time:      2022-11-30 18:21:09
+state:                 1
+```
+

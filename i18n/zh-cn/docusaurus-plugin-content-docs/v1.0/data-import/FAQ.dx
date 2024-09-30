@@ -1,0 +1,30 @@
+---
+title: 常见问题
+sidebar_position: 4
+tags:
+  - Docs
+---
+
+# 常见问题
+
+
+| 关键字                                                         | 原因                                    | 解决办法                                                 |
+|-------------------------------------------------------------|---------------------------------------|--------------------------------------------------------|
+| Too many map keys in table (more than 10000)                | Map 列中 key 种类超 10000                | 超 10000 则无法导入，请导入数据减少 map key 数量                          |
+| Memory limit (total)                                        | 导入过程中内存超限制                         | 打开 trace 日志，查看 Kafka 侧具体报错信息                                     |
+| Cannot parse JSON                                           | json 中数据类型与 clickhouse 的不符      | 请用户检查上游生成数据类型是否匹配；                                           |
+| Duplicate field found while parsing JSONEachRow format: hour| json 数据有字段重复，“hour”为重复字段      | 检查上游数据是否正确，配置是否正确                                           |
+| HDFS json size xxx > 1099511627776                          | 导入数据太大(1T)，禁止导入                  | 减少导入数据量                                                             |
+| Unable to parse hdfs json file                              | hdfs 中数据格式错误                         | 请用户检查 hdfs 中文件是否为合法的 json                                      |
+| DB::Exception: Error while reading parquet data: IOError: definition level exceeds maximum. Stack trace | hdsf 文件错误读取错误，多数为丢块等造成。       | 需要重新生产 HDFS 文件                                                 |
+| DB::Exception: Cannot parse string 'time="2021-11-12' as Date: syntax error at position 10 (parsed just 'time="2021'). Note: there are toDateOrZero and toDateOrNull functions, which returns zero/NULL instead of throwing exception.: while pushing to view|  用户 topic 中有脏数据                      | 1.临时可修改 VIEW 表，过滤脏数据；2.用户上游添加数据清洗和保护机制；3.Kafka 表解析与底表保持一致，不建议在写入阶段再转换，Kafka 解析失败可以丢弃脏数据，不阻塞整个消费 |
+| Code: 1001, type: cppkafka::Exception, e.what() = Failed to create consumer handle: consumer regist error, please check output!| 打开 trace 日志，查看 Kafka 侧具体报错信息 | 根据报错信息处理                                                        |
+| Code: 49, e.displayText() = DB::Exception: Check dependencies failed for | VIEW 表找不到                           | 重建 VIEW 表                                                           |
+| Code: 6001. DB::Exception: DB::Exception: Cannot get metadata of table XXX by UUID : XXX. | 执行 ALTER TABLE 命令时报错，cnch 表是和 server 绑定，这个是由于没在表对应 server 执行导致 | 先查询 system.cnch_table_host 获得该表对应的 server，然后在对应 server 执行 |
+| No space left on device: while pushing to view              | 磁盘用满                                    | 清理磁盘                                                               |
+| DB::Exception: Can not insert NULL data into non-nullable column "name" |     列字段添加 Nullable 属性。 |
+| DB::Exception: The hive type is not match in cnch.          |     | CnchHive schema type 与 Hive schema 不匹配。    |
+| DB::Exception: column name xxx doesn't match.               |     | CnchHive schema name 与 Hive schema 不匹配。     |
+| DB::Exception: CnchHive only support parquet format. Current format is org.apache.hadoop.hive.ql.io.HiveIgnoreKeyTextOutputFormat. |     | CnchHive 目前仅支持存储格式为 Parquet。   |
+| DB::Exception: No available nnproxy xxx.                    |      |  HiveMetastore 的 psm 有问题，需 check HiveMetastore psm 是否可访问。 |
+
