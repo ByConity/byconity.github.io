@@ -390,7 +390,6 @@ dpkg -i byconity-worker-write_${VERSION}_${ARCH}.deb
 dpkg -i byconity-daemon-manager_${VERSION}_${ARCH}.deb
 ```
 
-
 #### 推荐的配置文件结构示例
 
 通常，一项配置要么是专属于一种组件的，要么是集群共用的（如 HDFS/FDB 的连接参数），
@@ -424,6 +423,9 @@ dpkg -i byconity-daemon-manager_${VERSION}_${ARCH}.deb
 
 在 ByConity 中，组件之间有三种相互发现的方式。`mode` 标签用于指定方式，有三种模式：`local`、`dns` 和 `consul`。
 在 `local` 模式下，用户需要在此配置文件中指定所有组件的 IP 地址或主机名，通过替换占位符 `{your_xxx_address}`（例如 `{your_server_address}`），该占位符实际上是组件的 IP 地址，例如 `10.0.2.72`。
+
+在 `local` 模式下，服务之间主要通过 `host` (`service_discovery > xxx > node[] > host`) 来获取某个服务的具体地址。
+因此，请务必确保该项的值（比如可用于外部访问的 IP 或者域名）能够用于服务发现。
 
 对于 `hdfs_nnproxy` 标签，包含 HDFS 的 namenode 地址。
 
