@@ -421,6 +421,9 @@ Create any `XML` file in `conf.d/` to configure the `service_discovery` and `hdf
 
 In ByConity, there are three methods of mutual discovery between components. The `mode` tag is used to specify the method, with three modes: `local`, `dns`, and `consul`. In `local` mode, users need to specify the IP addresses or hostnames of all components in this configuration file by replacing the placeholder `{your_xxx_address}` (for example, `{your_server_address}`), which should be the component's actual IP address, such as `10.0.2.72`.
 
+In `local` mode, the specific address of a service is mainly obtained between services via `host` (`service_discovery > xxx > node[] > host`).
+Therefore, it is important to make sure that the value of this item (e.g. an IP or domain name that can be used for external access) can be used for service discovery.
+
 For the `hdfs_nnproxy` tag, it includes the address of the HDFS namenode.
 
 ### Starting the Program
